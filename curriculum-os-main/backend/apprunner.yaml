@@ -1,0 +1,24 @@
+version: 1.0
+runtime: python311
+build:
+  commands:
+    build:
+      - pip install --upgrade pip
+      - pip install "fastapi>=0.104.0" "uvicorn[standard]>=0.24.0" "pydantic>=2.5.0" "pydantic[email]" "requests>=2.31.0" "python-dotenv>=1.0.0" PyJWT boto3 mangum
+      - pip install -e . 2>/dev/null || true
+run:
+  command: python -m uvicorn src.curriculum_agent.main:app --host 0.0.0.0 --port 8080
+  network:
+    port: 8080
+    env: PORT
+  env:
+    - name: USE_DYNAMODB
+      value: "true"
+    - name: AWS_REGION
+      value: "us-east-1"
+    - name: DYNAMODB_USERS_TABLE
+      value: "curriculum_os_users"
+    - name: API_CORS_ORIGINS
+      value: "https://curriculum-os-phi.vercel.app,https://curriculum-os-phi.vercel.app/"
+    - name: LOG_LEVEL
+      value: "info"

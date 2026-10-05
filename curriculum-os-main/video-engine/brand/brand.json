@@ -1,0 +1,24 @@
+{
+  "name": "Artispreneur",
+  "domain": "artispreneur.com",
+  "font_family": "Inter",
+  "font_family_display": "Inter",
+  "logo": "artispreneur-logo.png",
+  "logo_end": "artispreneur-logo.png",
+  "logo_alt": "Artispreneur AI Artist Manager",
+  "fonts": [],
+  "colors": {
+    "primary": "#E98B18",
+    "primary_light": "#FBBF24",
+    "primary_dark": "#B45309",
+    "secondary": "#8B5CF6",
+    "secondary_light": "#C4B5FD",
+    "secondary_dark": "#4C1D95",
+    "accent": "#10B981",
+    "accent_light": "#6EE7B7",
+    "accent_dark": "#047857",
+    "ink": "#070B14",
+    "paper": "#0F172A",
+    "white": "#ffffff"
+  }
+}

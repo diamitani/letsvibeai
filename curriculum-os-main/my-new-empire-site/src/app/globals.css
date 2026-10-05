@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  /* ROSTR OS - Cinematic System Design Tokens */
+  --font-display: "Cormorant Garamond", serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --bg: #F5F1E8;
+  --bg-elevated: #FFFDFC;
+  --text: #050505;
+  --text-muted: rgba(5, 5, 5, 0.6);
+  --border: rgba(5, 5, 5, 0.1);
+  
+  --accent: #E03C31;
+  --accent-hover: #C52A20;
+  
+  --success: #0F766E;
+  --warning: #B45309;
+  --danger: #991B1B;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #070707;
+    --bg-elevated: #111111;
+    --text: #F3F1EC;
+    --text-muted: rgba(243, 241, 236, 0.5);
+    --border: rgba(243, 241, 236, 0.1);
+  }
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-display);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}

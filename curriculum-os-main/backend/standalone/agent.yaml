@@ -1,0 +1,25 @@
+rostr_version: "1.0"
+agent:
+  id: "curriculum-os"
+  name: "CurriculumOS"
+  description: "Researches learning resources, builds master indexes, generates personalized curricula"
+  version: "0.1.0"
+  license: "MIT"
+
+framework:
+  pal: true
+  ragdal: true
+  npao: true
+  hub: true
+
+exports:
+  - claude_skill
+  - claude_project
+  - standalone
+  - openclaw
+
+tools:
+  - deepseek_api
+
+env_vars:
+  - DEEPSEEK_API_KEY

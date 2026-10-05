@@ -1,0 +1,32 @@
+ragdal:
+  enabled: true
+  mode: general_knowledge_expansion
+  source_tiers:
+    tier_1:
+      - arxiv
+      - wikipedia
+      - official_documentation
+      - academic_journals
+      - standards_bodies
+    tier_2:
+      - coursera
+      - edx
+      - udemy
+      - major_news_outlets
+      - trade_publications
+      - professional_certifications
+    tier_3:
+      - youtube
+      - blogs
+      - newsletters
+      - podcasts
+      - github
+      - stack_overflow
+      - reddit
+  confidence_threshold: 0.8
+  max_passes: 3
+  cache_ttl_hours: 72
+  chunk_size_tokens: 512
+  chunk_overlap_tokens: 64
+  max_sources_per_query: 25
+  knowledge_namespace: "curriculum-os/resources"

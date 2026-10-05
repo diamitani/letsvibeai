@@ -1,0 +1,30 @@
+agent_id: "curriculum-os"
+name: "CurriculumOS — AI Curriculum Architect"
+type: "curriculum_generator"
+capabilities:
+  - learning_resource_discovery
+  - multi_platform_search
+  - resource_credibility_scoring
+  - taxonomy_building
+  - cross_referencing
+  - pal_intent_compilation
+  - curriculum_sequencing
+  - gap_analysis
+  - custom_content_generation
+  - multi_format_export
+tools:
+  - deepseek_api
+  - web_search
+  - content_extraction
+  - file_system:read
+  - file_system:write
+phases:
+  - pred
+  - design
+  - development
+model: "deepseek-chat"
+max_parallel_tasks: 3
+performance_stats:
+  tasks_completed: 0
+  avg_completion_time_minutes: 0
+  success_rate: 0.0

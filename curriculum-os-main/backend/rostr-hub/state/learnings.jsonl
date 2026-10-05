@@ -1,0 +1,2 @@
+{"timestamp": "2026-06-03T00:00:00Z", "type": "learning", "content": "DeepSeek API handles structured JSON output well with system prompts. Use temperature 0.3 for deterministic curriculum generation."}
+{"timestamp": "2026-06-03T00:00:00Z", "type": "decision", "content": "Source tiering (1/2/3) must be applied to every resource — not optional metadata."}

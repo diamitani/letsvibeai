@@ -1,0 +1,33 @@
+tools:
+  - name: "deepseek_chat"
+    type: "api"
+    description: "DeepSeek LLM for PAL compilation, research analysis, and curriculum generation"
+    required: true
+    config:
+      endpoint: "https://api.deepseek.com/v1/chat/completions"
+      auth: "api_key"
+      env_var: "DEEPSEEK_API_KEY"
+    schema:
+      input:
+        prompt: "string"
+        system: "string (optional)"
+        temperature: "float (0.0-1.0)"
+      output:
+        content: "string"
+
+  - name: "web_search"
+    type: "api"
+    description: "Search for learning resources across the web"
+    required: false
+    config:
+      env_var: "WEB_SEARCH_API_KEY"
+
+  - name: "content_extraction"
+    type: "script"
+    description: "Extract structured content from URLs"
+    required: false
+
+  - name: "file_system"
+    type: "builtin"
+    description: "Read/write curriculum files, state, and knowledge base"
+    required: true

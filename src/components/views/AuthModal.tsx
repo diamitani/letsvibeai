@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { X, ArrowRight, Github, Mail, Lock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { X, ArrowRight, Github, Mail, Lock, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  signUpWithEmail,
+  signInWithEmail,
+  signInWithOAuthProvider,
+  sendMagicLinkEmail,
+} from '../../lib/supabase';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -12,7 +18,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
-  initialMode = 'signin'
+  initialMode = 'signin',
 }) => {
   const [mode, setMode] = useState<'signin' | 'signup'>(initialMode);
   const [email, setEmail] = useState('');
@@ -21,48 +27,89 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [magicLinkSent, setMagicLinkSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !password) return;
     setIsLoading(true);
+    setErrorMessage(null);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      onSuccess({
-        email,
-        name: fullName || email.split('@')[0]
-      });
-      onClose();
-    }, 800);
-  };
-
-  const handleOAuth = (provider: 'google' | 'github' | 'apple') => {
-    setSocialLoading(provider);
-    setTimeout(() => {
-      setSocialLoading(null);
-      onSuccess({
-        email: `builder@${provider}.com`,
-        name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} Fellow`
-      });
-      onClose();
-    }, 900);
-  };
-
-  const handleMagicLink = () => {
-    if (!email) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setMagicLinkSent(true);
-      setTimeout(() => {
-        setMagicLinkSent(false);
-        onSuccess({ email, name: email.split('@')[0] });
+    try {
+      if (mode === 'signup') {
+        const { data, error } = await signUpWithEmail(email, password, fullName);
+        if (error) {
+          setErrorMessage(error.message);
+          setIsLoading(false);
+          return;
+        }
+        setIsLoading(false);
+        onSuccess({
+          email: data?.user?.email || email,
+          name: fullName || data?.user?.user_metadata?.full_name || email.split('@')[0],
+        });
         onClose();
-      }, 1500);
-    }, 700);
+      } else {
+        const { data, error } = await signInWithEmail(email, password);
+        if (error) {
+          setErrorMessage(error.message);
+          setIsLoading(false);
+          return;
+        }
+        setIsLoading(false);
+        onSuccess({
+          email: data?.user?.email || email,
+          name: data?.user?.user_metadata?.full_name || email.split('@')[0],
+        });
+        onClose();
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Authentication failed';
+      setErrorMessage(msg);
+      setIsLoading(false);
+    }
+  };
+
+  const handleOAuth = async (provider: 'google' | 'github' | 'apple') => {
+    setSocialLoading(provider);
+    setErrorMessage(null);
+    try {
+      const { error } = await signInWithOAuthProvider(provider);
+      if (error) {
+        setErrorMessage(error.message);
+        setSocialLoading(null);
+        return;
+      }
+      // Browser will redirect to provider or callback
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'OAuth failed';
+      setErrorMessage(msg);
+      setSocialLoading(null);
+    }
+  };
+
+  const handleMagicLink = async () => {
+    if (!email) {
+      setErrorMessage('Please enter your email first');
+      return;
+    }
+    setIsLoading(true);
+    setErrorMessage(null);
+    try {
+      const { error } = await sendMagicLinkEmail(email);
+      setIsLoading(false);
+      if (error) {
+        setErrorMessage(error.message);
+        return;
+      }
+      setMagicLinkSent(true);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Magic link failed';
+      setErrorMessage(msg);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -95,9 +142,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex bg-[#F4F7FB] p-1 rounded-xl mb-6 border border-slate-200">
+        <div className="flex bg-[#F4F7FB] p-1 rounded-xl mb-4 border border-slate-200">
           <button
-            onClick={() => setMode('signin')}
+            onClick={() => {
+              setMode('signin');
+              setErrorMessage(null);
+            }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
               mode === 'signin'
                 ? 'bg-white text-[#10213F] shadow-xs font-bold'
@@ -107,7 +157,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             Sign In
           </button>
           <button
-            onClick={() => setMode('signup')}
+            onClick={() => {
+              setMode('signup');
+              setErrorMessage(null);
+            }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
               mode === 'signup'
                 ? 'bg-white text-[#10213F] shadow-xs font-bold'
@@ -117,6 +170,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             Create Account
           </button>
         </div>
+
+        {/* Error message alert */}
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-700 text-xs">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* OAuth Buttons */}
         <div className="grid grid-cols-3 gap-2.5 mb-6">
@@ -259,9 +320,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#34D399]" />
-            <span>Supabase RLS & OAuth Encrypted</span>
+            <span>Supabase Master RLS & OAuth Encrypted</span>
           </div>
-          <span className="text-slate-400 font-medium">SOC2 Type II</span>
+          <span className="text-slate-400 font-medium">Diamitani Master</span>
         </div>
       </div>
     </div>

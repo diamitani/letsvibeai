@@ -18,6 +18,7 @@ import { MarketplaceView } from './components/views/MarketplaceView';
 import { DirectoryView } from './components/views/DirectoryView';
 import { DashboardView } from './components/views/DashboardView';
 import { AuthModal } from './components/views/AuthModal';
+import { supabase } from './lib/supabase';
 import { PricingPlan, MarketplaceItem } from './types';
 import { Bot, Sparkles } from 'lucide-react';
 
@@ -32,10 +33,7 @@ export const App: React.FC = () => {
       return [1];
     }
   });
-  const [user, setUser] = useState<{ email: string; name: string } | null>({
-    email: 'founder@letsvibeai.com',
-    name: 'Vibe Architect'
-  });
+  const [user, setUser] = useState<{ email: string; name: string } | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAgentOpen, setIsAgentOpen] = useState(false);
@@ -45,6 +43,37 @@ export const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('letsvibeai_completed_modules', JSON.stringify(completedModules));
   }, [completedModules]);
+
+  // Sync Supabase Auth Session
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email || 'builder@letsvibeai.com',
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Vibe Fellow',
+        });
+      }
+    });
+
+    // Listen to auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser({
+          email: session.user.email || 'builder@letsvibeai.com',
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Vibe Fellow',
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const handleToggleCompleteModule = (moduleId: number) => {
     setCompletedModules((prev) =>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Code a Web App — Architecture-First Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div id="trailer-root">
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #090a0f;
+        color: #ffffff;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        overflow: hidden;
+        width: 1920px;
+        height: 1080px;
+      }
+      #trailer-root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: #090a0f;
+        overflow: hidden;
+      }
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        background-image: 
+          linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(circle at center, black, transparent 80%);
+        pointer-events: none;
+      }
+      .ambient-glow {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(120px);
+        pointer-events: none;
+      }
+      .glow-1 {
+        width: 600px;
+        height: 600px;
+        background: rgba(16, 185, 129, 0.15);
+        top: -100px;
+        left: 200px;
+      }
+      .glow-2 {
+        width: 700px;
+        height: 700px;
+        background: rgba(6, 182, 212, 0.18);
+        bottom: -150px;
+        right: 200px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 20px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: 9999px;
+        color: #10b981;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+      }
+      .headline-main {
+        font-size: 76px;
+        font-weight: 900;
+        line-height: 1.05;
+        text-align: center;
+        letter-spacing: -2px;
+        max-width: 1400px;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #38bdf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .subtext {
+        font-size: 26px;
+        color: #94a3b8;
+        margin-top: 24px;
+        text-align: center;
+        max-width: 900px;
+        line-height: 1.4;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .comparison-container {
+        display: flex;
+        gap: 40px;
+        margin-top: 48px;
+        width: 1300px;
+      }
+      .comparison-card {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 24px;
+        backdrop-filter: blur(10px);
+      }
+      .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .card-vague .card-title { color: #ef4444; }
+      .card-directed .card-title { color: #10b981; }
+      .card-content {
+        font-size: 16px;
+        color: #cbd5e1;
+        line-height: 1.5;
+      }
+      .arch-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+        margin-top: 32px;
+        max-width: 1400px;
+      }
+      .arch-node {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      .arch-node:hover {
+        background: rgba(59, 130, 246, 0.2);
+        transform: translateY(-2px);
+      }
+      .node-label {
+        font-size: 12px;
+        color: #93c5fd;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .node-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+      }
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 32px;
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-number {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #10b981, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+      .stat-label {
+        font-size: 14px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #10b981, #06b6d4);
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 32px;
+      }
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      }
+    </style>
+
+    <!-- Scene 1: Hook & Core Promise (0-30s) -->
+    <div id="s1" class="clip">
+      <div class="bg-grid"></div>
+      <div class="ambient-glow glow-1"></div>
+      <div class="ambient-glow glow-2"></div>
+      <div id="s1-badge" class="badge">✓✓✓ THE CORE PROMISE</div>
+      <h1 id="s1-title" class="headline-main">
+        Welcome to<br>
+        <span class="gradient-text">Vibe Code a Web App</span>
+      </h1>
+      <p id="s1-sub" class="subtext">
+        You do not need to spend six months learning syntax, memorizing functions,<br>
+        or debugging missing semicolons. You only need to master two things:
+        how software is structured, and how to tell AI exactly what to build.
+      </p>
+    </div>
+
+    <!-- Scene 2: What You Will Build (30-90s) -->
+    <div id="s2" class="clip"
+      style="opacity: 0;">
+      <div class="bg-grid"></div>
+      <div class="ambient-glow glow-1"></div>
+      <div class="ambient-glow glow-2"></div>
+      <div id="s2-badge" class="badge">↑ WHAT YOU WILL BUILD</div>
+      <h2 id="s2-title" class="headline-main">
+        Architecture-First<br>
+        <span class="gradient-text">Dynamic UI Overlays & Code Animations</span>
+      </h2>
+      <div id="s2-cards" class="comparison-container">
+        <div id="s2-card-vague" class="comparison-card card-vague">
+          <div class="card-title">❌ VAGUE PROMPT</div>
+          <div class="card-content">
+            "Make me a login page."
+            <br><br>
+            Model hallucinates random libraries and wrong settings.
+          </div>
+        </div>
+        <div id="s2-card-directed" class="comparison-card card-directed">
+          <div class="card-title">✅ DIRECTED PROMPT</div>
+          <div class="card-content">
+            "Build a sign-up/sign-in page using Supabase Auth with Google sign-in and magic links in Next.js + Tailwind. Redirect to /dashboard."
+            <br><br>
+            Precise execution.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: 10-Module Roadmap (90-120s) -->
+    <div id="s3" class="clip"
+      style="opacity: 0;">
+      <div class="bg-grid"></div>
+      <div class="ambient-glow glow-1"></div>
+      <div class="ambient-glow glow-2"></div>
+      <div id="s3-badge" class="badge">↑↑↑ THE 10-MODULE ROADMAP</div>
+      <h2 id="s3-title" class="headline-main">
+        Complete Course<br>
+        <span class="gradient-text">From Idea to Revenue-Ready App</span>
+      </h2>
+      <div id="s3-grid" class="arch-grid">
+        <div class="arch-node"><div class="node-label">Module 1</div><div class="node-value">1</div></div>
+        <div class="arch-node"><div class="node-label">Module 2</div><div class="node-value">2</div></div>
+        <div class="arch-node"><div class="node-label">Module 3</div><div class="node-value">3</div></div>
+        <div class="arch-node"><div class="node-label">Module 4</div><div class="node-value">4</div></div>
+        <div class="arch-node"><div class="node-label">Module 5</div><div class="node-value">5</div></div>
+        <div class="arch-node"><div class="node-label">Module 6</div><div class="node-value">6</div></div>
+        <div class="arch-node"><div class="node-label">Module 7</div><div class="node-value">7</div></div>
+        <div class="arch-node"><div class="node-label">Module 8</div><div class="node-value">8</div></div>
+        <div class="arch-node"><div class="node-label">Module 9</div><div class="node-value">9</div></div>
+        <div class="arch-node"><div class="node-label">Module 10</div><div class="node-value">10</div></div>
+        <div class="arch-node"><div class="node-label">Capstone</div><div class="node-value">11</div></div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Call to Action -->
+    <div id="s4" class="clip"
+      style="opacity: 0;">
+      <div class="bg-grid"></div>
+      <div class="ambient-glow glow-1"></div>
+      <div class="ambient-glow glow-2"></div>
+      <div id="s4-badge" class="badge">✓✓✓ JOIN NOW</div>
+      <h2 id="s4-title" class="headline-main">
+        Ready to Transform<br>
+        <span class="gradient-text">Your Ideas Into Reality</span>
+      </h2>
+      <div class="stats-row" id="s4-stats">
+        <div class="stat-item">
+          <div class="stat-number">10</div>
+          <div class="stat-label">Core Modules</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">11</div>
+          <div class="stat-label">Document Stack</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Live Capstone App</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Production Ready</div>
+        </div>
+      </div>
+      <div id="s4-btn" class="cta-button">
+        <span>letsvibeai.com</span>
+        <span>&#8594;</span>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene 1 animations (0 - 30s)
+        tl.fromTo("#s1-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+        tl.fromTo("#s1-title", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: "power3.out" }, 0.4);
+        tl.fromTo("#s1-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.8);
+        tl.to(["#s1-badge", "#s1-title", "#s1-sub"], { opacity: 0, y: -25, duration: 0.4, ease: "power2.in" }, 3.5);
+        tl.set(["#s1-badge", "#s1-title", "#s1-sub"], { opacity: 0 }, 4.0);
+
+        // Scene 2 animations (4 - 30s)
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 3.8);
+        tl.fromTo("#s2-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.1);
+        tl.fromTo("#s2-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 4.3);
+        tl.fromTo("#s2-card-vague", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.7, ease: "back.out(1.2)" }, 4.6);
+        tl.fromTo("#s2-card-directed", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.7, ease: "back.out(1.2)" }, 4.9);
+        tl.to(["#s2-badge", "#s2-title", "#s2-cards"], { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 7.5);
+        tl.set(["#s2-badge", "#s2-title", "#s2-cards"], { opacity: 0 }, 8.0);
+
+        // Scene 3 animations (30 - 60s)
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 7.8);
+        tl.fromTo("#s3-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 8.1);
+        tl.fromTo("#s3-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 8.3);
+        tl.fromTo(".arch-node",
+          { opacity: 0, y: 30, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: "back.out(1.4)" },
+          8.6
+        );
+        tl.to(["#s3-badge", "#s3-title", "#s3-grid"], { opacity: 0, y: -30 }, 11.5);
+        tl.set(["#s3-badge", "#s3-title", "#s3-grid"], { opacity: 0 }, 12.0);
+
+        // Scene 4 animations (60 - 120s)
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 11.8);
+        tl.fromTo("#s4-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 12.1);
+        tl.fromTo("#s4-title", { opacity: 0, y: 30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" }, 12.3);
+        tl.fromTo(".stat-item", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }, 12.8);
+        tl.fromTo("#s4-btn", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 13.3);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["course-trailer-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

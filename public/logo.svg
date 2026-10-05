@@ -1,35 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%" fill="none">
   <defs>
-    <linearGradient id="lv-specular" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Background Card -->
+    <linearGradient id="iconBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="60%" stop-color="#F1F5F9" />
-      <stop offset="100%" stop-color="#94A3B8" />
+      <stop offset="100%" stop-color="#F4F7FB" />
     </linearGradient>
-    <linearGradient id="lv-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="100%" stop-color="#06B6D4" />
+
+    <!-- Gateway V Gradient -->
+    <linearGradient id="gatewayVGradientApp" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C5CFC" />
+      <stop offset="35%" stop-color="#2F80ED" />
+      <stop offset="70%" stop-color="#20C7D9" />
+      <stop offset="100%" stop-color="#34D399" />
     </linearGradient>
+
+    <linearGradient id="signalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#20C7D9" />
+      <stop offset="100%" stop-color="#2F80ED" />
+    </linearGradient>
+
+    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2F80ED" />
+      <stop offset="50%" stop-color="#20C7D9" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#071B3A" flood-opacity="0.08" />
+    </filter>
   </defs>
 
-  <!-- Grounding Squircle with Apple-style Chamfer -->
-  <rect width="120" height="120" rx="28" fill="#0A0D14" />
-  <rect x="0.75" y="0.75" width="118.5" height="118.5" rx="27.25" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="1.5" />
+  <!-- Clean Mist/White Squircle Frame -->
+  <rect x="2" y="2" width="116" height="116" rx="28" fill="url(#iconBg)" stroke="#E2E8F0" stroke-width="1.5" filter="url(#subtleShadow)" />
 
-  <!-- Iconic Vibe Vector V Mark -->
-  <path
-    d="M32 38L60 84L88 38"
-    stroke="url(#lv-specular)"
-    stroke-width="8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path
-    d="M47 43L60 63L73 43"
-    stroke="url(#lv-glow)"
-    stroke-width="5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <circle cx="60" cy="84" r="4.5" fill="#10B981" />
-  <circle cx="60" cy="38" r="3" fill="#FFFFFF" />
+  <!-- Gateway V Geometry -->
+  <g transform="translate(6, 6) scale(0.9)">
+    <path
+      d="M 22 36 L 42 36 L 60 82 L 78 36 L 98 36 L 68 98 C 65 104 55 104 52 98 Z"
+      fill="url(#gatewayVGradientApp)"
+    />
+
+    <!-- Central Signal (Learner Stem & Node) -->
+    <rect x="55.5" y="56" width="9" height="22" rx="4.5" fill="url(#signalGrad)" />
+    <circle cx="60" cy="44" r="5.5" fill="url(#signalGrad)" />
+
+    <!-- 3 Radiating Arcs (Learning -> Application -> Amplification) -->
+    <path d="M 50 30 C 56 26 64 26 70 30" stroke="url(#arcGrad)" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 43 21 C 53 14 67 14 77 21" stroke="url(#arcGrad)" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 36 12 C 50 3 70 3 84 12" stroke="url(#arcGrad)" stroke-width="3.5" stroke-linecap="round" />
+  </g>
 </svg>

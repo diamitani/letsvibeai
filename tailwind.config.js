@@ -4,44 +4,42 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        dark: {
-          950: '#090a0f',
-          900: '#0f1118',
-          850: '#141722',
-          800: '#1a1e2d',
-          700: '#252b3e',
+        institutional: {
+          navy: '#071B3A',
+          blue: '#2F80ED',
+          green: '#34D399',
+          violet: '#7C5CFC',
+          cyan: '#20C7D9',
+          mist: '#F4F7FB',
+          ink: '#10213F',
+          border: '#E2E8F0',
         },
         brand: {
-          emerald: '#10b981',
-          cyan: '#06b6d4',
-          sky: '#38bdf8',
-          teal: '#14b8a6',
+          emerald: '#34D399',
+          cyan: '#20C7D9',
+          sky: '#2F80ED',
+          violet: '#7C5CFC',
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Sora', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Menlo', 'monospace'],
       },
       animation: {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
-        glow: {
-          '0%': { boxShadow: '0 0 15px rgba(16, 185, 129, 0.2)' },
-          '100%': { boxShadow: '0 0 30px rgba(6, 182, 212, 0.4)' },
+          '50%': { transform: 'translateY(-6px)' },
         }
       }
     },
   },
   plugins: [],
 }
+

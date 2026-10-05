@@ -7,22 +7,14 @@ import {
   MessageSquare,
   CheckCircle2,
   Circle,
-  Sparkles,
-  Zap,
   CreditCard,
-  Key,
-  Shield,
   ExternalLink,
   Bot,
   Send,
   Terminal,
   RefreshCw,
   Plus,
-  Play,
   Cpu,
-  Database,
-  Radio,
-  Share2,
   Copy,
   Check
 } from 'lucide-react';
@@ -67,7 +59,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onOpenSandbox, onO
   const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string; code?: string }>>([
     {
       role: 'assistant',
-      text: 'Welcome to your Vibe AI Command Center. I am connected via the Vercel AI Suite LLM Gateway with full access to your Supabase schema and Sandbox environment. What are we building or debugging today?',
+      text: 'Welcome to your LetsVibeAI Command Center. Connected via the Vercel AI Suite LLM Gateway with full access to your Supabase schema and Sandbox environment. What are we building or shipping today?',
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -131,7 +123,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
   const result = streamText({
     model: openai('gpt-4o-mini'),
-    system: 'You are an Apple-grade Vibe Architect.',
+    system: 'You are an institutional Vibe Architect.',
     messages,
   });
   return result.toDataStreamResponse();
@@ -144,23 +136,23 @@ export async function POST(req: Request) {
   };
 
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white">
       {/* Top Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-zinc-800">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-200">
         <div className="flex items-center gap-4">
           <img
             src={userProfile.avatarUrl}
             alt={userProfile.fullName}
-            className="w-14 h-14 rounded-2xl border-2 border-emerald-400 shadow-xl object-cover"
+            className="w-14 h-14 rounded-2xl border-2 border-[#2F80ED] shadow-sm object-cover"
           />
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-black text-white tracking-tight">{userProfile.fullName}</h1>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono uppercase">
-                {userProfile.plan} Member
+              <h1 className="text-2xl font-black text-[#10213F] tracking-tight">{userProfile.fullName}</h1>
+              <span className="px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#2F80ED] text-[11px] font-mono font-bold uppercase">
+                {userProfile.plan} Fellow
               </span>
             </div>
-            <p className="text-xs text-zinc-400 mt-0.5">{userProfile.email} • {userProfile.role}</p>
+            <p className="text-xs text-slate-500 mt-0.5">{userProfile.email} • {userProfile.role}</p>
           </div>
         </div>
 
@@ -168,28 +160,28 @@ export async function POST(req: Request) {
         <div className="flex items-center gap-2.5">
           <button
             onClick={onOpenSandbox}
-            className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-emerald-400 bg-emerald-950/50 hover:bg-emerald-900/50 border border-emerald-500/40 rounded-xl transition-all"
+            className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#071B3A] bg-[#F4F7FB] hover:bg-slate-200/70 border border-slate-200 rounded-xl transition-all"
           >
-            <Terminal className="w-4 h-4" />
+            <Terminal className="w-4 h-4 text-[#2F80ED]" />
             <span>Open Vercel Sandbox</span>
           </button>
           <button
             onClick={onOpenAgent}
-            className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-black bg-emerald-400 hover:bg-emerald-300 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all"
+            className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-[#071B3A] hover:bg-[#10213F] rounded-xl shadow-sm active:scale-[0.98] transition-all"
           >
-            <Bot className="w-4 h-4" />
+            <Bot className="w-4 h-4 text-[#34D399]" />
             <span>Consult AI Coach</span>
           </button>
         </div>
       </div>
 
       {/* Primary Dashboard Navigation Tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-4 mb-6 border-b border-zinc-900 scrollbar-none">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-4 mb-6 border-b border-slate-100 scrollbar-none">
         {[
-          { id: 'home', label: 'Home & Onboarding', icon: LayoutDashboard },
+          { id: 'home', label: 'Home & Launch Checklist', icon: LayoutDashboard },
           { id: 'workspaces', label: 'Workspaces & Deployments', icon: FolderGit2 },
           { id: 'chat', label: 'Vercel AI Chat & Agents', icon: MessageSquare },
-          { id: 'profile', label: 'Founder Profile', icon: User },
+          { id: 'profile', label: 'Fellow Profile', icon: User },
           { id: 'settings', label: 'Settings & Billing', icon: Settings },
         ].map((tab) => {
           const Icon = tab.icon;
@@ -200,11 +192,11 @@ export async function POST(req: Request) {
               onClick={() => setActiveTab(tab.id as any)}
               className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${
                 isActive
-                  ? 'bg-zinc-800 text-white border border-zinc-700 shadow-md'
-                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60'
+                  ? 'bg-[#071B3A] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-[#10213F] hover:bg-[#F4F7FB]'
               }`}
             >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-zinc-500'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-[#34D399]' : 'text-slate-400'}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -216,50 +208,50 @@ export async function POST(req: Request) {
         <div className="space-y-8 animate-in fade-in duration-200">
           {/* Quick Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-5 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-[11px] font-mono text-zinc-400 uppercase">Live Deployments</div>
-              <div className="text-2xl sm:text-3xl font-black text-white font-mono mt-1">3 Production</div>
-              <div className="text-[10px] text-emerald-400 mt-1 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="p-5 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-[11px] font-mono text-slate-500 uppercase font-semibold">Live Deployments</div>
+              <div className="text-2xl sm:text-3xl font-black text-[#10213F] font-mono mt-1">3 Production</div>
+              <div className="text-[10px] text-emerald-600 mt-1 flex items-center gap-1 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-ping" />
                 <span>100% Vercel Edge Uptime</span>
               </div>
             </div>
 
-            <div className="p-5 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-[11px] font-mono text-zinc-400 uppercase">Gateway Invocations</div>
-              <div className="text-2xl sm:text-3xl font-black text-cyan-400 font-mono mt-1">142,800</div>
-              <div className="text-[10px] text-zinc-500 mt-1">Via Vercel AI Gateway</div>
+            <div className="p-5 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-[11px] font-mono text-slate-500 uppercase font-semibold">Gateway Invocations</div>
+              <div className="text-2xl sm:text-3xl font-black text-[#2F80ED] font-mono mt-1">142,800</div>
+              <div className="text-[10px] text-slate-500 mt-1">Via Vercel AI Gateway</div>
             </div>
 
-            <div className="p-5 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-[11px] font-mono text-zinc-400 uppercase">Supabase Records</div>
-              <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono mt-1">8,920</div>
-              <div className="text-[10px] text-zinc-500 mt-1">Encrypted with RLS</div>
+            <div className="p-5 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-[11px] font-mono text-slate-500 uppercase font-semibold">Supabase Records</div>
+              <div className="text-2xl sm:text-3xl font-black text-[#34D399] font-mono mt-1">8,920</div>
+              <div className="text-[10px] text-slate-500 mt-1">Encrypted with RLS</div>
             </div>
 
-            <div className="p-5 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-[11px] font-mono text-zinc-400 uppercase">Monthly Vibe MRR</div>
-              <div className="text-2xl sm:text-3xl font-black text-amber-400 font-mono mt-1">$4,250</div>
-              <div className="text-[10px] text-zinc-500 mt-1">Stripe Billing Active</div>
+            <div className="p-5 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-[11px] font-mono text-slate-500 uppercase font-semibold">Monthly MRR</div>
+              <div className="text-2xl sm:text-3xl font-black text-[#7C5CFC] font-mono mt-1">$4,250</div>
+              <div className="text-[10px] text-slate-500 mt-1">Stripe Billing Active</div>
             </div>
           </div>
 
           {/* Onboarding Checklist Card */}
-          <div className="p-6 sm:p-8 bg-zinc-950/80 border border-zinc-800 rounded-3xl relative overflow-hidden">
+          <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
-                <div className="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-1">
+                <div className="text-xs font-mono text-[#2F80ED] uppercase tracking-wider mb-1 font-bold">
                   Step-By-Step Activation
                 </div>
-                <h3 className="text-xl font-bold text-white">Production Launch Checklist</h3>
-                <p className="text-xs text-zinc-400 mt-1">
+                <h3 className="text-xl font-bold text-[#10213F]">Production Launch Checklist</h3>
+                <p className="text-xs text-slate-500 mt-1">
                   Complete these fundamental steps to scale your vibe app from 1 user to millions.
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 bg-zinc-900 px-3.5 py-1.5 rounded-full border border-zinc-800">
-                <span className="text-xs text-zinc-400">Progress:</span>
-                <span className="text-xs font-bold text-emerald-400 font-mono">
+              <div className="flex items-center gap-2 bg-[#F4F7FB] px-3.5 py-1.5 rounded-full border border-slate-200">
+                <span className="text-xs text-slate-500">Progress:</span>
+                <span className="text-xs font-bold text-[#2F80ED] font-mono">
                   {checklist.filter((c) => c.completed).length}/{checklist.length} Completed
                 </span>
               </div>
@@ -272,21 +264,21 @@ export async function POST(req: Request) {
                   onClick={() => toggleChecklistItem(item.id)}
                   className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${
                     item.completed
-                      ? 'bg-emerald-950/20 border-emerald-500/30 text-zinc-300'
-                      : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700'
+                      ? 'bg-emerald-50/50 border-emerald-200 text-slate-700'
+                      : 'bg-[#F4F7FB] border-slate-200 text-slate-600 hover:border-slate-300'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     {item.completed ? (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-[#34D399] flex-shrink-0" />
                     ) : (
-                      <Circle className="w-5 h-5 text-zinc-600 flex-shrink-0" />
+                      <Circle className="w-5 h-5 text-slate-400 flex-shrink-0" />
                     )}
-                    <span className={`text-xs sm:text-sm font-medium ${item.completed ? 'line-through text-zinc-500' : 'text-zinc-200'}`}>
+                    <span className={`text-xs sm:text-sm font-medium ${item.completed ? 'line-through text-slate-400' : 'text-[#10213F]'}`}>
                       {item.label}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">
                     {item.completed ? 'Done' : 'Pending'}
                   </span>
                 </div>
@@ -301,8 +293,8 @@ export async function POST(req: Request) {
         <div className="space-y-6 animate-in fade-in duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold text-white">Active Workspaces & Projects</h3>
-              <p className="text-xs text-zinc-400">Manage environments, deployments, and edge topologies.</p>
+              <h3 className="text-xl font-bold text-[#10213F]">Active Workspaces & Projects</h3>
+              <p className="text-xs text-slate-500">Manage environments, deployments, and edge topologies.</p>
             </div>
             <button
               onClick={() => {
@@ -317,9 +309,9 @@ export async function POST(req: Request) {
                 };
                 setProjects([...projects, newProject]);
               }}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-xs transition-all active:scale-[0.98]"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-xs transition-all active:scale-[0.98]"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3.5 h-3.5 text-[#34D399]" />
               <span>Create New Workspace</span>
             </button>
           </div>
@@ -328,38 +320,38 @@ export async function POST(req: Request) {
             {projects.map((proj) => (
               <div
                 key={proj.id}
-                className="p-6 bg-zinc-950/80 border border-zinc-800 rounded-3xl hover:border-zinc-700 transition-all flex flex-col justify-between"
+                className="p-6 bg-white border border-slate-200 rounded-3xl hover:border-slate-300 shadow-xs transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full uppercase ${
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full uppercase font-bold ${
                       proj.environment === 'production'
-                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/30'
-                        : 'bg-zinc-800 text-zinc-300'
+                        ? 'bg-blue-50 text-[#2F80ED] border border-blue-200'
+                        : 'bg-slate-100 text-slate-600'
                     }`}>
                       {proj.environment}
                     </span>
-                    <span className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="flex items-center gap-1 text-[11px] text-emerald-600 font-mono font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-pulse" />
                       <span>{proj.status}</span>
                     </span>
                   </div>
 
-                  <h4 className="text-base font-bold text-white mb-1">{proj.name}</h4>
-                  <p className="text-xs font-mono text-zinc-500 mb-4">{proj.slug}</p>
+                  <h4 className="text-base font-bold text-[#10213F] mb-1">{proj.name}</h4>
+                  <p className="text-xs font-mono text-slate-400 mb-4">{proj.slug}</p>
 
-                  <div className="text-xs text-zinc-400 space-y-1 mb-4">
-                    <div>Last Deployed: <span className="text-zinc-200">{proj.lastDeployed}</span></div>
-                    <div>Hosting: <span className="text-emerald-400">Vercel Edge Network</span></div>
+                  <div className="text-xs text-slate-600 space-y-1 mb-4">
+                    <div>Last Deployed: <span className="text-[#10213F] font-medium">{proj.lastDeployed}</span></div>
+                    <div>Hosting: <span className="text-[#2F80ED] font-medium">Vercel Edge Network</span></div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-zinc-900 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                   <a
                     href={proj.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300"
+                    className="flex items-center gap-1 text-xs font-semibold text-[#2F80ED] hover:text-blue-700"
                   >
                     <span>View Site</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -369,7 +361,7 @@ export async function POST(req: Request) {
                     onClick={() => {
                       alert(`Triggered fresh rebuild for ${proj.name} on Vercel Edge.`);
                     }}
-                    className="p-2 text-zinc-400 hover:text-white rounded-lg bg-zinc-900 hover:bg-zinc-800"
+                    className="p-2 text-slate-500 hover:text-[#10213F] rounded-lg bg-[#F4F7FB] hover:bg-slate-200"
                     title="Redeploy"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
@@ -381,15 +373,15 @@ export async function POST(req: Request) {
         </div>
       )}
 
-      {/* TAB 3: CHAT UI (Vercel AI SDK Chat Interface) */}
+      {/* TAB 3: CHAT UI */}
       {activeTab === 'chat' && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 animate-in fade-in duration-200">
           {/* Chat Sessions & Sub-Agents Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Sub-Agent Selector */}
-            <div className="p-4 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-xs font-mono text-zinc-400 uppercase mb-3 flex items-center gap-1.5">
-                <Bot className="w-3.5 h-3.5 text-cyan-400" />
+            <div className="p-4 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-xs font-mono text-slate-500 uppercase mb-3 flex items-center gap-1.5 font-bold">
+                <Bot className="w-3.5 h-3.5 text-[#2F80ED]" />
                 <span>Active Sub-Agent</span>
               </div>
               <div className="space-y-1.5">
@@ -397,34 +389,34 @@ export async function POST(req: Request) {
                   { id: 'vercel-stack', label: 'Vercel AI Stack Dev', desc: 'SDK 4.0 & Tool Calling' },
                   { id: 'rostr', label: 'ROSTR v2 Architect', desc: 'PAL & NPAO Engine' },
                   { id: 'signalwire', label: 'SignalWire Engineer', desc: 'Voice API & Duplex WebSockets' },
-                  { id: 'taste', label: 'Design-Taste Stylist', desc: 'Anti-Slop Apple Aesthetics' }
+                  { id: 'taste', label: 'Design-Taste Stylist', desc: 'Institutional Sora Aesthetics' }
                 ].map((agent) => (
                   <button
                     key={agent.id}
                     onClick={() => setSelectedSubAgent(agent.id as any)}
                     className={`w-full text-left p-2.5 rounded-xl text-xs transition-all ${
                       selectedSubAgent === agent.id
-                        ? 'bg-zinc-800 text-white border border-zinc-700 shadow-sm'
-                        : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
+                        ? 'bg-white text-[#10213F] font-bold border border-slate-200 shadow-xs'
+                        : 'text-slate-600 hover:bg-white/60 hover:text-[#10213F]'
                     }`}
                   >
                     <div className="font-semibold">{agent.label}</div>
-                    <div className="text-[10px] text-zinc-500">{agent.desc}</div>
+                    <div className="text-[10px] text-slate-400">{agent.desc}</div>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Active Tool Connectors */}
-            <div className="p-4 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-              <div className="text-xs font-mono text-zinc-400 uppercase mb-3 flex items-center gap-1.5">
-                <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="p-4 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
+              <div className="text-xs font-mono text-slate-500 uppercase mb-3 flex items-center gap-1.5 font-bold">
+                <Cpu className="w-3.5 h-3.5 text-[#34D399]" />
                 <span>Tool Connectors</span>
               </div>
               <div className="space-y-2 text-xs">
                 {Object.entries(activeTools).map(([toolKey, isEnabled]) => (
                   <label key={toolKey} className="flex items-center justify-between cursor-pointer">
-                    <span className="text-zinc-300 font-mono text-[11px] capitalize">
+                    <span className="text-slate-700 font-mono text-[11px] capitalize">
                       {toolKey.replace(/([A-Z])/g, ' $1')}
                     </span>
                     <input
@@ -436,7 +428,7 @@ export async function POST(req: Request) {
                           [toolKey]: !isEnabled
                         }))
                       }
-                      className="rounded bg-zinc-900 border-zinc-700 text-emerald-400 focus:ring-0"
+                      className="rounded bg-white border-slate-300 text-[#2F80ED] focus:ring-0"
                     />
                   </label>
                 ))}
@@ -444,9 +436,9 @@ export async function POST(req: Request) {
             </div>
 
             {/* Sessions List */}
-            <div className="p-4 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
+            <div className="p-4 bg-[#F4F7FB] border border-slate-200 rounded-3xl">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-zinc-400 uppercase">Chat Sessions</span>
+                <span className="text-xs font-mono text-slate-500 uppercase font-bold">Chat Sessions</span>
                 <button
                   onClick={() => {
                     const newSess = {
@@ -457,7 +449,7 @@ export async function POST(req: Request) {
                     setChatSessions([newSess, ...chatSessions]);
                     setActiveSessionId(newSess.id);
                   }}
-                  className="p-1 text-zinc-400 hover:text-white rounded-lg bg-zinc-900"
+                  className="p-1 text-slate-500 hover:text-[#10213F] rounded-lg bg-white border border-slate-200"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -469,12 +461,12 @@ export async function POST(req: Request) {
                     onClick={() => setActiveSessionId(s.id)}
                     className={`w-full text-left p-2 rounded-xl text-xs transition-all ${
                       activeSessionId === s.id
-                        ? 'bg-zinc-900 text-emerald-400 font-semibold'
-                        : 'text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-white text-[#2F80ED] font-bold border border-slate-200 shadow-xs'
+                        : 'text-slate-600 hover:text-[#10213F]'
                     }`}
                   >
                     <div className="truncate">{s.title}</div>
-                    <div className="text-[10px] text-zinc-500 font-mono">{s.date}</div>
+                    <div className="text-[10px] text-slate-400 font-mono">{s.date}</div>
                   </button>
                 ))}
               </div>
@@ -482,19 +474,19 @@ export async function POST(req: Request) {
           </div>
 
           {/* Chat Stream Window */}
-          <div className="lg:col-span-3 bg-zinc-950/80 border border-zinc-800 rounded-3xl p-6 flex flex-col h-[600px] justify-between">
+          <div className="lg:col-span-3 bg-white border border-slate-200 rounded-3xl p-6 flex flex-col h-[600px] justify-between shadow-xs">
             {/* Top Toolbar */}
-            <div className="flex items-center justify-between pb-4 border-b border-zinc-900">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <Bot className="w-4 h-4 text-emerald-400" />
-                <span className="text-xs font-bold text-white">Vercel AI SDK 4.0 Chatbot Harness</span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300">
+                <Bot className="w-4 h-4 text-[#2F80ED]" />
+                <span className="text-xs font-bold text-[#10213F]">Vercel AI SDK 4.0 Chatbot</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#2F80ED] font-semibold">
                   Model: gpt-4o-mini via AI Gateway
                 </span>
               </div>
               <button
                 onClick={onOpenSandbox}
-                className="text-xs text-emerald-400 hover:underline flex items-center gap-1"
+                className="text-xs text-[#2F80ED] hover:underline flex items-center gap-1 font-medium"
               >
                 <span>Run in Sandbox</span>
                 <ExternalLink className="w-3 h-3" />
@@ -511,13 +503,13 @@ export async function POST(req: Request) {
                   <div
                     className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed ${
                       m.role === 'user'
-                        ? 'bg-emerald-400 text-black font-medium'
-                        : 'bg-zinc-900 border border-zinc-800 text-zinc-200'
+                        ? 'bg-[#071B3A] text-white font-medium'
+                        : 'bg-[#F4F7FB] border border-slate-200 text-[#10213F]'
                     }`}
                   >
                     <div>{m.text}</div>
                     {m.code && (
-                      <div className="mt-3 p-3 bg-black/80 rounded-xl border border-zinc-800 font-mono text-xs text-emerald-300 overflow-x-auto relative">
+                      <div className="mt-3 p-3 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xs text-[#34D399] overflow-x-auto relative">
                         <pre>{m.code}</pre>
                       </div>
                     )}
@@ -525,28 +517,28 @@ export async function POST(req: Request) {
                 </div>
               ))}
               {isStreaming && (
-                <div className="flex items-center gap-2 text-xs text-zinc-500 font-mono">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <div className="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                  <div className="w-2 h-2 rounded-full bg-[#2F80ED] animate-ping" />
                   <span>Agent streaming tokens through Vercel AI Gateway...</span>
                 </div>
               )}
             </div>
 
             {/* Input Bar */}
-            <form onSubmit={handleSendMessage} className="pt-4 border-t border-zinc-900 flex items-center gap-2">
+            <form onSubmit={handleSendMessage} className="pt-4 border-t border-slate-100 flex items-center gap-2">
               <input
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask about SignalWire voice, Stripe webhooks, or Vercel edge deployment..."
-                className="flex-1 px-4 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/60"
+                className="flex-1 px-4 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F] placeholder-slate-400 focus:outline-none focus:border-[#2F80ED] focus:bg-white"
               />
               <button
                 type="submit"
                 disabled={isStreaming || !inputMessage.trim()}
-                className="p-2.5 bg-emerald-400 hover:bg-emerald-300 text-black rounded-xl active:scale-[0.98] transition-all disabled:opacity-50"
+                className="p-2.5 bg-[#071B3A] hover:bg-[#10213F] text-white rounded-xl active:scale-[0.98] transition-all disabled:opacity-50"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 text-[#34D399]" />
               </button>
             </form>
           </div>
@@ -556,55 +548,55 @@ export async function POST(req: Request) {
       {/* TAB 4: PROFILE */}
       {activeTab === 'profile' && (
         <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 sm:p-8 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-            <h3 className="text-xl font-bold text-white mb-1">Founder Profile</h3>
-            <p className="text-xs text-zinc-400 mb-6">Manage your public bio, credentials, and API access.</p>
+          <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-xs">
+            <h3 className="text-xl font-bold text-[#10213F] mb-1">Fellow Profile</h3>
+            <p className="text-xs text-slate-500 mb-6">Manage your credentials, public bio, and API access.</p>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1">Full Name</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   value={userProfile.fullName}
                   onChange={(e) => setUserProfile({ ...userProfile, fullName: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white"
+                  className="w-full px-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1">Role / Headline</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Role / Headline</label>
                 <input
                   type="text"
                   value={userProfile.role}
                   onChange={(e) => setUserProfile({ ...userProfile, role: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white"
+                  className="w-full px-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1">Bio</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">Bio</label>
                 <textarea
                   rows={3}
                   value={userProfile.bio}
                   onChange={(e) => setUserProfile({ ...userProfile, bio: e.target.value })}
-                  className="w-full px-3.5 py-2 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white resize-none"
+                  className="w-full px-3.5 py-2 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F] resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1">API Key (Vercel & Supabase)</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1">API Key (Vercel & Supabase)</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="password"
                     readOnly
                     value={userProfile.apiKey}
-                    className="flex-1 px-3.5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs font-mono text-zinc-400"
+                    className="flex-1 px-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs font-mono text-slate-600"
                   />
                   <button
                     onClick={handleCopyApiKey}
-                    className="flex items-center gap-1.5 px-3 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl text-xs transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-[#10213F] rounded-xl text-xs transition-colors"
                   >
-                    {copiedKey ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedKey ? <Check className="w-3.5 h-3.5 text-[#34D399]" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedKey ? 'Copied' : 'Copy'}</span>
                   </button>
                 </div>
@@ -612,7 +604,7 @@ export async function POST(req: Request) {
 
               <button
                 onClick={() => alert('Profile successfully updated.')}
-                className="w-full py-2.5 bg-emerald-400 hover:bg-emerald-300 text-black font-bold text-xs rounded-xl shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all mt-4"
+                className="w-full py-2.5 bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-xs rounded-xl shadow-md active:scale-[0.98] transition-all mt-4"
               >
                 Save Changes
               </button>
@@ -624,68 +616,39 @@ export async function POST(req: Request) {
       {/* TAB 5: SETTINGS & BILLING */}
       {activeTab === 'settings' && (
         <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
-          {/* Subscription & Stripe Billing */}
-          <div className="p-6 sm:p-8 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
+          <div className="p-6 sm:p-8 bg-white border border-slate-200 rounded-3xl shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold text-white">Subscription & Invoices</h3>
-                <p className="text-xs text-zinc-400">Powered by Stripe Billing & Customer Portal.</p>
+                <h3 className="text-xl font-bold text-[#10213F]">Subscription & Invoices</h3>
+                <p className="text-xs text-slate-500">Powered by Stripe Billing & Customer Portal.</p>
               </div>
-              <span className="px-3 py-1 bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono rounded-full font-bold">
+              <span className="px-3 py-1 bg-blue-50 border border-blue-200 text-[#2F80ED] text-xs font-mono rounded-full font-bold">
                 Cohort VIP License
               </span>
             </div>
 
-            <div className="p-4 bg-zinc-900/60 rounded-2xl border border-zinc-800 text-xs text-zinc-300 space-y-2 mb-6">
+            <div className="p-4 bg-[#F4F7FB] rounded-2xl border border-slate-200 text-xs text-slate-700 space-y-2 mb-6">
               <div className="flex justify-between">
                 <span>Billing Period:</span>
-                <span className="font-mono text-white">Monthly Auto-Renewal</span>
+                <span className="font-mono text-[#10213F] font-bold">Monthly Auto-Renewal</span>
               </div>
               <div className="flex justify-between">
                 <span>Payment Method:</span>
-                <span className="font-mono text-white">Mastercard •••• 4242</span>
+                <span className="font-mono text-[#10213F] font-bold">Mastercard •••• 4242</span>
               </div>
               <div className="flex justify-between">
                 <span>Next Invoice Date:</span>
-                <span className="font-mono text-emerald-400">November 1, 2026</span>
+                <span className="font-mono text-[#2F80ED] font-bold">November 1, 2026</span>
               </div>
             </div>
 
             <button
               onClick={() => alert('Redirecting to Stripe Customer Portal...')}
-              className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-semibold text-white rounded-xl transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-[#F4F7FB] hover:bg-slate-200/70 border border-slate-300 text-xs font-semibold text-[#10213F] rounded-xl transition-colors flex items-center gap-2"
             >
-              <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
+              <CreditCard className="w-3.5 h-3.5 text-[#2F80ED]" />
               <span>Manage Stripe Billing & Invoices</span>
             </button>
-          </div>
-
-          {/* Permissions & Security */}
-          <div className="p-6 sm:p-8 bg-zinc-950/80 border border-zinc-800 rounded-3xl">
-            <h3 className="text-xl font-bold text-white mb-1">Access Control & Security</h3>
-            <p className="text-xs text-zinc-400 mb-6">Supabase Row-Level Security and team roles.</p>
-
-            <div className="space-y-3 text-xs">
-              <div className="flex items-center justify-between p-3 bg-zinc-900/50 rounded-xl border border-zinc-800">
-                <div>
-                  <div className="font-bold text-white">Owner & Superadmin</div>
-                  <div className="text-zinc-500">Unrestricted access to all production deployments & billing</div>
-                </div>
-                <span className="px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 rounded font-mono text-[10px]">
-                  ACTIVE
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-zinc-900/50 rounded-xl border border-zinc-800">
-                <div>
-                  <div className="font-bold text-white">Two-Factor Authentication (2FA)</div>
-                  <div className="text-zinc-500">Hardware security key or TOTP authenticator</div>
-                </div>
-                <span className="px-2 py-0.5 bg-cyan-950 text-cyan-300 border border-cyan-800 rounded font-mono text-[10px]">
-                  ENFORCED
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       )}

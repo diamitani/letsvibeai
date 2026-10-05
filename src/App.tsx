@@ -99,8 +99,9 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090a0f] text-slate-100 flex flex-col font-sans selection:bg-emerald-400 selection:text-black relative">
+    <div className="min-h-screen bg-white text-[#10213F] flex flex-col font-sans selection:bg-[#2F80ED] selection:text-white relative">
       {/* Top Navbar with View Switcher */}
+
       <Navbar
         currentView={currentView}
         setCurrentView={setCurrentView}
@@ -184,15 +185,16 @@ export const App: React.FC = () => {
             setAgentInitialQuery('');
             setIsAgentOpen(true);
           }}
-          className="flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-extrabold text-xs sm:text-sm shadow-2xl shadow-cyan-500/40 active:scale-95 transition-all group"
+          className="flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-xs sm:text-sm shadow-xl shadow-slate-900/20 active:scale-95 transition-all group border border-slate-700/60"
         >
-          <div className="w-6 h-6 rounded-full bg-black/20 flex items-center justify-center">
-            <Bot className="w-4 h-4 text-black group-hover:rotate-12 transition-transform" />
+          <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
+            <Bot className="w-4 h-4 text-[#20C7D9] group-hover:rotate-12 transition-transform" />
           </div>
-          <span>Curriculum Agent (ROSTR v2)</span>
-          <span className="w-2 h-2 rounded-full bg-black animate-ping" />
+          <span>Curriculum Agent (ROSTR)</span>
+          <span className="w-2 h-2 rounded-full bg-[#34D399] animate-ping" />
         </button>
       </div>
+
 
       {/* Footer */}
       <Footer />

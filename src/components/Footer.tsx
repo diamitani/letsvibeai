@@ -1,30 +1,35 @@
 import React from 'react';
-import { Github, Sparkles, Heart, ShieldCheck } from 'lucide-react';
+import { Github, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-zinc-800 bg-[#07080c] py-16 px-4 sm:px-6 lg:px-8 text-zinc-400 text-xs font-sans">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-zinc-850">
+    <footer className="border-t border-slate-200 bg-[#F4F7FB] py-16 px-4 sm:px-6 lg:px-8 text-slate-600 text-xs font-sans">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-200">
         
         {/* Brand Column (4 cols) */}
         <div className="md:col-span-4 space-y-4">
           <div className="flex items-center gap-3">
-            <img src="/logo.svg" alt="LetsVibeAI" className="w-8 h-8" />
-            <span className="font-extrabold text-lg text-white tracking-tight">
-              LetsVibe<span className="text-emerald-400">AI</span>
-            </span>
+            <img src="/logo-standalone-mark.svg" alt="LetsVibeAI" className="w-8 h-8" />
+            <div className="flex flex-col">
+              <span className="font-extrabold text-lg text-[#10213F] tracking-tight">
+                LetsVibe<span className="text-[#2F80ED]">AI</span>
+              </span>
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                The AI Skills Institution
+              </span>
+            </div>
           </div>
-          <p className="text-zinc-400 leading-relaxed max-w-sm">
-            The architecture-first vibe coding course and platform. Learn how software is put together, then direct AI agents to build and ship production web apps.
+          <p className="text-slate-600 leading-relaxed max-w-sm">
+            LetsVibeAI makes AI understandable, practical, and actionable for beginners, career changers, creators, founders, operators, educators, and teams.
           </p>
           <div className="flex items-center gap-3 pt-2">
             <a
               href="https://github.com/diamitani/letsvibeai"
               target="_blank"
               rel="noreferrer"
-              className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors flex items-center gap-2 font-mono text-xs"
+              className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-[#10213F] hover:border-slate-300 transition-colors flex items-center gap-2 font-mono text-xs shadow-xs"
             >
-              <Github className="w-4 h-4" />
+              <Github className="w-4 h-4 text-[#10213F]" />
               <span>diamitani/letsvibeai</span>
             </a>
           </div>
@@ -32,62 +37,63 @@ export const Footer: React.FC = () => {
 
         {/* 10 Modules (3 cols) */}
         <div className="md:col-span-3 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            10 Core Modules
+          <h4 className="font-mono font-bold text-[#10213F] uppercase tracking-wider text-[11px]">
+            10 Curriculum Modules
           </h4>
-          <ul className="space-y-1.5 text-zinc-400">
-            <li><a href="#curriculum" className="hover:text-emerald-300">1. What is Vibe Coding?</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">2. AI Fundamentals & Tokens</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">3. The AI Model Landscape</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">4. Web App Architecture</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">5. The Developer Toolbox</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">6. Talking to AI & Context</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">7. Autonomous AI Agents</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">8. The 11-Doc Stack</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">9. Page-by-Page Build</a></li>
-            <li><a href="#curriculum" className="hover:text-emerald-300">10. Ship & Deploy to Edge</a></li>
+          <ul className="space-y-1.5 text-slate-600">
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">1. What is Vibe Coding?</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">2. AI Fundamentals & Tokens</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">3. The AI Model Landscape</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">4. Web App Architecture</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">5. The Developer Toolbox</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">6. Talking to AI & Context</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">7. Autonomous AI Agents</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">8. The 11-Doc Stack</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">9. Page-by-Page Build</a></li>
+            <li><a href="#curriculum" className="hover:text-[#2F80ED]">10. Ship & Deploy to Edge</a></li>
           </ul>
         </div>
 
         {/* Platform & Resources (3 cols) */}
         <div className="md:col-span-3 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            Artifacts & Tools
+          <h4 className="font-mono font-bold text-[#10213F] uppercase tracking-wider text-[11px]">
+            Artifacts & Portals
           </h4>
-          <ul className="space-y-1.5 text-zinc-400">
-            <li><a href="#video" className="hover:text-cyan-300">HyperFrames Video Showcase</a></li>
-            <li><a href="#architecture" className="hover:text-cyan-300">11-Block Architecture Map</a></li>
-            <li><a href="#studio" className="hover:text-cyan-300">Prompt Studio & Cost Calculator</a></li>
-            <li><a href="#docs" className="hover:text-cyan-300">11 Planning Doc Templates</a></li>
-            <li><a href="#capstone" className="hover:text-cyan-300">Capstone Rubric & Certificate</a></li>
-            <li><a href="#pricing" className="hover:text-cyan-300">Cohort & Pro Enrollment</a></li>
+          <ul className="space-y-1.5 text-slate-600">
+            <li><a href="#video" className="hover:text-[#2F80ED]">HyperFrames Video Showcase</a></li>
+            <li><a href="#architecture" className="hover:text-[#2F80ED]">11-Block Architecture Map</a></li>
+            <li><a href="#studio" className="hover:text-[#2F80ED]">Prompt Studio & Cost Calculator</a></li>
+            <li><a href="#docs" className="hover:text-[#2F80ED]">11 Planning Doc Templates</a></li>
+            <li><a href="#capstone" className="hover:text-[#2F80ED]">Capstone Rubric & Certificate</a></li>
+            <li><a href="#pricing" className="hover:text-[#2F80ED]">Cohort & Pro Enrollment</a></li>
           </ul>
         </div>
 
-        {/* Doctrine (2 cols) */}
+        {/* Brand Doctrine (2 cols) */}
         <div className="md:col-span-2 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            Two Principles
+          <h4 className="font-mono font-bold text-[#10213F] uppercase tracking-wider text-[11px]">
+            Institutional Creed
           </h4>
-          <div className="p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-[11px] leading-relaxed text-zinc-300 font-mono">
-            <span className="text-emerald-400 font-bold block mb-1">1. Direction Beats Guessing</span>
-            <span className="text-cyan-400 font-bold block">2. Architecture First</span>
+          <div className="p-3.5 rounded-2xl bg-white border border-slate-200 text-[11px] leading-relaxed text-slate-700 font-mono shadow-xs">
+            <span className="text-[#2F80ED] font-bold block mb-1">1. Learn AI</span>
+            <span className="text-[#20C7D9] font-bold block mb-1">2. Build with AI</span>
+            <span className="text-[#34D399] font-bold block">3. Ship with AI</span>
           </div>
         </div>
 
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-400 font-mono text-[11px]">
+      <div className="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 font-mono text-[11px]">
         <div>
-          © 2026 LetsVibeAI. All rights reserved. Built for builders, creators, and founders.
+          © 2026 LetsVibeAI — The AI Skills Institution. All rights reserved.
         </div>
         <div className="flex items-center gap-6">
-          <span className="flex items-center gap-1.5 text-emerald-400">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>2026 AI Production Certified</span>
+          <span className="flex items-center gap-1.5 text-[#071B3A] font-bold">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#34D399]" />
+            <span>LEARN • BUILD • SHIP</span>
           </span>
-          <a href="https://github.com/diamitani/letsvibeai" target="_blank" rel="noreferrer" className="hover:text-white">
+          <a href="https://github.com/diamitani/letsvibeai" target="_blank" rel="noreferrer" className="hover:text-[#10213F]">
             GitHub Repository
           </a>
         </div>

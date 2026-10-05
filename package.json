@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
+    "@ai-sdk/react": "^4.0.131",
+    "ai": "^7.0.128",
     "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.7",
     "react": "^19.0.0",

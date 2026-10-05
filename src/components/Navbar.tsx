@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Search, BookOpen, Layers, Terminal, Award, ChevronRight, Menu, X, Bot, Play } from 'lucide-react';
+import { Sparkles, Search, BookOpen, Layers, Terminal, Award, ChevronRight, Menu, X, Bot, Play, ShoppingBag, Compass, LayoutDashboard, User } from 'lucide-react';
 
 interface NavbarProps {
+  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard';
+  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard') => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onOpenSearch: () => void;
   onOpenAgent: () => void;
+  onOpenAuth: () => void;
   completedModulesCount: number;
+  user: { email: string; name: string } | null;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
+  currentView,
+  setCurrentView,
   activeSection,
   setActiveSection,
   onOpenSearch,
   onOpenAgent,
-  completedModulesCount
+  onOpenAuth,
+  completedModulesCount,
+  user
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,12 +47,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const handleNavClick = (id: string) => {
+    if (currentView !== 'saas') {
+      setCurrentView('saas');
+    }
     setActiveSection(id);
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   return (
@@ -52,15 +65,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-[#090a0f]/95 backdrop-blur-md border-b border-zinc-800/80 shadow-2xl py-2.5'
-          : 'bg-transparent py-4'
+          : 'bg-transparent py-3.5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo - Standalone Apple Mark */}
         <a
           href="#"
           onClick={(e) => {
             e.preventDefault();
+            setCurrentView('saas');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className="flex items-center gap-3 group"
@@ -73,76 +87,115 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex flex-col">
             <span className="font-extrabold text-xl tracking-tight text-white flex items-center gap-1.5">
               LetsVibe<span className="text-emerald-400">AI</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">ROSTR v2</span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">v1.0</span>
             </span>
             <span className="text-[10px] text-zinc-400 tracking-wider uppercase font-mono">Architecture First</span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-1 bg-zinc-900/60 p-1.5 rounded-full border border-zinc-800/80 backdrop-blur-md">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
-                  isActive
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                    : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
+        {/* Center View Selector Pill */}
+        <div className="hidden lg:flex items-center bg-zinc-950/80 p-1 rounded-full border border-zinc-800/90 backdrop-blur-md">
+          <button
+            onClick={() => setCurrentView('saas')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all ${
+              currentView === 'saas'
+                ? 'bg-zinc-800 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Course & SaaS</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentView('marketplace')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all ${
+              currentView === 'marketplace'
+                ? 'bg-zinc-800 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
+          >
+            <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
+            <span>Marketplace</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentView('directory')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all ${
+              currentView === 'directory'
+                ? 'bg-zinc-800 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Directory & CRM</span>
+          </button>
+
+          <button
+            onClick={() => setCurrentView('dashboard')}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all ${
+              currentView === 'dashboard'
+                ? 'bg-zinc-800 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
+          >
+            <LayoutDashboard className="w-3.5 h-3.5 text-purple-400" />
+            <span>Dashboard</span>
+          </button>
+        </div>
 
         {/* Right Action Tools */}
         <div className="hidden sm:flex items-center gap-2.5">
-          {/* Quick Search Trigger */}
+          {/* Quick Search */}
           <button
             onClick={onOpenSearch}
             className="flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-400 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-full transition-all group"
             title="Search course & prompts (Cmd+K)"
           >
             <Search className="w-3.5 h-3.5 text-zinc-400 group-hover:text-emerald-400 transition-colors" />
-            <span>Search</span>
             <kbd className="text-[10px] bg-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded font-mono">⌘K</kbd>
           </button>
 
-          {/* Curriculum Agent Trigger Button */}
+          {/* AI Coach Button */}
           <button
             onClick={onOpenAgent}
             className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold text-cyan-300 bg-cyan-950/70 hover:bg-cyan-900/80 border border-cyan-500/40 rounded-full transition-all shadow-sm group"
           >
             <Bot className="w-3.5 h-3.5 text-cyan-400 group-hover:rotate-12 transition-transform" />
-            <span>AI Coach (ROSTR)</span>
+            <span>ROSTR AI</span>
           </button>
 
-          {/* Progress Pill */}
-          <button
-            onClick={() => handleNavClick('curriculum')}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800/50 rounded-full hover:border-emerald-500/50 transition-colors"
-          >
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono font-semibold">{completedModulesCount}/10</span>
-          </button>
+          {/* User Sign In / Profile Button */}
+          {user ? (
+            <button
+              onClick={() => setCurrentView('dashboard')}
+              className="flex items-center gap-2 px-3 py-1 text-xs text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-full transition-all"
+            >
+              <div className="w-5 h-5 rounded-full bg-emerald-400 text-black flex items-center justify-center font-bold text-[10px]">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              <span className="font-medium max-w-[90px] truncate">{user.name}</span>
+            </button>
+          ) : (
+            <button
+              onClick={onOpenAuth}
+              className="px-3.5 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-full transition-all"
+            >
+              Sign In
+            </button>
+          )}
 
           {/* Primary CTA */}
           <button
             onClick={() => handleNavClick('pricing')}
             className="px-4 py-2 text-xs font-bold text-black bg-emerald-400 hover:bg-emerald-300 active:scale-[0.98] rounded-full transition-all shadow-lg shadow-emerald-500/20"
           >
-            Enroll
+            Enroll V1
           </button>
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="flex xl:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={onOpenAgent}
             className="p-2 text-cyan-400 bg-cyan-950/60 border border-cyan-800 rounded-full"
@@ -167,21 +220,89 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden bg-zinc-950/95 border-b border-zinc-800 px-4 pt-4 pb-6 space-y-2 mt-3 backdrop-blur-xl">
-          {navItems.map((item) => (
+        <div className="lg:hidden bg-zinc-950/95 border-b border-zinc-800 px-4 pt-4 pb-6 space-y-3 mt-3 backdrop-blur-xl">
+          {/* View Toggles Mobile */}
+          <div className="grid grid-cols-2 gap-2 pb-3 border-b border-zinc-900">
             <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className="w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-xl"
+              onClick={() => {
+                setCurrentView('saas');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 ${
+                currentView === 'saas' ? 'bg-zinc-800 text-white' : 'bg-zinc-900 text-zinc-400'
+              }`}
             >
-              <div className="flex items-center gap-3">
-                <item.icon className="w-4 h-4 text-emerald-400" />
-                <span>{item.label}</span>
-              </div>
-              <ChevronRight className="w-4 h-4 text-zinc-600" />
+              <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Course & SaaS</span>
             </button>
-          ))}
-          <div className="pt-4 border-t border-zinc-800/80 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                setCurrentView('marketplace');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 ${
+                currentView === 'marketplace' ? 'bg-zinc-800 text-white' : 'bg-zinc-900 text-zinc-400'
+              }`}
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
+              <span>Marketplace</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentView('directory');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 ${
+                currentView === 'directory' ? 'bg-zinc-800 text-white' : 'bg-zinc-900 text-zinc-400'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Directory & CRM</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentView('dashboard');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 ${
+                currentView === 'dashboard' ? 'bg-zinc-800 text-white' : 'bg-zinc-900 text-zinc-400'
+              }`}
+            >
+              <LayoutDashboard className="w-3.5 h-3.5 text-purple-400" />
+              <span>Dashboard</span>
+            </button>
+          </div>
+
+          {currentView === 'saas' && (
+            <div className="space-y-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:bg-zinc-900 rounded-xl"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <item.icon className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{item.label}</span>
+                  </div>
+                  <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
+                </button>
+              ))}
+            </div>
+          )}
+
+          <div className="pt-3 border-t border-zinc-800/80 flex flex-col gap-2">
+            {!user && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAuth();
+                }}
+                className="w-full py-2.5 text-center text-xs font-bold text-white bg-zinc-900 border border-zinc-800 rounded-xl"
+              >
+                Sign In
+              </button>
+            )}
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -204,3 +325,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+

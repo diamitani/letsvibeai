@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Precision Apple-grade Standalone Mark -->
+  <defs>
+    <!-- Subtle specular gradient for refined depth -->
+    <linearGradient id="apple-specular" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="60%" stop-color="#E2E8F0" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#94A3B8" stop-opacity="0.8" />
+    </linearGradient>
+    <linearGradient id="apple-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Precision Squircle Vessel -->
+  <rect width="120" height="120" rx="28" fill="#090A0F" />
+  <rect x="0.75" y="0.75" width="118.5" height="118.5" rx="27.25" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1.5" />
+
+  <!-- The Kinetic Prism Mark: Seamless geometric V with precision curvature -->
+  <g filter="url(#subtle-shadow)">
+    <!-- Primary Sweeping Stroke -->
+    <path
+      d="M32 38C32 38 43 56 60 84C77 56 88 38 88 38"
+      stroke="url(#apple-specular)"
+      stroke-width="8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Forward Vector Core -->
+    <path
+      d="M48 42L60 62L72 42"
+      stroke="url(#apple-accent)"
+      stroke-width="5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- Apex Focal Diamond Node -->
+    <circle cx="60" cy="84" r="4.5" fill="#34D399" />
+    <!-- Quantum Resonance Arc -->
+    <circle cx="60" cy="38" r="2.5" fill="#FFFFFF" opacity="0.9" />
+  </g>
+</svg>

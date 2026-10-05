@@ -1,22 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
   <defs>
-    <linearGradient id="vibe-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10b981" />
-      <stop offset="50%" stop-color="#06b6d4" />
-      <stop offset="100%" stop-color="#38bdf8" />
+    <linearGradient id="lv-specular" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#F1F5F9" />
+      <stop offset="100%" stop-color="#94A3B8" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
+    <linearGradient id="lv-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
   </defs>
-  <rect width="100" height="100" rx="24" fill="#0f1118" />
-  <rect x="2" y="2" width="96" height="96" rx="22" stroke="url(#vibe-grad)" stroke-width="2" stroke-opacity="0.4" />
-  <!-- Stylized V with AI nodes -->
-  <path d="M28 32L50 72L72 32" stroke="url(#vibe-grad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
-  <circle cx="28" cy="32" r="4.5" fill="#10b981" />
-  <circle cx="72" cy="32" r="4.5" fill="#38bdf8" />
-  <circle cx="50" cy="72" r="5" fill="#06b6d4" />
-  <circle cx="50" cy="45" r="3.5" fill="#ffffff" />
-  <line x1="50" y1="45" x2="50" y2="72" stroke="#ffffff" stroke-width="2" stroke-dasharray="2 3" stroke-opacity="0.6" />
+
+  <!-- Grounding Squircle with Apple-style Chamfer -->
+  <rect width="120" height="120" rx="28" fill="#0A0D14" />
+  <rect x="0.75" y="0.75" width="118.5" height="118.5" rx="27.25" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="1.5" />
+
+  <!-- Iconic Vibe Vector V Mark -->
+  <path
+    d="M32 38L60 84L88 38"
+    stroke="url(#lv-specular)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M47 43L60 63L73 43"
+    stroke="url(#lv-glow)"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="60" cy="84" r="4.5" fill="#10B981" />
+  <circle cx="60" cy="38" r="3" fill="#FFFFFF" />
 </svg>

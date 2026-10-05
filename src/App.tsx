@@ -14,10 +14,15 @@ import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
 import { CheckoutModal } from './components/CheckoutModal';
 import { CurriculumAgentDrawer } from './components/CurriculumAgentDrawer';
-import { PricingPlan } from './types';
+import { MarketplaceView } from './components/views/MarketplaceView';
+import { DirectoryView } from './components/views/DirectoryView';
+import { DashboardView } from './components/views/DashboardView';
+import { AuthModal } from './components/views/AuthModal';
+import { PricingPlan, MarketplaceItem } from './types';
 import { Bot, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard'>('saas');
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
     try {
@@ -27,6 +32,11 @@ export const App: React.FC = () => {
       return [1];
     }
   });
+  const [user, setUser] = useState<{ email: string; name: string } | null>({
+    email: 'founder@letsvibeai.com',
+    name: 'Vibe Architect'
+  });
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAgentOpen, setIsAgentOpen] = useState(false);
   const [agentInitialQuery, setAgentInitialQuery] = useState('');
@@ -43,30 +53,57 @@ export const App: React.FC = () => {
   };
 
   const handleSelectResult = (targetSection: string, detailId?: string | number) => {
-    setActiveSection(targetSection);
-    const element = document.getElementById(targetSection);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (currentView !== 'saas') {
+      setCurrentView('saas');
     }
+    setActiveSection(targetSection);
+    setTimeout(() => {
+      const element = document.getElementById(targetSection);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   const scrollTo = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (currentView !== 'saas') {
+      setCurrentView('saas');
     }
+    setActiveSection(sectionId);
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 50);
   };
 
-  const openAgentWithQuery = (query: string) => {
-    setAgentInitialQuery(query);
-    setIsAgentOpen(true);
+  const handleMarketplaceCheckout = (item: MarketplaceItem) => {
+    setSelectedPlan({
+      id: item.id,
+      name: item.title,
+      tagline: item.description.slice(0, 60) + '...',
+      monthlyPrice: item.price,
+      annualPrice: item.price,
+      featured: true,
+      badge: item.badge || 'Marketplace Item',
+      features: [
+        'Complete TypeScript & React 19 source code',
+        'Vercel AI SDK 4.0 runtime harness',
+        'Supabase schema migrations with RLS policies',
+        'One-click Vercel Deploy integration'
+      ],
+      cta: 'Deploy Now',
+      ctaAction: 'checkout'
+    });
   };
 
   return (
     <div className="min-h-screen bg-[#090a0f] text-slate-100 flex flex-col font-sans selection:bg-emerald-400 selection:text-black relative">
-      {/* Top Navbar */}
+      {/* Top Navbar with View Switcher */}
       <Navbar
+        currentView={currentView}
+        setCurrentView={setCurrentView}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         onOpenSearch={() => setIsSearchOpen(true)}
@@ -74,37 +111,70 @@ export const App: React.FC = () => {
           setAgentInitialQuery('');
           setIsAgentOpen(true);
         }}
+        onOpenAuth={() => setIsAuthOpen(true)}
         completedModulesCount={completedModules.length}
+        user={user}
       />
 
-      {/* Main Content */}
+      {/* Main Content Router */}
       <main className="flex-1">
-        <Hero
-          onStartCourse={() => scrollTo('curriculum')}
-          onWatchVideo={() => scrollTo('video')}
-          onExploreArchitecture={() => scrollTo('architecture')}
-        />
+        {currentView === 'saas' && (
+          <div className="animate-in fade-in duration-300">
+            <Hero
+              onStartCourse={() => scrollTo('curriculum')}
+              onWatchVideo={() => scrollTo('video')}
+              onExploreArchitecture={() => scrollTo('architecture')}
+            />
 
-        <VideoShowcase />
+            <VideoShowcase />
 
-        <ArchitectureMap />
+            <ArchitectureMap />
 
-        <CourseCurriculum
-          completedModules={completedModules}
-          onToggleCompleteModule={handleToggleCompleteModule}
-        />
+            <CourseCurriculum
+              completedModules={completedModules}
+              onToggleCompleteModule={handleToggleCompleteModule}
+            />
 
-        <PortfolioSandbox />
+            <PortfolioSandbox />
 
-        <PromptStudio />
+            <PromptStudio />
 
-        <DocumentStackViewer />
+            <DocumentStackViewer />
 
-        <CapstoneHub />
+            <CapstoneHub />
 
-        <PricingSection onSelectPlan={(plan) => setSelectedPlan(plan)} />
+            <PricingSection onSelectPlan={(plan) => setSelectedPlan(plan)} />
 
-        <Testimonials />
+            <Testimonials />
+          </div>
+        )}
+
+        {currentView === 'marketplace' && (
+          <div className="animate-in fade-in duration-300">
+            <MarketplaceView onSelectCheckout={handleMarketplaceCheckout} />
+          </div>
+        )}
+
+        {currentView === 'directory' && (
+          <div className="animate-in fade-in duration-300">
+            <DirectoryView />
+          </div>
+        )}
+
+        {currentView === 'dashboard' && (
+          <div className="animate-in fade-in duration-300">
+            <DashboardView
+              onOpenSandbox={() => {
+                setCurrentView('saas');
+                scrollTo('sandbox');
+              }}
+              onOpenAgent={() => {
+                setAgentInitialQuery('');
+                setIsAgentOpen(true);
+              }}
+            />
+          </div>
+        )}
       </main>
 
       {/* Floating ROSTR v2 Curriculum Agent Trigger Pill */}
@@ -141,6 +211,13 @@ export const App: React.FC = () => {
         initialQuery={agentInitialQuery}
       />
 
+      {/* Auth Modal (Sign In / Sign Up) */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onSuccess={(newUser) => setUser(newUser)}
+      />
+
       {/* Checkout / Enrollment Modal */}
       <CheckoutModal
         plan={selectedPlan}
@@ -154,3 +231,4 @@ export const App: React.FC = () => {
     </div>
   );
 };
+

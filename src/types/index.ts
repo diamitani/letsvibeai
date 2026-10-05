@@ -94,3 +94,54 @@ export interface CapstoneDeliverable {
   description: string;
   points: number;
 }
+
+// Marketplace Item Specification
+export interface MarketplaceItem {
+  id: string;
+  title: string;
+  category: 'templates' | 'skills' | 'agents' | 'prompts';
+  price: number;
+  rating: number;
+  downloads: number;
+  author: string;
+  description: string;
+  tags: string[];
+  badge?: string;
+  previewUrl?: string;
+}
+
+// Directory Listing Specification
+export interface DirectoryListing {
+  id: string;
+  name: string;
+  founder: string;
+  category: string;
+  mrr: string;
+  description: string;
+  stack: string[];
+  url: string;
+  verified: boolean;
+  featured: boolean;
+}
+
+// User Profile & Workspace
+export interface UserProfile {
+  id: string;
+  email: string;
+  fullName: string;
+  plan: 'free' | 'pro' | 'cohort';
+  avatarUrl: string;
+  role: string;
+  bio: string;
+  apiKey: string;
+}
+
+export interface WorkspaceProject {
+  id: string;
+  name: string;
+  slug: string;
+  environment: 'development' | 'staging' | 'production';
+  status: 'live' | 'building' | 'draft';
+  lastDeployed: string;
+  url: string;
+}

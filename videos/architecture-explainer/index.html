@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI - Web App Architecture Explainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #090a0f;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #arch-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: #090a0f;
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-cyan {
+      width: 700px;
+      height: 700px;
+      background: rgba(6, 182, 212, 0.14);
+      top: -100px;
+      right: 150px;
+    }
+    .glow-emerald {
+      width: 650px;
+      height: 650px;
+      background: rgba(16, 185, 129, 0.12);
+      bottom: -100px;
+      left: 150px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 22px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 9999px;
+      color: #06b6d4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .headline {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      letter-spacing: -2px;
+      max-width: 1400px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtext {
+      font-size: 24px;
+      color: #94a3b8;
+      margin-top: 18px;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+
+    /* Interactive Pipeline Graph */
+    .pipeline-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 50px;
+      width: 1500px;
+    }
+    .pipe-step {
+      background: rgba(18, 22, 34, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px 24px;
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .pipe-step.highlight {
+      border-color: #06b6d4;
+      background: rgba(6, 182, 212, 0.08);
+      box-shadow: 0 0 35px rgba(6, 182, 212, 0.25);
+    }
+    .pipe-step.emerald-glow {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
+    }
+    .step-icon {
+      font-size: 38px;
+      margin-bottom: 14px;
+    }
+    .step-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+    .step-detail {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+    .pipe-arrow {
+      font-size: 32px;
+      color: #475569;
+      font-weight: bold;
+    }
+
+    /* Security Pillar Cards */
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      width: 1300px;
+      margin-top: 48px;
+    }
+    .sec-card {
+      background: rgba(20, 24, 38, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 36px 30px;
+    }
+    .sec-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .sec-icon {
+      font-size: 32px;
+    }
+    .sec-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+    .sec-desc {
+      font-size: 16px;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* Final CTA block */
+    .cta-card {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+      border: 1px solid rgba(6, 182, 212, 0.4);
+      border-radius: 28px;
+      padding: 60px 80px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="arch-root" data-composition-id="arch-root" data-duration="18" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-cyan"></div>
+    <div class="ambient-glow glow-emerald"></div>
+
+    <!-- Scene 1: Introduction (0s - 4.5s) -->
+    <div class="clip" id="scene-1" data-start="0" data-duration="4.5" data-track-index="0">
+      <div class="badge" id="s1-badge">MODULE 4 DEEP DIVE</div>
+      <h1 class="headline" id="s1-title">
+        The Anatomy of a <span class="gradient-text">Modern Web App</span>
+      </h1>
+      <p class="subtext" id="s1-sub">
+        Every high-converting SaaS, AI tool, and platform runs on the same proven 11 building blocks.
+      </p>
+    </div>
+
+    <!-- Scene 2: Request Flow Pipeline (4.5s - 9s) -->
+    <div class="clip" id="scene-2" data-start="4.5" data-duration="4.5" data-track-index="1">
+      <div class="badge" id="s2-badge">EXECUTION TRACE</div>
+      <h2 class="headline" style="font-size: 52px;" id="s2-title">
+        Following One User Action
+      </h2>
+      <div class="pipeline-container" id="s2-pipeline">
+        <div class="pipe-step highlight" id="p-step-1">
+          <div class="step-icon">💻</div>
+          <div class="step-name">1. Browser UI</div>
+          <div class="step-detail">User clicks "Ask AI"</div>
+        </div>
+        <div class="pipe-arrow" id="p-arr-1">→</div>
+        <div class="pipe-step highlight" id="p-step-2">
+          <div class="step-icon">🛡️</div>
+          <div class="step-name">2. Auth & Tokens</div>
+          <div class="step-detail">Verify session & plan</div>
+        </div>
+        <div class="pipe-arrow" id="p-arr-2">→</div>
+        <div class="pipe-step highlight" id="p-step-3">
+          <div class="step-icon">⚡</div>
+          <div class="step-name">3. Secure API</div>
+          <div class="step-detail">Next.js Edge / Node</div>
+        </div>
+        <div class="pipe-arrow" id="p-arr-3">→</div>
+        <div class="pipe-step emerald-glow" id="p-step-4">
+          <div class="step-icon">🤖</div>
+          <div class="step-name">4. Agent Loop</div>
+          <div class="step-detail">LLM + DB + Tools</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: The Golden Security Rule (9s - 13.5s) -->
+    <div class="clip" id="scene-3" data-start="9" data-duration="4.5" data-track-index="2">
+      <div class="badge" id="s3-badge">SECURITY & SCALE</div>
+      <h2 class="headline" style="font-size: 52px;" id="s3-title">
+        The Golden Rule of Web Apps
+      </h2>
+      <div class="security-grid" id="s3-grid">
+        <div class="sec-card" id="s3-c1">
+          <div class="sec-header">
+            <span class="sec-icon">🔒</span>
+            <span class="sec-title">Never Leak Secrets</span>
+          </div>
+          <p class="sec-desc">Stripe keys, DB passwords, and AI API tokens live strictly on the server.</p>
+        </div>
+        <div class="sec-card" id="s3-c2">
+          <div class="sec-header">
+            <span class="sec-icon">📊</span>
+            <span class="sec-title">Row-Level Security</span>
+          </div>
+          <p class="sec-desc">Postgres RLS ensures each user can only read and write their own data.</p>
+        </div>
+        <div class="sec-card" id="s3-c3">
+          <div class="sec-header">
+            <span class="sec-icon">💳</span>
+            <span class="sec-title">Webhook Truth</span>
+          </div>
+          <p class="sec-desc">Stripe webhooks are the single source of truth for paid entitlements.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Conclusion & Course Callout (13.5s - 18s) -->
+    <div class="clip" id="scene-4" data-start="13.5" data-duration="4.5" data-track-index="3">
+      <div class="cta-card" id="s4-card">
+        <div class="badge" id="s4-badge">MASTER ARCHITECTURE FIRST</div>
+        <h1 class="headline" style="font-size: 58px;" id="s4-title">
+          Build Apps That Scale to <span class="gradient-text">Millions of Users</span>
+        </h1>
+        <p class="subtext" id="s4-sub">
+          Learn the complete blueprint at <strong>letsvibeai.com</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tl = gsap.timeline({ paused: true });
+
+      // Scene 1 (0 - 4.5s)
+      tl.fromTo("#s1-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#s1-title", { opacity: 0, y: 30, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" }, 0.4);
+      tl.fromTo("#s1-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.8);
+      tl.to(["#s1-badge", "#s1-title", "#s1-sub"], { opacity: 0, y: -25, duration: 0.4, ease: "power2.in" }, 4.0);
+      tl.set(["#s1-badge", "#s1-title", "#s1-sub"], { opacity: 0 }, 4.5);
+
+      // Scene 2 (4.5 - 9s)
+      tl.fromTo("#s2-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 4.6);
+      tl.fromTo("#s2-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 4.8);
+      tl.fromTo(".pipe-step", { opacity: 0, scale: 0.85, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.15, ease: "back.out(1.3)" }, 5.1);
+      tl.fromTo(".pipe-arrow", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.15 }, 5.3);
+      tl.to(["#s2-badge", "#s2-title", "#s2-pipeline"], { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 8.5);
+      tl.set(["#s2-badge", "#s2-title", "#s2-pipeline"], { opacity: 0 }, 9.0);
+
+      // Scene 3 (9 - 13.5s)
+      tl.fromTo("#s3-badge", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 9.1);
+      tl.fromTo("#s3-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 9.3);
+      tl.fromTo(".sec-card", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out" }, 9.6);
+      tl.to(["#s3-badge", "#s3-title", "#s3-grid"], { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, 13.0);
+      tl.set(["#s3-badge", "#s3-title", "#s3-grid"], { opacity: 0 }, 13.5);
+
+      // Scene 4 (13.5 - 18s)
+      tl.fromTo("#s4-card", { opacity: 0, scale: 0.9, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "back.out(1.2)" }, 13.7);
+      tl.fromTo("#s4-badge", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5 }, 14.1);
+      tl.fromTo("#s4-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 }, 14.3);
+      tl.fromTo("#s4-sub", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, 14.6);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["arch-root"] = tl;
+    });
+  </script>
+</body>
+</html>

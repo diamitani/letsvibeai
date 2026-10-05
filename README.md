@@ -1,60 +1,121 @@
-# Vibe Code a Web App — Architecture-First Course
+# LetsVibeAI — Architecture-First Vibe Coding Platform (v1.0)
 
-*A LetsVibeAI course. Build, architect and ship a real web app with AI agents — no coding background required.*
+> *Build, architect, and ship production-grade web apps with AI agents — no coding background required.*
+> 
+> **Live Web Application:** [letsvibeai.com](https://github.com/diamitani/letsvibeai)  
+> **GitHub Repository:** [github.com/diamitani/letsvibeai](https://github.com/diamitani/letsvibeai)
 
+---
 
-By the end of this course, a student with zero coding experience can plan, architect and ship a working web app with AI agents — marketing site, logged-in dashboard, chat UI, database, sign-in and payments. The course teaches architecture first, because AI builds fast but only builds well on a solid foundation.
+## 🌟 The Core Promise
 
-**Who it's for:** career changers, creators, founders, operators and hobbyists who have ideas but no engineering background. No code required; curiosity required.
+> *"You don't need to learn to code. You need to learn how software is put together — and how to tell AI exactly what to build."*
 
-**The promise:** "You don't need to learn to code. You need to learn how software is put together — and how to tell AI exactly what to build."
+Traditional coding courses focus on syntax and memorization. **LetsVibeAI** teaches software architecture and agent direction:
+1. **Principle 1: Direction Beats Guessing.** AI models hallucinate when prompts are vague. When you provide technical architecture, data models, auth constraints, and definitions of done, agents produce production code on the first pass.
+2. **Principle 2: Every App Has an Architecture.** A web app is built from 11 interconnected building blocks. If you build UI before database and auth foundations, the app collapses.
 
-**Format:** 10 modules + a capstone. Each lesson has a plain-English explanation, a real-world analogy, a copy-paste prompt, a hands-on exercise and a 3-question check. Self-paced (about 20–25 hours total) or run live as a 6-week cohort.
+---
 
-| # | Module | You'll be able to… | You leave with |
-| --- | --- | --- | --- |
-| 1 | What is vibe coding? | Explain vibe coding and its two principles | Your app idea in one paragraph |
-| 2 | AI fundamentals | Explain ML, LLMs, tokens and GPUs to a friend | A token budget for your project |
-| 3 | The AI landscape | Choose a model provider for a job | A provider shortlist |
-| 4 | Web app architecture | Name every building block of a web app | Your architecture map |
-| 5 | The toolbox | Pick a coding harness, cloud and host | Your Tech Stack Key Sheet draft |
-| 6 | Talking to AI | Write prompts, chains and context packs | Your project context pack |
-| 7 | Agents | Design an agent with skills, tools, loops and goals | Your agent folder structure |
-| 8 | The document stack | Generate the 11 planning docs with AI | A complete docs folder |
-| 9 | The build process | Go from template to working app, page by page | Version 1 running locally |
-| 10 | Ship it | Version, deploy, host and launch | A live URL + launch checklist |
-| — | Capstone | Build and demo a revenue-ready app | Portfolio project + certificate |
+## 🚀 Features & Platform Capabilities
 
-**The one-sentence method:** give AI clear directions (Principle 1) about a properly structured system (Principle 2), in writing, before you build — then build one piece at a time and check every piece against a checklist.
+### 1. 🎥 HyperFrames Cinematic Video Compositions
+- **Official Course Trailer (`/videos/trailer`)**: High-energy 16s 60fps motion graphic video explaining the film-director mindset and the 11 building blocks.
+- **11 Building Blocks Explainer (`/videos/architecture-explainer`)**: 18s 60fps animated request trace following a user action through Browser → OAuth → Server → Postgres RLS → Stripe → AI Agent loop.
+- Authored with GSAP timelines and rendered deterministically to MP4 using the `hyperframes` engine.
 
+### 2. 🗺️ Interactive 11-Block Architecture Visualizer
+- Visual node graph with an interactive **"Simulate Live User Request Flow"** animation.
+- Deep-dive inspector drawer for every building block (Front End, Auth, Database, Storage, Payments, Agent, Git, Deployment).
+- Security & scale guidance (Postgres RLS, httpOnly cookies, server environment secrets).
 
-## Modules
+### 3. 📚 10 Core Course Modules with Interactive Quizzes
+- Complete syllabi with plain-English breakdowns, real-world analogies, copy-paste prompts, and hands-on exercises.
+- **Interactive 3-Question Knowledge Checks** with instant feedback, explanations, score calculations, and celebratory confetti on 100% completion.
 
-1. [Module 1 — What is vibe coding?](modules/01-what-is-vibe-coding.md)
-2. [Module 2 — AI fundamentals: ML, LLMs, tokens and GPUs](modules/02-ai-fundamentals.md)
-3. [Module 3 — The AI landscape: model providers and platforms](modules/03-ai-landscape.md)
-4. [Module 4 — Web app architecture: the building blocks](modules/04-web-app-architecture.md)
-5. [Module 5 — The toolbox: coding harnesses, cloud and hosting](modules/05-the-toolbox.md)
-6. [Module 6 — Talking to AI: prompting, chain prompting and context engineering](modules/06-talking-to-ai.md)
-7. [Module 7 — Agents: harness, skills, tools, loops, goals and graphs](modules/07-agents.md)
-8. [Module 8 — The document stack: 11 planning docs, written with AI](modules/08-document-stack.md)
-9. [Module 9 — The build process: front end to back end to agent review](modules/09-build-process.md)
-10. [Module 10 — Ship it: versioning, deployment, hosting and launch](modules/10-ship-it.md)
-11. [Capstone](capstone/README.md)
+### 4. ⚡ Prompt Studio & Token Cost Estimator
+- **Prompt Architect**: Turns raw ideas into production-ready system prompts and context packs.
+- **Token Cost Estimator**: Live sliders for DAU, queries/day, and token lengths with real-time monthly cost comparisons across Claude 3.7 Sonnet, GPT-4o, DeepSeek R1, and Gemini 2.5 Flash.
 
-## Resources
+### 5. 📑 The 11-Document Planning Stack
+- Complete templates for `01-prd.md` through `11-gtm-plan.md` with instant copy and markdown file download.
 
-- [Glossary](resources/glossary.md)
-- [Prompt library](resources/prompt-library.md) — every copy-paste prompt in one file
-- [Sources](resources/sources.md)
-- [Templates](templates/) — the `/context` pack, 11 planning docs and `/agent` folder, ready to copy
-- [Checklists](checklists/)
-- [Publishing guide](PUBLISH.md) — pre-launch, review agent team, capstone
+### 6. 🏆 Capstone Project Hub & Verified Certificate Generator
+- 100-point grading rubric tracking project deliverables.
+- Interactive **Certificate of Completion Generator** with custom student name, verification ID, and instant print/export support.
 
-## How to use this repo
+---
 
-1. Click **Use this template** (or fork) to copy it to your GitHub account.
-2. Work through the modules in order — each ends with an exercise that builds your capstone.
-3. Copy `templates/` into your own project as you reach Modules 6–8.
+## 🛠️ The 11 Building Blocks
 
-*Course content as of October 2026. AI tools change fast — check provider pages for current models and prices.*
+| # | Block | Role (Plain English) | Analogy | Default Tool |
+|---|---|---|---|---|
+| 1 | **Front End** | The public website users see in their browser | The Storefront | Next.js / Vite + Tailwind CSS |
+| 2 | **Dashboard** | The logged-in workspace where users do the work | The Back Office | Next.js App Routes |
+| 3 | **Chat UI** | The streaming chat window for talking to AI agents | The Help Desk | Vercel AI SDK |
+| 4 | **Storage** | Holds images, PDFs, audio, and user uploads | The Filing Cabinet | Supabase Storage / S3 |
+| 5 | **Database** | Relational tables with Row-Level Security (RLS) | The Secure Master Ledger | Supabase (Postgres) |
+| 6 | **Auth & OAuth** | Sign-up, Google sign-in, session tokens | The Keycard Entry Gate | Supabase Auth / Clerk |
+| 7 | **Payments** | Checkout sessions, subscriptions, webhooks | The Cash Register | Stripe Billing |
+| 8 | **Agent Harness** | System instructions, tool schemas, memory | The Employee Handbook | Vercel AI SDK / Claude |
+| 9 | **Versioning** | Tracking every commit and rollback point | Video Game Save Points | Git + GitHub |
+| 10 | **Deployment** | Automated CI/CD builds on every git push | The Moving Truck | Vercel Edge Platform |
+| 11 | **Hosting** | Edge servers delivering the web app globally | The Building Ground | Vercel Cloud |
+
+---
+
+## 📖 Course Modules Overview
+
+1. [Module 1 — What is Vibe Coding?](modules/01-what-is-vibe-coding.md)
+2. [Module 2 — AI Fundamentals: ML, LLMs, Tokens & GPUs](modules/02-ai-fundamentals.md)
+3. [Module 3 — The AI Landscape: Model Providers & Platforms](modules/03-ai-landscape.md)
+4. [Module 4 — Web App Architecture: The Building Blocks](modules/04-web-app-architecture.md)
+5. [Module 5 — The Toolbox: Coding Harnesses, Cloud & Hosting](modules/05-the-toolbox.md)
+6. [Module 6 — Talking to AI: Prompting, Chains & Context Engineering](modules/06-talking-to-ai.md)
+7. [Module 7 — Agents: Harness, Skills, Tools, Loops, Goals & Graphs](modules/07-agents.md)
+8. [Module 8 — The Document Stack: 11 Planning Docs Written with AI](modules/08-document-stack.md)
+9. [Module 9 — The Build Process: Front End to Back End to Agent Review](modules/09-build-process.md)
+10. [Module 10 — Ship It: Versioning, Deployment, Hosting & Launch](modules/10-ship-it.md)
+11. [Capstone — Build & Demo a Revenue-Ready App](capstone/README.md)
+
+---
+
+## 💻 Local Development & Build
+
+### Prerequisites
+- Node.js 18+
+- npm
+
+### 1. Run Web Application
+\`\`\`bash
+# Install dependencies
+npm install
+
+# Start Vite dev server on localhost:3000
+npm run dev
+
+# Build production bundle
+npm run build
+\`\`\`
+
+### 2. HyperFrames Video Compositions
+\`\`\`bash
+# Lint the trailer composition
+cd videos/trailer && npx hyperframes lint
+
+# Render trailer to MP4
+npx hyperframes render -o ../../public/videos/letsvibeai-trailer.mp4
+
+# Lint the architecture explainer composition
+cd ../architecture-explainer && npx hyperframes lint
+
+# Render architecture explainer to MP4
+npx hyperframes render -o ../../public/videos/letsvibeai-architecture-explainer.mp4
+\`\`\`
+
+---
+
+## 📄 License & Attribution
+
+Designed and built for the **LetsVibeAI** community.  
+Authored under the **Site Empire OS** / **PAL × SDLC** architecture doctrine.

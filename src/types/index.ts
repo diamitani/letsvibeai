@@ -222,4 +222,21 @@ export interface HarnessFormatEntry {
   harnesses: Record<string, { path: string; code: string }>;
 }
 
+// GencyAI Skills Library Specification
+export interface GencyLibrarySkill {
+  slug: string;
+  name: string;
+  category: string;
+  tagline: string;
+  description: string;
+  core: boolean;
+  github: string;
+  raw: string;
+  repo: string;
+  install: string;
+  compat: string[];
+  triggers: string[];
+}
+
+
 

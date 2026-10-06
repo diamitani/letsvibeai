@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { COURSE_MODULES, ARCHITECTURE_BLOCKS, DOC_TEMPLATES } from '../data/courseData';
 import { AGENT_SKILLS } from '../data/agentPlatformData';
 import { HARNESS_LESSONS } from '../data/harnessMasteryData';
+import { GENCY_SKILLS_LIBRARY } from '../data/skillsLibraryData';
 import { Search, BookOpen, Layers, FileText, ArrowRight, X, Cpu, Play } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -70,6 +71,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       h.title.toLowerCase().includes(normalizedQuery) ||
       h.desc.toLowerCase().includes(normalizedQuery) ||
       'harness'.includes(normalizedQuery)
+  );
+
+  const skillsLibResults = GENCY_SKILLS_LIBRARY.filter(
+    (s) =>
+      s.name.toLowerCase().includes(normalizedQuery) ||
+      s.tagline.toLowerCase().includes(normalizedQuery) ||
+      s.category.toLowerCase().includes(normalizedQuery) ||
+      s.triggers.some((t) => t.toLowerCase().includes(normalizedQuery))
   );
 
   const handleItemClick = (section: string, detailId?: string | number) => {
@@ -248,9 +257,38 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             </div>
           )}
 
-          {moduleResults.length === 0 && blockResults.length === 0 && docResults.length === 0 && skillResults.length === 0 && harnessResults.length === 0 && (
+          {/* Skills Library (46 Production Skills) Group */}
+          {skillsLibResults.length > 0 && (
+            <div>
+              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+                Skills Library ({skillsLibResults.length})
+              </div>
+              <div className="space-y-1">
+                {skillsLibResults.slice(0, 6).map((s) => (
+                  <button
+                    key={s.slug}
+                    onClick={() => handleItemClick('skills-library', s.slug)}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Layers className="w-4 h-4 text-[#2F80ED] shrink-0" />
+                      <div>
+                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
+                          {s.name} <span className="text-[10px] text-slate-400 font-mono">({s.category})</span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 line-clamp-1">{s.tagline}</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {moduleResults.length === 0 && blockResults.length === 0 && docResults.length === 0 && skillResults.length === 0 && harnessResults.length === 0 && skillsLibResults.length === 0 && (
             <div className="p-8 text-center text-xs text-slate-500 font-mono">
-              No matching modules, architecture nodes, documents, skills, or harness lessons found for "{query}".
+              No matching modules, architecture nodes, documents, skills, harness lessons, or library skills found for "{query}".
             </div>
           )}
 

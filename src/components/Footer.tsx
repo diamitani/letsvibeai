@@ -1,104 +1,112 @@
 import React from 'react';
-import { Github, ShieldCheck } from 'lucide-react';
+import { Sparkles, ShieldCheck, Heart, ArrowUp } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="border-t border-[#EAE3D9] bg-[#281010] py-16 px-4 sm:px-6 lg:px-8 text-white/70 text-xs font-sans">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+    <footer className="bg-[#281010] text-[#D8D1C7] pt-16 pb-12 px-4 sm:px-6 lg:px-8 border-t border-[#FA5929]/20 text-left">
+      <div className="max-w-7xl mx-auto space-y-12">
         
-        {/* Brand Column (4 cols) */}
-        <div className="md:col-span-4 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#FA5929] flex items-center justify-center font-bold text-white shadow-xs">
-              V
+        {/* Top Creed & Newsletter Row */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-12 border-b border-white/10">
+          <div className="max-w-md">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 rounded-full bg-[#FA5929] text-white flex items-center justify-center font-bold font-heading text-xs">
+                LV
+              </div>
+              <span className="text-lg font-black text-white font-heading">LetsVibeAI Academy</span>
             </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-lg text-white tracking-tight">
-                LetsVibe<span className="text-[#FA5929]">AI</span>
-              </span>
-              <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">
-                The AI Skills Institution
-              </span>
-            </div>
+            <p className="text-xs text-[#A89F91] leading-relaxed">
+              Beauty without payments is a brochure. Payments without architecture is a liability. Architecture without taste is a spreadsheet.
+            </p>
           </div>
-          <p className="text-white/70 leading-relaxed max-w-sm">
-            LetsVibeAI makes AI understandable, practical, and actionable for beginners, career changers, creators, founders, operators, educators, and teams.
-          </p>
-          <div className="flex items-center gap-3 pt-2">
-            <a
-              href="https://github.com/diamitani/letsvibeai"
-              target="_blank"
-              rel="noreferrer"
-              className="px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white transition-colors flex items-center gap-2 font-mono text-xs shadow-xs"
+
+          {/* Newsletter Input */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 max-w-md w-full">
+            <input
+              type="email"
+              placeholder="Enter your work email..."
+              className="px-4 py-2.5 rounded-full bg-white/10 border border-white/10 text-xs text-white placeholder-[#A89F91] focus:outline-none focus:border-[#FA5929] flex-1"
+            />
+            <button
+              onClick={() => alert('Subscribed to Weekly Vibe Coding Dispatch!')}
+              className="px-5 py-2.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs font-bold transition-all shadow-md shrink-0 cursor-pointer"
             >
-              <Github className="w-4 h-4 text-white" />
-              <span>diamitani/letsvibeai</span>
-            </a>
+              Get Dispatch
+            </button>
           </div>
         </div>
 
-        {/* 10 Modules (3 cols) */}
-        <div className="md:col-span-3 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            10 Curriculum Modules
-          </h4>
-          <ul className="space-y-1.5 text-white/70">
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">1. What is Vibe Coding?</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">2. AI Fundamentals & Tokens</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">3. The AI Model Landscape</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">4. Web App Architecture</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">5. The Developer Toolbox</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">6. Talking to AI & Context</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">7. Autonomous AI Agents</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">8. The 11-Doc Stack</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">9. Page-by-Page Build</a></li>
-            <li><a href="#curriculum" className="hover:text-[#FA5929] transition-colors">10. Ship & Deploy to Edge</a></li>
-          </ul>
-        </div>
+        {/* Links Navigation Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs">
+          <div className="space-y-2.5">
+            <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px]">
+              Curriculum
+            </h4>
+            <ul className="space-y-1.5 text-[#A89F91]">
+              <li><a href="#curriculum" className="hover:text-white transition-colors">10-Module Syllabus</a></li>
+              <li><a href="#architecture" className="hover:text-white transition-colors">PAL Doctrine</a></li>
+              <li><a href="#video" className="hover:text-white transition-colors">Cinema Masterclass</a></li>
+              <li><a href="#sandbox" className="hover:text-white transition-colors">AI Sandbox</a></li>
+            </ul>
+          </div>
 
-        {/* Platform & Resources (3 cols) */}
-        <div className="md:col-span-3 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            Artifacts & Portals
-          </h4>
-          <ul className="space-y-1.5 text-white/70">
-            <li><a href="#video" className="hover:text-[#FA5929] transition-colors">HyperFrames Video Showcase</a></li>
-            <li><a href="#architecture" className="hover:text-[#FA5929] transition-colors">11-Block Architecture Map</a></li>
-            <li><a href="#studio" className="hover:text-[#FA5929] transition-colors">Prompt Studio & Cost Calculator</a></li>
-            <li><a href="#docs" className="hover:text-[#FA5929] transition-colors">11 Planning Doc Templates</a></li>
-            <li><a href="#capstone" className="hover:text-[#FA5929] transition-colors">Capstone Rubric & Certificate</a></li>
-            <li><a href="#pricing" className="hover:text-[#FA5929] transition-colors">Cohort & Pro Enrollment</a></li>
-          </ul>
-        </div>
+          <div className="space-y-2.5">
+            <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px]">
+              Platforms
+            </h4>
+            <ul className="space-y-1.5 text-[#A89F91]">
+              <li><span className="text-white">Claude Code & Antigravity</span></li>
+              <li><span className="text-white">Cursor Composer</span></li>
+              <li><span className="text-white">Supabase Postgres</span></li>
+              <li><span className="text-white">Stripe Billing</span></li>
+            </ul>
+          </div>
 
-        {/* Brand Doctrine (2 cols) */}
-        <div className="md:col-span-2 space-y-2.5">
-          <h4 className="font-mono font-bold text-white uppercase tracking-wider text-[11px]">
-            Institutional Creed
-          </h4>
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-[11px] leading-relaxed text-white/80 font-mono shadow-xs">
-            <span className="text-[#FA5929] font-bold block mb-1">1. Learn AI</span>
-            <span className="text-[#FEBF03] font-bold block mb-1">2. Build with AI</span>
-            <span className="text-white font-bold block">3. Ship with AI</span>
+          <div className="space-y-2.5">
+            <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px]">
+              Resources
+            </h4>
+            <ul className="space-y-1.5 text-[#A89F91]">
+              <li><a href="#docs" className="hover:text-white transition-colors">PRD Document Stack</a></li>
+              <li><a href="#prompt-studio" className="hover:text-white transition-colors">Prompt Studio</a></li>
+              <li><a href="#capstone" className="hover:text-white transition-colors">Certification</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors">Tuition & Pricing</a></li>
+            </ul>
+          </div>
+
+          <div className="space-y-2.5">
+            <h4 className="font-bold text-white uppercase tracking-wider font-mono text-[11px]">
+              Status & Safety
+            </h4>
+            <div className="p-3 rounded-2xl bg-[#160E0E] border border-white/5 space-y-1 text-[11px]">
+              <div className="flex items-center gap-1.5 text-[#34D399] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#34D399] animate-ping" />
+                <span>All Systems Operational</span>
+              </div>
+              <span className="text-[#A89F91] block">Latency: 42ms · 99.99% Uptime</span>
+            </div>
           </div>
         </div>
 
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/50 font-mono text-[11px]">
-        <div>
-          © 2026 LetsVibeAI — The AI Skills Institution. All rights reserved.
-        </div>
-        <div className="flex items-center gap-6">
-          <span className="flex items-center gap-1.5 text-white font-bold">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#FA5929]" />
-            <span>LEARN • BUILD • SHIP</span>
+        {/* Bottom Copyright & Back to Top */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#A89F91]">
+          <span>
+            © 2026 Diamitani Industries · LetsVibeAI. All rights reserved.
           </span>
-          <a href="https://github.com/diamitani/letsvibeai" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-            GitHub Repository
-          </a>
+
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-1.5 text-white hover:text-[#FA5929] transition-colors"
+          >
+            <span>Back to top</span>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </button>
         </div>
+
       </div>
     </footer>
   );

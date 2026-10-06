@@ -280,7 +280,7 @@ export const AgentPlatformView: React.FC<AgentPlatformViewProps> = ({ onSelectCh
                 One agent. Skills you pay for. Sub-agents you spin up per project.
               </h2>
               <p className="text-sm sm:text-base text-[#D8D1C7] leading-relaxed mb-8">
-                Every founder and creator starts with a general manager agent. Skills are the modular unit — buy one as a done-for-you service, attach it to your agent with credit metering, or export it as a package to run in your own AI harness.
+                Every founder and creator starts with a general manager agent. Skills are the modular unit: buy one as a done-for-you service, attach it to your agent with credit metering, or export it as a package to run in your own AI harness.
               </p>
 
               {/* Stat Counters */}
@@ -374,7 +374,7 @@ export const AgentPlatformView: React.FC<AgentPlatformViewProps> = ({ onSelectCh
                   </span>
                   <h4 className="text-lg font-bold text-[#281010] mb-2 font-heading">Project Sub-Agents</h4>
                   <p className="text-xs text-[#706B67] leading-relaxed mb-4">
-                    Project-scoped agents. Give one a brief, a subset of skills, a credit cap, and a deadline — it autonomously works and reports back to the Manager.
+                    Project-scoped agents. Give one a brief, a subset of skills, a credit cap, and a deadline: it autonomously works and reports back to the Manager.
                   </p>
                 </div>
                 <div className="space-y-2 pt-4 border-t border-[#EAE3D9] text-xs text-[#281010] font-medium">
@@ -440,7 +440,7 @@ export const AgentPlatformView: React.FC<AgentPlatformViewProps> = ({ onSelectCh
                   </span>
                   <h4 className="text-lg font-bold text-[#281010] mb-2 font-heading">Run It Yourself</h4>
                   <p className="text-xs text-[#706B67] leading-relaxed mb-4">
-                    Download the skill as a portable package — system prompt, tool schemas, runbook, and evaluation set — to run in your own AI harness.
+                    Download the skill as a portable package (system prompt, tool schemas, runbook, and evaluation set) to run in your own AI harness.
                   </p>
                 </div>
                 <div className="text-xs text-[#706B67] font-mono font-bold pt-4 border-t border-[#EAE3D9]">

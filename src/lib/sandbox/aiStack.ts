@@ -27,7 +27,7 @@ export interface PortfolioProject {
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     id: 'ai-counsel',
-    title: 'AI Counsel — Contract Redliner',
+    title: 'AI Counsel: Contract Redliner',
     founder: 'Elena Rostova',
     role: 'Former Product Marketing Lead',
     category: 'LegalTech SaaS',
@@ -54,7 +54,7 @@ REVISION RECOMMENDED:
   },
   {
     id: 'supply-sync',
-    title: 'SupplySync — Autonomous PO Agent',
+    title: 'SupplySync: Autonomous PO Agent',
     founder: 'Marcus Vance',
     role: 'Operations Director',
     category: 'B2B Logistics',
@@ -82,7 +82,7 @@ Purchase Order #PO-2026-892 created:
   },
   {
     id: 'clinical-summaries',
-    title: 'ClinicalSummaries — Bio-Paper Synthesizer',
+    title: 'ClinicalSummaries: Bio-Paper Synthesizer',
     founder: 'Dr. Sophia Chen',
     role: 'Biotech Researcher',
     category: 'BioTech / Research',

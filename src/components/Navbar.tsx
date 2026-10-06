@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Search,
+  Sparkles,
   BookOpen,
+  Cpu,
   Layers,
-  Terminal,
-  Award,
-  ChevronRight,
+  ShoppingBag,
+  Search,
+  User,
   Menu,
   X,
-  Bot,
   Play,
-  ShoppingBag,
-  Compass,
-  LayoutDashboard,
-  User as UserIcon,
-  Sparkles,
-  Cpu
+  Terminal,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -26,8 +24,8 @@ interface NavbarProps {
   onOpenSearch: () => void;
   onOpenAgent: () => void;
   onOpenAuth: () => void;
-  completedModulesCount: number;
-  user: { email: string; name: string } | null;
+  completedModulesCount?: number;
+  user?: { email: string; name: string } | null;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -36,19 +34,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   setActiveSection,
   onOpenSearch,
-  onOpenAgent,
   onOpenAuth,
-  completedModulesCount,
+  completedModulesCount = 1,
   user
 }) => {
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -59,71 +56,60 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveSection(sectionId);
     setMobileMenuOpen(false);
     setTimeout(() => {
-      const el = document.getElementById(sectionId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 60);
+    }, 50);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-8 pt-4 pb-2 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 pb-2 transition-all duration-300">
       <div
-        className={`max-w-7xl mx-auto rounded-full transition-all duration-300 pointer-events-auto border ${
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md border-[#EAE3D9] shadow-[0_8px_30px_rgba(40,16,16,0.08)] py-2.5 px-5 sm:px-6'
-            : 'bg-white/90 backdrop-blur-sm border-[#EAE3D9]/80 shadow-[0_4px_20px_rgba(40,16,16,0.04)] py-3 px-5 sm:px-7'
+        className={`max-w-7xl mx-auto rounded-full transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#F8F3EC]/90 backdrop-blur-xl border border-[#EAE3D9] shadow-lg shadow-black/5 py-2.5 px-4 sm:px-6'
+            : 'bg-[#F8F3EC]/70 backdrop-blur-md border border-[#EAE3D9]/80 py-3 px-4 sm:px-6'
         }`}
       >
         <div className="flex items-center justify-between gap-4">
-          {/* Brand Logo - Lexio styled Gateway V + LetsVibeAI */}
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
+          
+          {/* Brand Logo & Tagline */}
+          <button
+            onClick={() => {
               setCurrentView('saas');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-3 group shrink-0"
+            className="flex items-center gap-3 group text-left shrink-0 cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-full bg-[#281010] flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
-              <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none">
-                <path
-                  d="M10 12L24 38L38 12"
-                  stroke="white"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="24" cy="22" r="4" fill="#FA5929" />
-              </svg>
+            <div className="w-9 h-9 rounded-full bg-[#281010] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform relative">
+              <span className="font-heading font-black text-sm tracking-tighter">LV</span>
+              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#FA5929] border-2 border-[#F8F3EC]" />
             </div>
-            <div className="flex flex-col text-left">
-              <div className="flex items-center gap-2 leading-none">
-                <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[#281010]">
-                  LetsVibe<span className="text-[#FA5929]">AI</span>
+            <div className="hidden sm:flex flex-col">
+              <span className="font-heading font-extrabold text-sm tracking-tight text-[#281010] flex items-center gap-1.5">
+                LetsVibeAI
+                <span className="text-[10px] font-mono font-bold px-2 py-0.2 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60">
+                  ACADEMY
                 </span>
-                <span className="hidden sm:inline-block text-[10px] px-2.5 py-0.5 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/50 font-bold uppercase tracking-wider">
-                  Academy
-                </span>
-              </div>
-              <span className="text-[10px] text-[#706B67] font-bold tracking-wider mt-1 uppercase">
-                Learn <span className="text-[#FA5929]">•</span> Build <span className="text-[#34D399]">•</span> Ship
+              </span>
+              <span className="text-[10px] text-[#706B67] font-medium tracking-wide">
+                Vibe Coding & Agent Harnesses
               </span>
             </div>
-          </a>
+          </button>
 
-          {/* Center Navigation Links (Lexio Rounded-Full Pills) */}
-          <nav className="hidden xl:flex items-center gap-1.5">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1 bg-[#EDE7DE]/80 p-1.5 rounded-full border border-[#EAE3D9]">
             <button
               onClick={() => {
                 setCurrentView('saas');
                 handleNavClick('curriculum');
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                 currentView === 'saas' && activeSection === 'curriculum'
-                  ? 'bg-[#FBE1CE] text-[#FA5929] font-bold border border-[#FCAA91]/60'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
               }`}
             >
               Curriculum (10)
@@ -134,307 +120,217 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setCurrentView('saas');
                 handleNavClick('architecture');
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                 currentView === 'saas' && activeSection === 'architecture'
-                  ? 'bg-[#FBE1CE] text-[#FA5929] font-bold border border-[#FCAA91]/60'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
               }`}
             >
-              Architecture Map
+              Architecture
+            </button>
+
+            <button
+              onClick={() => {
+                setCurrentView('agent-platform');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                currentView === 'agent-platform'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+              }`}
+            >
+              <span>Skills Hub</span>
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#FBE1CE] text-[#FA5929] font-bold">
+                32
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                setCurrentView('harness-mastery');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                currentView === 'harness-mastery'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+              }`}
+            >
+              <Play className="w-3 h-3 text-[#FA5929]" />
+              <span>Harnesses</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setCurrentView('skills-library');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                currentView === 'skills-library'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+              }`}
+            >
+              Library
+            </button>
+
+            <button
+              onClick={() => {
+                setCurrentView('marketplace');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                currentView === 'marketplace'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+              }`}
+            >
+              Templates
             </button>
 
             <button
               onClick={() => {
                 setCurrentView('saas');
-                handleNavClick('sandbox');
+                handleNavClick('pricing');
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'sandbox'
-                  ? 'bg-[#FBE1CE] text-[#FA5929] font-bold border border-[#FCAA91]/60'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                currentView === 'saas' && activeSection === 'pricing'
+                  ? 'bg-[#281010] text-white shadow-xs'
+                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
               }`}
             >
-              AI Sandbox
-            </button>
-
-            <button
-              onClick={() => setCurrentView('agent-platform')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'agent-platform'
-                  ? 'bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60 font-bold shadow-2xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <Cpu className="w-3.5 h-3.5 text-[#FA5929]" />
-              <span>Skills Hub</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#FBE1CE] text-[#FA5929] font-mono font-bold">32</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentView('harness-mastery')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'harness-mastery'
-                  ? 'bg-amber-100/70 text-[#B8741A] border border-amber-300 font-bold shadow-2xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <Play className="w-3.5 h-3.5 text-[#E9A93B]" />
-              <span>Harnesses</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-[#B8741A] font-mono font-bold">8</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentView('skills-library')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'skills-library'
-                  ? 'bg-[#E1E3F6] text-[#7C5CFC] border border-[#7C5CFC]/40 font-bold shadow-2xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5 text-[#7C5CFC]" />
-              <span>Skills Lib</span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#E1E3F6] text-[#7C5CFC] font-mono font-bold">46</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentView('marketplace')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'marketplace'
-                  ? 'bg-[#C4DAC8]/60 text-[#1B4D2B] border border-[#C4DAC8] font-bold'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#34D399]" />
-              <span>Marketplace</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentView('directory')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'directory'
-                  ? 'bg-cyan-50 text-[#0F606B] border border-cyan-200/80 font-bold'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <Compass className="w-3.5 h-3.5 text-[#20C7D9]" />
-              <span>Directory</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentView('dashboard')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                currentView === 'dashboard'
-                  ? 'bg-violet-50 text-[#4C2889] border border-violet-200/80 font-bold'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
-              }`}
-            >
-              <LayoutDashboard className="w-3.5 h-3.5 text-[#7C5CFC]" />
-              <span>Console</span>
+              Tuition
             </button>
           </nav>
 
-          {/* Right Action Tools */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            {/* Quick Search Button */}
+          {/* Right Action Controls */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Quick Search Shortcut */}
             <button
               onClick={onOpenSearch}
-              className="hidden sm:flex items-center gap-2 px-3.5 py-2 text-xs text-[#706B67] bg-[#F8F3EC] hover:bg-[#EAE3D9]/60 border border-[#EAE3D9] rounded-full transition-all"
-              title="Search lessons and prompts (Cmd+K)"
+              className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-[#EAE3D9] text-[#706B67] hover:text-[#281010] text-xs font-medium shadow-2xs hover:border-[#FA5929] transition-colors"
             >
-              <Search className="w-3.5 h-3.5 text-[#706B67]" />
-              <span className="hidden md:inline">Search</span>
-              <kbd className="text-[10px] bg-white text-[#706B67] px-1.5 py-0.5 rounded-full border border-[#EAE3D9] font-mono">⌘K</kbd>
+              <Search className="w-3.5 h-3.5 text-[#FA5929]" />
+              <span className="text-[11px]">Search Academy</span>
+              <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#F8F3EC] border border-[#EAE3D9] text-[#706B67]">
+                ⌘K
+              </kbd>
             </button>
 
-            {/* AI Copilot Drawer Trigger */}
-            <button
-              onClick={onOpenAgent}
-              className="hidden lg:flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-[#FA5929] bg-[#FBE1CE] hover:bg-[#fbd3ba] border border-[#FCAA91]/50 rounded-full transition-all shadow-xs"
-            >
-              <Bot className="w-3.5 h-3.5 text-[#FA5929]" />
-              <span>Ask Copilot</span>
-            </button>
-
-            {/* User Account / Sign In */}
+            {/* Auth / Student Dashboard Button */}
             {user ? (
               <button
-                onClick={() => setCurrentView('dashboard')}
-                className="flex items-center gap-2 px-3 py-1.5 text-xs text-[#281010] bg-[#F8F3EC] hover:bg-[#EAE3D9]/60 border border-[#EAE3D9] rounded-full transition-all"
+                onClick={() => {
+                  setCurrentView('dashboard');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#281010] shadow-2xs hover:border-[#FA5929] transition-all"
               >
-                <div className="w-6 h-6 rounded-full bg-[#FA5929] text-white flex items-center justify-center font-bold text-xs">
-                  {user.name.charAt(0).toUpperCase()}
+                <div className="w-5 h-5 rounded-full bg-[#FBE1CE] text-[#FA5929] flex items-center justify-center text-[10px] font-mono">
+                  {user.name[0].toUpperCase()}
                 </div>
-                <span className="hidden sm:inline font-semibold max-w-[100px] truncate">{user.name}</span>
+                <span className="hidden sm:inline">{user.name.split(' ')[0]}</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-[#FBE1CE] text-[#FA5929]">
+                  {completedModulesCount}/10
+                </span>
               </button>
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="px-4 py-2 text-xs font-bold text-[#281010] hover:text-[#FA5929] bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-full transition-all shadow-xs"
+                className="px-4 py-2 rounded-full text-xs font-bold text-[#281010] hover:bg-white/60 transition-colors"
               >
                 Sign In
               </button>
             )}
 
-            {/* Primary Action Button (Lexio Coral Flame Pill) */}
+            {/* Primary Action Button (Start V1) */}
             <button
               onClick={() => handleNavClick('pricing')}
-              className="px-5 py-2.5 text-xs font-extrabold text-white bg-[#FA5929] hover:bg-[#E0491B] active:scale-[0.98] rounded-full transition-all shadow-md shadow-[#FA5929]/20"
+              className="px-5 py-2.5 rounded-full text-xs font-extrabold text-white bg-[#FA5929] hover:bg-[#E0491B] active:scale-95 transition-all shadow-md shadow-[#FA5929]/25 flex items-center gap-1.5 cursor-pointer"
             >
-              Start V1
+              <span>Enroll Now</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 text-[#706B67] hover:text-[#281010] bg-[#F8F3EC] border border-[#EAE3D9] rounded-full"
+              className="lg:hidden p-2 rounded-full bg-white border border-[#EAE3D9] text-[#281010] shadow-2xs"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-[#281010]" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
+
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-3 pt-3 border-t border-[#EAE3D9] flex flex-col gap-2 pb-2">
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => {
+                  setCurrentView('saas');
+                  handleNavClick('curriculum');
+                }}
+                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
+              >
+                <BookOpen className="w-4 h-4 text-[#FA5929]" />
+                <span>Curriculum</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setCurrentView('agent-platform');
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
+              >
+                <Cpu className="w-4 h-4 text-[#FA5929]" />
+                <span>Skills Hub (32)</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setCurrentView('harness-mastery');
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
+              >
+                <Play className="w-4 h-4 text-[#FA5929]" />
+                <span>Harness Academy</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setCurrentView('skills-library');
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
+              >
+                <Layers className="w-4 h-4 text-[#FA5929]" />
+                <span>Skills Library</span>
+              </button>
+            </div>
+
+            <button
+              onClick={() => {
+                onOpenSearch();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full py-2.5 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#706B67] flex items-center justify-center gap-2"
+            >
+              <Search className="w-4 h-4 text-[#FA5929]" />
+              <span>Search All Modules & Prompts</span>
+            </button>
+          </div>
+        )}
+
       </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="xl:hidden max-w-7xl mx-auto mt-3 bg-white border border-[#EAE3D9] rounded-3xl p-5 shadow-xl pointer-events-auto space-y-3">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pb-3 border-b border-[#EAE3D9]/60">
-            <button
-              onClick={() => {
-                setCurrentView('saas');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'saas' ? 'bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60' : 'text-[#706B67]'
-              }`}
-            >
-              <BookOpen className="w-4 h-4 text-[#FA5929]" />
-              <span>Academy</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('agent-platform');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'agent-platform' ? 'bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60' : 'text-[#706B67]'
-              }`}
-            >
-              <Cpu className="w-4 h-4 text-[#FA5929]" />
-              <span>Skills Hub (32)</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('harness-mastery');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'harness-mastery' ? 'bg-amber-100 text-[#B8741A] border border-amber-300' : 'text-[#706B67]'
-              }`}
-            >
-              <Play className="w-4 h-4 text-[#E9A93B]" />
-              <span>Harnesses (8)</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('skills-library');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'skills-library' ? 'bg-[#E1E3F6] text-[#7C5CFC] border border-[#7C5CFC]/40' : 'text-[#706B67]'
-              }`}
-            >
-              <Layers className="w-4 h-4 text-[#7C5CFC]" />
-              <span>Skills Lib (46)</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('marketplace');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'marketplace' ? 'bg-[#C4DAC8]/60 text-[#1B4D2B] border border-[#C4DAC8]' : 'text-[#706B67]'
-              }`}
-            >
-              <ShoppingBag className="w-4 h-4 text-[#34D399]" />
-              <span>Marketplace</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('directory');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'directory' ? 'bg-cyan-50 text-[#0F606B] border border-cyan-200' : 'text-[#706B67]'
-              }`}
-            >
-              <Compass className="w-4 h-4 text-[#20C7D9]" />
-              <span>Directory</span>
-            </button>
-            <button
-              onClick={() => {
-                setCurrentView('dashboard');
-                setMobileMenuOpen(false);
-              }}
-              className={`p-3 rounded-2xl text-xs font-bold flex items-center gap-2 ${
-                currentView === 'dashboard' ? 'bg-violet-50 text-[#4C2889] border border-violet-200' : 'text-[#706B67]'
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4 text-[#7C5CFC]" />
-              <span>Console</span>
-            </button>
-          </div>
-
-          <div className="space-y-1">
-            <button
-              onClick={() => handleNavClick('curriculum')}
-              className="w-full flex items-center justify-between p-2.5 text-xs font-semibold text-[#281010] hover:bg-[#F8F3EC] rounded-2xl"
-            >
-              <span>Course Curriculum (10 Modules)</span>
-              <ChevronRight className="w-4 h-4 text-[#706B67]" />
-            </button>
-            <button
-              onClick={() => handleNavClick('architecture')}
-              className="w-full flex items-center justify-between p-2.5 text-xs font-semibold text-[#281010] hover:bg-[#F8F3EC] rounded-2xl"
-            >
-              <span>11-Layer Web Architecture</span>
-              <ChevronRight className="w-4 h-4 text-[#706B67]" />
-            </button>
-            <button
-              onClick={() => handleNavClick('sandbox')}
-              className="w-full flex items-center justify-between p-2.5 text-xs font-semibold text-[#281010] hover:bg-[#F8F3EC] rounded-2xl"
-            >
-              <span>Interactive AI Sandbox</span>
-              <ChevronRight className="w-4 h-4 text-[#706B67]" />
-            </button>
-            <button
-              onClick={() => handleNavClick('pricing')}
-              className="w-full flex items-center justify-between p-2.5 text-xs font-semibold text-[#281010] hover:bg-[#F8F3EC] rounded-2xl"
-            >
-              <span>Tuition & Enrollment</span>
-              <ChevronRight className="w-4 h-4 text-[#706B67]" />
-            </button>
-          </div>
-
-          <div className="pt-3 border-t border-[#EAE3D9] flex flex-col gap-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAgent();
-              }}
-              className="w-full py-3 bg-[#FBE1CE] hover:bg-[#fbd3ba] border border-[#FCAA91]/50 rounded-full text-xs font-bold text-[#FA5929] flex items-center justify-center gap-2"
-            >
-              <Bot className="w-4 h-4 text-[#FA5929]" />
-              <span>Launch Curriculum Copilot</span>
-            </button>
-            <button
-              onClick={() => handleNavClick('pricing')}
-              className="w-full py-3 bg-[#FA5929] hover:bg-[#E0491B] text-white rounded-full text-xs font-extrabold shadow-md"
-            >
-              Enroll Now
-            </button>
-          </div>
-        </div>
-      )}
     </header>
   );
 };

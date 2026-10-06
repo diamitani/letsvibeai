@@ -4,7 +4,7 @@ import {
   signUpWithEmail,
   signInWithEmail,
   signInWithOAuthProvider,
-  sendMagicLinkEmail,
+  sendMagicLinkEmail
 } from '../../lib/supabase';
 
 interface AuthModalProps {
@@ -18,15 +18,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
-  initialMode = 'signin',
+  initialMode = 'signin'
 }) => {
   const [mode, setMode] = useState<'signin' | 'signup'>(initialMode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<string | null>(null);
-  const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
@@ -48,7 +46,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setIsLoading(false);
         onSuccess({
           email: data?.user?.email || email,
-          name: fullName || data?.user?.user_metadata?.full_name || email.split('@')[0],
+          name: fullName || data?.user?.user_metadata?.full_name || email.split('@')[0]
         });
         onClose();
       } else {
@@ -61,270 +59,121 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setIsLoading(false);
         onSuccess({
           email: data?.user?.email || email,
-          name: data?.user?.user_metadata?.full_name || email.split('@')[0],
+          name: data?.user?.user_metadata?.full_name || email.split('@')[0]
         });
         onClose();
       }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Authentication failed';
-      setErrorMessage(msg);
-      setIsLoading(false);
-    }
-  };
-
-  const handleOAuth = async (provider: 'google' | 'github' | 'apple') => {
-    setSocialLoading(provider);
-    setErrorMessage(null);
-    try {
-      const { error } = await signInWithOAuthProvider(provider);
-      if (error) {
-        setErrorMessage(error.message);
-        setSocialLoading(null);
-        return;
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'OAuth failed';
-      setErrorMessage(msg);
-      setSocialLoading(null);
-    }
-  };
-
-  const handleMagicLink = async () => {
-    if (!email) {
-      setErrorMessage('Please enter your email first');
-      return;
-    }
-    setIsLoading(true);
-    setErrorMessage(null);
-    try {
-      const { error } = await sendMagicLinkEmail(email);
-      setIsLoading(false);
-      if (error) {
-        setErrorMessage(error.message);
-        return;
-      }
-      setMagicLinkSent(true);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Magic link failed';
-      setErrorMessage(msg);
+    } catch {
+      setErrorMessage('Authentication error occurred. Please try again.');
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#281010]/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div
-        className="relative w-full max-w-md bg-white border border-[#EAE3D9] rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Close Button */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#281010]/60 backdrop-blur-sm">
+      <div className="bg-[#F8F3EC] border border-[#EAE3D9] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-150 relative text-left">
+        
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-[#706B67] hover:text-[#281010] rounded-full bg-[#F8F3EC] hover:bg-[#FBE1CE] transition-colors"
+          className="absolute top-6 right-6 p-2 rounded-full bg-white border border-[#EAE3D9] text-[#706B67] hover:text-[#281010] shadow-2xs"
         >
           <X className="w-4 h-4" />
         </button>
 
-        {/* Brand Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-9 h-9 rounded-full bg-[#FA5929] flex items-center justify-center font-bold text-white shadow-xs">
-            V
-          </div>
-          <div>
-            <h2 className="text-xl font-black font-display tracking-tight text-[#281010]">
-              {mode === 'signin' ? 'Welcome Back' : 'Join the Institution'}
-            </h2>
-            <p className="text-xs text-[#706B67] font-medium">
-              {mode === 'signin'
-                ? 'Sign in to access your Vibe AI Workspaces & Copilot'
-                : 'Learn AI. Build with AI. Ship with AI.'}
-            </p>
-          </div>
+        <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#FA5929] uppercase mb-2">
+          <Lock className="w-4 h-4" />
+          <span>Supabase Auth Gateway</span>
         </div>
 
-        {/* Tab Toggle */}
-        <div className="flex bg-[#F8F3EC] p-1 rounded-full mb-5 border border-[#EAE3D9]">
+        <h3 className="text-2xl font-black text-[#281010] font-heading mb-1">
+          {mode === 'signup' ? 'Create Fellow Account' : 'Sign in to Academy'}
+        </h3>
+        <p className="text-xs text-[#706B67] mb-6">
+          Access all course modules, workspace starters, and agent sandboxes.
+        </p>
+
+        {/* Mode Switcher */}
+        <div className="flex items-center gap-1 bg-[#EDE7DE] p-1.5 rounded-full border border-[#EAE3D9] mb-6">
           <button
-            onClick={() => {
-              setMode('signin');
-              setErrorMessage(null);
-            }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all ${
-              mode === 'signin'
-                ? 'bg-[#281010] text-white shadow-xs font-bold'
-                : 'text-[#706B67] hover:text-[#281010]'
+            onClick={() => setMode('signin')}
+            className={`flex-1 py-1.5 rounded-full text-xs font-bold transition-all ${
+              mode === 'signin' ? 'bg-[#281010] text-white shadow-xs' : 'text-[#706B67]'
             }`}
           >
             Sign In
           </button>
           <button
-            onClick={() => {
-              setMode('signup');
-              setErrorMessage(null);
-            }}
-            className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all ${
-              mode === 'signup'
-                ? 'bg-[#281010] text-white shadow-xs font-bold'
-                : 'text-[#706B67] hover:text-[#281010]'
+            onClick={() => setMode('signup')}
+            className={`flex-1 py-1.5 rounded-full text-xs font-bold transition-all ${
+              mode === 'signup' ? 'bg-[#281010] text-white shadow-xs' : 'text-[#706B67]'
             }`}
           >
-            Create Account
+            Sign Up
           </button>
         </div>
 
-        {/* Error message alert */}
         {errorMessage && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-2xl flex items-center gap-2 text-red-700 text-xs">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <div className="p-3 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-700 mb-4 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMessage}</span>
           </div>
         )}
 
-        {/* OAuth Buttons */}
-        <div className="grid grid-cols-3 gap-2.5 mb-6">
-          <button
-            onClick={() => handleOAuth('google')}
-            disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24">
-              <path
-                fill="#EA4335"
-                d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.2 8.9 5 12 5z"
-              />
-              <path
-                fill="#4285F4"
-                d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.2-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.2-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"
-              />
-            </svg>
-            <span>Google</span>
-          </button>
-
-          <button
-            onClick={() => handleOAuth('github')}
-            disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
-          >
-            <Github className="w-4 h-4 text-[#281010]" />
-            <span>GitHub</span>
-          </button>
-
-          <button
-            onClick={() => handleOAuth('apple')}
-            disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
-          >
-            <svg className="w-4 h-4 fill-current text-[#281010]" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.63 1.35-.57.65-.99 1.72-.88 2.74 1 .08 2.02-.53 2.58-1.24z" />
-            </svg>
-            <span>Apple</span>
-          </button>
-        </div>
-
-        <div className="relative flex items-center justify-center mb-6">
-          <div className="border-t border-[#EAE3D9] w-full" />
-          <span className="bg-white px-3 text-[10px] uppercase font-mono text-[#706B67] tracking-widest absolute">
-            or email
-          </span>
-        </div>
-
-        {magicLinkSent ? (
-          <div className="p-4 bg-[#FBE1CE] border border-[#FCAA91]/60 rounded-2xl flex items-center gap-3 text-[#281010]">
-            <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#FA5929]" />
-            <div className="text-xs">
-              <p className="font-semibold">Magic login link dispatched!</p>
-              <p className="text-[#706B67]">Check your inbox to authenticate securely.</p>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-3.5">
-            {mode === 'signup' && (
-              <div>
-                <label className="block text-xs font-medium text-[#281010] mb-1">Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Ada Lovelace"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
-                />
-              </div>
-            )}
-
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {mode === 'signup' && (
             <div>
-              <label className="block text-xs font-medium text-[#281010] mb-1">Work / School Email</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-[#706B67] absolute left-3.5 top-3" />
-                <input
-                  type="email"
-                  required
-                  placeholder="learner@institution.edu"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
-                />
-              </div>
+              <label className="block text-xs font-mono font-bold text-[#281010] mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Alex Rivera"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-full bg-white border border-[#EAE3D9] text-xs text-[#281010] focus:outline-none focus:border-[#FA5929]"
+              />
             </div>
+          )}
 
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-medium text-[#281010]">Password</label>
-                {mode === 'signin' && (
-                  <button
-                    type="button"
-                    onClick={handleMagicLink}
-                    className="text-[11px] text-[#FA5929] hover:underline font-medium"
-                  >
-                    Send Magic Link instead
-                  </button>
-                )}
-              </div>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-[#706B67] absolute left-3.5 top-3" />
-                <input
-                  type="password"
-                  required
-                  placeholder="••••••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3 px-4 bg-[#FA5929] hover:bg-[#E0491B] active:scale-[0.98] text-white font-bold text-xs rounded-full transition-all shadow-md flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
-            >
-              {isLoading ? (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>{mode === 'signin' ? 'Sign In to Workspace' : 'Get Instant Access'}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-white" />
-                </>
-              )}
-            </button>
-          </form>
-        )}
-
-        {/* Security Assurance */}
-        <div className="mt-6 pt-4 border-t border-[#EAE3D9] flex items-center justify-between text-[11px] text-[#706B67] font-mono">
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#FA5929]" />
-            <span>Supabase RLS & OAuth Encrypted</span>
+          <div>
+            <label className="block text-xs font-mono font-bold text-[#281010] mb-1">
+              Work Email
+            </label>
+            <input
+              type="email"
+              required
+              placeholder="name@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-full bg-white border border-[#EAE3D9] text-xs text-[#281010] focus:outline-none focus:border-[#FA5929]"
+            />
           </div>
-          <span className="text-[#706B67] font-medium">Diamitani Master</span>
-        </div>
+
+          <div>
+            <label className="block text-xs font-mono font-bold text-[#281010] mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              required
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-full bg-white border border-[#EAE3D9] text-xs text-[#281010] focus:outline-none focus:border-[#FA5929]"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-extrabold text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span>{isLoading ? 'Authenticating...' : mode === 'signup' ? 'Create Account' : 'Sign In'}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </form>
+
       </div>
     </div>
   );

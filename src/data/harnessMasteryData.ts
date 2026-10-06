@@ -31,7 +31,7 @@ export const HARNESS_LESSONS: HarnessLesson[] = [
     num: '02',
     title: 'Context files that remember for you',
     dur: '9:12',
-    desc: 'Write project rules once — AGENTS.md, CLAUDE.md, rules folders — so every session starts informed with zero prompt repeating.',
+    desc: 'Write project rules once (AGENTS.md, CLAUDE.md, rules folders) so every session starts informed with zero prompt repeating.',
     src: '',
     isAvailable: false
   },
@@ -153,7 +153,7 @@ export const HARNESS_CONCEPT_TRACKS: HarnessConceptTrack[] = [
     key: 'skills',
     name: 'Skills',
     meta: 'CONCEPT 02 · MODULAR CAPABILITIES',
-    desc: 'A SKILL.md file that teaches the agent how to complete a specific task your way. It loads dynamically when a user prompt matches — no prompt engineering needed.',
+    desc: 'A SKILL.md file that teaches the agent how to complete a specific task your way. It loads dynamically when a user prompt matches with no prompt engineering needed.',
     ship: 'You have explained the exact same process or workflow three times.',
     modules: [
       'Anatomy of a SKILL.md: name, trigger description, step-by-step runbook',
@@ -167,7 +167,7 @@ export const HARNESS_CONCEPT_TRACKS: HarnessConceptTrack[] = [
     key: 'artifacts',
     name: 'Artifacts',
     meta: 'CONCEPT 03 · OUTPUT & DELIVERABLES',
-    desc: 'Self-contained tangible deliverables created alongside the chat — documents, implementation plans, architecture diagrams, and interactive React apps.',
+    desc: 'Self-contained tangible deliverables created alongside the chat: documents, implementation plans, architecture diagrams, and interactive React apps.',
     ship: 'You need an executable, inspectable deliverable, not a wall of text.',
     modules: [
       'What qualifies as a persistent artifact vs disposable chat message',
@@ -195,7 +195,7 @@ export const HARNESS_CONCEPT_TRACKS: HarnessConceptTrack[] = [
     key: 'agents',
     name: 'Agents & Subagents',
     meta: 'CONCEPT 05 · AUTONOMOUS DELEGATION',
-    desc: 'Specialist agents with scoped instructions, dedicated toolsets, and isolated memory — one reviews, one writes tests, one deploys — in clean parallel contexts.',
+    desc: 'Specialist agents with scoped instructions, dedicated toolsets, and isolated memory (one reviews, one writes tests, one deploys) in clean parallel contexts.',
     ship: 'The task is too complex or wide to execute in a single reasoning loop.',
     modules: [
       'Defining a specialist agent: role, permitted tools, and model choice',
@@ -239,7 +239,7 @@ ${MD_SKILL}`;
 export const HARNESS_FORMAT_GUIDES: Record<string, HarnessFormatEntry> = {
   context: {
     title: 'Context & Project Rules Files',
-    note: 'Every harness reads a markdown rules file from your project root. AGENTS.md is the industry standard — when in doubt, maintain AGENTS.md and symlink other tool formats.',
+    note: 'Every harness reads a markdown rules file from your project root. AGENTS.md is the industry standard. When in doubt, maintain AGENTS.md and symlink other tool formats.',
     harnesses: {
       claude: {
         path: 'CLAUDE.md  (or ~/.claude/CLAUDE.md for global user rules)',

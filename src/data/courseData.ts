@@ -989,7 +989,7 @@ export const DOC_TEMPLATES: DocTemplate[] = [
     purpose: 'Defines the core problem, user personas, MVP scope, non-goals, and success metrics.',
     keySections: ['Problem Statement', 'Target Users & JTBD', 'Scope v1 & Non-Goals', 'Functional Requirements', 'Success Metrics'],
     samplePrompt: 'Draft 01-prd.md for my app idea focusing on solving [core pain point] for [target audience] with a lean V1 scope.',
-    contentTemplate: `# 01 — Product Requirements Document (PRD)
+    contentTemplate: `# 01: Product Requirements Document (PRD)
 
 ## 1. Problem Statement
 Who hurts, how often, and why current solutions fall short.
@@ -1029,7 +1029,7 @@ Who hurts, how often, and why current solutions fall short.
     purpose: 'Binds numeric SLOs, API performance thresholds, uptime targets, and data classifications.',
     keySections: ['SLOs & Uptime', 'API Latency Targets', 'Data Classification', 'Error Budgets'],
     samplePrompt: 'Generate 02-product-specs.md establishing 99.9% uptime, <300ms p95 API response times, and PII data classifications.',
-    contentTemplate: `# 02 — Product & Non-Functional Specifications
+    contentTemplate: `# 02: Product & Non-Functional Specifications
 
 ## 1. Performance SLOs
 - **Availability:** 99.9% monthly uptime.
@@ -1051,7 +1051,7 @@ Who hurts, how often, and why current solutions fall short.
     purpose: 'Official system of record for all chosen frameworks, libraries, APIs, and environment keys.',
     keySections: ['Core Stack', 'UI & Styling', 'AI Infrastructure', 'Environment Keys'],
     samplePrompt: 'Create 03-tech-stack-key-sheet.md mapping Next.js, Supabase, Tailwind, Stripe, and Vercel AI SDK.',
-    contentTemplate: `# 03 — Tech Stack Key Sheet
+    contentTemplate: `# 03: Tech Stack Key Sheet
 
 ## 1. Core Architecture
 - **Framework:** Next.js App Router (TypeScript)
@@ -1081,7 +1081,7 @@ AI_GATEWAY_KEY=secret-ai-token
     purpose: 'C4 component diagrams, logical layers, database schema ERDs, and request lifecycles.',
     keySections: ['Layered Topology', 'Database ERD', 'Request Flow Traces', 'Failure Modes'],
     samplePrompt: 'Produce 04-system-architecture.md with detailed request flow for paid agent execution.',
-    contentTemplate: `# 04 — System Architecture
+    contentTemplate: `# 04: System Architecture
 
 ## 1. Logical Architecture
 \`\`\`
@@ -1113,15 +1113,15 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Complete URL hierarchy, navigation taxonomy, and permission matrix.',
     keySections: ['Marketing Sitemap', 'Application Sitemap', 'Permission Matrix', '3-Click Rule'],
     samplePrompt: 'Draft 05-information-architecture.md with marketing routes, app routes, and role access control.',
-    contentTemplate: `# 05 — Information Architecture & Sitemap
+    contentTemplate: `# 05: Information Architecture & Sitemap
 
 ## 1. Sitemap Hierarchy
-- \`/\` — Marketing Landing Page (Public)
-- \`/pricing\` — Plans, Feature Comparison, FAQ (Public)
-- \`/login\` & \`/signup\` — Authentication Gate (Public)
-- \`/dashboard\` — User Command Center (Auth Required)
-- \`/dashboard/projects/[id]\` — Active Project Workspace (Auth Required)
-- \`/dashboard/settings\` — Profile & Billing Management (Auth Required)
+- \`/\` - Marketing Landing Page (Public)
+- \`/pricing\` - Plans, Feature Comparison, FAQ (Public)
+- \`/login\` & \`/signup\` - Authentication Gate (Public)
+- \`/dashboard\` - User Command Center (Auth Required)
+- \`/dashboard/projects/[id]\` - Active Project Workspace (Auth Required)
+- \`/dashboard/settings\` - Profile & Billing Management (Auth Required)
 
 ## 2. Permission Matrix
 | Role | View Public | Access Dashboard | Run AI Agent | Manage Billing |
@@ -1139,7 +1139,7 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Audit against Operational Excellence, Security, Reliability, Performance, Cost, and Sustainability.',
     keySections: ['Security Pillar', 'Reliability Pillar', 'Cost Optimization', 'Operational Excellence'],
     samplePrompt: 'Review the application against the 6 Well-Architected pillars and document remediations.',
-    contentTemplate: `# 06 — Well-Architected Framework Review
+    contentTemplate: `# 06: Well-Architected Framework Review
 
 ## 1. Operational Excellence
 - Infrastructure as Code (IaC) with automated Vercel & Supabase migrations.
@@ -1163,7 +1163,7 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Quality gates for every stage from planning to deployment and rollback.',
     keySections: ['Planning Gate', 'Build Gate', 'Security Gate', 'Rollback Runbook'],
     samplePrompt: 'Create 07-sdlc-checklist.md with strict definition of done for feature branches.',
-    contentTemplate: `# 07 — SDLC & Quality Gate Checklist
+    contentTemplate: `# 07: SDLC & Quality Gate Checklist
 
 ## 1. Code Quality Gates
 - [ ] TypeScript compilation passes with zero errors (\`tsc --noEmit\`).
@@ -1184,19 +1184,19 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Sequenced feature releases mapped to customer traction and scale stages.',
     keySections: ['Now (V1 MVP)', 'Next (V1.1 Growth)', 'Later (V2 Scale)'],
     samplePrompt: 'Generate 08-roadmap.md with Now/Next/Later horizons for our vibe coding app.',
-    contentTemplate: `# 08 — Product Roadmap
+    contentTemplate: `# 08: Product Roadmap
 
-## Horizon 1: Now (V1 MVP — Days 1-7)
+## Horizon 1: Now (V1 MVP - Days 1-7)
 - Core landing page, interactive curriculum, and capstone project hub.
 - Google OAuth, Supabase database, and Stripe payment integration.
 - AI Agent harness with prompt playground and token calculator.
 
-## Horizon 2: Next (V1.1 — Month 1)
+## Horizon 2: Next (V1.1 - Month 1)
 - Live cohort community forums and peer review rooms.
 - Voice agent interactive tutor integration (ElevenLabs).
 - Team workspace invites and multi-seat billing.
 
-## Horizon 3: Later (V2 — Quarter 2)
+## Horizon 3: Later (V2 - Quarter 2)
 - Autonomous multi-agent review teams with GitHub PR bot integration.
 - Custom enterprise LMS integrations (Canvas, Blackboard).`
   },
@@ -1209,7 +1209,7 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Brand personality, typography rules, color palettes, and tone of voice.',
     keySections: ['Brand Identity', 'Color Tokens', 'Typography Hierarchy', 'Tone of Voice'],
     samplePrompt: 'Write 09-brand-guidelines.md for LetsVibeAI: confident, empowering, architecturally sound.',
-    contentTemplate: `# 09 — Brand Guidelines & Tone of Voice
+    contentTemplate: `# 09: Brand Guidelines & Tone of Voice
 
 ## 1. Brand Mission
 "Democratizing software creation through architecture-first AI direction."
@@ -1233,7 +1233,7 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Exact CSS tokens, spacing scales, button states, and animation spring configs.',
     keySections: ['Spacing Scale', 'Button System', 'Animation Spring Physics', 'Accessibility WCAG'],
     samplePrompt: 'Draft 10-design-specs.md following design-taste-frontend anti-slop guidelines.',
-    contentTemplate: `# 10 — Design Specifications & UI Tokens
+    contentTemplate: `# 10: Design Specifications & UI Tokens
 
 ## 1. Button System
 - **Primary CTA:** \`bg-emerald-500 text-black font-bold px-6 py-3 rounded-full hover:bg-emerald-400 active:scale-[0.98] transition-all\`
@@ -1253,7 +1253,7 @@ Next.js App Server (Server Actions / Route Handlers)
     purpose: 'Audience acquisition, launch channels, pricing strategy, and referral loops.',
     keySections: ['Launch Channels', 'Pricing Strategy', 'Growth Loops', 'Conversion Funnel'],
     samplePrompt: 'Create 11-gtm-plan.md detailing ProductHunt, X/Twitter, and YouTube launch strategy.',
-    contentTemplate: `# 11 — Go-To-Market & Launch Plan
+    contentTemplate: `# 11: Go-To-Market & Launch Plan
 
 ## 1. Launch Channels
 - **X / Twitter & LinkedIn:** Video teaser demo showing architecture-to-code in 60 seconds.

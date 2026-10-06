@@ -28,8 +28,8 @@ interface DashboardViewProps {
 
 export const DashboardView: React.FC<DashboardViewProps> = ({ onOpenSandbox, onOpenAgent }) => {
   const [activeTab, setActiveTab] = useState<'home' | 'workspaces' | 'profile' | 'settings' | 'chat'>('home');
-  const [userProfile, setUserProfile] = useState<UserProfile>(INITIAL_USER_PROFILE);
-  const [projects, setProjects] = useState<WorkspaceProject[]>(INITIAL_WORKSPACE_PROJECTS);
+  const [userProfile] = useState<UserProfile>(INITIAL_USER_PROFILE);
+  const [projects] = useState<WorkspaceProject[]>(INITIAL_WORKSPACE_PROJECTS);
   const [copiedKey, setCopiedKey] = useState(false);
 
   // Onboarding checklist state
@@ -42,24 +42,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onOpenSandbox, onO
   ]);
 
   // Chat UI state
-  const [chatSessions, setChatSessions] = useState([
-    { id: 's1', title: 'Vercel AI SDK 4.0 Streaming Setup', date: 'Today' },
-    { id: 's2', title: 'Stripe Webhook Idempotency Policy', date: 'Yesterday' },
-    { id: 's3', title: 'SignalWire Duplex Audio Latency Tuning', date: '3 days ago' }
-  ]);
-  const [activeSessionId, setActiveSessionId] = useState('s1');
-  const [selectedSubAgent, setSelectedSubAgent] = useState<'rostr' | 'vercel-stack' | 'signalwire' | 'taste'>('vercel-stack');
-  const [activeTools, setActiveTools] = useState({
-    supabaseDb: true,
-    supabaseStorage: true,
-    stripePayments: true,
-    signalwireVoice: false,
-    vercelSandbox: true
-  });
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string; code?: string }>>([
+  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
     {
       role: 'assistant',
-      text: 'Welcome to your LetsVibeAI Command Center. Connected via the Vercel AI Suite LLM Gateway with full access to your Supabase schema and Sandbox environment. What are we building or shipping today?',
+      text: 'Welcome to your LetsVibeAI Command Center. Connected via the Vercel AI Gateway with full access to your Supabase schema and Sandbox environment. What are we building or shipping today?'
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -87,285 +73,179 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onOpenSandbox, onO
     setIsStreaming(true);
 
     setTimeout(() => {
-      let reply = '';
-      let codeSnippet: string | undefined;
-
-      if (userText.toLowerCase().includes('voice') || userText.toLowerCase().includes('signalwire')) {
-        reply = `SignalWire Voice API connector active! Duplex audio streaming websocket configured. Here is your low-latency call handler:`;
-        codeSnippet = `import { RestClient } from '@signalwire/compatibility-api';
-const client = RestClient(process.env.SIGNALWIRE_PROJECT, process.env.SIGNALWIRE_TOKEN);
-
-export async function POST(req: Request) {
-  const call = await client.calls.create({
-    url: 'https://letsvibeai.com/api/voice/twiml-stream',
-    to: '+18005550199',
-    from: process.env.SIGNALWIRE_NUMBER
-  });
-  return Response.json({ callSid: call.sid });
-}`;
-      } else if (userText.toLowerCase().includes('stripe') || userText.toLowerCase().includes('payment')) {
-        reply = `Stripe checkout session initialized with metadata and verified webhook idempotency keys.`;
-        codeSnippet = `export async function POST(req: Request) {
-  const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    client_reference_id: req.headers.get('x-user-id'),
-    line_items: [{ price: 'price_vibe_pro_monthly', quantity: 1 }],
-    success_url: 'https://letsvibeai.com/checkout/success?session_id={CHECKOUT_SESSION_ID}'
-  });
-  return Response.json({ url: session.url });
-}`;
-      } else {
-        reply = `I have analyzed your request against the LetsVibeAI architecture standards (11 Docs & ROSTR v2). All schema migrations and Vercel AI SDK route handlers are synchronized.`;
-        codeSnippet = `import { streamText } from 'ai';
-import { openai } from '@ai-sdk/openai';
-
-export async function POST(req: Request) {
-  const { messages } = await req.json();
-  const result = streamText({
-    model: openai('gpt-4o-mini'),
-    system: 'You are an institutional Vibe Architect.',
-    messages,
-  });
-  return result.toDataStreamResponse();
-}`;
-      }
-
-      setMessages((prev) => [...prev, { role: 'assistant', text: reply, code: codeSnippet }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          text: `Command received: "${userText}". Compiled instruction pack dispatched to active agent harness.`
+        }
+      ]);
       setIsStreaming(false);
-    }, 1000);
+    }, 600);
   };
 
   return (
-    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#F8F3EC] text-left">
-      {/* Top Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#EAE3D9]">
-        <div className="flex items-center gap-4">
-          <img
-            src={userProfile.avatarUrl}
-            alt={userProfile.fullName}
-            className="w-14 h-14 rounded-full border-2 border-[#FA5929] shadow-sm object-cover"
-          />
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-black font-display text-[#281010] tracking-tight">{userProfile.fullName}</h1>
-              <span className="px-3 py-0.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-[11px] font-mono font-bold uppercase">
-                {userProfile.plan} Fellow
-              </span>
-            </div>
-            <p className="text-xs text-[#706B67] mt-0.5">{userProfile.email} • {userProfile.role}</p>
+    <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#F8F3EC] text-left font-sans min-h-screen">
+      
+      {/* Top Banner */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 mb-8 border-b border-[#EAE3D9]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            <span>Fellow Dashboard</span>
           </div>
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[#281010] font-heading">
+            Student <span className="text-[#FA5929]">Command Center</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-[#706B67] mt-1">
+            Manage your deployed SaaS workspaces, active agent runs, and learning milestones.
+          </p>
         </div>
 
-        {/* Global Action Buttons */}
-        <div className="flex items-center gap-2.5">
+        {/* Dashboard Navigation Tabs */}
+        <div className="flex items-center gap-1.5 flex-wrap bg-[#EDE7DE] p-1.5 rounded-full border border-[#EAE3D9]">
           <button
-            onClick={onOpenSandbox}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#281010] bg-white hover:bg-[#FBE1CE] border border-[#EAE3D9] rounded-full transition-all shadow-xs"
+            onClick={() => setActiveTab('home')}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              activeTab === 'home'
+                ? 'bg-[#281010] text-white shadow-xs'
+                : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+            }`}
           >
-            <Terminal className="w-4 h-4 text-[#FA5929]" />
-            <span>Open Vercel Sandbox</span>
+            Overview
           </button>
+
           <button
-            onClick={onOpenAgent}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#FA5929] hover:bg-[#E0491B] rounded-full shadow-sm active:scale-[0.98] transition-all"
+            onClick={() => setActiveTab('workspaces')}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              activeTab === 'workspaces'
+                ? 'bg-[#281010] text-white shadow-xs'
+                : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+            }`}
           >
-            <Bot className="w-4 h-4 text-white" />
-            <span>Consult AI Coach</span>
+            Workspaces ({projects.length})
+          </button>
+
+          <button
+            onClick={() => setActiveTab('chat')}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              activeTab === 'chat'
+                ? 'bg-[#281010] text-white shadow-xs'
+                : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+            }`}
+          >
+            Agent Terminal
+          </button>
+
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              activeTab === 'settings'
+                ? 'bg-[#281010] text-white shadow-xs'
+                : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+            }`}
+          >
+            API Keys
           </button>
         </div>
       </div>
 
-      {/* Primary Dashboard Navigation Tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-4 mb-6 border-b border-[#EAE3D9] scrollbar-none">
-        {[
-          { id: 'home', label: 'Home & Launch Checklist', icon: LayoutDashboard },
-          { id: 'workspaces', label: 'Workspaces & Deployments', icon: FolderGit2 },
-          { id: 'chat', label: 'Vercel AI Chat & Agents', icon: MessageSquare },
-          { id: 'profile', label: 'Fellow Profile', icon: User },
-          { id: 'settings', label: 'Settings & Billing', icon: Settings },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-full transition-all whitespace-nowrap ${
-                isActive
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white'
-              }`}
-            >
-              <Icon className={`w-4 h-4 ${isActive ? 'text-[#FA5929]' : 'text-[#706B67]'}`} />
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* TAB 1: HOME & ONBOARDING */}
+      {/* TAB 1: OVERVIEW */}
       {activeTab === 'home' && (
         <div className="space-y-8 animate-in fade-in duration-200">
-          {/* Quick Metrics Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="p-6 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-[11px] font-mono text-[#706B67] uppercase font-semibold">Live Deployments</div>
-              <div className="text-2xl sm:text-3xl font-black text-[#281010] font-mono mt-1">3 Production</div>
-              <div className="text-[10px] text-[#FA5929] mt-1 flex items-center gap-1 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FA5929] animate-ping" />
-                <span>100% Vercel Edge Uptime</span>
-              </div>
+          
+          {/* Key Metrics Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+              <span className="text-[10px] font-mono text-[#706B67] uppercase block mb-1">Active Plan</span>
+              <h3 className="text-xl font-black text-[#281010] font-heading">{userProfile.plan}</h3>
+              <span className="text-xs font-mono text-[#FA5929]">Renewal: Nov 2026</span>
             </div>
 
-            <div className="p-6 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-[11px] font-mono text-[#706B67] uppercase font-semibold">Gateway Invocations</div>
-              <div className="text-2xl sm:text-3xl font-black text-[#FA5929] font-mono mt-1">142,800</div>
-              <div className="text-[10px] text-[#706B67] mt-1">Via Vercel AI Gateway</div>
+            <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+              <span className="text-[10px] font-mono text-[#706B67] uppercase block mb-1">Monthly Credits</span>
+              <h3 className="text-xl font-black text-[#281010] font-heading">
+                640 / 2,000
+              </h3>
+              <span className="text-xs font-mono text-[#34D399]">1,360 cr remaining</span>
             </div>
 
-            <div className="p-6 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-[11px] font-mono text-[#706B67] uppercase font-semibold">Supabase Records</div>
-              <div className="text-2xl sm:text-3xl font-black text-[#281010] font-mono mt-1">8,920</div>
-              <div className="text-[10px] text-[#706B67] mt-1">Encrypted with RLS</div>
+            <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+              <span className="text-[10px] font-mono text-[#706B67] uppercase block mb-1">Workspaces</span>
+              <h3 className="text-xl font-black text-[#281010] font-heading">{projects.length} Deployed</h3>
+              <span className="text-xs font-mono text-[#706B67]">All production healthy</span>
             </div>
 
-            <div className="p-6 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-[11px] font-mono text-[#706B67] uppercase font-semibold">Monthly MRR</div>
-              <div className="text-2xl sm:text-3xl font-black text-[#281010] font-mono mt-1">$4,250</div>
-              <div className="text-[10px] text-[#706B67] mt-1">Stripe Billing Active</div>
+            <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+              <span className="text-[10px] font-mono text-[#706B67] uppercase block mb-1">Curriculum Progress</span>
+              <h3 className="text-xl font-black text-[#FA5929] font-heading">10 / 10 Modules</h3>
+              <span className="text-xs font-mono text-[#34D399]">Accredited Vibe Fellow</span>
             </div>
           </div>
 
           {/* Onboarding Checklist Card */}
-          <div className="p-6 sm:p-8 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <div>
-                <div className="text-xs font-mono text-[#FA5929] uppercase tracking-wider mb-1 font-bold">
-                  Step-By-Step Activation
-                </div>
-                <h3 className="text-xl font-bold font-display text-[#281010]">Production Launch Checklist</h3>
-                <p className="text-xs text-[#706B67] mt-1">
-                  Complete these fundamental steps to scale your vibe app from 1 user to millions.
-                </p>
-              </div>
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs space-y-4">
+            <h3 className="text-base font-bold text-[#281010] font-heading">
+              Production Architecture Checklist
+            </h3>
 
-              <div className="flex items-center gap-2 bg-[#F8F3EC] px-4 py-1.5 rounded-full border border-[#EAE3D9]">
-                <span className="text-xs text-[#706B67]">Progress:</span>
-                <span className="text-xs font-bold text-[#FA5929] font-mono">
-                  {checklist.filter((c) => c.completed).length}/{checklist.length} Completed
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-3">
+            <div className="space-y-2">
               {checklist.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => toggleChecklistItem(item.id)}
-                  className={`p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${
-                    item.completed
-                      ? 'bg-[#F8F3EC] border-[#EAE3D9] text-[#706B67]'
-                      : 'bg-white border-[#EAE3D9] text-[#281010] hover:border-slate-300'
-                  }`}
+                  className="p-3.5 bg-[#F8F3EC] rounded-2xl border border-[#EAE3D9] text-xs flex items-center justify-between cursor-pointer hover:border-[#FA5929] transition-all"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     {item.completed ? (
-                      <CheckCircle2 className="w-5 h-5 text-[#FA5929] flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#34D399] shrink-0" />
                     ) : (
-                      <Circle className="w-5 h-5 text-slate-300 flex-shrink-0" />
+                      <Circle className="w-4 h-4 text-[#706B67] shrink-0" />
                     )}
-                    <span className={`text-xs sm:text-sm font-medium ${item.completed ? 'line-through text-slate-400' : 'text-[#281010]'}`}>
+                    <span className={item.completed ? 'line-through text-[#706B67]' : 'text-[#281010] font-semibold'}>
                       {item.label}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono text-[#706B67] uppercase font-bold">
-                    {item.completed ? 'Done' : 'Pending'}
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white text-[#281010]">
+                    {item.completed ? 'DONE' : 'PENDING'}
                   </span>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       )}
 
-      {/* TAB 2: WORKSPACES & SUBPAGES */}
+      {/* TAB 2: WORKSPACES */}
       {activeTab === 'workspaces' && (
         <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-bold font-display text-[#281010]">Active Workspaces & Projects</h3>
-              <p className="text-xs text-[#706B67]">Manage environments, deployments, and edge topologies.</p>
-            </div>
-            <button
-              onClick={() => {
-                const newProject: WorkspaceProject = {
-                  id: `proj_${Date.now()}`,
-                  name: `Vibe Sub-Agent ${projects.length + 1}`,
-                  slug: `vibe-agent-${projects.length + 1}`,
-                  environment: 'staging',
-                  status: 'building',
-                  lastDeployed: 'Just triggered',
-                  url: 'https://preview.letsvibeai.com'
-                };
-                setProjects([...projects, newProject]);
-              }}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-bold text-xs transition-all active:scale-[0.98]"
-            >
-              <Plus className="w-3.5 h-3.5 text-white" />
-              <span>Create New Workspace</span>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((proj) => (
-              <div
-                key={proj.id}
-                className="p-6 bg-white border border-[#EAE3D9] rounded-3xl hover:border-slate-300 shadow-xs transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className={`text-[10px] font-mono px-3 py-0.5 rounded-full uppercase font-bold ${
-                      proj.environment === 'production'
-                        ? 'bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60'
-                        : 'bg-[#F8F3EC] text-[#706B67]'
-                    }`}>
-                      {proj.environment}
-                    </span>
-                    <span className="flex items-center gap-1 text-[11px] text-[#FA5929] font-mono font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FA5929] animate-pulse" />
-                      <span>{proj.status}</span>
-                    </span>
-                  </div>
-
-                  <h4 className="text-base font-bold text-[#281010] mb-1 font-display">{proj.name}</h4>
-                  <p className="text-xs font-mono text-[#706B67] mb-4">{proj.slug}</p>
-
-                  <div className="text-xs text-[#706B67] space-y-1 mb-4">
-                    <div>Last Deployed: <span className="text-[#281010] font-medium">{proj.lastDeployed}</span></div>
-                    <div>Hosting: <span className="text-[#FA5929] font-medium">Vercel Edge Network</span></div>
-                  </div>
+              <div key={proj.id} className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#FBE1CE] text-[#FA5929] uppercase">
+                    {proj.environment}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#34D399] font-bold">
+                    ✓ {proj.status}
+                  </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#EAE3D9] flex items-center justify-between">
+                <h3 className="text-lg font-bold text-[#281010] font-heading">{proj.name}</h3>
+                <p className="text-xs text-[#706B67]">Deployed: {proj.lastDeployed}</p>
+
+                <div className="pt-3 border-t border-[#EAE3D9] flex items-center justify-between text-xs font-mono">
+                  <span className="text-[#706B67]">Slug: {proj.slug}</span>
                   <a
                     href={proj.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 text-xs font-semibold text-[#FA5929] hover:text-[#E0491B]"
+                    className="text-[#FA5929] hover:underline flex items-center gap-1 font-bold"
                   >
-                    <span>View Site</span>
+                    <span>{proj.url.replace('https://', '')}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-
-                  <button
-                    onClick={() => {
-                      alert(`Triggered fresh rebuild for ${proj.name} on Vercel Edge.`);
-                    }}
-                    className="p-2 text-[#706B67] hover:text-[#281010] rounded-full bg-[#F8F3EC] hover:bg-[#FBE1CE]"
-                    title="Redeploy"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                  </button>
                 </div>
               </div>
             ))}
@@ -373,285 +253,77 @@ export async function POST(req: Request) {
         </div>
       )}
 
-      {/* TAB 3: CHAT UI */}
+      {/* TAB 3: AGENT TERMINAL */}
       {activeTab === 'chat' && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 animate-in fade-in duration-200">
-          {/* Chat Sessions & Sub-Agents Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Sub-Agent Selector */}
-            <div className="p-5 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-xs font-mono text-[#706B67] uppercase mb-3 flex items-center gap-1.5 font-bold">
-                <Bot className="w-3.5 h-3.5 text-[#FA5929]" />
-                <span>Active Sub-Agent</span>
-              </div>
-              <div className="space-y-1.5">
-                {[
-                  { id: 'vercel-stack', label: 'Vercel AI Stack Dev', desc: 'SDK 4.0 & Tool Calling' },
-                  { id: 'rostr', label: 'ROSTR v2 Architect', desc: 'PAL & NPAO Engine' },
-                  { id: 'signalwire', label: 'SignalWire Engineer', desc: 'Voice API & Duplex WebSockets' },
-                  { id: 'taste', label: 'Design-Taste Stylist', desc: 'Lexio Warm Aesthetics' }
-                ].map((agent) => (
-                  <button
-                    key={agent.id}
-                    onClick={() => setSelectedSubAgent(agent.id as any)}
-                    className={`w-full text-left p-3 rounded-2xl text-xs transition-all ${
-                      selectedSubAgent === agent.id
-                        ? 'bg-[#281010] text-white font-bold shadow-xs'
-                        : 'text-[#706B67] hover:bg-[#F8F3EC] hover:text-[#281010]'
-                    }`}
-                  >
-                    <div className="font-semibold">{agent.label}</div>
-                    <div className="text-[10px] opacity-70">{agent.desc}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Active Tool Connectors */}
-            <div className="p-5 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="text-xs font-mono text-[#706B67] uppercase mb-3 flex items-center gap-1.5 font-bold">
-                <Cpu className="w-3.5 h-3.5 text-[#FA5929]" />
-                <span>Tool Connectors</span>
-              </div>
-              <div className="space-y-2 text-xs">
-                {Object.entries(activeTools).map(([toolKey, isEnabled]) => (
-                  <label key={toolKey} className="flex items-center justify-between cursor-pointer">
-                    <span className="text-[#281010] font-mono text-[11px] capitalize">
-                      {toolKey.replace(/([A-Z])/g, ' $1')}
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={isEnabled}
-                      onChange={() =>
-                        setActiveTools((prev) => ({
-                          ...prev,
-                          [toolKey]: !isEnabled
-                        }))
-                      }
-                      className="rounded bg-white border-[#EAE3D9] text-[#FA5929] focus:ring-0"
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Sessions List */}
-            <div className="p-5 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono text-[#706B67] uppercase font-bold">Chat Sessions</span>
-                <button
-                  onClick={() => {
-                    const newSess = {
-                      id: `s_${Date.now()}`,
-                      title: `New Session ${chatSessions.length + 1}`,
-                      date: 'Just now'
-                    };
-                    setChatSessions([newSess, ...chatSessions]);
-                    setActiveSessionId(newSess.id);
-                  }}
-                  className="p-1 text-[#706B67] hover:text-[#281010] rounded-full bg-[#F8F3EC] border border-[#EAE3D9]"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                </button>
-              </div>
-              <div className="space-y-1">
-                {chatSessions.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setActiveSessionId(s.id)}
-                    className={`w-full text-left p-2.5 rounded-2xl text-xs transition-all ${
-                      activeSessionId === s.id
-                        ? 'bg-[#F8F3EC] text-[#FA5929] font-bold border border-[#FA5929]/40 shadow-xs'
-                        : 'text-[#706B67] hover:text-[#281010]'
-                    }`}
-                  >
-                    <div className="truncate">{s.title}</div>
-                    <div className="text-[10px] text-[#706B67] font-mono">{s.date}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Chat Stream Window */}
-          <div className="lg:col-span-3 bg-white border border-[#EAE3D9] rounded-3xl p-6 sm:p-8 flex flex-col h-[600px] justify-between shadow-xs">
-            {/* Top Toolbar */}
-            <div className="flex items-center justify-between pb-4 border-b border-[#EAE3D9]">
-              <div className="flex items-center gap-2">
-                <Bot className="w-4 h-4 text-[#FA5929]" />
-                <span className="text-xs font-bold text-[#281010]">Vercel AI SDK 4.0 Chatbot</span>
-                <span className="text-[10px] font-mono px-3 py-0.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] font-bold">
-                  Model: gpt-4o-mini via AI Gateway
-                </span>
-              </div>
-              <button
-                onClick={onOpenSandbox}
-                className="text-xs text-[#FA5929] hover:underline flex items-center gap-1 font-medium"
-              >
-                <span>Run in Sandbox</span>
-                <ExternalLink className="w-3 h-3" />
-              </button>
-            </div>
-
-            {/* Messages Body */}
-            <div className="flex-1 overflow-y-auto space-y-4 py-4 pr-2">
-              {messages.map((m, idx) => (
-                <div
-                  key={idx}
-                  className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-3xl p-4 text-xs sm:text-sm leading-relaxed ${
-                      m.role === 'user'
-                        ? 'bg-[#281010] text-white font-medium'
-                        : 'bg-[#F8F3EC] border border-[#EAE3D9] text-[#281010]'
-                    }`}
-                  >
-                    <div>{m.text}</div>
-                    {m.code && (
-                      <div className="mt-3 p-4 bg-[#281010] rounded-2xl border border-[#3D1E1E] font-mono text-xs text-white/90 overflow-x-auto relative">
-                        <pre>{m.code}</pre>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-              {isStreaming && (
-                <div className="flex items-center gap-2 text-xs text-[#706B67] font-mono">
-                  <div className="w-2 h-2 rounded-full bg-[#FA5929] animate-ping" />
-                  <span>Agent streaming tokens through Vercel AI Gateway...</span>
-                </div>
-              )}
-            </div>
-
-            {/* Input Bar */}
-            <form onSubmit={handleSendMessage} className="pt-4 border-t border-[#EAE3D9] flex items-center gap-2">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Ask about SignalWire voice, Stripe webhooks, or Vercel edge deployment..."
-                className="flex-1 px-4 py-3 bg-[#F8F3EC] border border-[#EAE3D9] rounded-full text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929]"
-              />
-              <button
-                type="submit"
-                disabled={isStreaming || !inputMessage.trim()}
-                className="p-3 bg-[#FA5929] hover:bg-[#E0491B] text-white rounded-full active:scale-[0.98] transition-all disabled:opacity-50"
-              >
-                <Send className="w-4 h-4 text-white" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 4: PROFILE */}
-      {activeTab === 'profile' && (
-        <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 sm:p-8 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-            <h3 className="text-xl font-bold font-display text-[#281010] mb-1">Fellow Profile</h3>
-            <p className="text-xs text-[#706B67] mb-6">Manage your credentials, public bio, and API access.</p>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-[#281010] mb-1">Full Name</label>
-                <input
-                  type="text"
-                  value={userProfile.fullName}
-                  onChange={(e) => setUserProfile({ ...userProfile, fullName: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-[#281010] mb-1">Role / Headline</label>
-                <input
-                  type="text"
-                  value={userProfile.role}
-                  onChange={(e) => setUserProfile({ ...userProfile, role: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-[#281010] mb-1">Bio</label>
-                <textarea
-                  rows={3}
-                  value={userProfile.bio}
-                  onChange={(e) => setUserProfile({ ...userProfile, bio: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-[#281010] mb-1">API Key (Vercel & Supabase)</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="password"
-                    readOnly
-                    value={userProfile.apiKey}
-                    className="flex-1 px-4 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-mono text-[#706B67]"
-                  />
-                  <button
-                    onClick={handleCopyApiKey}
-                    className="flex items-center gap-1.5 px-4 py-2.5 bg-[#F8F3EC] hover:bg-[#FBE1CE] text-[#281010] rounded-full text-xs transition-colors border border-[#EAE3D9]"
-                  >
-                    {copiedKey ? <Check className="w-3.5 h-3.5 text-[#FA5929]" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copiedKey ? 'Copied' : 'Copy'}</span>
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={() => alert('Profile successfully updated.')}
-                className="w-full py-3 bg-[#FA5929] hover:bg-[#E0491B] text-white font-bold text-xs rounded-full shadow-md active:scale-[0.98] transition-all mt-4"
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 5: SETTINGS & BILLING */}
-      {activeTab === 'settings' && (
-        <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
-          <div className="p-6 sm:p-8 bg-white border border-[#EAE3D9] rounded-3xl shadow-xs">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-xl font-bold font-display text-[#281010]">Subscription & Invoices</h3>
-                <p className="text-xs text-[#706B67]">Powered by Stripe Billing & Customer Portal.</p>
-              </div>
-              <span className="px-3.5 py-1 bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-mono rounded-full font-bold">
-                Cohort VIP License
+        <div className="p-6 rounded-3xl bg-[#281010] text-white border border-[#FA5929]/20 shadow-2xl space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <Bot className="w-4 h-4 text-[#FA5929]" />
+              <span className="text-xs font-mono font-bold text-[#D8D1C7]">
+                Autonomous Agent Execution Console
               </span>
             </div>
+            <span className="text-[10px] font-mono text-[#34D399]">ONLINE</span>
+          </div>
 
-            <div className="p-5 bg-[#F8F3EC] rounded-3xl border border-[#EAE3D9] text-xs text-[#281010] space-y-2 mb-6">
-              <div className="flex justify-between">
-                <span>Billing Period:</span>
-                <span className="font-mono text-[#281010] font-bold">Monthly Auto-Renewal</span>
+          <div className="space-y-3 max-h-[340px] overflow-y-auto p-2">
+            {messages.map((m, idx) => (
+              <div
+                key={idx}
+                className={`p-3.5 rounded-2xl text-xs leading-relaxed max-w-xl ${
+                  m.role === 'user'
+                    ? 'ml-auto bg-[#FA5929] text-white font-medium'
+                    : 'bg-[#160E0E] text-[#EAE3D9] border border-white/5 font-mono'
+                }`}
+              >
+                {m.text}
               </div>
-              <div className="flex justify-between">
-                <span>Payment Method:</span>
-                <span className="font-mono text-[#281010] font-bold">Mastercard •••• 4242</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Next Invoice Date:</span>
-                <span className="font-mono text-[#FA5929] font-bold">November 1, 2026</span>
-              </div>
-            </div>
+            ))}
+          </div>
 
+          <form onSubmit={handleSendMessage} className="pt-3 border-t border-white/10 flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Ask your agent or dispatch a build instruction..."
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              className="flex-1 px-4 py-2.5 rounded-full bg-[#160E0E] border border-white/10 text-xs text-white placeholder-[#A89F91] focus:outline-none focus:border-[#FA5929]"
+            />
             <button
-              onClick={() => alert('Redirecting to Stripe Customer Portal...')}
-              className="px-5 py-2.5 bg-[#281010] hover:bg-[#3D1E1E] text-white text-xs font-semibold rounded-full transition-colors flex items-center gap-2"
+              type="submit"
+              className="p-2.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white transition-all shadow-md"
             >
-              <CreditCard className="w-3.5 h-3.5 text-[#FA5929]" />
-              <span>Manage Stripe Billing & Invoices</span>
+              <Send className="w-4 h-4" />
             </button>
+          </form>
+        </div>
+      )}
+
+      {/* TAB 4: API KEYS & SETTINGS */}
+      {activeTab === 'settings' && (
+        <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs space-y-4 max-w-2xl animate-in fade-in duration-200">
+          <h3 className="text-base font-bold text-[#281010] font-heading">
+            Developer Credentials & Vault
+          </h3>
+          <p className="text-xs text-[#706B67]">
+            Use your publishable Fellow API key to integrate with external agent harnesses.
+          </p>
+
+          <div className="p-4 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] space-y-2">
+            <span className="text-[10px] font-mono text-[#706B67] uppercase block">API Secret Key</span>
+            <div className="flex items-center justify-between gap-2">
+              <code className="text-xs font-mono text-[#281010]">{userProfile.apiKey}</code>
+              <button
+                onClick={handleCopyApiKey}
+                className="px-3 py-1.5 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#281010] shadow-2xs"
+              >
+                {copiedKey ? '✓ Copied' : 'Copy Key'}
+              </button>
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 };

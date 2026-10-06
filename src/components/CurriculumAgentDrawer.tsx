@@ -99,42 +99,42 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-2xl bg-zinc-950 border-l border-zinc-800 h-full flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="w-full max-w-2xl bg-white border-l border-slate-200 h-full flex flex-col shadow-2xl overflow-hidden text-left">
         
         {/* Drawer Header */}
-        <div className="p-4 sm:p-5 border-b border-zinc-800/80 bg-zinc-900/90 flex items-center justify-between gap-3">
+        <div className="p-4 sm:p-5 border-b border-slate-200 bg-[#F4F7FB] flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#2F80ED] border border-blue-200 flex items-center justify-center shadow-2xs">
               <Bot className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-white">Curriculum Agent</h3>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800">
+                <h3 className="text-sm font-bold text-[#10213F]">Curriculum Agent</h3>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-50 text-[#2F80ED] border border-blue-200 font-bold">
                   ROSTR v2 Runtime
                 </span>
               </div>
-              <p className="text-[11px] text-zinc-400">PAL · RAG DAL Grounding · NPAO Scheduling</p>
+              <p className="text-[11px] text-slate-500">PAL · RAG DAL Grounding · NPAO Scheduling</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-slate-700 shadow-2xs transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1 p-2 bg-zinc-900/50 border-b border-zinc-800/80 text-xs font-mono">
+        <div className="flex items-center gap-1 p-2 bg-[#F4F7FB] border-b border-slate-200 text-xs font-mono">
           <button
             onClick={() => setActiveTab('chat')}
             className={`flex-1 py-1.5 rounded-lg text-center transition-all ${
               activeTab === 'chat'
-                ? 'bg-zinc-800 text-emerald-300 font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white text-[#071B3A] font-bold shadow-2xs'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             Chat & Coach
@@ -144,21 +144,21 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
             onClick={() => setActiveTab('manifest')}
             className={`flex-1 py-1.5 rounded-lg text-center transition-all flex items-center justify-center gap-1 ${
               activeTab === 'manifest'
-                ? 'bg-zinc-800 text-cyan-300 font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white text-[#2F80ED] font-bold shadow-2xs'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             <FileCode className="w-3.5 h-3.5" />
             <span>PAL Manifest</span>
-            {currentManifest && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+            {currentManifest && <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />}
           </button>
 
           <button
             onClick={() => setActiveTab('npao')}
             className={`flex-1 py-1.5 rounded-lg text-center transition-all flex items-center justify-center gap-1 ${
               activeTab === 'npao'
-                ? 'bg-zinc-800 text-sky-300 font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white text-[#7C5CFC] font-bold shadow-2xs'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -169,8 +169,8 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
             onClick={() => setActiveTab('contextengine')}
             className={`flex-1 py-1.5 rounded-lg text-center transition-all flex items-center justify-center gap-1 ${
               activeTab === 'contextengine'
-                ? 'bg-zinc-800 text-emerald-300 font-bold'
-                : 'text-zinc-400 hover:text-white'
+                ? 'bg-white text-[#34D399] font-bold shadow-2xs'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />
@@ -180,7 +180,7 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
 
         {/* Tab Content: Chat */}
         {activeTab === 'chat' && (
-          <div className="flex-1 flex flex-col justify-between overflow-hidden">
+          <div className="flex-1 flex flex-col justify-between overflow-hidden bg-white">
             <div className="flex-1 p-4 overflow-y-auto space-y-4">
               {messages.map((m, idx) => (
                 <div
@@ -192,24 +192,24 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
                   <div
                     className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${
                       m.role === 'user'
-                        ? 'bg-emerald-500 text-black font-semibold shadow-md'
-                        : 'bg-zinc-900 border border-zinc-800 text-zinc-200'
+                        ? 'bg-[#071B3A] text-white font-semibold shadow-xs'
+                        : 'bg-[#F4F7FB] border border-slate-200 text-slate-800'
                     }`}
                   >
                     {m.text}
 
                     {/* Citations if available */}
                     {m.data?.ragResult && m.data.ragResult.citations.length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-zinc-800/80 text-[11px] text-zinc-400 font-mono">
-                        <div className="text-cyan-400 font-bold mb-1 flex items-center gap-1">
-                          <ShieldCheck className="w-3 h-3" />
+                      <div className="mt-3 pt-3 border-t border-slate-200 text-[11px] text-slate-500 font-mono">
+                        <div className="text-[#2F80ED] font-bold mb-1 flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-[#34D399]" />
                           <span>RAG DAL Grounding ({Math.round(m.data.ragResult.confidenceScore * 100)}% Confidence):</span>
                         </div>
                         <ul className="space-y-1">
                           {m.data.ragResult.citations.map((c, i) => (
                             <li key={i} className="flex items-center gap-1.5 truncate">
-                              <span className="text-zinc-500">[{c.tier.toUpperCase()}]</span>
-                              <span className="text-zinc-300">{c.title}</span>
+                              <span className="text-slate-400">[{c.tier.toUpperCase()}]</span>
+                              <span className="text-slate-700">{c.title}</span>
                             </li>
                           ))}
                         </ul>
@@ -220,7 +220,7 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
                     {m.data?.manifest && (
                       <button
                         onClick={() => setActiveTab('manifest')}
-                        className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-800 text-[11px] font-mono hover:bg-cyan-900 transition-colors"
+                        className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 text-[#2F80ED] text-[11px] font-mono hover:bg-slate-50 transition-colors shadow-2xs font-bold"
                       >
                         <FileCode className="w-3 h-3" />
                         <span>Inspect Compiled PAL Manifest (Ambiguity: {m.data.manifest.intent.ambiguity_score})</span>
@@ -230,8 +230,8 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
                 </div>
               ))}
               {isLoading && (
-                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 p-2">
-                  <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                <div className="flex items-center gap-2 text-xs font-mono text-[#2F80ED] p-2">
+                  <div className="w-2 h-2 rounded-full bg-[#2F80ED] animate-ping" />
                   <span>ROSTR v2 RAG DAL converging across knowledge tiers...</span>
                 </div>
               )}
@@ -239,19 +239,19 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
             </div>
 
             {/* Chat Input */}
-            <div className="p-3 bg-zinc-900 border-t border-zinc-800 flex items-center gap-2">
+            <div className="p-3 bg-[#F4F7FB] border-t border-slate-200 flex items-center gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Ask curriculum coach or describe an app idea..."
-                className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500"
+                className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-[#10213F] focus:outline-none focus:border-[#2F80ED] shadow-2xs font-sans"
               />
               <button
                 onClick={() => handleSend()}
                 disabled={isLoading || !input.trim()}
-                className="p-2.5 bg-emerald-400 hover:bg-emerald-300 disabled:opacity-40 text-black font-bold rounded-xl transition-all"
+                className="p-2.5 bg-[#071B3A] hover:bg-[#10213F] disabled:opacity-40 text-white font-bold rounded-xl transition-all shadow-xs"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -261,59 +261,59 @@ export const CurriculumAgentDrawer: React.FC<CurriculumAgentDrawerProps> = ({
 
         {/* Tab Content: PAL Manifest */}
         {activeTab === 'manifest' && (
-          <div className="flex-1 p-5 overflow-y-auto space-y-4">
+          <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-white">
             {currentManifest ? (
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
-                  <span className="text-xs font-mono font-bold text-cyan-400 uppercase">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
                     Manifest ID: {currentManifest.id}
                   </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-slate-700 font-bold">
                     Ambiguity Score: {currentManifest.intent.ambiguity_score}
                   </span>
                 </div>
 
-                <div className="mt-4 p-4 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-3">
+                <div className="mt-4 p-4 rounded-2xl bg-[#F4F7FB] border border-slate-200 space-y-3">
                   <div>
-                    <span className="text-[11px] font-mono text-zinc-500 block">Agent Runtime</span>
-                    <span className="text-xs font-bold text-white font-mono">
+                    <span className="text-[11px] font-mono text-slate-400 block uppercase">Agent Runtime</span>
+                    <span className="text-xs font-bold text-[#10213F] font-mono">
                       {currentManifest.runtime.agent_type.toUpperCase()} · Model: {currentManifest.runtime.model} · Temp: {currentManifest.runtime.temperature}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-[11px] font-mono text-zinc-500 block">Task Description</span>
-                    <p className="text-xs text-zinc-200 leading-relaxed font-sans">
+                    <span className="text-[11px] font-mono text-slate-400 block uppercase">Task Description</span>
+                    <p className="text-xs text-slate-700 leading-relaxed font-sans mt-0.5">
                       {currentManifest.instructions.task_description}
                     </p>
                   </div>
 
                   <div>
-                    <span className="text-[11px] font-mono text-zinc-500 block">Completion Criteria</span>
+                    <span className="text-[11px] font-mono text-slate-400 block uppercase">Completion Criteria</span>
                     <ul className="space-y-1 mt-1">
                       {currentManifest.instructions.completion_criteria.map((c, i) => (
-                        <li key={i} className="text-xs text-zinc-300 flex items-start gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                        <li key={i} className="text-xs text-slate-700 flex items-start gap-1.5">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#34D399] shrink-0 mt-0.5" />
                           <span>{c}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono">
-                    <span className="text-zinc-400">Escalation Policy:</span>
-                    <span className="text-cyan-400 font-bold">{currentManifest.instructions.escalation_policy}</span>
+                  <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs font-mono">
+                    <span className="text-slate-500">Escalation Policy:</span>
+                    <span className="text-[#2F80ED] font-bold">{currentManifest.instructions.escalation_policy}</span>
                   </div>
 
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-zinc-400">Allowed Tools:</span>
-                    <span className="text-emerald-400">{currentManifest.tools_enabled.allow.join(', ')}</span>
+                    <span className="text-slate-500">Allowed Tools:</span>
+                    <span className="text-[#34D399] font-bold">{currentManifest.tools_enabled.allow.join(', ')}</span>
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <span className="text-xs font-mono text-zinc-400 block mb-1">YAML Manifest Output:</span>
-                  <pre className="p-4 rounded-2xl bg-black border border-zinc-800 font-mono text-[11px] text-emerald-300 overflow-x-auto whitespace-pre">
+                  <span className="text-xs font-mono text-slate-500 block mb-1">YAML Manifest Output:</span>
+                  <pre className="p-4 rounded-2xl bg-[#F4F7FB] border border-slate-200 font-mono text-[11px] text-slate-800 overflow-x-auto whitespace-pre leading-relaxed shadow-2xs">
 {`runtime:
   agent_type: ${currentManifest.runtime.agent_type}
   model: ${currentManifest.runtime.model}
@@ -330,7 +330,7 @@ tools_enabled:
                 </div>
               </div>
             ) : (
-              <div className="text-center py-12 text-zinc-500 font-mono text-xs">
+              <div className="text-center py-12 text-slate-400 font-mono text-xs">
                 No active PAL Manifest. Share your app idea in the Chat tab to compile a manifest!
               </div>
             )}
@@ -339,12 +339,12 @@ tools_enabled:
 
         {/* Tab Content: NPAO Tasks */}
         {activeTab === 'npao' && (
-          <div className="flex-1 p-5 overflow-y-auto space-y-4">
-            <div className="pb-3 border-b border-zinc-800 flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-sky-400 uppercase">
+          <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-white">
+            <div className="pb-3 border-b border-slate-200 flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
                 NPAO 5D Phase Sequencer
               </span>
-              <span className="text-[10px] font-mono text-zinc-500">
+              <span className="text-[10px] font-mono text-slate-400">
                 Necessity → Anxiety → Priority → Opportunity
               </span>
             </div>
@@ -355,12 +355,12 @@ tools_enabled:
                   key={t.id}
                   className={`p-3.5 rounded-2xl border transition-all ${
                     t.completed
-                      ? 'bg-zinc-900/40 border-zinc-800 opacity-60'
+                      ? 'bg-[#F4F7FB] border-slate-200 opacity-60'
                       : t.category === 'necessity'
-                      ? 'bg-rose-950/20 border-rose-800/50'
+                      ? 'bg-rose-50 border-rose-200'
                       : t.category === 'anxiety'
-                      ? 'bg-amber-950/20 border-amber-800/50'
-                      : 'bg-zinc-900 border-zinc-800'
+                      ? 'bg-amber-50 border-amber-200'
+                      : 'bg-white border-slate-200 shadow-2xs'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -368,24 +368,24 @@ tools_enabled:
                       <div className="flex items-center gap-2 mb-1">
                         <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold uppercase ${
                           t.category === 'necessity'
-                            ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                            ? 'bg-rose-100 text-rose-800 border border-rose-200'
                             : t.category === 'anxiety'
-                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                            : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                            ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                            : 'bg-blue-100 text-[#071B3A] border border-blue-200'
                         }`}>
                           {t.category}
                         </span>
-                        <span className="text-[10px] font-mono text-zinc-400">
+                        <span className="text-[10px] font-mono text-slate-500">
                           Phase: {t.phase}
                         </span>
                       </div>
-                      <div className="text-xs sm:text-sm font-bold text-white">
+                      <div className="text-xs sm:text-sm font-bold text-[#10213F]">
                         {t.title}
                       </div>
-                      <p className="text-[11px] text-zinc-400 mt-1">{t.reason}</p>
+                      <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{t.reason}</p>
                     </div>
 
-                    <span className="text-xs font-mono text-zinc-500 shrink-0">
+                    <span className="text-xs font-mono text-slate-500 shrink-0 font-bold">
                       {t.completed ? '✓ Done' : 'Pending'}
                     </span>
                   </div>
@@ -397,9 +397,9 @@ tools_enabled:
 
         {/* Tab Content: ContextEngine Logs */}
         {activeTab === 'contextengine' && (
-          <div className="flex-1 p-5 overflow-y-auto space-y-3 font-mono">
-            <div className="pb-3 border-b border-zinc-800 flex items-center justify-between text-xs">
-              <span className="font-bold text-emerald-400 uppercase">
+          <div className="flex-1 p-5 overflow-y-auto space-y-3 font-mono bg-white">
+            <div className="pb-3 border-b border-slate-200 flex items-center justify-between text-xs">
+              <span className="font-bold text-[#071B3A] uppercase">
                 ContextEngine Append-Only Ledger
               </span>
               <button
@@ -407,7 +407,7 @@ tools_enabled:
                   ContextEngine.clear();
                   setContextLogs(ContextEngine.getLogs());
                 }}
-                className="text-[10px] text-zinc-500 hover:text-white"
+                className="text-[10px] text-slate-400 hover:text-slate-800 underline"
               >
                 Clear Logs
               </button>
@@ -415,15 +415,15 @@ tools_enabled:
 
             <div className="space-y-2 text-[11px]">
               {contextLogs.map((entry, idx) => (
-                <div key={idx} className="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
-                  <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <div key={idx} className="p-3 rounded-xl bg-[#F4F7FB] border border-slate-200 shadow-2xs">
+                  <div className="flex items-center justify-between text-slate-400 mb-1">
                     <span>{new Date(entry.timestamp).toLocaleTimeString()}</span>
-                    <span className="text-emerald-400 font-bold">{entry.run_id}</span>
+                    <span className="text-[#2F80ED] font-bold">{entry.run_id}</span>
                   </div>
-                  <div className="text-white font-bold">{entry.actor}</div>
-                  <div className="text-zinc-400 mt-0.5">{entry.action}</div>
+                  <div className="text-[#10213F] font-bold">{entry.actor}</div>
+                  <div className="text-slate-600 mt-0.5">{entry.action}</div>
                   {entry.metadata && Object.keys(entry.metadata).length > 0 && (
-                    <div className="mt-2 pt-2 border-t border-zinc-800 text-[10px] text-cyan-400">
+                    <div className="mt-2 pt-2 border-t border-slate-200 text-[10px] text-[#2F80ED]">
                       Metadata: {JSON.stringify(entry.metadata)}
                     </div>
                   )}

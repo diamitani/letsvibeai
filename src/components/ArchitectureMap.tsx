@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ARCHITECTURE_BLOCKS } from '../data/courseData';
 import { ArchitectureBlock } from '../types';
-import { Play, RotateCcw, ShieldAlert, Sparkles, Copy, Check, ArrowRight, X } from 'lucide-react';
+import { Play, RotateCcw, ShieldAlert, Sparkles, Copy, Check, ArrowRight, X, Layers } from 'lucide-react';
 
 export const ArchitectureMap: React.FC = () => {
   const [selectedBlock, setSelectedBlock] = useState<ArchitectureBlock>(ARCHITECTURE_BLOCKS[0]);
@@ -46,264 +46,192 @@ export const ArchitectureMap: React.FC = () => {
   };
 
   return (
-    <section id="architecture" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="architecture" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-semibold tracking-wider uppercase mb-3">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Module 4 Interactive Visual Blueprint</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
+          <Layers className="w-3.5 h-3.5 text-[#2F80ED]" />
+          <span>Module 4 Interactive Blueprint</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
           The 11 Building Blocks of Web Apps
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-zinc-400">
+        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
           Every revenue-generating SaaS connects these exact same parts. Click any block or simulate a live request.
         </p>
 
-        {/* Simulation Action Bar */}
-        <div className="mt-6 flex items-center justify-center gap-4">
+        {/* Live Simulation Control Button */}
+        <div className="mt-6 flex justify-center">
           <button
             onClick={runSimulation}
             disabled={isSimulating}
-            className={`px-6 py-3 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2.5 transition-all shadow-lg ${
+            className={`inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-xs sm:text-sm font-bold transition-all shadow-md ${
               isSimulating
-                ? 'bg-cyan-500/30 text-cyan-200 border border-cyan-500/50 cursor-not-allowed animate-pulse'
-                : 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black hover:opacity-90 active:scale-95 shadow-emerald-500/20'
+                ? 'bg-blue-50 text-[#2F80ED] border border-blue-200 animate-pulse'
+                : 'bg-[#071B3A] text-white hover:bg-[#10213F] active:scale-95'
             }`}
           >
-            {isSimulating ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4 fill-black" />}
-            <span>{isSimulating ? 'Simulating Request Flow...' : 'Simulate Live User Request Flow'}</span>
+            {isSimulating ? (
+              <>
+                <RotateCcw className="w-4 h-4 animate-spin text-[#2F80ED]" />
+                <span>Simulating Request Flow...</span>
+              </>
+            ) : (
+              <>
+                <Play className="w-4 h-4 fill-white text-white" />
+                <span>Simulate Live User Request Flow</span>
+              </>
+            )}
           </button>
         </div>
 
-        {/* Active Simulation Step Indicator */}
+        {/* Live Simulation Step Pill */}
         {isSimulating && (
-          <div className="mt-4 inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-cyan-950/70 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-semibold">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+          <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#2F80ED] font-mono text-xs font-semibold animate-in fade-in">
+            <span className="w-2 h-2 rounded-full bg-[#2F80ED] animate-ping" />
             <span>{simSteps[simulationStep]?.label}</span>
           </div>
         )}
       </div>
 
-      {/* Main Graph & Inspector Grid */}
+      {/* Main Architecture Interactive Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left: 11-Block Interactive Visual Map (7 cols) */}
-        <div className="lg:col-span-7 bg-zinc-900/70 rounded-3xl border border-zinc-800 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
-          
-          {/* Layer 1: Client Surfaces */}
-          <div className="mb-6">
-            <div className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider mb-3">
-              1. Client Layer (Browser)
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {ARCHITECTURE_BLOCKS.filter((b) => b.layer === 'client').map((block) => {
-                const isSelected = selectedBlock.id === block.id;
-                const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => setSelectedBlock(block)}
-                    className={`p-4 rounded-2xl text-left border transition-all relative overflow-hidden group ${
-                      isSimActive
-                        ? 'border-cyan-400 bg-cyan-950/60 shadow-lg shadow-cyan-500/30 scale-105'
-                        : isSelected
-                        ? 'border-emerald-400 bg-emerald-950/40 shadow-md shadow-emerald-500/20'
-                        : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700 hover:bg-zinc-850'
-                    }`}
-                  >
-                    <div className="text-xl mb-2">{block.analogyIcon}</div>
-                    <div className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
-                      {block.name}
-                    </div>
-                    <div className="text-[11px] font-mono text-zinc-400 mt-1 truncate">
-                      {block.defaultTool.split('+')[0]}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+        {/* Left: 11 Blocks Grid (7 cols) */}
+        <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+          {ARCHITECTURE_BLOCKS.map((block, idx) => {
+            const isSelected = selectedBlock.id === block.id;
+            const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
 
-          {/* Layer 2: Auth Gatekeeper */}
-          <div className="mb-6">
-            <div className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider mb-3">
-              2. Authentication Gateway
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {ARCHITECTURE_BLOCKS.filter((b) => b.layer === 'gateway').map((block) => {
-                const isSelected = selectedBlock.id === block.id;
-                const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => setSelectedBlock(block)}
-                    className={`p-4 rounded-2xl text-left border transition-all group ${
+            return (
+              <button
+                key={block.id}
+                onClick={() => setSelectedBlock(block)}
+                className={`p-4 rounded-2xl text-left border transition-all relative flex flex-col justify-between min-h-[110px] ${
+                  isSimActive
+                    ? 'bg-blue-50 border-[#2F80ED] shadow-lg scale-105 ring-2 ring-[#2F80ED]/30'
+                    : isSelected
+                    ? 'bg-white border-[#071B3A] shadow-md ring-1 ring-[#071B3A]'
+                    : 'bg-[#F4F7FB] border-slate-200/80 hover:bg-white hover:border-slate-300 hover:shadow-xs'
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-2">
+                  <span className="text-[10px] font-mono font-bold text-slate-400">
+                    #{idx + 1}
+                  </span>
+                  <span
+                    className={`w-2 h-2 rounded-full ${
                       isSimActive
-                        ? 'border-cyan-400 bg-cyan-950/60 shadow-lg shadow-cyan-500/30 scale-105'
+                        ? 'bg-[#2F80ED] animate-ping'
                         : isSelected
-                        ? 'border-emerald-400 bg-emerald-950/40'
-                        : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700'
+                        ? 'bg-[#34D399]'
+                        : 'bg-slate-300'
                     }`}
-                  >
-                    <div className="text-xl mb-2">{block.analogyIcon}</div>
-                    <div className="text-sm font-bold text-white">{block.name}</div>
-                    <div className="text-[11px] font-mono text-cyan-400 mt-1">{block.defaultTool}</div>
-                  </button>
-                );
-              })}
-              {ARCHITECTURE_BLOCKS.filter((b) => b.id === 'server').map((block) => {
-                const isSelected = selectedBlock.id === block.id;
-                const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => setSelectedBlock(block)}
-                    className={`p-4 rounded-2xl text-left border transition-all group ${
-                      isSimActive
-                        ? 'border-cyan-400 bg-cyan-950/60 shadow-lg shadow-cyan-500/30 scale-105'
-                        : isSelected
-                        ? 'border-emerald-400 bg-emerald-950/40'
-                        : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700'
-                    }`}
-                  >
-                    <div className="text-xl mb-2">{block.analogyIcon}</div>
-                    <div className="text-sm font-bold text-white">{block.name}</div>
-                    <div className="text-[11px] font-mono text-emerald-400 mt-1">{block.defaultTool}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+                  />
+                </div>
 
-          {/* Layer 3: Persistence (Database & Storage) */}
-          <div className="mb-6">
-            <div className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider mb-3">
-              3. Persistence & Vault
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {ARCHITECTURE_BLOCKS.filter((b) => b.layer === 'persistence').map((block) => {
-                const isSelected = selectedBlock.id === block.id;
-                const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => setSelectedBlock(block)}
-                    className={`p-4 rounded-2xl text-left border transition-all group ${
-                      isSimActive
-                        ? 'border-cyan-400 bg-cyan-950/60 shadow-lg shadow-cyan-500/30 scale-105'
-                        : isSelected
-                        ? 'border-emerald-400 bg-emerald-950/40'
-                        : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700'
-                    }`}
-                  >
-                    <div className="text-xl mb-2">{block.analogyIcon}</div>
-                    <div className="text-sm font-bold text-white">{block.name}</div>
-                    <div className="text-[11px] font-mono text-zinc-400 mt-1 truncate">{block.defaultTool}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Layer 4: External Services (Payments, Agent, Deployment) */}
-          <div>
-            <div className="text-[11px] font-mono font-bold text-zinc-500 uppercase tracking-wider mb-3">
-              4. External Engines & Infrastructure
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-              {ARCHITECTURE_BLOCKS.filter((b) => b.layer === 'external' && b.id !== 'server').map((block) => {
-                const isSelected = selectedBlock.id === block.id;
-                const isSimActive = isSimulating && simSteps[simulationStep]?.id === block.id;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => setSelectedBlock(block)}
-                    className={`p-3 rounded-2xl text-left border transition-all group ${
-                      isSimActive
-                        ? 'border-cyan-400 bg-cyan-950/60 shadow-lg shadow-cyan-500/30 scale-105'
-                        : isSelected
-                        ? 'border-emerald-400 bg-emerald-950/40'
-                        : 'border-zinc-800 bg-zinc-900 hover:border-zinc-700'
-                    }`}
-                  >
-                    <div className="text-lg mb-1">{block.analogyIcon}</div>
-                    <div className="text-xs font-bold text-white leading-snug">{block.name}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
+                <div>
+                  <h4 className={`text-xs font-bold leading-tight ${isSelected ? 'text-[#10213F]' : 'text-slate-700'}`}>
+                    {block.name}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                    {block.analogy}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Right: Block Deep Dive Inspector (5 cols) */}
-        <div className="lg:col-span-5 bg-zinc-900/90 rounded-3xl border border-zinc-800 p-6 sm:p-8 backdrop-blur-xl shadow-2xl sticky top-24">
+        {/* Right: Selected Block Deep-Dive Inspector Card (5 cols) */}
+        <div className="lg:col-span-5 bg-[#F4F7FB] border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col gap-5 text-left">
           
-          {/* Header */}
-          <div className="flex items-start justify-between gap-4 pb-6 border-b border-zinc-800">
+          {/* Header with Title and Tools */}
+          <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-200">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl">{selectedBlock.analogyIcon}</span>
-                <span className="text-xs font-mono font-bold text-emerald-400 tracking-wider uppercase">
-                  Analogy: {selectedBlock.analogy}
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
+                  {selectedBlock.layer} Layer
+                </span>
+                <span className="text-slate-400">•</span>
+                <span className="text-xs font-semibold text-slate-500">
+                  {selectedBlock.analogy}
                 </span>
               </div>
-              <h3 className="text-2xl font-extrabold text-white">{selectedBlock.name}</h3>
+              <h3 className="text-xl font-extrabold text-[#10213F]">
+                {selectedBlock.name}
+              </h3>
+            </div>
+            <div className="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-mono font-bold text-[#10213F] shadow-xs">
+              {selectedBlock.defaultTool}
             </div>
           </div>
 
-          {/* Plain English Role */}
-          <div className="mt-5">
-            <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider mb-1.5">
-              What it does (Plain English)
-            </h4>
-            <p className="text-sm text-zinc-300 leading-relaxed">{selectedBlock.role}</p>
+          {/* Plain English Description */}
+          <div>
+            <h5 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+              Role & Responsibility
+            </h5>
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              {selectedBlock.role}
+            </p>
           </div>
 
-          {/* Recommended Tool & Alternatives */}
-          <div className="mt-5 p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800/80">
-            <div className="text-xs font-mono font-bold text-emerald-400 mb-1">
-              ✓ Recommended Standard Tool
+          {/* Security Rule / Invariant */}
+          <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-2.5 text-amber-900 text-xs">
+            <ShieldAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-bold">Security Rule: </span>
+              <span>{selectedBlock.securityNote}</span>
             </div>
-            <div className="text-sm font-bold text-white font-mono">{selectedBlock.defaultTool}</div>
-            
-            <div className="mt-3 pt-3 border-t border-zinc-800/80 flex items-center gap-2 flex-wrap text-xs text-zinc-400">
-              <span className="font-mono text-zinc-500">Alternatives:</span>
-              {selectedBlock.alternatives.map((alt, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[11px]">
-                  {alt}
+          </div>
+
+          {/* Tools List */}
+          <div>
+            <h5 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              Standard Tool & Alternatives
+            </h5>
+            <div className="flex flex-wrap gap-1.5">
+              <span className="px-2.5 py-1 bg-[#071B3A] text-white rounded-lg text-xs font-bold shadow-xs">
+                {selectedBlock.defaultTool}
+              </span>
+              {selectedBlock.alternatives?.map((t: string, idx: number) => (
+                <span
+                  key={idx}
+                  className="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 shadow-xs"
+                >
+                  {t}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* Security & Scalability Note */}
-          <div className="mt-5 p-4 rounded-2xl bg-rose-950/20 border border-rose-900/40">
-            <div className="flex items-center gap-2 text-rose-400 text-xs font-mono font-bold mb-1">
-              <ShieldAlert className="w-3.5 h-3.5" />
-              <span>Architectural Rule & Security</span>
-            </div>
-            <p className="text-xs text-zinc-300 leading-relaxed">{selectedBlock.securityNote}</p>
-          </div>
-
-          {/* Copy-Paste Prompt Template for this Block */}
-          <div className="mt-5">
+          {/* Copyable Architect Prompt */}
+          <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-mono font-bold text-zinc-400 uppercase">
-                Copy Prompt for Coding Agent
+              <span className="text-[10px] font-mono font-bold text-[#2F80ED] uppercase">
+                Copy Prompt for AI Agents
               </span>
               <button
                 onClick={() => handleCopyPrompt(selectedBlock.promptExample)}
-                className="flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-mono"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-[#10213F] font-bold"
               >
-                {copiedPrompt ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedPrompt ? 'Copied!' : 'Copy'}</span>
+                {copiedPrompt ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-[#34D399]" />
+                    <span className="text-[#34D399]">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy</span>
+                  </>
+                )}
               </button>
             </div>
-            <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs text-emerald-300/90 leading-relaxed select-all">
-              "{selectedBlock.promptExample}"
-            </div>
+            <pre className="text-xs font-mono text-slate-800 bg-[#F4F7FB] p-3 rounded-xl overflow-x-auto whitespace-pre-wrap leading-relaxed border border-slate-200/60">
+              {selectedBlock.promptExample}
+            </pre>
           </div>
 
         </div>

@@ -99,23 +99,23 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
   };
 
   return (
-    <section id="curriculum" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="curriculum" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white border-t border-slate-200">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold tracking-wider uppercase mb-3">
-          <BookOpen className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
+          <BookOpen className="w-3.5 h-3.5 text-[#2F80ED]" />
           <span>Complete 10-Module Syllabus</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
           From Concept to Production App
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-zinc-400">
+        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
           Each module includes plain-English theory, a real-world analogy, copy-paste prompts, an exercise, and an interactive 3-question knowledge check.
         </p>
       </div>
 
       {/* Modules Accordion List */}
-      <div className="space-y-4 max-w-5xl mx-auto">
+      <div className="space-y-4 max-w-5xl mx-auto text-left">
         {COURSE_MODULES.map((mod) => {
           const isExpanded = expandedModuleId === mod.id;
           const isCompleted = completedModules.includes(mod.id);
@@ -126,8 +126,8 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
               key={mod.id}
               className={`rounded-3xl border transition-all duration-200 overflow-hidden ${
                 isExpanded
-                  ? 'bg-zinc-900 border-zinc-700/80 shadow-2xl'
-                  : 'bg-zinc-900/60 border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-900'
+                  ? 'bg-white border-[#071B3A] shadow-lg ring-1 ring-[#071B3A]'
+                  : 'bg-[#F4F7FB] border-slate-200 hover:border-slate-300 hover:bg-white shadow-xs'
               }`}
             >
               {/* Module Top Row Summary */}
@@ -139,31 +139,31 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
                       isCompleted
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                        : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                        ? 'bg-emerald-50 text-[#34D399] border-emerald-200'
+                        : 'bg-white text-[#071B3A] border-slate-200 shadow-2xs'
                     }`}
                   >
-                    {isCompleted ? <CheckCircle2 className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
+                    {isCompleted ? <CheckCircle2 className="w-6 h-6 text-[#34D399]" /> : <Icon className="w-6 h-6 text-[#2F80ED]" />}
                   </div>
 
                   <div className="min-w-0">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-xs font-mono font-bold text-emerald-400">
+                      <span className="text-xs font-mono font-bold text-[#2F80ED]">
                         MODULE {mod.id}
                       </span>
-                      <span className="text-xs text-zinc-500 font-mono flex items-center gap-1">
+                      <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {mod.estimatedHours}
                       </span>
                       {isCompleted && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-[#34D399] border border-emerald-200 font-bold">
                           COMPLETED
                         </span>
                       )}
                     </div>
-                    <h3 className="text-base sm:text-xl font-bold text-white mt-1 truncate">
+                    <h3 className="text-base sm:text-xl font-bold text-[#10213F] mt-1 truncate">
                       {mod.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-zinc-400 mt-0.5 hidden sm:block">
+                    <p className="text-xs sm:text-sm text-slate-600 mt-0.5 hidden sm:block">
                       {mod.tagline}
                     </p>
                   </div>
@@ -175,48 +175,48 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                       e.stopPropagation();
                       openQuiz(mod);
                     }}
-                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-750 border border-zinc-700 text-xs font-mono text-zinc-300 hover:text-white transition-colors"
+                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-bold text-[#10213F] shadow-2xs transition-colors"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+                    <HelpCircle className="w-3.5 h-3.5 text-[#2F80ED]" />
                     <span>Quiz</span>
                   </button>
 
-                  <div className="p-2 text-zinc-400">
-                    {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                  <div className="p-2 text-slate-400">
+                    {isExpanded ? <ChevronUp className="w-5 h-5 text-[#071B3A]" /> : <ChevronDown className="w-5 h-5" />}
                   </div>
                 </div>
               </div>
 
               {/* Module Expanded Details */}
               {isExpanded && (
-                <div className="px-5 sm:px-8 pb-8 pt-2 border-t border-zinc-800/80 space-y-6">
+                <div className="px-5 sm:px-8 pb-8 pt-2 border-t border-slate-200 space-y-6 bg-white">
                   
                   {/* Real World Analogy Box */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800/80">
-                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-cyan-400 uppercase mb-1.5">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#2F80ED] uppercase mb-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>{mod.analogy.title}</span>
                     </div>
-                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed italic">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
                       "{mod.analogy.description}"
                     </p>
                   </div>
 
                   {/* Lessons Grid */}
                   <div>
-                    <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider mb-3">
+                    <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-3">
                       Lesson Breakdown
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {mod.lessons.map((lesson) => (
-                        <div key={lesson.id} className="p-4 rounded-2xl bg-zinc-950/50 border border-zinc-800/60">
-                          <div className="text-xs font-mono text-emerald-400 font-bold mb-1">
+                        <div key={lesson.id} className="p-4 rounded-2xl bg-[#F4F7FB] border border-slate-200 shadow-2xs">
+                          <div className="text-xs font-mono text-[#2F80ED] font-bold mb-1">
                             Lesson {lesson.id}
                           </div>
-                          <div className="text-sm font-bold text-white mb-1.5">
+                          <div className="text-sm font-bold text-[#10213F] mb-1.5">
                             {lesson.title}
                           </div>
-                          <p className="text-xs text-zinc-400 leading-relaxed">
+                          <p className="text-xs text-slate-600 leading-relaxed">
                             {lesson.summary}
                           </p>
                         </div>
@@ -225,39 +225,39 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   </div>
 
                   {/* Copy Prompt for Module */}
-                  <div className="p-5 rounded-2xl bg-zinc-950 border border-zinc-800">
+                  <div className="p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold text-emerald-400 uppercase">
+                        <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
                           {mod.copyPrompt.title}
                         </span>
-                        <span className="text-[11px] font-mono text-zinc-500">
+                        <span className="text-[11px] font-mono text-slate-500">
                           → Saves to {mod.copyPrompt.targetDoc}
                         </span>
                       </div>
                       <button
                         onClick={() => handleCopyPrompt(mod.copyPrompt.prompt, mod.id)}
-                        className="flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-mono"
+                        className="flex items-center gap-1.5 text-xs text-[#071B3A] hover:text-[#2F80ED] font-bold"
                       >
-                        {copiedPromptId === mod.id ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        {copiedPromptId === mod.id ? <Check className="w-3.5 h-3.5 text-[#34D399]" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedPromptId === mod.id ? 'Copied Prompt!' : 'Copy Prompt'}</span>
                       </button>
                     </div>
-                    <pre className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed overflow-x-auto">
+                    <pre className="p-3.5 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-800 whitespace-pre-wrap leading-relaxed overflow-x-auto shadow-2xs">
                       {mod.copyPrompt.prompt}
                     </pre>
                   </div>
 
                   {/* Action Bar (Exercise, Quiz, Completion) */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-xs text-zinc-400">
-                      <strong className="text-white font-mono">Exercise:</strong> {mod.exercise}
+                    <div className="text-xs text-slate-600">
+                      <strong className="text-[#10213F] font-mono">Exercise:</strong> {mod.exercise}
                     </div>
 
                     <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
                       <button
                         onClick={() => openQuiz(mod)}
-                        className="flex-1 sm:flex-initial px-4 py-2 text-xs font-bold text-black bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm"
+                        className="flex-1 sm:flex-initial px-4 py-2 text-xs font-bold text-white bg-[#2F80ED] hover:bg-blue-600 rounded-xl transition-all flex items-center justify-center gap-2 shadow-xs"
                       >
                         <HelpCircle className="w-3.5 h-3.5" />
                         <span>Take 3-Question Quiz</span>
@@ -265,10 +265,10 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
                       <button
                         onClick={() => onToggleCompleteModule(mod.id)}
-                        className={`px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                        className={`px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-center gap-2 shadow-xs ${
                           isCompleted
-                            ? 'bg-emerald-950 text-emerald-400 border-emerald-800'
-                            : 'bg-zinc-800 hover:bg-zinc-750 text-zinc-300 border-zinc-700'
+                            ? 'bg-emerald-50 text-[#34D399] border-emerald-300'
+                            : 'bg-white hover:bg-slate-50 text-[#10213F] border-slate-200'
                         }`}
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
@@ -286,21 +286,21 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
       {/* Interactive Quiz Modal */}
       {activeQuizModule && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left">
             
-            <div className="flex items-start justify-between gap-4 pb-4 border-b border-zinc-800">
+            <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-200">
               <div>
-                <span className="text-xs font-mono font-bold text-emerald-400 uppercase">
+                <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
                   Module {activeQuizModule.id} Knowledge Check
                 </span>
-                <h3 className="text-xl font-bold text-white mt-1">
+                <h3 className="text-xl font-bold text-[#10213F] mt-1">
                   {activeQuizModule.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveQuizModule(null)}
-                className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
+                className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-[#10213F]"
               >
                 ✕
               </button>
@@ -310,28 +310,27 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
             <div className="mt-6 space-y-6">
               {activeQuizModule.quiz.map((q, qIndex) => {
                 const selected = quizAnswers[q.id];
-                const isAnswered = selected !== undefined;
                 const isCorrect = selected === q.correctIndex;
 
                 return (
-                  <div key={q.id} className="p-4 sm:p-5 rounded-2xl bg-zinc-950 border border-zinc-800">
-                    <div className="text-sm font-bold text-white mb-3">
+                  <div key={q.id} className="p-4 sm:p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
+                    <div className="text-sm font-bold text-[#10213F] mb-3">
                       {qIndex + 1}. {q.question}
                     </div>
 
                     <div className="space-y-2">
                       {q.options.map((opt, optIndex) => {
                         const isThisSelected = selected === optIndex;
-                        let optionStyle = 'border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700';
+                        let optionStyle = 'border-slate-200 bg-white text-slate-700 hover:border-slate-300';
 
                         if (quizSubmitted) {
                           if (optIndex === q.correctIndex) {
-                            optionStyle = 'border-emerald-500 bg-emerald-950/60 text-emerald-200 font-semibold';
+                            optionStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold';
                           } else if (isThisSelected && !isCorrect) {
-                            optionStyle = 'border-rose-500 bg-rose-950/60 text-rose-200';
+                            optionStyle = 'border-rose-500 bg-rose-50 text-rose-900';
                           }
                         } else if (isThisSelected) {
-                          optionStyle = 'border-cyan-500 bg-cyan-950/60 text-cyan-200 font-semibold';
+                          optionStyle = 'border-[#2F80ED] bg-blue-50 text-[#071B3A] font-semibold';
                         }
 
                         return (
@@ -342,7 +341,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                           >
                             <span>{opt}</span>
                             {quizSubmitted && optIndex === q.correctIndex && (
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                              <CheckCircle2 className="w-4 h-4 text-[#34D399] shrink-0" />
                             )}
                           </button>
                         );
@@ -352,7 +351,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                     {/* Explanation after submission */}
                     {quizSubmitted && (
                       <div className={`mt-3 p-3 rounded-xl text-xs leading-relaxed ${
-                        isCorrect ? 'bg-emerald-950/40 text-emerald-300' : 'bg-rose-950/40 text-rose-300'
+                        isCorrect ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'
                       }`}>
                         <strong>Explanation:</strong> {q.explanation}
                       </div>
@@ -363,11 +362,11 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
             </div>
 
             {/* Quiz Bottom Submit / Result */}
-            <div className="mt-8 pt-4 border-t border-zinc-800 flex items-center justify-between">
+            <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between">
               {quizSubmitted ? (
                 <div className="flex items-center gap-3">
-                  <div className="text-sm font-mono text-zinc-300">
-                    Score: <strong className="text-white">
+                  <div className="text-sm font-mono text-slate-700">
+                    Score: <strong className="text-[#10213F]">
                       {Object.keys(quizAnswers).filter(k => {
                         const q = activeQuizModule.quiz.find(x => x.id === k);
                         return q && quizAnswers[k] === q.correctIndex;
@@ -376,7 +375,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   </div>
                   <button
                     onClick={() => setActiveQuizModule(null)}
-                    className="px-5 py-2.5 rounded-xl bg-emerald-400 text-black font-bold text-xs"
+                    className="px-5 py-2.5 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-xs shadow-xs"
                   >
                     Done & Close
                   </button>
@@ -385,7 +384,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                 <button
                   onClick={submitQuiz}
                   disabled={Object.keys(quizAnswers).length < activeQuizModule.quiz.length}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-black font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-emerald-500/20"
+                  className="w-full py-3 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition-all"
                 >
                   Submit & Check Answers
                 </button>

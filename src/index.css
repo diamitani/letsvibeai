@@ -5,48 +5,42 @@
 @layer base {
   :root {
     color-scheme: light;
-    --lexio-canvas: #F8F3EC;
-    --lexio-surface: #FFFFFF;
-    --lexio-dark: #281010;
-    --lexio-muted: #706B67;
-    --lexio-border: #EAE3D9;
-    --lexio-coral: #FA5929;
-    --lexio-peach: #FBE1CE;
-    --navy: #281010;
-    --signal-blue: #FA5929;
-    --growth-green: #34D399;
-    --learning-violet: #7C5CFC;
-    --signal-cyan: #20C7D9;
-    --mist: #F8F3EC;
-    --ink: #281010;
+    --token-orange: #ec4909;
+    --token-navy: #020335;
+    --token-dark: #101b24;
+    --token-white: #ffffff;
+    --token-canvas: #f7f4f2;
+    --token-muted: #4a4d4f;
+    --token-yellow: #fcd554;
+    --token-border: rgba(74, 77, 79, 0.12);
   }
   
   html {
     scroll-behavior: smooth;
-    background-color: #F8F3EC;
+    background-color: #f7f4f2;
   }
 
   body {
-    background-color: #F8F3EC;
-    color: #281010;
+    background-color: #f7f4f2;
+    color: #101b24;
     overflow-x: hidden;
-    font-family: 'Plus Jakarta Sans', 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Hanken Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   /* Clean warm scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
   }
   ::-webkit-scrollbar-track {
-    background: #F8F3EC;
+    background: #f7f4f2;
   }
   ::-webkit-scrollbar-thumb {
-    background: #D8D1C7;
+    background: #d8d1c7;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #B5ADA3;
+    background: #b5ada3;
   }
 }
 

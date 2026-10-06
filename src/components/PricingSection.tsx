@@ -8,7 +8,8 @@ import {
   ShieldCheck,
   HelpCircle,
   ChevronDown,
-  ArrowRight
+  ArrowRight,
+  Star
 } from 'lucide-react';
 
 interface PricingSectionProps {
@@ -17,177 +18,155 @@ interface PricingSectionProps {
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) => {
   const [isAnnual, setIsAnnual] = useState(true);
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
-
-  const faqs = [
-    {
-      q: 'Do I get access to all 32 agent skills and templates?',
-      a: 'Yes. Every plan includes full access to the downloadable source code, instruction packs, and Supabase migrations.'
-    },
-    {
-      q: 'Can I build commercial SaaS platforms for clients?',
-      a: 'Yes. All starter templates and agent harnesses are released under the MIT commercial license with no royalties.'
-    },
-    {
-      q: 'What is the 30-day money-back guarantee policy?',
-      a: 'If you complete the first 3 modules and feel this course does not give you 10x value, email us for a full refund.'
-    }
-  ];
 
   return (
     <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-8 border-b border-[#EAE3D9]">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
-            <Zap className="w-3.5 h-3.5 fill-current" />
-            <span>Enrollment & Tuition</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="space-y-3 max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ec4909]/10 border border-[#ec4909]/20 text-[#ec4909] text-xs font-semibold">
+            <Sparkles className="w-3.5 h-3.5 fill-[#ec4909]" />
+            <span>Tuition & Enrollment</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#281010] font-heading">
-            Simple, Transparent <span className="text-[#FA5929]">Tuition Plans</span>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#101b24] tracking-tight leading-[1.15]">
+            Simple, Transparent{' '}
+            <span className="font-serif italic font-normal text-[#ec4909]">
+              Investment Plans.
+            </span>
           </h2>
-          <p className="text-sm text-[#706B67] mt-1 max-w-xl">
-            Choose your enrollment tier. Start building production autonomous agents today.
+
+          <p className="text-base text-[#4a4d4f] leading-relaxed">
+            Choose your enrollment tier. Start building production-grade autonomous agents and SaaS platforms today.
           </p>
         </div>
 
         {/* Annual / Monthly Toggle Switch */}
-        <div className="flex items-center gap-3 bg-[#EDE7DE] p-1.5 rounded-full border border-[#EAE3D9]">
+        <div className="flex items-center gap-2 bg-white p-1.5 rounded-full border border-[#4a4d4f]/10 shadow-xs shrink-0">
           <button
             onClick={() => setIsAnnual(false)}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-              !isAnnual ? 'bg-[#281010] text-white shadow-xs' : 'text-[#706B67] hover:text-[#281010]'
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              !isAnnual ? 'bg-[#101b24] text-white shadow-xs' : 'text-[#4a4d4f] hover:text-[#101b24]'
             }`}
           >
-            Monthly Billing
+            Monthly
           </button>
 
           <button
             onClick={() => setIsAnnual(true)}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-              isAnnual ? 'bg-[#281010] text-white shadow-xs' : 'text-[#706B67] hover:text-[#281010]'
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+              isAnnual ? 'bg-[#101b24] text-white shadow-xs' : 'text-[#4a4d4f] hover:text-[#101b24]'
             }`}
           >
-            <span>Annual (Save 20%)</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-[#FA5929] text-white">
-              PROMO
+            <span>Annual</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-[#ec4909] text-white">
+              Save 20%
             </span>
           </button>
         </div>
       </div>
 
       {/* Pricing Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
         {PRICING_PLANS.map((plan) => {
           const price = isAnnual ? plan.annualPrice : plan.monthlyPrice;
 
           return (
             <div
               key={plan.id}
-              className={`p-8 rounded-3xl transition-all flex flex-col justify-between relative overflow-hidden ${
+              className={`rounded-[28px] p-7 sm:p-8 transition-all flex flex-col justify-between relative overflow-hidden ${
                 plan.featured
-                  ? 'bg-[#281010] text-white border-2 border-[#FA5929] shadow-2xl scale-[1.02]'
-                  : 'bg-white text-[#281010] border border-[#EAE3D9] shadow-xs hover:shadow-md'
+                  ? 'bg-[#101b24] text-white border-2 border-[#ec4909] shadow-2xl shadow-[#ec4909]/15 scale-[1.02]'
+                  : 'bg-white text-[#101b24] border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,27,36,0.08)]'
               }`}
             >
               {plan.featured && (
-                <div className="absolute top-0 right-0 bg-[#FA5929] text-white text-[10px] font-mono font-bold px-4 py-1 rounded-bl-2xl">
-                  MOST POPULAR
+                <div className="absolute top-0 right-0 bg-[#ec4909] text-white text-[10px] font-bold tracking-wider uppercase px-4 py-1.5 rounded-bl-2xl">
+                  Most Popular
                 </div>
               )}
 
-              <div>
-                <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full ${
-                  plan.featured ? 'bg-white/10 text-[#FA5929]' : 'bg-[#FBE1CE] text-[#FA5929]'
-                }`}>
-                  {plan.badge}
-                </span>
+              <div className="space-y-4">
+                <div className="inline-block">
+                  <span className={`text-[11px] font-bold px-3 py-1 rounded-full ${
+                    plan.featured ? 'bg-[#ec4909]/20 text-[#ec4909] border border-[#ec4909]/40' : 'bg-[#f7f4f2] text-[#4a4d4f] border border-[#4a4d4f]/10'
+                  }`}>
+                    {plan.badge}
+                  </span>
+                </div>
 
-                <h3 className={`text-2xl font-black font-heading mt-3 mb-1 ${plan.featured ? 'text-white' : 'text-[#281010]'}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-xs mb-6 ${plan.featured ? 'text-[#D8D1C7]' : 'text-[#706B67]'}`}>
-                  {plan.tagline}
-                </p>
+                <div>
+                  <h3 className={`text-2xl font-black font-sans ${plan.featured ? 'text-white' : 'text-[#101b24]'}`}>
+                    {plan.name}
+                  </h3>
+                  <p className={`text-xs mt-1 leading-relaxed ${plan.featured ? 'text-white/70' : 'text-[#4a4d4f]'}`}>
+                    {plan.tagline}
+                  </p>
+                </div>
 
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className={`text-4xl font-black font-heading ${plan.featured ? 'text-white' : 'text-[#281010]'}`}>
+                {/* Price Display */}
+                <div className="flex items-baseline gap-1 py-2">
+                  <span className={`text-4xl sm:text-5xl font-black ${plan.featured ? 'text-white' : 'text-[#101b24]'}`}>
                     ${price}
                   </span>
-                  <span className={`text-xs ${plan.featured ? 'text-[#A89F91]' : 'text-[#706B67]'}`}>
+                  <span className={`text-xs ${plan.featured ? 'text-white/60' : 'text-[#4a4d4f]'}`}>
                     {isAnnual ? '/year' : '/month'}
                   </span>
                 </div>
 
                 {/* Features List */}
-                <div className="space-y-2.5 pt-4 border-t border-current/10 mb-8">
+                <div className="space-y-3 pt-4 border-t border-current/10">
                   {plan.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs">
-                      <Check className={`w-4 h-4 shrink-0 mt-0.5 ${plan.featured ? 'text-[#FA5929]' : 'text-[#34D399]'}`} />
-                      <span className={plan.featured ? 'text-[#EAE3D9]' : 'text-[#281010]'}>{feat}</span>
+                    <div key={idx} className="flex items-start gap-2.5 text-xs leading-relaxed">
+                      <Check className={`w-4 h-4 shrink-0 mt-0.5 ${plan.featured ? 'text-[#ec4909]' : 'text-[#15803d]'}`} />
+                      <span className={plan.featured ? 'text-white/90' : 'text-[#4a4d4f]'}>{feat}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <button
-                onClick={() => onSelectPlan(plan)}
-                className={`w-full py-3.5 rounded-full text-xs font-extrabold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer ${
-                  plan.featured
-                    ? 'bg-[#FA5929] hover:bg-[#E0491B] text-white shadow-[#FA5929]/30'
-                    : 'bg-[#281010] hover:bg-[#1A0B0B] text-white'
-                }`}
-              >
-                <span>{plan.cta}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              {/* Action Button */}
+              <div className="pt-8">
+                <button
+                  onClick={() => onSelectPlan(plan)}
+                  className={`w-full py-3.5 px-6 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer group ${
+                    plan.featured
+                      ? 'bg-[#ec4909] hover:bg-[#d43f05] text-white shadow-lg shadow-[#ec4909]/30'
+                      : 'bg-[#101b24] hover:bg-[#020335] text-white'
+                  }`}
+                >
+                  <span>{plan.cta}</span>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-transform group-hover:translate-x-0.5 ${
+                    plan.featured ? 'bg-white text-[#ec4909]' : 'bg-white text-[#101b24]'
+                  }`}>
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                </button>
+              </div>
+
             </div>
           );
         })}
       </div>
 
-      {/* 30-Day Guarantee Banner */}
-      <div className="mt-12 p-6 rounded-3xl bg-white border border-[#EAE3D9] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
-        <div className="flex items-center gap-3">
-          <ShieldCheck className="w-8 h-8 text-[#34D399] shrink-0" />
+      {/* 14-Day Guarantee Card */}
+      <div className="mt-12 p-6 sm:p-7 rounded-[26px] bg-white border border-black/[0.06] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5 text-left">
+          <div className="w-11 h-11 rounded-full bg-[#34D399]/15 text-[#15803d] flex items-center justify-center shrink-0">
+            <ShieldCheck className="w-6 h-6" />
+          </div>
           <div>
-            <h4 className="text-sm font-bold text-[#281010]">30-Day Risk-Free Guarantee</h4>
-            <p className="text-xs text-[#706B67]">
-              Build your first production agent or get a 100% full refund with no questions asked.
+            <h4 className="text-sm font-bold text-[#101b24]">14-Day 100% Satisfaction Guarantee</h4>
+            <p className="text-xs text-[#4a4d4f]">
+              Complete the first two modules risk-free. If not completely thrilled, receive an instant full refund.
             </p>
           </div>
         </div>
 
-        <span className="text-xs font-mono font-bold text-[#FA5929] bg-[#FBE1CE] px-3.5 py-1.5 rounded-full border border-[#FCAA91]/60 shrink-0">
-          GUARANTEED ROI
+        <span className="text-xs font-bold text-[#ec4909] bg-[#ec4909]/10 px-4 py-1.5 rounded-full border border-[#ec4909]/20 shrink-0">
+          Zero Risk Guarantee
         </span>
-      </div>
-
-      {/* FAQ Accordion */}
-      <div className="mt-12 space-y-3 max-w-3xl mx-auto">
-        <h3 className="text-xl font-bold text-[#281010] font-heading text-center mb-6">
-          Frequently Asked Questions
-        </h3>
-
-        {faqs.map((faq, idx) => (
-          <div
-            key={idx}
-            onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-            className="p-5 rounded-2xl bg-white border border-[#EAE3D9] cursor-pointer hover:border-[#FA5929] transition-all"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#281010]">{faq.q}</span>
-              <ChevronDown className={`w-4 h-4 text-[#706B67] transition-transform ${activeFaq === idx ? 'rotate-180 text-[#FA5929]' : ''}`} />
-            </div>
-
-            {activeFaq === idx && (
-              <p className="text-xs text-[#706B67] mt-3 leading-relaxed border-t border-[#EAE3D9] pt-3 animate-in fade-in">
-                {faq.a}
-              </p>
-            )}
-          </div>
-        ))}
       </div>
 
     </section>

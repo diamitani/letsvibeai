@@ -101,133 +101,95 @@ export const ArchitectureMap: React.FC = () => {
     }
   ];
 
-  const currentStage = stages[activeStage];
+  const current = stages[activeStage];
 
-  const handleCopySchema = () => {
-    navigator.clipboard.writeText(JSON.stringify(currentStage.schema, null, 2));
+  const handleCopy = () => {
+    navigator.clipboard.writeText(JSON.stringify(current.schema, null, 2));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <section id="architecture" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
+    <div className="bg-white rounded-[32px] p-7 sm:p-9 border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] text-left space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-8 border-b border-[#EAE3D9]">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#4a4d4f]/10">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ec4909]/10 border border-[#ec4909]/20 text-[#ec4909] text-xs font-semibold">
             <Layers className="w-3.5 h-3.5" />
             <span>Architecture Doctrine</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#281010] font-heading">
-            The PAL <span className="text-[#FA5929]">Pipeline & Blueprint</span>
-          </h2>
-          <p className="text-sm text-[#706B67] mt-1 max-w-xl">
-            Parse, Ambiguity Scan, Latent Intent, Expand, and Compile before writing production code.
+          <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[#101b24] font-sans">
+            The PAL <span className="text-[#ec4909]">Pipeline Architecture</span>
+          </h3>
+          <p className="text-xs sm:text-sm text-[#4a4d4f]">
+            Parse → Ambiguity Scan → Expand → Compile. Our systematic doctrine for building autonomous systems.
           </p>
         </div>
 
-        {/* 4 Stage Pills */}
-        <div className="flex items-center gap-1.5 flex-wrap bg-[#EDE7DE] p-1.5 rounded-full border border-[#EAE3D9]">
+        {/* Stage Switcher Pills */}
+        <div className="flex items-center gap-1.5 flex-wrap bg-[#f7f4f2] p-1.5 rounded-full border border-[#4a4d4f]/10">
           {stages.map((st) => (
             <button
               key={st.id}
               onClick={() => setActiveStage(st.id)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeStage === st.id
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24]'
               }`}
             >
-              {st.title.split(' ')[0]}
+              {st.phase}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Interactive 2-Column Stage Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* Stage Visual Details */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Left Column: Stage Breakdown (6 cols) */}
-        <div className="lg:col-span-6 space-y-4">
-          <div className="p-8 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
-            <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60">
-              {currentStage.phase}
+        {/* Left Breakdown (5 cols) */}
+        <div className="lg:col-span-5 p-6 rounded-2xl bg-[#f7f4f2] border border-[#4a4d4f]/10 space-y-4">
+          <div>
+            <span className="text-[10px] font-mono font-bold text-[#ec4909] uppercase">
+              {current.phase}
             </span>
+            <h4 className="text-xl font-bold text-[#101b24] mt-0.5">
+              {current.title}
+            </h4>
+            <p className="text-xs text-[#4a4d4f] mt-1">{current.subtitle}</p>
+          </div>
 
-            <h3 className="text-2xl font-black text-[#281010] font-heading mt-2 mb-1">
-              {currentStage.title}
-            </h3>
-            <p className="text-xs text-[#706B67] mb-6">{currentStage.subtitle}</p>
-
-            <div className="space-y-3 pt-4 border-t border-[#EAE3D9]">
-              {currentStage.details.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3 text-xs text-[#281010]">
-                  <CheckCircle2 className="w-4 h-4 text-[#FA5929] shrink-0 mt-0.5" />
-                  <span className="leading-relaxed font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Navigation Switcher */}
-            <div className="mt-8 pt-4 border-t border-[#EAE3D9] flex items-center justify-between">
-              <button
-                onClick={() => setActiveStage((prev) => Math.max(0, prev - 1))}
-                disabled={activeStage === 0}
-                className="px-4 py-2 rounded-full bg-[#F8F3EC] text-xs font-bold text-[#706B67] hover:text-[#281010] disabled:opacity-30 border border-[#EAE3D9]"
-              >
-                ← Previous Stage
-              </button>
-
-              <span className="text-xs font-mono font-bold text-[#281010]">
-                {activeStage + 1} of {stages.length}
-              </span>
-
-              <button
-                onClick={() => setActiveStage((prev) => Math.min(stages.length - 1, prev + 1))}
-                disabled={activeStage === stages.length - 1}
-                className="px-4 py-2 rounded-full bg-[#FA5929] text-xs font-bold text-white hover:bg-[#E0491B] disabled:opacity-30 shadow-xs"
-              >
-                Next Stage →
-              </button>
-            </div>
+          <div className="space-y-2.5 pt-2 border-t border-[#4a4d4f]/10">
+            {current.details.map((item, idx) => (
+              <div key={idx} className="flex items-start gap-2 text-xs text-[#101b24]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#ec4909] shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Right Column: Live Compiled JSON Spec (6 cols) */}
-        <div className="lg:col-span-6 p-6 sm:p-8 rounded-3xl bg-[#281010] text-white border border-[#FA5929]/20 shadow-2xl">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-[#FA5929]" />
-              <span className="text-xs font-mono font-bold text-[#D8D1C7]">
-                pal-manifest.{currentStage.phase.toLowerCase().replace(' ', '_')}.json
-              </span>
-            </div>
-
+        {/* Right JSON Schema Output (7 cols) */}
+        <div className="lg:col-span-7 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-mono text-[#4a4d4f]">stage_contract.json</span>
             <button
-              onClick={handleCopySchema}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-mono text-[#D8D1C7] transition-colors"
+              onClick={handleCopy}
+              className="px-3 py-1 rounded-full bg-[#f7f4f2] hover:bg-[#101b24] hover:text-white text-[#101b24] text-xs font-mono transition-all flex items-center gap-1 cursor-pointer"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#34D399]" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied' : 'Copy JSON'}</span>
+              {copied ? <Check className="w-3 h-3 text-[#15803d]" /> : <Copy className="w-3 h-3" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
 
-          <pre className="p-4 rounded-2xl bg-[#160E0E] font-mono text-xs text-[#EAE3D9] overflow-x-auto leading-relaxed border border-white/5 max-h-[300px]">
-            {JSON.stringify(currentStage.schema, null, 2)}
+          <pre className="p-4 rounded-2xl bg-[#101b24] text-[#f7f4f2] font-mono text-xs overflow-x-auto leading-relaxed border border-black/10 min-h-[220px]">
+            {JSON.stringify(current.schema, null, 2)}
           </pre>
-
-          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-[#A89F91]">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#34D399]" />
-              <span>Immutable Artifact Checksum Verified</span>
-            </span>
-            <span className="font-mono text-[11px] text-[#FA5929]">PAL-v1.0.0</span>
-          </div>
         </div>
 
       </div>
 
-    </section>
+    </div>
   );
 };

@@ -75,33 +75,33 @@ export const DocumentStackViewer: React.FC = () => {
   };
 
   return (
-    <section id="docs" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
+    <div className="bg-white rounded-[32px] p-7 sm:p-9 border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] text-left space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-8 border-b border-[#EAE3D9]">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#4a4d4f]/10">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ec4909]/10 border border-[#ec4909]/20 text-[#ec4909] text-xs font-semibold">
             <FileText className="w-3.5 h-3.5" />
             <span>Architecture Artifacts</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[#281010] font-heading">
-            Production Document <span className="text-[#FA5929]">Stack</span>
-          </h2>
-          <p className="text-sm text-[#706B67] mt-1 max-w-xl">
-            Explore the exact specifications and PRD templates included in the course downloads.
+          <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[#101b24] font-sans">
+            Production Document <span className="text-[#ec4909]">Stack</span>
+          </h3>
+          <p className="text-xs sm:text-sm text-[#4a4d4f]">
+            Explore the exact specifications and PRD templates included in the verified course downloads.
           </p>
         </div>
 
         {/* Document Selection Pills */}
-        <div className="flex items-center gap-1.5 flex-wrap bg-[#EDE7DE] p-1.5 rounded-full border border-[#EAE3D9]">
+        <div className="flex items-center gap-1.5 flex-wrap bg-[#f7f4f2] p-1.5 rounded-full border border-[#4a4d4f]/10">
           {documents.map((doc, idx) => (
             <button
               key={doc.id}
               onClick={() => setActiveDocIndex(idx)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeDocIndex === idx
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24]'
               }`}
             >
               Doc {doc.id}
@@ -110,49 +110,55 @@ export const DocumentStackViewer: React.FC = () => {
         </div>
       </div>
 
-      {/* Document Inspector Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* Document Content Split */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Left: Metadata & Breakdown (5 cols) */}
-        <div className="lg:col-span-5 p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs space-y-4">
-          <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60">
-            {currentDoc.filename}
-          </span>
-          <h3 className="text-xl font-bold text-[#281010] font-heading">{currentDoc.title}</h3>
-          <p className="text-xs text-[#706B67] leading-relaxed">{currentDoc.summary}</p>
+        {/* Left Metadata (5 cols) */}
+        <div className="lg:col-span-5 p-6 rounded-2xl bg-[#f7f4f2] border border-[#4a4d4f]/10 space-y-4">
+          <div>
+            <span className="text-[10px] font-mono font-bold text-[#ec4909] uppercase">
+              {currentDoc.filename}
+            </span>
+            <h4 className="text-xl font-bold text-[#101b24] mt-0.5">
+              {currentDoc.title}
+            </h4>
+            <p className="text-xs text-[#4a4d4f] mt-1">{currentDoc.summary}</p>
+          </div>
 
-          <div className="pt-4 border-t border-[#EAE3D9] space-y-2 text-xs">
-            <div className="flex items-center justify-between text-[#706B67]">
-              <span>Document Owner:</span>
-              <strong className="text-[#281010]">{currentDoc.owner}</strong>
+          <div className="space-y-2 pt-2 border-t border-[#4a4d4f]/10 text-xs text-[#101b24]">
+            <div className="flex items-center justify-between">
+              <span className="text-[#4a4d4f]">Document Owner:</span>
+              <strong className="font-bold">{currentDoc.owner}</strong>
             </div>
-            <div className="flex items-center justify-between text-[#706B67]">
-              <span>Verification Gate:</span>
-              <strong className="text-[#34D399]">Well-Architected Pass</strong>
+            <div className="flex items-center justify-between">
+              <span className="text-[#4a4d4f]">Review Status:</span>
+              <span className="px-2 py-0.5 rounded-full bg-[#34D399]/20 text-[#15803d] font-bold text-[10px]">
+                Approved v1.0
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Right: Markdown Content Viewer (7 cols) */}
-        <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-[#281010] text-white border border-[#FA5929]/20 shadow-2xl space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <span className="text-xs font-mono text-[#D8D1C7]">{currentDoc.filename}</span>
+        {/* Right Markdown Viewer (7 cols) */}
+        <div className="lg:col-span-7 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-mono text-[#4a4d4f]">{currentDoc.filename}</span>
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-mono text-[#D8D1C7] transition-colors"
+              className="px-3 py-1 rounded-full bg-[#f7f4f2] hover:bg-[#101b24] hover:text-white text-[#101b24] text-xs font-mono transition-all flex items-center gap-1 cursor-pointer"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#34D399]" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Copied' : 'Copy Doc'}</span>
+              {copied ? <Check className="w-3 h-3 text-[#15803d]" /> : <Copy className="w-3 h-3" />}
+              <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
 
-          <pre className="p-4 rounded-2xl bg-[#160E0E] font-mono text-xs text-[#EAE3D9] overflow-x-auto leading-relaxed border border-white/5 max-h-[260px]">
+          <pre className="p-4 rounded-2xl bg-[#101b24] text-[#f7f4f2] font-mono text-xs overflow-x-auto leading-relaxed border border-black/10 min-h-[220px]">
             {currentDoc.content}
           </pre>
         </div>
 
       </div>
 
-    </section>
+    </div>
   );
 };

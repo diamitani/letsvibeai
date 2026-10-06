@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
-  BookOpen,
-  Cpu,
-  Layers,
-  ShoppingBag,
   Search,
   User,
   Menu,
   X,
-  Play,
-  Terminal,
   ArrowRight,
-  ShieldCheck,
-  CheckCircle2
+  GraduationCap,
+  Layers,
+  Terminal,
+  FileCode,
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -34,6 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeSection,
   setActiveSection,
   onOpenSearch,
+  onOpenAgent,
   onOpenAuth,
   completedModulesCount = 1,
   user
@@ -64,17 +62,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 pb-2 transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 transition-all duration-300">
       <div
         className={`max-w-7xl mx-auto rounded-full transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#F8F3EC]/90 backdrop-blur-xl border border-[#EAE3D9] shadow-lg shadow-black/5 py-2.5 px-4 sm:px-6'
-            : 'bg-[#F8F3EC]/70 backdrop-blur-md border border-[#EAE3D9]/80 py-3 px-4 sm:px-6'
+            ? 'bg-white/95 backdrop-blur-xl border border-[#4a4d4f]/10 shadow-[0_10px_30px_-10px_rgba(16,27,36,0.08)] py-2.5 px-4 sm:px-6'
+            : 'bg-white/80 backdrop-blur-md border border-[#4a4d4f]/10 shadow-[0_4px_20px_-4px_rgba(16,27,36,0.04)] py-3 px-4 sm:px-6'
         }`}
       >
         <div className="flex items-center justify-between gap-4">
           
-          {/* Brand Logo & Tagline */}
+          {/* Brand Logo - Openclass style with Gateway mark */}
           <button
             onClick={() => {
               setCurrentView('saas');
@@ -82,51 +80,90 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
             className="flex items-center gap-3 group text-left shrink-0 cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-full bg-[#281010] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform relative">
-              <span className="font-heading font-black text-sm tracking-tighter">LV</span>
-              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#FA5929] border-2 border-[#F8F3EC]" />
+            <div className="w-9 h-9 rounded-full bg-[#101b24] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform relative overflow-hidden">
+              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white">
+                <path d="M4 6L12 18L20 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="11" r="2.5" fill="#ec4909" />
+              </svg>
             </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-heading font-extrabold text-sm tracking-tight text-[#281010] flex items-center gap-1.5">
-                LetsVibeAI
-                <span className="text-[10px] font-mono font-bold px-2 py-0.2 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60">
-                  ACADEMY
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="font-sans font-black text-base tracking-tight text-[#101b24]">
+                  LetsVibe<span className="text-[#ec4909]">AI</span>
                 </span>
-              </span>
-              <span className="text-[10px] text-[#706B67] font-medium tracking-wide">
-                Vibe Coding & Agent Harnesses
-              </span>
+                <span className="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#ec4909]/10 text-[#ec4909] border border-[#ec4909]/20">
+                  LIVEBUILD
+                </span>
+              </div>
             </div>
           </button>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#EDE7DE]/80 p-1.5 rounded-full border border-[#EAE3D9]">
+          {/* Desktop Navigation Menu Links */}
+          <nav className="hidden lg:flex items-center gap-1 bg-[#f7f4f2] p-1.5 rounded-full border border-[#4a4d4f]/10">
             <button
-              onClick={() => {
-                setCurrentView('saas');
-                handleNavClick('curriculum');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              onClick={() => handleNavClick('hero')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                currentView === 'saas' && activeSection === 'hero'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              }`}
+            >
+              Home
+            </button>
+
+            <button
+              onClick={() => handleNavClick('about-mentor')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                currentView === 'saas' && activeSection === 'about-mentor'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              }`}
+            >
+              About
+            </button>
+
+            <button
+              onClick={() => handleNavClick('courses')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                currentView === 'saas' && activeSection === 'courses'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              }`}
+            >
+              Courses
+            </button>
+
+            <button
+              onClick={() => handleNavClick('curriculum')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
                 currentView === 'saas' && activeSection === 'curriculum'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
               }`}
             >
               Curriculum (10)
             </button>
 
             <button
-              onClick={() => {
-                setCurrentView('saas');
-                handleNavClick('architecture');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-                currentView === 'saas' && activeSection === 'architecture'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+              onClick={() => handleNavClick('how-it-works')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                currentView === 'saas' && activeSection === 'how-it-works'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
               }`}
             >
-              Architecture
+              How It Works
+            </button>
+
+            <button
+              onClick={() => handleNavClick('sandboxes')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                currentView === 'saas' && activeSection === 'sandboxes'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              }`}
+            >
+              Sandbox
             </button>
 
             <button
@@ -134,130 +171,79 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setCurrentView('agent-platform');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
                 currentView === 'agent-platform'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
               }`}
             >
-              <span>Skills Hub</span>
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#FBE1CE] text-[#FA5929] font-bold">
-                32
-              </span>
+              <Sparkles className="w-3 h-3 text-[#ec4909]" />
+              Agent Hub
             </button>
 
             <button
-              onClick={() => {
-                setCurrentView('harness-mastery');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-                currentView === 'harness-mastery'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
-              }`}
-            >
-              <Play className="w-3 h-3 text-[#FA5929]" />
-              <span>Harnesses</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setCurrentView('skills-library');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-                currentView === 'skills-library'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
-              }`}
-            >
-              Library
-            </button>
-
-            <button
-              onClick={() => {
-                setCurrentView('marketplace');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-                currentView === 'marketplace'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
-              }`}
-            >
-              Templates
-            </button>
-
-            <button
-              onClick={() => {
-                setCurrentView('saas');
-                handleNavClick('pricing');
-              }}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+              onClick={() => handleNavClick('pricing')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
                 currentView === 'saas' && activeSection === 'pricing'
-                  ? 'bg-[#281010] text-white shadow-xs'
-                  : 'text-[#706B67] hover:text-[#281010] hover:bg-white/60'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
               }`}
             >
-              Tuition
+              Pricing
             </button>
           </nav>
 
-          {/* Right Action Controls */}
+          {/* Action Buttons: Search, AI Coach, and Primary Openclass CTA */}
           <div className="flex items-center gap-2 sm:gap-3">
-            
-            {/* Quick Search Shortcut */}
+            {/* Command Palette Trigger */}
             <button
               onClick={onOpenSearch}
-              className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-[#EAE3D9] text-[#706B67] hover:text-[#281010] text-xs font-medium shadow-2xs hover:border-[#FA5929] transition-colors"
+              className="p-2 sm:px-3 sm:py-1.5 rounded-full bg-[#f7f4f2] hover:bg-white text-[#4a4d4f] hover:text-[#101b24] border border-[#4a4d4f]/10 text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer"
+              title="Search curriculum & tools (Cmd+K)"
             >
-              <Search className="w-3.5 h-3.5 text-[#FA5929]" />
-              <span className="text-[11px]">Search Academy</span>
-              <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#F8F3EC] border border-[#EAE3D9] text-[#706B67]">
+              <Search className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Search</span>
+              <kbd className="hidden md:inline font-mono text-[10px] text-[#4a4d4f]/70 bg-white px-1.5 py-0.5 rounded border border-[#4a4d4f]/10">
                 ⌘K
               </kbd>
             </button>
 
-            {/* Auth / Student Dashboard Button */}
-            {user ? (
-              <button
-                onClick={() => {
-                  setCurrentView('dashboard');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#281010] shadow-2xs hover:border-[#FA5929] transition-all"
-              >
-                <div className="w-5 h-5 rounded-full bg-[#FBE1CE] text-[#FA5929] flex items-center justify-center text-[10px] font-mono">
-                  {user.name[0].toUpperCase()}
-                </div>
-                <span className="hidden sm:inline">{user.name.split(' ')[0]}</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-[#FBE1CE] text-[#FA5929]">
-                  {completedModulesCount}/10
-                </span>
-              </button>
-            ) : (
-              <button
-                onClick={onOpenAuth}
-                className="px-4 py-2 rounded-full text-xs font-bold text-[#281010] hover:bg-white/60 transition-colors"
-              >
-                Sign In
-              </button>
-            )}
-
-            {/* Primary Action Button (Start V1) */}
+            {/* AI Assistant Drawer Trigger */}
             <button
-              onClick={() => handleNavClick('pricing')}
-              className="px-5 py-2.5 rounded-full text-xs font-extrabold text-white bg-[#FA5929] hover:bg-[#E0491B] active:scale-95 transition-all shadow-md shadow-[#FA5929]/25 flex items-center gap-1.5 cursor-pointer"
+              onClick={onOpenAgent}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ec4909]/10 hover:bg-[#ec4909]/20 text-[#ec4909] border border-[#ec4909]/20 text-xs font-semibold transition-all cursor-pointer"
             >
-              <span>Enroll Now</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 fill-[#ec4909]" />
+              <span>AI Coach</span>
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* User Profile / Auth */}
+            <button
+              onClick={onOpenAuth}
+              className="p-2 rounded-full bg-[#f7f4f2] hover:bg-white text-[#101b24] border border-[#4a4d4f]/10 transition-all cursor-pointer relative"
+              title={user ? `Signed in as ${user.name}` : 'Sign In'}
+            >
+              <User className="w-4 h-4" />
+              {user && (
+                <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-[#ec4909] border-2 border-white" />
+              )}
+            </button>
+
+            {/* Primary Action Button (OpenClass Signature Orange Pill with White Circle Arrow) */}
+            <button
+              onClick={() => handleNavClick('pricing')}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#ec4909] hover:bg-[#d43f05] active:scale-98 text-white font-semibold text-xs sm:text-sm transition-all shadow-md shadow-[#ec4909]/25 flex items-center gap-2 cursor-pointer group"
+            >
+              <span>Browse Courses</span>
+              <div className="w-5 h-5 rounded-full bg-white text-[#ec4909] flex items-center justify-center transition-transform group-hover:translate-x-0.5">
+                <ArrowRight className="w-3 h-3" />
+              </div>
+            </button>
+
+            {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-full bg-white border border-[#EAE3D9] text-[#281010] shadow-2xs"
+              className="lg:hidden p-2 rounded-full bg-[#f7f4f2] hover:bg-white text-[#101b24] border border-[#4a4d4f]/10 cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -265,67 +251,61 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-3 border-t border-[#EAE3D9] flex flex-col gap-2 pb-2">
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => {
-                  setCurrentView('saas');
-                  handleNavClick('curriculum');
-                }}
-                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
-              >
-                <BookOpen className="w-4 h-4 text-[#FA5929]" />
-                <span>Curriculum</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setCurrentView('agent-platform');
-                  setMobileMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
-              >
-                <Cpu className="w-4 h-4 text-[#FA5929]" />
-                <span>Skills Hub (32)</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setCurrentView('harness-mastery');
-                  setMobileMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
-              >
-                <Play className="w-4 h-4 text-[#FA5929]" />
-                <span>Harness Academy</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setCurrentView('skills-library');
-                  setMobileMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="p-3 rounded-2xl bg-white border border-[#EAE3D9] text-xs font-bold text-left flex items-center gap-2"
-              >
-                <Layers className="w-4 h-4 text-[#FA5929]" />
-                <span>Skills Library</span>
-              </button>
-            </div>
-
+          <div className="lg:hidden mt-3 pt-3 border-t border-[#4a4d4f]/10 flex flex-col gap-1 pb-2">
+            <button
+              onClick={() => handleNavClick('hero')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => handleNavClick('about-mentor')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              About the Program
+            </button>
+            <button
+              onClick={() => handleNavClick('courses')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              Top Courses
+            </button>
+            <button
+              onClick={() => handleNavClick('curriculum')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              Curriculum (10 Modules)
+            </button>
+            <button
+              onClick={() => handleNavClick('how-it-works')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              How It Works
+            </button>
+            <button
+              onClick={() => handleNavClick('sandboxes')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              Sandbox & Studio
+            </button>
             <button
               onClick={() => {
-                onOpenSearch();
+                setCurrentView('agent-platform');
                 setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="w-full py-2.5 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#706B67] flex items-center justify-center gap-2"
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl flex items-center justify-between"
             >
-              <Search className="w-4 h-4 text-[#FA5929]" />
-              <span>Search All Modules & Prompts</span>
+              <span>Agent Platform Hub</span>
+              <Sparkles className="w-4 h-4 text-[#ec4909]" />
+            </button>
+            <button
+              onClick={() => handleNavClick('pricing')}
+              className="px-4 py-2 text-left text-sm font-semibold text-[#101b24] hover:bg-[#f7f4f2] rounded-xl"
+            >
+              Pricing & Cohorts
             </button>
           </div>
         )}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PricingPlan } from '../types';
 import confetti from 'canvas-confetti';
-import { ShieldCheck, Lock, CheckCircle2, CreditCard, Sparkles, X } from 'lucide-react';
+import { Lock, CheckCircle2, CreditCard, Sparkles, X } from 'lucide-react';
 
 interface CheckoutModalProps {
   plan: PricingPlan | null;
@@ -43,39 +43,39 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-      <div className="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-150 relative text-left">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#281010]/60 backdrop-blur-sm">
+      <div className="bg-white border border-[#EAE3D9] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-150 relative text-left">
         
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 p-1.5 rounded-lg bg-[#F4F7FB] border border-slate-200 text-slate-400 hover:text-slate-700 shadow-2xs"
+          className="absolute top-6 right-6 p-2 rounded-full bg-[#F8F3EC] border border-[#EAE3D9] text-[#706B67] hover:text-[#281010] shadow-2xs"
         >
           <X className="w-4 h-4" />
         </button>
 
         {!isSuccess ? (
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#2F80ED] uppercase mb-2">
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#FA5929] uppercase mb-2">
               <Sparkles className="w-4 h-4" />
               <span>Enrollment & Checkout</span>
             </div>
 
-            <h3 className="text-2xl font-extrabold text-[#10213F]">
+            <h3 className="text-2xl font-black font-display text-[#281010]">
               {plan.name}
             </h3>
-            <p className="text-xs text-slate-500 mt-1 mb-6 leading-relaxed">
+            <p className="text-xs text-[#706B67] mt-1 mb-6 leading-relaxed">
               {plan.tagline}
             </p>
 
             {/* Price & Summary Box */}
-            <div className="p-4 rounded-2xl bg-[#F4F7FB] border border-slate-200 mb-6 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] mb-6 flex items-center justify-between">
               <div>
-                <span className="text-xs text-slate-500 font-mono block">Investment:</span>
-                <span className="text-2xl font-extrabold font-mono text-[#10213F]">
+                <span className="text-xs text-[#706B67] font-mono block">Investment:</span>
+                <span className="text-2xl font-black font-mono text-[#281010]">
                   ${plan.annualPrice > 0 ? plan.annualPrice : 0}
                 </span>
               </div>
-              <div className="text-right text-xs font-mono text-[#34D399] font-bold">
+              <div className="text-right text-xs font-mono text-[#FA5929] font-bold">
                 ✓ Full 10-Module Access
               </div>
             </div>
@@ -83,7 +83,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             {/* Checkout Form */}
             <form onSubmit={handleCheckout} className="space-y-4">
               <div>
-                <label className="block text-xs font-mono font-bold text-slate-700 mb-1">
+                <label className="block text-xs font-mono font-bold text-[#281010] mb-1">
                   Your Email Address
                 </label>
                 <input
@@ -92,21 +92,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-[#10213F] focus:outline-none focus:border-[#2F80ED] font-sans shadow-2xs"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] text-sm text-[#281010] focus:outline-none focus:border-[#FA5929] font-sans shadow-2xs"
                 />
               </div>
 
               {plan.annualPrice > 0 && (
                 <div>
-                  <label className="block text-xs font-mono font-bold text-slate-700 mb-1">
+                  <label className="block text-xs font-mono font-bold text-[#281010] mb-1">
                     Card Details (Simulated Stripe Elements)
                   </label>
-                  <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs font-mono text-slate-700 shadow-2xs">
+                  <div className="px-4 py-3 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] flex items-center justify-between text-xs font-mono text-[#281010] shadow-2xs">
                     <span className="flex items-center gap-2">
-                      <CreditCard className="w-4 h-4 text-[#2F80ED]" />
+                      <CreditCard className="w-4 h-4 text-[#FA5929]" />
                       <span>•••• •••• •••• 4242</span>
                     </span>
-                    <span className="text-slate-400">12/28 · 123</span>
+                    <span className="text-[#706B67]">12/28 · 123</span>
                   </div>
                 </div>
               )}
@@ -114,7 +114,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="w-full py-3.5 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-sm shadow-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2"
+                className="w-full py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-extrabold text-sm shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
               >
                 {isProcessing ? (
                   <span>Securing Entitlement with Stripe...</span>
@@ -124,21 +124,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </button>
             </form>
 
-            <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <div className="mt-6 pt-4 border-t border-[#EAE3D9] flex items-center justify-between text-[11px] font-mono text-[#706B67]">
               <span className="flex items-center gap-1">
-                <Lock className="w-3.5 h-3.5 text-[#34D399]" />
+                <Lock className="w-3.5 h-3.5 text-[#FA5929]" />
                 <span>256-Bit SSL Encrypted</span>
               </span>
-              <span>30-Day Money-Back Guarantee</span>
+              <span>30-Day Guarantee</span>
             </div>
           </div>
         ) : (
           <div className="text-center py-8 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 text-[#34D399] flex items-center justify-center mx-auto animate-bounce shadow-xs">
+            <div className="w-16 h-16 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] flex items-center justify-center mx-auto animate-bounce shadow-xs">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-extrabold text-[#10213F]">Welcome to LetsVibeAI!</h3>
-            <p className="text-sm text-slate-600 max-w-sm mx-auto">
+            <h3 className="text-2xl font-black font-display text-[#281010]">Welcome to LetsVibeAI!</h3>
+            <p className="text-sm text-[#706B67] max-w-sm mx-auto">
               Your enrollment is active and your student workspace is unlocked. Happy vibe coding!
             </p>
           </div>

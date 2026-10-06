@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Sparkles, Layers, CheckCircle2, Film, ArrowRight } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Sparkles, Layers, CheckCircle2, Film } from 'lucide-react';
 
 export const VideoShowcase: React.FC = () => {
   const [activeVideo, setActiveVideo] = useState<'trailer' | 'explainer'>('trailer');
@@ -124,55 +124,55 @@ export const VideoShowcase: React.FC = () => {
   };
 
   return (
-    <section id="video" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white">
+    <section id="video" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
-          <Film className="w-3.5 h-3.5 text-[#2F80ED]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+          <Film className="w-3.5 h-3.5 text-[#FA5929]" />
           <span>Interactive Academy Media</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-black font-display text-[#281010] tracking-tight">
           Watch the Course in Action
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
+        <p className="mt-3 text-base sm:text-lg text-[#706B67] font-normal">
           High-density architectural animations explaining full-stack web applications, compiled from pure code.
         </p>
       </div>
 
       {/* Video Selector Tabs */}
       <div className="flex justify-center mb-8">
-        <div className="inline-flex p-1.5 rounded-2xl bg-[#F4F7FB] border border-slate-200 shadow-xs">
+        <div className="inline-flex p-1.5 rounded-full bg-white border border-[#EAE3D9] shadow-xs">
           <button
             onClick={() => setActiveVideo('trailer')}
-            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
               activeVideo === 'trailer'
-                ? 'bg-white text-[#10213F] shadow-sm border border-slate-200/80 font-extrabold'
-                : 'text-slate-600 hover:text-[#10213F] hover:bg-white/50'
+                ? 'bg-[#281010] text-white shadow-sm font-extrabold'
+                : 'text-[#706B67] hover:text-[#281010]'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-[#2F80ED]" />
+            <Sparkles className="w-4 h-4 text-[#FA5929]" />
             <span>Course Trailer (16s)</span>
           </button>
           <button
             onClick={() => setActiveVideo('explainer')}
-            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
               activeVideo === 'explainer'
-                ? 'bg-white text-[#10213F] shadow-sm border border-slate-200/80 font-extrabold'
-                : 'text-slate-600 hover:text-[#10213F] hover:bg-white/50'
+                ? 'bg-[#281010] text-white shadow-sm font-extrabold'
+                : 'text-[#706B67] hover:text-[#281010]'
             }`}
           >
-            <Layers className="w-4 h-4 text-[#34D399]" />
+            <Layers className="w-4 h-4 text-[#FA5929]" />
             <span>Architecture Explainer (18s)</span>
           </button>
         </div>
       </div>
 
-      {/* Main Video & Breakdown Grid (Crisp Light Theme) */}
+      {/* Main Video & Breakdown Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left: Video Player Card (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden group">
-          <div className="relative aspect-video bg-slate-900 flex items-center justify-center overflow-hidden">
+        <div className="lg:col-span-8 bg-white rounded-3xl border border-[#EAE3D9] shadow-sm overflow-hidden group">
+          <div className="relative aspect-video bg-[#1A0B0B] flex items-center justify-center overflow-hidden">
             <video
               ref={videoRef}
               src={current.src}
@@ -187,14 +187,14 @@ export const VideoShowcase: React.FC = () => {
             {!isPlaying && (
               <button
                 onClick={togglePlay}
-                className="absolute inset-0 m-auto w-20 h-20 rounded-full bg-white text-[#071B3A] flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl backdrop-blur-sm"
+                className="absolute inset-0 m-auto w-20 h-20 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl backdrop-blur-sm"
               >
-                <Play className="w-8 h-8 fill-[#071B3A] ml-1 text-[#071B3A]" />
+                <Play className="w-8 h-8 fill-white ml-1 text-white" />
               </button>
             )}
 
             {/* Video Controls Overlay Bar */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-950/90 via-slate-900/60 to-transparent flex flex-col gap-2 transition-opacity duration-300">
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col gap-2 transition-opacity duration-300">
               
               {/* Progress Scrubber */}
               <div
@@ -202,7 +202,7 @@ export const VideoShowcase: React.FC = () => {
                 className="w-full h-2 bg-white/20 rounded-full cursor-pointer relative group/bar overflow-hidden"
               >
                 <div
-                  className="h-full bg-gradient-to-r from-[#2F80ED] to-[#34D399] rounded-full transition-all duration-100"
+                  className="h-full bg-[#FA5929] rounded-full transition-all duration-100"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -262,26 +262,26 @@ export const VideoShowcase: React.FC = () => {
             </div>
           </div>
 
-          {/* Video Metadata Footer (Clean Light Theme) */}
-          <div className="p-6 bg-[#F4F7FB] border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          {/* Video Metadata Footer */}
+          <div className="p-6 bg-white border-t border-[#EAE3D9] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-mono font-bold text-[#2F80ED] tracking-wider uppercase">
+                <span className="text-xs font-mono font-bold text-[#FA5929] tracking-wider uppercase">
                   {current.badge}
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-[#10213F]">{current.title}</h3>
-              <p className="text-xs text-slate-600 mt-1 max-w-xl">{current.description}</p>
+              <h3 className="text-lg font-bold text-[#281010]">{current.title}</h3>
+              <p className="text-xs text-[#706B67] mt-1 max-w-xl">{current.description}</p>
             </div>
             
             <a
               href={`https://github.com/diamitani/letsvibeai/tree/main/videos/${activeVideo}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-xs font-bold text-[#10213F] shrink-0 transition-all shadow-xs"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F8F3EC] border border-[#EAE3D9] hover:border-[#FA5929]/40 text-xs font-bold text-[#281010] shrink-0 transition-all shadow-xs"
             >
               <span>View Source</span>
-              <span className="text-[#2F80ED] font-mono">.html</span>
+              <span className="text-[#FA5929] font-mono">.html</span>
             </a>
           </div>
         </div>
@@ -290,8 +290,8 @@ export const VideoShowcase: React.FC = () => {
         <div className="lg:col-span-4 flex flex-col gap-6">
           
           {/* Chapter Jump List */}
-          <div className="p-6 rounded-3xl bg-[#F4F7FB] border border-slate-200">
-            <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+            <h4 className="text-xs font-mono font-bold text-[#706B67] uppercase tracking-wider mb-4 flex items-center gap-2">
               <span>Timeline Chapters</span>
             </h4>
             <div className="space-y-2">
@@ -301,14 +301,14 @@ export const VideoShowcase: React.FC = () => {
                   <button
                     key={ch.time}
                     onClick={() => jumpToTime(ch.time)}
-                    className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-all ${
+                    className={`w-full text-left px-4 py-2.5 rounded-full text-xs font-semibold flex items-center justify-between transition-all ${
                       isCurrent
-                        ? 'bg-white text-[#2F80ED] shadow-sm border border-blue-200 font-bold'
-                        : 'text-slate-600 hover:text-[#10213F] hover:bg-white/80'
+                        ? 'bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60 font-bold'
+                        : 'text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC]'
                     }`}
                   >
                     <span>{ch.label}</span>
-                    <Play className={`w-3 h-3 ${isCurrent ? 'fill-[#2F80ED] text-[#2F80ED]' : 'opacity-30'}`} />
+                    <Play className={`w-3 h-3 ${isCurrent ? 'fill-[#FA5929] text-[#FA5929]' : 'opacity-30'}`} />
                   </button>
                 );
               })}
@@ -316,14 +316,14 @@ export const VideoShowcase: React.FC = () => {
           </div>
 
           {/* Key Architectural Takeaways */}
-          <div className="p-6 rounded-3xl bg-[#F4F7FB] border border-slate-200">
-            <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-4">
+          <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+            <h4 className="text-xs font-mono font-bold text-[#706B67] uppercase tracking-wider mb-4">
               Core Principles in this Clip
             </h4>
             <ul className="space-y-3">
               {current.takeaways.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 leading-relaxed">
-                  <CheckCircle2 className="w-4 h-4 text-[#34D399] shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-[#281010] leading-relaxed">
+                  <CheckCircle2 className="w-4 h-4 text-[#FA5929] shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}

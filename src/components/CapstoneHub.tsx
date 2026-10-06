@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CAPSTONE_DELIVERABLES } from '../data/courseData';
 import confetti from 'canvas-confetti';
-import { Award, CheckCircle2, ShieldCheck, Printer, Sparkles, ExternalLink, UserCheck } from 'lucide-react';
+import { Award, CheckCircle2, Printer } from 'lucide-react';
 
 export const CapstoneHub: React.FC = () => {
   const [completedItems, setCompletedItems] = useState<string[]>([
@@ -38,17 +38,17 @@ export const CapstoneHub: React.FC = () => {
   };
 
   return (
-    <section id="capstone" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white border-t border-slate-200 text-left">
+    <section id="capstone" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#EAE3D9] text-left">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
-          <Award className="w-3.5 h-3.5 text-[#2F80ED]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+          <Award className="w-3.5 h-3.5 text-[#FA5929]" />
           <span>Final Milestone & Accreditation</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-black font-display text-[#281010] tracking-tight">
           The Capstone Project & Certificate
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
+        <p className="mt-3 text-base sm:text-lg text-[#706B67] font-normal">
           Complete the 5 deliverables of your live web app to achieve 70+ points and generate your accredited LetsVibeAI Vibe Architect Certificate.
         </p>
       </div>
@@ -56,19 +56,19 @@ export const CapstoneHub: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left: 5 Deliverables Checklist (6 cols) */}
-        <div className="lg:col-span-6 bg-[#F4F7FB] border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div className="lg:col-span-6 bg-white border border-[#EAE3D9] rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#EAE3D9]">
             <div>
-              <h3 className="text-base font-extrabold text-[#10213F]">
+              <h3 className="text-base font-extrabold text-[#281010]">
                 Capstone Deliverables Checklist
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-[#706B67] mt-0.5">
                 Click each milestone as you build and deploy your app.
               </p>
             </div>
             <div className="text-right">
-              <div className="text-xl font-black font-mono text-[#071B3A]">{totalScore}/100</div>
-              <div className="text-[10px] text-slate-400 font-medium">Points Required: 70</div>
+              <div className="text-xl font-black font-mono text-[#FA5929]">{totalScore}/100</div>
+              <div className="text-[10px] text-[#706B67] font-medium">Points Required: 70</div>
             </div>
           </div>
 
@@ -81,15 +81,15 @@ export const CapstoneHub: React.FC = () => {
                   onClick={() => toggleItem(item.id)}
                   className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-start gap-3.5 ${
                     isDone
-                      ? 'bg-white border-emerald-300 shadow-sm'
-                      : 'bg-white/60 border-slate-200 hover:bg-white'
+                      ? 'bg-[#F8F3EC] border-[#FA5929]/40 shadow-xs'
+                      : 'bg-white border-[#EAE3D9] hover:border-slate-300'
                   }`}
                 >
                   <div
                     className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
                       isDone
-                        ? 'bg-[#34D399] text-white'
-                        : 'border border-slate-300 bg-white'
+                        ? 'bg-[#FA5929] text-white'
+                        : 'border border-[#EAE3D9] bg-white'
                     }`}
                   >
                     {isDone && <CheckCircle2 className="w-4 h-4" />}
@@ -97,12 +97,12 @@ export const CapstoneHub: React.FC = () => {
 
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold text-[#10213F]">{item.title}</h4>
-                      <span className="text-[10px] font-mono font-bold text-[#2F80ED] bg-blue-50 px-2 py-0.5 rounded-full">
+                      <h4 className="text-xs font-bold text-[#281010]">{item.title}</h4>
+                      <span className="text-[10px] font-mono font-bold text-[#FA5929] bg-[#FBE1CE] px-2.5 py-0.5 rounded-full border border-[#FCAA91]/40">
                         +{item.points} pts
                       </span>
                     </div>
-                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    <p className="text-xs text-[#706B67] mt-1 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -114,10 +114,10 @@ export const CapstoneHub: React.FC = () => {
 
         {/* Right: Real-time Institutional Certificate Preview (6 cols) */}
         <div className="lg:col-span-6 flex flex-col gap-4">
-          <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 shadow-xl relative overflow-hidden text-center">
+          <div className="p-8 sm:p-10 rounded-3xl bg-white border-2 border-[#EAE3D9] shadow-xl relative overflow-hidden text-center">
             {/* Certificate Header Lockup */}
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-[#071B3A] flex items-center justify-center shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#281010] flex items-center justify-center shadow-xs">
                 <svg className="w-6 h-6" viewBox="0 0 48 48" fill="none">
                   <path
                     d="M10 12L24 38L38 12"
@@ -126,49 +126,49 @@ export const CapstoneHub: React.FC = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <circle cx="24" cy="22" r="4" fill="#34D399" />
+                  <circle cx="24" cy="22" r="4" fill="#FA5929" />
                 </svg>
               </div>
               <div className="text-left">
-                <div className="text-base font-extrabold text-[#10213F]">LetsVibeAI Academy</div>
-                <div className="text-[10px] text-slate-400 font-mono tracking-widest uppercase">
+                <div className="text-base font-extrabold text-[#281010]">LetsVibeAI Academy</div>
+                <div className="text-[10px] text-[#706B67] font-mono tracking-widest uppercase">
                   Institutional Credential
                 </div>
               </div>
             </div>
 
-            <div className="text-xs font-mono uppercase tracking-widest text-[#2F80ED] font-bold mb-2">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#FA5929] font-bold mb-2">
               Certificate of Architectural Mastery
             </div>
 
-            <div className="text-xs text-slate-500 mb-2">This is proudly awarded to</div>
+            <div className="text-xs text-[#706B67] mb-2">This is proudly awarded to</div>
 
             <input
               type="text"
               value={studentName}
               onChange={(e) => setStudentName(e.target.value)}
-              className="text-2xl sm:text-3xl font-extrabold text-[#071B3A] text-center w-full bg-transparent border-b border-dashed border-slate-300 focus:outline-none focus:border-[#2F80ED] pb-1 mb-4 font-sans"
+              className="text-2xl sm:text-3xl font-black text-[#281010] text-center w-full bg-transparent border-b border-dashed border-[#EAE3D9] focus:outline-none focus:border-[#FA5929] pb-1 mb-4 font-display"
             />
 
-            <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed mb-6">
+            <p className="text-xs text-[#706B67] max-w-md mx-auto leading-relaxed mb-6">
               for successfully designing, planning, building, and deploying a production-grade full-stack web application with AI agents, verified through the 11-Layer Architecture Stack.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-xs text-slate-500 font-mono">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-[#EAE3D9] text-xs text-[#706B67] font-mono">
               <div>
-                <div className="text-slate-400 text-[10px]">Date Issued</div>
-                <div className="font-bold text-slate-700">{certDate}</div>
+                <div className="text-[#706B67] text-[10px]">Date Issued</div>
+                <div className="font-bold text-[#281010]">{certDate}</div>
               </div>
               <div>
-                <div className="text-slate-400 text-[10px]">Verification ID</div>
-                <div className="font-bold text-slate-700">{certCode}</div>
+                <div className="text-[#706B67] text-[10px]">Verification ID</div>
+                <div className="font-bold text-[#281010]">{certCode}</div>
               </div>
             </div>
 
             {/* Passing Ribbon Indicator */}
             {isPassing ? (
-              <div className="mt-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 text-[#071B3A] text-xs font-bold border border-emerald-200">
-                <CheckCircle2 className="w-4 h-4 text-[#34D399]" />
+              <div className="mt-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FBE1CE] text-[#FA5929] text-xs font-bold border border-[#FCAA91]/60">
+                <CheckCircle2 className="w-4 h-4 text-[#FA5929]" />
                 <span>Accredited Vibe Architect • Ready to Export</span>
               </div>
             ) : (
@@ -182,7 +182,7 @@ export const CapstoneHub: React.FC = () => {
             <button
               onClick={handlePrint}
               disabled={!isPassing}
-              className="flex-1 py-3 px-6 bg-[#071B3A] hover:bg-[#10213F] disabled:opacity-40 text-white font-extrabold text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+              className="flex-1 py-3.5 px-6 bg-[#281010] hover:bg-[#3D1E1E] disabled:opacity-40 text-white font-extrabold text-xs rounded-full transition-all shadow-md flex items-center justify-center gap-2"
             >
               <Printer className="w-4 h-4" />
               <span>Print / Save Verified PDF</span>

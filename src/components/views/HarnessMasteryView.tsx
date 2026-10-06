@@ -11,22 +11,11 @@ import {
   Play,
   CheckCircle2,
   Clock,
-  Layers,
   ArrowRight,
-  Terminal,
-  Cpu,
-  Sparkles,
-  FileCode,
-  Compass,
   Copy,
   Check,
   X,
-  ExternalLink,
-  Shield,
-  Zap,
-  BookOpen,
-  Bell,
-  Code2
+  Zap
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -114,21 +103,21 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
     activeGuideEntry?.harnesses[guideHarnessKey] || { path: '', code: '' };
 
   return (
-    <div className="min-h-screen bg-[#F4F7FB] text-[#10213F] font-sans pb-24 pt-24 selection:bg-[#2F80ED] selection:text-white">
+    <div className="min-h-screen bg-[#F8F3EC] text-[#281010] font-sans pb-24 pt-24 selection:bg-[#FA5929] selection:text-white">
       {/* 1. HERO HEADER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-12">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#2F80ED] text-xs font-mono font-bold uppercase tracking-wider mb-6">
-          <span className="w-2 h-2 rounded-full bg-[#2F80ED] animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-mono font-bold uppercase tracking-wider mb-6">
+          <span className="w-2 h-2 rounded-full bg-[#FA5929] animate-pulse" />
           <span>Agent Harness Mastery · 100% Free · Any Harness</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#071B3A] leading-[1.05] max-w-4xl">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black font-display tracking-tight text-[#281010] leading-[1.05] max-w-4xl">
           Learn the agent. <br className="hidden sm:inline" />
-          <span className="text-[#2F80ED]">Not the brand.</span>
+          <span className="text-[#FA5929]">Not the brand.</span>
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6 items-end">
-          <p className="lg:col-span-8 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
+          <p className="lg:col-span-8 text-base sm:text-lg text-[#706B67] leading-relaxed max-w-3xl">
             Context, skills, artifacts, markdown files, and agents exist in every modern harness. Learn
             the universal principles once, then inspect exact file formats for <b>Claude Code</b>,{' '}
             <b>Codex</b>, <b>Hermes</b>, <b>Antigravity</b>, <b>VS Code</b>, and <b>Cursor</b>.
@@ -137,13 +126,13 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
           <div className="lg:col-span-4 flex items-center gap-3 flex-wrap">
             <a
               href="#video-theater"
-              className="px-5 py-3 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95"
+              className="px-6 py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95"
             >
               Start Watching (8 Lessons)
             </a>
             <a
               href="#concepts"
-              className="px-5 py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#071B3A] text-xs sm:text-sm font-bold transition-all shadow-xs"
+              className="px-5 py-3.5 rounded-full bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] text-[#281010] text-xs sm:text-sm font-bold transition-all shadow-xs"
             >
               Core Concepts
             </a>
@@ -151,8 +140,8 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
         </div>
 
         {/* Harness Selector Pills */}
-        <div className="flex items-center gap-2 flex-wrap mt-8 pt-6 border-t border-slate-200/70">
-          <span className="text-xs font-mono font-bold text-slate-400 uppercase mr-2">Target Harness:</span>
+        <div className="flex items-center gap-2 flex-wrap mt-8 pt-6 border-t border-[#EAE3D9]">
+          <span className="text-xs font-mono font-bold text-[#706B67] uppercase mr-2">Target Harness:</span>
           {HARNESS_OPTIONS.map((h) => {
             const isActive = activeHarnessKey === h.key;
             return (
@@ -162,14 +151,14 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
                   setActiveHarnessKey(h.key);
                   setGuideHarnessKey(h.key);
                 }}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
                   isActive
-                    ? 'bg-[#071B3A] text-white shadow-xs'
-                    : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
+                    ? 'bg-[#281010] text-white shadow-xs'
+                    : 'bg-white hover:bg-[#F8F3EC] text-[#281010] border border-[#EAE3D9]'
                 }`}
               >
                 <span>{h.name}</span>
-                {isActive && <Check className="w-3 h-3 text-[#34D399]" />}
+                {isActive && <Check className="w-3 h-3 text-[#FA5929]" />}
               </button>
             );
           })}
@@ -181,36 +170,36 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
           {/* Main Video Screen */}
-          <div className="lg:col-span-7 bg-[#071B3A] rounded-3xl overflow-hidden shadow-xl border border-slate-800 flex flex-col">
-            <div className="relative aspect-video w-full bg-[#051329] flex items-center justify-center">
+          <div className="lg:col-span-7 bg-[#281010] rounded-3xl overflow-hidden shadow-xl border border-[#3D1E1E] flex flex-col">
+            <div className="relative aspect-video w-full bg-[#1A0B0B] flex items-center justify-center">
               {currentLesson.src && getYouTubeEmbedUrl(currentLesson.src) ? (
                 <iframe
                   src={getYouTubeEmbedUrl(currentLesson.src)}
                   title={currentLesson.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  className="absolute inset-0 w-full height-full w-full h-full border-0"
+                  className="absolute inset-0 w-full h-full border-0"
                 />
               ) : (
                 <div className="p-8 text-center flex flex-col items-center gap-4">
-                  <div className="px-3 py-1 rounded-full bg-amber-500/20 text-[#E9A93B] border border-amber-500/30 text-xs font-mono font-bold uppercase tracking-wider">
+                  <div className="px-3.5 py-1.5 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60 text-xs font-mono font-bold uppercase tracking-wider">
                     Lesson {currentLesson.num} · In Production
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white max-w-md">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white max-w-md font-display">
                     This video drops soon. Get notified the day it goes live.
                   </h3>
                   <div className="flex items-center gap-3 flex-wrap justify-center mt-2">
                     <a
                       href="#newsletter"
-                      className="px-4 py-2 rounded-full bg-[#E9A93B] hover:bg-amber-400 text-[#071B3A] text-xs font-bold transition-all shadow-md"
+                      className="px-5 py-2.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs font-bold transition-all shadow-md"
                     >
                       Notify Me
                     </a>
                     <button
                       onClick={() => setSelectedLessonIndex(6)}
-                      className="px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1.5"
+                      className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/15 transition-all flex items-center gap-1.5"
                     >
-                      <Play className="w-3.5 h-3.5 fill-current text-[#34D399]" />
+                      <Play className="w-3.5 h-3.5 fill-current text-[#FA5929]" />
                       <span>Watch Lesson 07 (Available Now)</span>
                     </button>
                   </div>
@@ -219,60 +208,60 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
             </div>
 
             {/* Video Metadata Box */}
-            <div className="p-6 sm:p-7 text-white">
-              <div className="flex items-center gap-3 text-xs font-mono text-slate-400 mb-2">
-                <span className="text-[#20C7D9] font-bold">LESSON {currentLesson.num}</span>
+            <div className="p-6 sm:p-8 text-white">
+              <div className="flex items-center gap-3 text-xs font-mono text-white/60 mb-2">
+                <span className="text-[#FA5929] font-bold">LESSON {currentLesson.num}</span>
                 <span>•</span>
                 <span>{currentLesson.dur}</span>
                 {currentLesson.isAvailable ? (
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-[#34D399] font-bold text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#FA5929]/20 text-[#FA5929] font-bold text-[10px]">
                     LIVE
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white/60 font-bold text-[10px]">
                     SOON
                   </span>
                 )}
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black font-display text-white tracking-tight">
                 {currentLesson.title}
               </h2>
-              <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
+              <p className="mt-3 text-sm sm:text-base text-white/70 leading-relaxed">
                 {currentLesson.desc}
               </p>
             </div>
           </div>
 
           {/* Lesson Playlist */}
-          <div className="lg:col-span-5 bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm flex flex-col">
-            <div className="flex items-center justify-between pb-4 mb-2 border-b border-slate-100">
+          <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-[#EAE3D9] shadow-xs flex flex-col">
+            <div className="flex items-center justify-between pb-4 mb-2 border-b border-[#EAE3D9]">
               <div>
-                <h3 className="text-lg font-bold text-[#071B3A]">Curriculum Library</h3>
-                <p className="text-xs text-slate-500">8 Modules · Full Agent Lifecycle</p>
+                <h3 className="text-lg font-bold font-display text-[#281010]">Curriculum Library</h3>
+                <p className="text-xs text-[#706B67]">8 Modules · Full Agent Lifecycle</p>
               </div>
-              <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-[#34D399] border border-emerald-200">
+              <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60">
                 100% Free
               </span>
             </div>
 
-            <div className="space-y-1.5 overflow-y-auto max-h-[460px] pr-1">
+            <div className="space-y-2 overflow-y-auto max-h-[460px] pr-1">
               {HARNESS_LESSONS.map((l, idx) => {
                 const isSelected = selectedLessonIndex === idx;
                 return (
                   <button
                     key={l.id}
                     onClick={() => setSelectedLessonIndex(idx)}
-                    className={`w-full p-3 rounded-2xl text-left transition-all flex items-start gap-3.5 group ${
+                    className={`w-full p-3.5 rounded-2xl text-left transition-all flex items-start gap-3.5 group ${
                       isSelected
-                        ? 'bg-blue-50/80 border border-blue-200 text-[#071B3A] shadow-2xs'
-                        : 'hover:bg-[#F4F7FB] border border-transparent text-slate-700'
+                        ? 'bg-[#F8F3EC] border border-[#FA5929]/40 text-[#281010] shadow-2xs'
+                        : 'hover:bg-[#F8F3EC] border border-transparent text-[#706B67]'
                     }`}
                   >
                     <div
-                      className={`w-7 h-7 rounded-xl flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5 ${
+                      className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5 ${
                         isSelected
-                          ? 'bg-[#2F80ED] text-white'
-                          : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
+                          ? 'bg-[#FA5929] text-white'
+                          : 'bg-[#F8F3EC] text-[#706B67] group-hover:bg-[#FBE1CE]'
                       }`}
                     >
                       {l.num}
@@ -280,16 +269,16 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
-                        <div className="font-bold text-xs sm:text-sm text-[#071B3A] truncate">
+                        <div className="font-bold text-xs sm:text-sm text-[#281010] truncate">
                           {l.title}
                         </div>
-                        <span className="text-[11px] font-mono text-slate-400 shrink-0">{l.dur}</span>
+                        <span className="text-[11px] font-mono text-[#706B67] shrink-0">{l.dur}</span>
                       </div>
-                      <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{l.desc}</p>
+                      <p className="text-[11px] text-[#706B67] line-clamp-1 mt-0.5">{l.desc}</p>
                     </div>
 
                     {l.isAvailable ? (
-                      <span className="w-2 h-2 rounded-full bg-[#34D399] shrink-0 mt-2" title="Available now" />
+                      <span className="w-2 h-2 rounded-full bg-[#FA5929] shrink-0 mt-2" title="Available now" />
                     ) : (
                       <Clock className="w-3.5 h-3.5 text-slate-300 shrink-0 mt-1.5" />
                     )}
@@ -301,16 +290,16 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
         </div>
 
         {/* MCP Connectors Banner */}
-        <div className="mt-6 p-5 sm:p-6 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#2F80ED] flex items-center justify-center font-bold">
+        <div className="mt-6 p-6 sm:p-8 bg-white rounded-3xl border border-[#EAE3D9] shadow-xs flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-full bg-[#FBE1CE] text-[#FA5929] flex items-center justify-center font-bold">
               <Zap className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-sm font-bold text-[#071B3A]">
+              <div className="text-sm font-bold text-[#281010]">
                 Connecting tools (Model Context Protocol)
               </div>
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-[#706B67]">
                 MCP server configuration schemas and environment variables differ across harnesses.
               </div>
             </div>
@@ -318,28 +307,28 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
 
           <button
             onClick={() => handleOpenGuide('library')}
-            className="px-4 py-2.5 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-full bg-[#281010] hover:bg-[#3D1E1E] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
           >
             <span>Config Formats by Harness</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#FA5929]" />
           </button>
         </div>
       </section>
 
       {/* 3. THE 5-LAYER SYSTEM ARCHITECTURE */}
       <section id="architecture" className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
-        <div className="bg-[#071B3A] text-white rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-xl">
+        <div className="bg-[#281010] text-white rounded-3xl p-8 sm:p-12 border border-[#3D1E1E] shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <div className="lg:col-span-5">
-              <div className="text-xs font-mono font-bold text-[#E9A93B] uppercase tracking-wider mb-2">
+              <div className="text-xs font-mono font-bold text-[#FA5929] uppercase tracking-wider mb-2">
                 System Architecture
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight leading-tight">
                 Five layers. <br />
                 Every harness has them.
               </h2>
-              <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-white/70 text-sm sm:text-base leading-relaxed">
                 Directory names, file keys, and CLI switches differ between vendors. The five core
                 architectural layers do not. Learn what each layer is responsible for and you can migrate
                 between harnesses seamlessly.
@@ -347,7 +336,7 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
 
               <button
                 onClick={() => handleOpenGuide('stack')}
-                className="mt-6 px-5 py-3 rounded-xl bg-[#E9A93B] hover:bg-amber-400 text-[#071B3A] text-xs sm:text-sm font-extrabold transition-all shadow-md flex items-center gap-2"
+                className="mt-6 px-6 py-3 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs sm:text-sm font-extrabold transition-all shadow-md flex items-center gap-2"
               >
                 <span>Folder Layout by Harness</span>
                 <ArrowRight className="w-4 h-4" />
@@ -385,14 +374,14 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
               ].map((layer) => (
                 <div
                   key={layer.num}
-                  className="p-4 sm:p-5 rounded-2xl bg-[#10213F] border border-slate-700/60 flex items-start gap-4 hover:border-slate-500 transition-colors"
+                  className="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4 hover:border-white/20 transition-colors"
                 >
-                  <div className="font-mono text-sm font-bold text-[#E9A93B] shrink-0 mt-0.5">
+                  <div className="font-mono text-sm font-bold text-[#FA5929] shrink-0 mt-0.5">
                     {layer.num}
                   </div>
                   <div>
                     <div className="font-bold text-base text-white">{layer.name}</div>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-1">
+                    <p className="text-xs sm:text-sm text-white/70 leading-relaxed mt-1">
                       {layer.desc}
                     </p>
                   </div>
@@ -407,17 +396,17 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-8">
         <div className="flex items-end justify-between gap-4 flex-wrap mb-8">
           <div>
-            <div className="text-xs font-mono font-bold text-[#2F80ED] uppercase tracking-wider mb-1">
+            <div className="text-xs font-mono font-bold text-[#FA5929] uppercase tracking-wider mb-1">
               Practitioner Playbook
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#071B3A] tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black font-display text-[#281010] tracking-tight">
               Eight habits of builders who ship real output.
             </h2>
           </div>
 
           <button
             onClick={() => handleOpenGuide('context')}
-            className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#071B3A] text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-full bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] text-[#281010] text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
           >
             <span>Where to Write the Rules →</span>
           </button>
@@ -427,12 +416,12 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
           {HARNESS_PRACTICES.map((p) => (
             <div
               key={p.n}
-              className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow"
+              className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow"
             >
               <div>
-                <div className="font-mono text-xs font-bold text-[#2F80ED] mb-3">HABIT {p.n}</div>
-                <h3 className="font-bold text-base text-[#071B3A] mb-2">{p.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{p.desc}</p>
+                <div className="font-mono text-xs font-bold text-[#FA5929] mb-3">HABIT {p.n}</div>
+                <h3 className="font-bold text-base text-[#281010] mb-2">{p.title}</h3>
+                <p className="text-xs sm:text-sm text-[#706B67] leading-relaxed">{p.desc}</p>
               </div>
             </div>
           ))}
@@ -441,10 +430,10 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
 
       {/* 5. CORE CONCEPTS TRACKS */}
       <section id="concepts" className="max-w-7xl mx-auto px-4 sm:px-8 py-16">
-        <div className="text-xs font-mono font-bold text-[#2F80ED] uppercase tracking-wider mb-2">
+        <div className="text-xs font-mono font-bold text-[#FA5929] uppercase tracking-wider mb-2">
           Conceptual Deep Dives
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071B3A] tracking-tight mb-8">
+        <h2 className="text-3xl sm:text-4xl font-black font-display text-[#281010] tracking-tight mb-8">
           Five concepts to master before building agents.
         </h2>
 
@@ -456,10 +445,10 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
               <button
                 key={t.key}
                 onClick={() => setSelectedTrackKey(t.key)}
-                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all shrink-0 ${
                   isActive
-                    ? 'bg-[#071B3A] text-white shadow-sm'
-                    : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
+                    ? 'bg-[#281010] text-white shadow-sm'
+                    : 'bg-white hover:bg-[#F8F3EC] text-[#281010] border border-[#EAE3D9]'
                 }`}
               >
                 {t.name}
@@ -469,48 +458,48 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
         </div>
 
         {/* Active Concept Box */}
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-[#EAE3D9] shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-6 flex flex-col justify-between">
             <div>
-              <div className="text-xs font-mono font-bold text-[#2F80ED] uppercase tracking-wider mb-2">
+              <div className="text-xs font-mono font-bold text-[#FA5929] uppercase tracking-wider mb-2">
                 {currentTrack.meta}
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#071B3A] tracking-tight mb-4">
+              <h3 className="text-2xl sm:text-3xl font-black font-display text-[#281010] tracking-tight mb-4">
                 {currentTrack.name}
               </h3>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+              <p className="text-[#706B67] text-sm sm:text-base leading-relaxed mb-6">
                 {currentTrack.desc}
               </p>
 
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 mb-6">
-                <div className="text-[10px] font-mono font-bold text-slate-500 uppercase mb-1">
+              <div className="p-5 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] mb-6">
+                <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase mb-1">
                   WHEN TO USE THIS
                 </div>
-                <div className="text-xs sm:text-sm font-bold text-[#071B3A]">{currentTrack.ship}</div>
+                <div className="text-xs sm:text-sm font-bold text-[#281010]">{currentTrack.ship}</div>
               </div>
             </div>
 
             <button
               onClick={() => handleOpenGuide(currentTrack.key)}
-              className="px-5 py-3 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white text-xs sm:text-sm font-bold transition-all shadow-xs flex items-center gap-2 self-start"
+              className="px-6 py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs sm:text-sm font-bold transition-all shadow-xs flex items-center gap-2 self-start"
             >
               <span>How {currentTrack.name} is formatted per harness →</span>
             </button>
           </div>
 
           <div className="lg:col-span-6 space-y-3">
-            <div className="text-xs font-mono font-bold text-slate-400 uppercase pb-2 border-b border-slate-100">
+            <div className="text-xs font-mono font-bold text-[#706B67] uppercase pb-2 border-b border-[#EAE3D9]">
               Module Breakdown (5 Core Topics)
             </div>
             {currentTrack.modules.map((mod, idx) => (
               <div
                 key={idx}
-                className="p-3.5 rounded-xl bg-[#F4F7FB] border border-slate-200/60 flex items-center gap-3"
+                className="p-4 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] flex items-center gap-3"
               >
-                <div className="w-6 h-6 rounded-lg bg-blue-100 text-[#2F80ED] font-mono text-xs font-bold flex items-center justify-center shrink-0">
+                <div className="w-6 h-6 rounded-full bg-[#FBE1CE] text-[#FA5929] font-mono text-xs font-bold flex items-center justify-center shrink-0">
                   {idx + 1}
                 </div>
-                <span className="text-xs sm:text-sm font-semibold text-[#10213F]">{mod}</span>
+                <span className="text-xs sm:text-sm font-semibold text-[#281010]">{mod}</span>
               </div>
             ))}
           </div>
@@ -519,12 +508,12 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
 
       {/* 6. NEWSLETTER SUBSCRIBE / FREE RESOURCES */}
       <section id="newsletter" className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
-        <div className="bg-[#E9A93B] rounded-3xl p-8 sm:p-12 text-[#071B3A] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-[#281010] rounded-3xl p-8 sm:p-12 text-white grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border border-[#3D1E1E]">
           <div className="lg:col-span-7">
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-black font-display tracking-tight leading-tight">
               Want more free agent playbooks?
             </h2>
-            <p className="mt-3 text-slate-900 text-sm sm:text-base leading-relaxed max-w-xl">
+            <p className="mt-3 text-white/70 text-sm sm:text-base leading-relaxed max-w-xl">
               Receive updates whenever new lessons drop, plus open-source `SKILL.md` templates and
               cross-harness config files. 100% free, zero marketing spam.
             </p>
@@ -539,22 +528,22 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="builder@agency.com"
-                  className="px-4 py-3.5 rounded-2xl bg-white border border-amber-600/30 text-slate-800 text-sm focus:outline-none flex-1 shadow-xs placeholder-slate-400"
+                  className="px-4 py-3.5 rounded-full bg-white/10 border border-white/20 text-white text-sm focus:outline-none flex-1 shadow-xs placeholder-white/50"
                 />
                 <button
                   type="submit"
                   disabled={subscribing}
-                  className="px-6 py-3.5 rounded-2xl bg-[#071B3A] hover:bg-[#10213F] text-white text-xs sm:text-sm font-extrabold transition-all shadow-md shrink-0 disabled:opacity-50"
+                  className="px-6 py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-xs sm:text-sm font-extrabold transition-all shadow-md shrink-0 disabled:opacity-50"
                 >
                   {subscribing ? 'Sending...' : 'Send Me Updates'}
                 </button>
               </form>
             ) : (
-              <div className="p-5 rounded-2xl bg-[#071B3A] text-white flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6 text-[#34D399] shrink-0" />
+              <div className="p-5 rounded-2xl bg-white/10 text-white flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-[#FA5929] shrink-0" />
                 <div>
                   <div className="font-bold text-sm">You are subscribed!</div>
-                  <div className="text-xs text-slate-300">
+                  <div className="text-xs text-white/70">
                     You'll receive lesson drops and skill packages as soon as they are published.
                   </div>
                 </div>
@@ -568,31 +557,31 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
       {activeGuideKey && activeGuideEntry && (
         <div
           onClick={() => setActiveGuideKey(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#281010]/70 backdrop-blur-sm"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-150"
+            className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-[#EAE3D9] animate-in fade-in zoom-in-95 duration-150"
           >
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100">
+            <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#EAE3D9]">
               <div>
-                <div className="text-[11px] font-mono font-bold text-[#2F80ED] uppercase tracking-wider">
+                <div className="text-[11px] font-mono font-bold text-[#FA5929] uppercase tracking-wider">
                   Cross-Harness Format Guide
                 </div>
-                <h3 className="text-2xl font-extrabold text-[#071B3A] tracking-tight mt-1">
+                <h3 className="text-2xl font-black font-display text-[#281010] tracking-tight mt-1">
                   {activeGuideEntry.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveGuideKey(null)}
-                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors"
+                className="p-2 rounded-full text-[#706B67] hover:text-[#281010] bg-[#F8F3EC] hover:bg-[#FBE1CE] transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-4 mb-6">
+            <p className="text-xs sm:text-sm text-[#706B67] leading-relaxed mt-4 mb-6">
               {activeGuideEntry.note}
             </p>
 
@@ -607,10 +596,10 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
                       setGuideHarnessKey(h.key);
                       setCopiedCode(false);
                     }}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                    className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 ${
                       isActive
-                        ? 'bg-[#071B3A] text-white shadow-xs'
-                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                        ? 'bg-[#281010] text-white shadow-xs'
+                        : 'bg-[#F8F3EC] hover:bg-[#FBE1CE] text-[#281010]'
                     }`}
                   >
                     {h.name}
@@ -620,39 +609,39 @@ export const HarnessMasteryView: React.FC<HarnessMasteryViewProps> = () => {
             </div>
 
             {/* Code & Path Preview Box */}
-            <div className="rounded-2xl bg-[#071B3A] border border-slate-800 overflow-hidden shadow-md">
-              <div className="flex items-center justify-between gap-3 px-4 py-3 bg-[#051329] border-b border-slate-800">
-                <span className="font-mono text-xs text-[#E9A93B] truncate">
+            <div className="rounded-2xl bg-[#281010] border border-[#3D1E1E] overflow-hidden shadow-md">
+              <div className="flex items-center justify-between gap-3 px-4 py-3 bg-black/40 border-b border-white/10">
+                <span className="font-mono text-xs text-[#FA5929] truncate">
                   {currentCodeSnippet.path}
                 </span>
                 <button
                   onClick={() => handleCopyCode(currentCodeSnippet.code)}
-                  className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-colors shrink-0"
+                  className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-colors shrink-0"
                 >
                   {copiedCode ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#34D399]" />
+                      <Check className="w-3.5 h-3.5 text-[#FA5929]" />
                       <span>Copied!</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5 text-slate-300" />
+                      <Copy className="w-3.5 h-3.5 text-white/70" />
                       <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
 
-              <pre className="p-4 sm:p-5 font-mono text-xs text-slate-200 overflow-x-auto whitespace-pre leading-relaxed max-h-[380px]">
+              <pre className="p-4 sm:p-5 font-mono text-xs text-white/90 overflow-x-auto whitespace-pre leading-relaxed max-h-[380px]">
                 {currentCodeSnippet.code}
               </pre>
             </div>
 
-            <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-slate-400">
+            <div className="mt-4 flex items-center justify-between text-[11px] font-mono text-[#706B67]">
               <span>Standard conforms across Anthropic, OpenAI, DeepMind & Cursor standards</span>
               <button
                 onClick={() => setActiveGuideKey(null)}
-                className="text-slate-600 font-bold hover:underline"
+                className="text-[#281010] font-bold hover:underline"
               >
                 Close (ESC)
               </button>

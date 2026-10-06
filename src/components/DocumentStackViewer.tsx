@@ -24,17 +24,17 @@ export const DocumentStackViewer: React.FC = () => {
   };
 
   return (
-    <section id="docs" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white border-t border-slate-200 text-left">
+    <section id="docs" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[#EAE3D9] text-left">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
-          <FileText className="w-3.5 h-3.5 text-[#2F80ED]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold mb-3 shadow-xs">
+          <FileText className="w-3.5 h-3.5 text-[#FA5929]" />
           <span>Module 8 Artifact Catalog</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-black font-display text-[#281010] tracking-tight">
           The 11-Document Planning Stack
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
+        <p className="mt-3 text-base sm:text-lg text-[#706B67] font-normal">
           The exact technical documents professional builders generate with AI before writing a single line of production code.
         </p>
       </div>
@@ -50,19 +50,19 @@ export const DocumentStackViewer: React.FC = () => {
               <button
                 key={doc.id}
                 onClick={() => setSelectedDoc(doc)}
-                className={`w-full p-3.5 rounded-2xl text-left border transition-all flex items-center justify-between ${
+                className={`w-full p-4 rounded-2xl text-left border transition-all flex items-center justify-between ${
                   isSelected
-                    ? 'bg-white border-[#071B3A] shadow-md ring-1 ring-[#071B3A]'
-                    : 'bg-[#F4F7FB] border-slate-200 hover:bg-white hover:border-slate-300'
+                    ? 'bg-white border-[#FA5929] shadow-md ring-1 ring-[#FA5929]'
+                    : 'bg-white border-[#EAE3D9] hover:border-slate-300 shadow-xs'
                 }`}
               >
                 <div>
-                  <div className="text-[10px] font-mono text-[#2F80ED] font-bold">
+                  <div className="text-[10px] font-mono text-[#FA5929] font-bold">
                     {doc.num} · {doc.filename}
                   </div>
-                  <h4 className="text-xs font-bold text-[#10213F] mt-0.5">{doc.title}</h4>
+                  <h4 className="text-xs font-bold text-[#281010] mt-0.5">{doc.title}</h4>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-white border border-slate-200 font-mono text-slate-500 shadow-xs">
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#F8F3EC] border border-[#EAE3D9] font-mono text-[#706B67] shadow-xs">
                   {doc.owner}
                 </span>
               </button>
@@ -71,31 +71,31 @@ export const DocumentStackViewer: React.FC = () => {
         </div>
 
         {/* Right: Selected Document Markdown Viewer (8 cols) */}
-        <div className="lg:col-span-8 bg-[#F4F7FB] border border-slate-200 rounded-3xl p-6 shadow-sm">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-200">
+        <div className="lg:col-span-8 bg-white border border-[#EAE3D9] rounded-3xl p-6 sm:p-8 shadow-xs">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#EAE3D9]">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
+                <span className="text-xs font-mono font-bold text-[#FA5929] uppercase">
                   {selectedDoc.filename}
                 </span>
-                <span className="text-slate-300">•</span>
-                <span className="text-xs font-medium text-slate-500">
+                <span className="text-[#EAE3D9]">•</span>
+                <span className="text-xs font-medium text-[#706B67]">
                   Owner: {selectedDoc.owner}
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-[#10213F]">{selectedDoc.title}</h3>
-              <p className="text-xs text-slate-600 mt-0.5">{selectedDoc.purpose}</p>
+              <h3 className="text-lg font-bold text-[#281010]">{selectedDoc.title}</h3>
+              <p className="text-xs text-[#706B67] mt-0.5">{selectedDoc.purpose}</p>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleCopy(selectedDoc.contentTemplate)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-[#10213F] shadow-xs"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#F8F3EC] hover:bg-[#FBE1CE] border border-[#EAE3D9] rounded-full text-xs font-bold text-[#281010] shadow-xs transition-colors"
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#34D399]" />
-                    <span className="text-[#34D399]">Copied</span>
+                    <Check className="w-3.5 h-3.5 text-[#FA5929]" />
+                    <span className="text-[#FA5929]">Copied</span>
                   </>
                 ) : (
                   <>
@@ -107,7 +107,7 @@ export const DocumentStackViewer: React.FC = () => {
 
               <button
                 onClick={() => handleDownload(selectedDoc)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#071B3A] hover:bg-[#10213F] text-white rounded-xl text-xs font-bold shadow-xs"
+                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#FA5929] hover:bg-[#E0491B] text-white rounded-full text-xs font-bold shadow-xs transition-colors"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download .md</span>
@@ -115,7 +115,7 @@ export const DocumentStackViewer: React.FC = () => {
             </div>
           </div>
 
-          <pre className="p-4 bg-white border border-slate-200 rounded-2xl text-xs font-mono text-slate-800 leading-relaxed overflow-x-auto whitespace-pre-wrap max-h-[460px] shadow-xs">
+          <pre className="p-4 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-mono text-[#281010] leading-relaxed overflow-x-auto whitespace-pre-wrap max-h-[460px] shadow-xs">
             {selectedDoc.contentTemplate}
           </pre>
         </div>
@@ -124,4 +124,3 @@ export const DocumentStackViewer: React.FC = () => {
     </section>
   );
 };
-

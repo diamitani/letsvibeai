@@ -1,14 +1,14 @@
 import { AgentPlatformSkill, AgentSubAgent, AgentMemoryRecord, AgentRunRecord } from '../types';
 
 export const AGENT_CATEGORIES = {
-  form:    { name: 'Formation & Finance', color: '#2F80ED', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
+  form:    { name: 'Formation & Finance', color: '#FA5929', bg: 'bg-[#FBE1CE]', text: 'text-[#FA5929]', border: 'border-[#FCAA91]/60' },
   pub:     { name: 'Publishing & Rights', color: '#7C5CFC', bg: 'bg-violet-50', text: 'text-violet-700', border: 'border-violet-200' },
   dist:    { name: 'Distribution & Royalties', color: '#20C7D9', bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200' },
-  brand:   { name: 'Brand & Identity', color: '#EAB308', bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-200' },
-  content: { name: 'Content & Social', color: '#EC4899', bg: 'bg-pink-50', text: 'text-pink-700', border: 'border-pink-200' },
-  merch:   { name: 'Merch & Product', color: '#F97316', bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-  strat:   { name: 'Strategy', color: '#071B3A', bg: 'bg-slate-100', text: 'text-slate-800', border: 'border-slate-300' },
-  build:   { name: 'Agent Builder', color: '#34D399', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' }
+  brand:   { name: 'Brand & Identity', color: '#FA5929', bg: 'bg-[#FBE1CE]', text: 'text-[#FA5929]', border: 'border-[#FCAA91]/60' },
+  content: { name: 'Content & Social', color: '#FA5929', bg: 'bg-[#FBE1CE]', text: 'text-[#FA5929]', border: 'border-[#FCAA91]/60' },
+  merch:   { name: 'Merch & Product', color: '#FA5929', bg: 'bg-[#FBE1CE]', text: 'text-[#FA5929]', border: 'border-[#FCAA91]/60' },
+  strat:   { name: 'Strategy', color: '#281010', bg: 'bg-[#EDE7DE]', text: 'text-[#281010]', border: 'border-[#EAE3D9]' },
+  build:   { name: 'Agent Builder', color: '#FA5929', bg: 'bg-[#FBE1CE]', text: 'text-[#FA5929]', border: 'border-[#FCAA91]/60' }
 };
 
 export const AGENT_SKILLS: AgentPlatformSkill[] = [

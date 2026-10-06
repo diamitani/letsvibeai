@@ -87,23 +87,23 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 bg-slate-900/60 backdrop-blur-sm">
-      <div className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150 text-left">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 bg-[#281010]/60 backdrop-blur-sm">
+      <div className="bg-white border border-[#EAE3D9] rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150 text-left">
         
         {/* Search Input Bar */}
-        <div className="p-4 border-b border-slate-200 flex items-center gap-3 bg-[#F4F7FB]">
-          <Search className="w-5 h-5 text-[#2F80ED] shrink-0" />
+        <div className="p-4 border-b border-[#EAE3D9] flex items-center gap-3 bg-[#F8F3EC]">
+          <Search className="w-5 h-5 text-[#FA5929] shrink-0" />
           <input
             autoFocus
             type="text"
             placeholder="Search modules, architecture blocks, planning docs, prompts..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 bg-transparent text-sm text-[#10213F] placeholder-slate-400 focus:outline-none font-sans"
+            className="flex-1 bg-transparent text-sm text-[#281010] placeholder-[#706B67] focus:outline-none font-sans"
           />
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg bg-white border border-slate-200 shadow-2xs"
+            className="p-1.5 text-[#706B67] hover:text-[#281010] rounded-full bg-white border border-[#EAE3D9] shadow-2xs"
           >
             <X className="w-4 h-4" />
           </button>
@@ -115,7 +115,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Modules Group */}
           {moduleResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 Course Modules ({moduleResults.length})
               </div>
               <div className="space-y-1">
@@ -123,18 +123,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={m.id}
                     onClick={() => handleItemClick('curriculum', m.id)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <BookOpen className="w-4 h-4 text-[#2F80ED] shrink-0" />
+                      <BookOpen className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
                           Module {m.id}: {m.title}
                         </div>
-                        <div className="text-[11px] text-slate-500">{m.tagline}</div>
+                        <div className="text-[11px] text-[#706B67]">{m.tagline}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
@@ -144,7 +144,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Architecture Blocks Group */}
           {blockResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 Architecture Blocks ({blockResults.length})
               </div>
               <div className="space-y-1">
@@ -152,18 +152,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={b.id}
                     onClick={() => handleItemClick('architecture', b.id)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Layers className="w-4 h-4 text-[#20C7D9] shrink-0" />
+                      <Layers className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#20C7D9]">
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
                           {b.name} ({b.defaultTool.split('+')[0]})
                         </div>
-                        <div className="text-[11px] text-slate-500">Analogy: {b.analogy}</div>
+                        <div className="text-[11px] text-[#706B67]">Analogy: {b.analogy}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#20C7D9]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
@@ -173,7 +173,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Documents Group */}
           {docResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 11 Planning Docs ({docResults.length})
               </div>
               <div className="space-y-1">
@@ -181,18 +181,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={d.id}
                     onClick={() => handleItemClick('docs', d.id)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <FileText className="w-4 h-4 text-[#7C5CFC] shrink-0" />
+                      <FileText className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#7C5CFC]">
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
                           Doc {d.num}: {d.title}
                         </div>
-                        <div className="text-[11px] text-slate-500">{d.filename}</div>
+                        <div className="text-[11px] text-[#706B67]">{d.filename}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#7C5CFC]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
@@ -202,7 +202,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Agent Skills Group */}
           {skillResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 Modular Agent Skills ({skillResults.length})
               </div>
               <div className="space-y-1">
@@ -210,18 +210,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={s.id}
                     onClick={() => handleItemClick('agent-platform', s.id)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Cpu className="w-4 h-4 text-[#2F80ED] shrink-0" />
+                      <Cpu className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
-                          {s.name} <span className="text-[10px] text-slate-400 font-mono">({s.cat})</span>
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
+                          {s.name} <span className="text-[10px] text-[#706B67] font-mono">({s.cat})</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1">{s.summary}</div>
+                        <div className="text-[11px] text-[#706B67] line-clamp-1">{s.summary}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
@@ -231,7 +231,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           {/* Harness Lessons Group */}
           {harnessResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 Agent Harness Mastery Lessons ({harnessResults.length})
               </div>
               <div className="space-y-1">
@@ -239,28 +239,28 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={h.id}
                     onClick={() => handleItemClick('harness-mastery', h.id)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Play className="w-4 h-4 text-[#E9A93B] shrink-0" />
+                      <Play className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
-                          Lesson {h.num}: {h.title} <span className="text-[10px] text-slate-400 font-mono">({h.dur})</span>
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
+                          Lesson {h.num}: {h.title} <span className="text-[10px] text-[#706B67] font-mono">({h.dur})</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1">{h.desc}</div>
+                        <div className="text-[11px] text-[#706B67] line-clamp-1">{h.desc}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Skills Library (46 Production Skills) Group */}
+          {/* Skills Library Group */}
           {skillsLibResults.length > 0 && (
             <div>
-              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+              <div className="text-[10px] font-mono font-bold text-[#706B67] uppercase px-3 py-1">
                 Skills Library ({skillsLibResults.length})
               </div>
               <div className="space-y-1">
@@ -268,18 +268,18 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   <button
                     key={s.slug}
                     onClick={() => handleItemClick('skills-library', s.slug)}
-                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                    className="w-full text-left p-2.5 rounded-2xl hover:bg-[#F8F3EC] flex items-center justify-between group transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <Layers className="w-4 h-4 text-[#2F80ED] shrink-0" />
+                      <Layers className="w-4 h-4 text-[#FA5929] shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
-                          {s.name} <span className="text-[10px] text-slate-400 font-mono">({s.category})</span>
+                        <div className="text-xs font-bold text-[#281010] group-hover:text-[#FA5929]">
+                          {s.name} <span className="text-[10px] text-[#706B67] font-mono">({s.category})</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 line-clamp-1">{s.tagline}</div>
+                        <div className="text-[11px] text-[#706B67] line-clamp-1">{s.tagline}</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[#706B67] group-hover:text-[#FA5929]" />
                   </button>
                 ))}
               </div>
@@ -287,7 +287,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           )}
 
           {moduleResults.length === 0 && blockResults.length === 0 && docResults.length === 0 && skillResults.length === 0 && harnessResults.length === 0 && skillsLibResults.length === 0 && (
-            <div className="p-8 text-center text-xs text-slate-500 font-mono">
+            <div className="p-8 text-center text-xs text-[#706B67] font-mono">
               No matching modules, architecture nodes, documents, skills, harness lessons, or library skills found for "{query}".
             </div>
           )}
@@ -295,9 +295,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Footer info */}
-        <div className="p-3 bg-[#F4F7FB] border-t border-slate-200 text-[11px] font-mono text-slate-500 flex items-center justify-between">
+        <div className="p-3.5 bg-[#F8F3EC] border-t border-[#EAE3D9] text-[11px] font-mono text-[#706B67] flex items-center justify-between">
           <span>Navigate with mouse or keyboard</span>
-          <span className="px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600 font-bold">ESC to close</span>
+          <span className="px-2.5 py-0.5 rounded-full bg-white border border-[#EAE3D9] text-[#281010] font-bold">ESC to close</span>
         </div>
 
       </div>

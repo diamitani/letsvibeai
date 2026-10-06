@@ -82,7 +82,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         setSocialLoading(null);
         return;
       }
-      // Browser will redirect to provider or callback
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'OAuth failed';
       setErrorMessage(msg);
@@ -113,27 +112,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#281010]/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
+        className="relative w-full max-w-md bg-white border border-[#EAE3D9] rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-700 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+          className="absolute top-5 right-5 p-2 text-[#706B67] hover:text-[#281010] rounded-full bg-[#F8F3EC] hover:bg-[#FBE1CE] transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Brand Header */}
         <div className="flex items-center gap-3 mb-6">
-          <img src="/logo-standalone-mark.svg" alt="LetsVibeAI" className="w-8 h-8" />
+          <div className="w-9 h-9 rounded-full bg-[#FA5929] flex items-center justify-center font-bold text-white shadow-xs">
+            V
+          </div>
           <div>
-            <h2 className="text-xl font-bold tracking-tight text-[#10213F]">
+            <h2 className="text-xl font-black font-display tracking-tight text-[#281010]">
               {mode === 'signin' ? 'Welcome Back' : 'Join the Institution'}
             </h2>
-            <p className="text-xs text-slate-500 font-medium">
+            <p className="text-xs text-[#706B67] font-medium">
               {mode === 'signin'
                 ? 'Sign in to access your Vibe AI Workspaces & Copilot'
                 : 'Learn AI. Build with AI. Ship with AI.'}
@@ -142,16 +143,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex bg-[#F4F7FB] p-1 rounded-xl mb-4 border border-slate-200">
+        <div className="flex bg-[#F8F3EC] p-1 rounded-full mb-5 border border-[#EAE3D9]">
           <button
             onClick={() => {
               setMode('signin');
               setErrorMessage(null);
             }}
-            className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all ${
               mode === 'signin'
-                ? 'bg-white text-[#10213F] shadow-xs font-bold'
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-[#281010] text-white shadow-xs font-bold'
+                : 'text-[#706B67] hover:text-[#281010]'
             }`}
           >
             Sign In
@@ -161,10 +162,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               setMode('signup');
               setErrorMessage(null);
             }}
-            className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all ${
               mode === 'signup'
-                ? 'bg-white text-[#10213F] shadow-xs font-bold'
-                : 'text-slate-500 hover:text-slate-800'
+                ? 'bg-[#281010] text-white shadow-xs font-bold'
+                : 'text-[#706B67] hover:text-[#281010]'
             }`}
           >
             Create Account
@@ -173,7 +174,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
         {/* Error message alert */}
         {errorMessage && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2 text-red-700 text-xs">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-2xl flex items-center gap-2 text-red-700 text-xs">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{errorMessage}</span>
           </div>
@@ -184,7 +185,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <button
             onClick={() => handleOAuth('google')}
             disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
+            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
@@ -210,18 +211,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <button
             onClick={() => handleOAuth('github')}
             disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
+            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
           >
-            <Github className="w-4 h-4 text-[#10213F]" />
+            <Github className="w-4 h-4 text-[#281010]" />
             <span>GitHub</span>
           </button>
 
           <button
             onClick={() => handleOAuth('apple')}
             disabled={socialLoading !== null}
-            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
+            className="flex items-center justify-center gap-2 py-2.5 px-3 bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs font-semibold text-[#281010] transition-all active:scale-[0.98] disabled:opacity-50 shadow-xs"
           >
-            <svg className="w-4 h-4 fill-current text-[#10213F]" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 fill-current text-[#281010]" viewBox="0 0 24 24">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.93-2.85-.9.04-1.99.6-2.63 1.35-.57.65-.99 1.72-.88 2.74 1 .08 2.02-.53 2.58-1.24z" />
             </svg>
             <span>Apple</span>
@@ -229,72 +230,72 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         </div>
 
         <div className="relative flex items-center justify-center mb-6">
-          <div className="border-t border-slate-200 w-full" />
-          <span className="bg-white px-3 text-[10px] uppercase font-mono text-slate-400 tracking-widest absolute">
+          <div className="border-t border-[#EAE3D9] w-full" />
+          <span className="bg-white px-3 text-[10px] uppercase font-mono text-[#706B67] tracking-widest absolute">
             or email
           </span>
         </div>
 
         {magicLinkSent ? (
-          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3 text-emerald-900">
-            <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#34D399]" />
+          <div className="p-4 bg-[#FBE1CE] border border-[#FCAA91]/60 rounded-2xl flex items-center gap-3 text-[#281010]">
+            <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#FA5929]" />
             <div className="text-xs">
               <p className="font-semibold">Magic login link dispatched!</p>
-              <p className="text-slate-500">Check your inbox to authenticate securely.</p>
+              <p className="text-[#706B67]">Check your inbox to authenticate securely.</p>
             </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3.5">
             {mode === 'signup' && (
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Full Name</label>
+                <label className="block text-xs font-medium text-[#281010] mb-1">Full Name</label>
                 <input
                   type="text"
                   placeholder="Ada Lovelace"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F] placeholder-slate-400 focus:outline-none focus:border-[#2F80ED] focus:bg-white transition-all"
+                  className="w-full px-4 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Work / School Email</label>
+              <label className="block text-xs font-medium text-[#281010] mb-1">Work / School Email</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <Mail className="w-4 h-4 text-[#706B67] absolute left-3.5 top-3" />
                 <input
                   type="email"
                   required
                   placeholder="learner@institution.edu"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F] placeholder-slate-400 focus:outline-none focus:border-[#2F80ED] focus:bg-white transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-medium text-slate-700">Password</label>
+                <label className="text-xs font-medium text-[#281010]">Password</label>
                 {mode === 'signin' && (
                   <button
                     type="button"
                     onClick={handleMagicLink}
-                    className="text-[11px] text-[#2F80ED] hover:underline font-medium"
+                    className="text-[11px] text-[#FA5929] hover:underline font-medium"
                   >
                     Send Magic Link instead
                   </button>
                 )}
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                <Lock className="w-4 h-4 text-[#706B67] absolute left-3.5 top-3" />
                 <input
                   type="password"
                   required
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F4F7FB] border border-slate-200 rounded-xl text-xs text-[#10213F] placeholder-slate-400 focus:outline-none focus:border-[#2F80ED] focus:bg-white transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F8F3EC] border border-[#EAE3D9] rounded-2xl text-xs text-[#281010] placeholder-[#706B67] focus:outline-none focus:border-[#FA5929] focus:bg-white transition-all"
                 />
               </div>
             </div>
@@ -302,14 +303,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 px-4 bg-[#071B3A] hover:bg-[#10213F] active:scale-[0.98] text-white font-bold text-xs rounded-xl transition-all shadow-md flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
+              className="w-full py-3 px-4 bg-[#FA5929] hover:bg-[#E0491B] active:scale-[0.98] text-white font-bold text-xs rounded-full transition-all shadow-md flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
             >
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
                   <span>{mode === 'signin' ? 'Sign In to Workspace' : 'Get Instant Access'}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#34D399]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-white" />
                 </>
               )}
             </button>
@@ -317,12 +318,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         )}
 
         {/* Security Assurance */}
-        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+        <div className="mt-6 pt-4 border-t border-[#EAE3D9] flex items-center justify-between text-[11px] text-[#706B67] font-mono">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#34D399]" />
-            <span>Supabase Master RLS & OAuth Encrypted</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-[#FA5929]" />
+            <span>Supabase RLS & OAuth Encrypted</span>
           </div>
-          <span className="text-slate-400 font-medium">Diamitani Master</span>
+          <span className="text-[#706B67] font-medium">Diamitani Master</span>
         </div>
       </div>
     </div>

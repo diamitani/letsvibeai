@@ -8,15 +8,6 @@ import {
   Copy,
   Check,
   ArrowRight,
-  Sparkles,
-  Layers,
-  Bot,
-  Zap,
-  CheckCircle2,
-  ChevronRight,
-  Terminal,
-  FileCode,
-  Compass,
   ArrowLeft,
   X
 } from 'lucide-react';
@@ -100,7 +91,6 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
   const handleDownloadSkill = (skill: GencyLibrarySkill, e: React.MouseEvent) => {
     e.stopPropagation();
-    // Simulate direct download
     const blob = new Blob(
       [
         `---\nname: ${skill.name}\ndescription: ${skill.tagline}\n---\n\n# ${skill.name}\n\n${skill.description}\n`
@@ -120,14 +110,14 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
   // 1. DETAIL VIEW
   if (activeSkill) {
     return (
-      <div className="min-h-screen bg-[#F4F7FB] text-[#10213F] font-sans pb-24 pt-24 selection:bg-[#2F80ED] selection:text-white">
+      <div className="min-h-screen bg-[#F8F3EC] text-[#281010] font-sans pb-24 pt-24 selection:bg-[#FA5929] selection:text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-6">
           
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-500 mb-8 flex-wrap">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#706B67] mb-8 flex-wrap">
             <button
               onClick={() => setSelectedSlug(null)}
-              className="text-slate-600 hover:text-[#2F80ED] flex items-center gap-1 font-bold"
+              className="text-[#706B67] hover:text-[#FA5929] flex items-center gap-1 font-bold"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>All Skills</span>
@@ -135,7 +125,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
             <span>/</span>
             <span>{activeSkill.category}</span>
             <span>/</span>
-            <span className="text-[#071B3A] font-bold">{activeSkill.name}</span>
+            <span className="text-[#281010] font-bold">{activeSkill.name}</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -143,24 +133,24 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
             {/* Left Column: Skill Information */}
             <div className="lg:col-span-8">
               <div className="flex items-center gap-2 flex-wrap mb-4">
-                <span className="px-3 py-1 rounded-full bg-blue-50 text-[#2F80ED] border border-blue-200 text-xs font-mono font-bold uppercase tracking-wider">
+                <span className="px-3.5 py-1 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60 text-xs font-mono font-bold uppercase tracking-wider">
                   {activeSkill.category}
                 </span>
                 {activeSkill.core && (
-                  <span className="px-2.5 py-1 rounded-full bg-amber-50 text-[#B8741A] border border-amber-300 font-mono text-xs font-bold uppercase">
+                  <span className="px-3 py-1 rounded-full bg-[#281010] text-white font-mono text-xs font-bold uppercase">
                     CORE SKILL
                   </span>
                 )}
-                <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-[#34D399] border border-emerald-200 font-mono text-xs font-bold uppercase">
+                <span className="px-3 py-1 rounded-full bg-white border border-[#EAE3D9] text-[#281010] font-mono text-xs font-bold uppercase shadow-2xs">
                   FREE OPEN SOURCE
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-[#071B3A] tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-black font-display text-[#281010] tracking-tight leading-tight">
                 {activeSkill.name}
               </h1>
 
-              <p className="mt-4 text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl font-medium">
+              <p className="mt-4 text-lg sm:text-xl text-[#706B67] leading-relaxed max-w-2xl font-medium">
                 {activeSkill.tagline}
               </p>
 
@@ -168,7 +158,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
               <div className="flex items-center gap-3 flex-wrap mt-8">
                 <button
                   onClick={(e) => handleDownloadSkill(activeSkill, e)}
-                  className="px-6 py-3.5 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white text-sm font-extrabold shadow-md flex items-center gap-2 active:scale-95 transition-all"
+                  className="px-6 py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white text-sm font-extrabold shadow-md flex items-center gap-2 active:scale-95 transition-all"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download SKILL.md — Free</span>
@@ -177,17 +167,17 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                   href={activeSkill.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-[#071B3A] text-sm font-bold shadow-xs flex items-center gap-2 transition-all"
+                  className="px-5 py-3.5 rounded-full bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] text-[#281010] text-sm font-bold shadow-xs flex items-center gap-2 transition-all"
                 >
-                  <ExternalLink className="w-4 h-4 text-slate-400" />
+                  <ExternalLink className="w-4 h-4 text-[#706B67]" />
                   <span>View on GitHub</span>
                 </a>
               </div>
 
               {/* What It Does */}
-              <div className="mt-12 pt-8 border-t border-slate-200/80">
-                <h2 className="text-2xl font-bold text-[#071B3A] mb-4">What it does</h2>
-                <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs text-sm sm:text-base text-slate-700 leading-relaxed whitespace-pre-line">
+              <div className="mt-12 pt-8 border-t border-[#EAE3D9]">
+                <h2 className="text-2xl font-bold font-display text-[#281010] mb-4">What it does</h2>
+                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs text-sm sm:text-base text-[#281010] leading-relaxed whitespace-pre-line">
                   {activeSkill.description}
                 </div>
               </div>
@@ -195,12 +185,12 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
               {/* Say this to trigger it */}
               {activeSkill.triggers && activeSkill.triggers.length > 0 && (
                 <div className="mt-8">
-                  <h2 className="text-xl font-bold text-[#071B3A] mb-3">Say this to trigger it</h2>
+                  <h2 className="text-xl font-bold font-display text-[#281010] mb-3">Say this to trigger it</h2>
                   <div className="flex items-center gap-2 flex-wrap">
                     {activeSkill.triggers.map((trig, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-2 rounded-xl bg-white border border-slate-200 font-mono text-xs text-slate-700 shadow-2xs"
+                        className="px-4 py-2 rounded-full bg-white border border-[#EAE3D9] font-mono text-xs text-[#281010] shadow-2xs"
                       >
                         "{trig}"
                       </span>
@@ -211,38 +201,38 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
               {/* Install in Two Minutes */}
               <div className="mt-10">
-                <h2 className="text-2xl font-bold text-[#071B3A] mb-4">Install in two minutes</h2>
+                <h2 className="text-2xl font-bold font-display text-[#281010] mb-4">Install in two minutes</h2>
                 <div className="space-y-3">
-                  <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-start gap-4">
-                    <span className="font-mono text-sm font-bold text-[#2F80ED] shrink-0 mt-0.5">
+                  <div className="p-5 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs flex items-start gap-4">
+                    <span className="font-mono text-sm font-bold text-[#FA5929] shrink-0 mt-0.5">
                       01
                     </span>
-                    <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-[#281010] leading-relaxed">
                       <b>Claude App:</b> Download the file, then navigate to <i>Settings → Capabilities → Skills</i> and upload `SKILL.md`.
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-start gap-4">
-                    <span className="font-mono text-sm font-bold text-[#2F80ED] shrink-0 mt-0.5">
+                  <div className="p-5 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs flex items-start gap-4">
+                    <span className="font-mono text-sm font-bold text-[#FA5929] shrink-0 mt-0.5">
                       02
                     </span>
-                    <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-[#281010] leading-relaxed">
                       <b>Claude Code & Antigravity:</b> Save it to{' '}
-                      <code className="px-1.5 py-0.5 rounded bg-slate-100 text-blue-600 font-mono text-xs">
+                      <code className="px-2 py-0.5 rounded-full bg-[#F8F3EC] text-[#FA5929] font-mono text-xs border border-[#EAE3D9]">
                         ~/.claude/skills/{activeSkill.name}/SKILL.md
                       </code>{' '}
                       or{' '}
-                      <code className="px-1.5 py-0.5 rounded bg-slate-100 text-blue-600 font-mono text-xs">
+                      <code className="px-2 py-0.5 rounded-full bg-[#F8F3EC] text-[#FA5929] font-mono text-xs border border-[#EAE3D9]">
                         .agents/skills/{activeSkill.name}/SKILL.md
                       </code>.
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-start gap-4">
-                    <span className="font-mono text-sm font-bold text-[#2F80ED] shrink-0 mt-0.5">
+                  <div className="p-5 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs flex items-start gap-4">
+                    <span className="font-mono text-sm font-bold text-[#FA5929] shrink-0 mt-0.5">
                       03
                     </span>
-                    <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <div className="text-xs sm:text-sm text-[#281010] leading-relaxed">
                       <b>Any other agent (Cursor, Windsurf, Copilot, Hermes):</b> Copy and paste the install prompt directly into a new chat.
                     </div>
                   </div>
@@ -254,18 +244,18 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
             <div className="lg:col-span-4 sticky top-28 space-y-5">
               
               {/* Install Prompt Box */}
-              <div className="p-6 rounded-3xl bg-[#071B3A] text-white shadow-xl border border-slate-800">
-                <div className="text-xs font-mono font-bold text-[#E9A93B] uppercase tracking-wider mb-2">
+              <div className="p-6 sm:p-8 rounded-3xl bg-[#281010] text-white shadow-xl border border-[#3D1E1E]">
+                <div className="text-xs font-mono font-bold text-[#FA5929] uppercase tracking-wider mb-2">
                   AGENT INSTALL PROMPT
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#051329] border border-slate-800 text-xs font-mono text-slate-300 break-all leading-relaxed my-3">
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/10 text-xs font-mono text-white/80 break-all leading-relaxed my-3">
                   {activeSkill.install}
                 </div>
 
                 <button
                   onClick={() => handleCopyInstallPrompt(activeSkill.install)}
-                  className="w-full py-3 rounded-xl bg-[#E9A93B] hover:bg-amber-400 text-[#071B3A] font-extrabold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md flex items-center justify-center gap-2"
                 >
                   {copiedInstall ? (
                     <>
@@ -280,15 +270,15 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                   )}
                 </button>
 
-                <div className="mt-6 pt-4 border-t border-slate-800">
-                  <div className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider mb-2">
+                <div className="mt-6 pt-4 border-t border-white/10">
+                  <div className="text-[10px] font-mono font-bold text-white/50 uppercase tracking-wider mb-2">
                     WORKS WITH
                   </div>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {activeSkill.compat.map((c, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700"
+                        className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/10 text-white/90 border border-white/10"
                       >
                         {c}
                       </span>
@@ -298,16 +288,16 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
               </div>
 
               {/* Consultation Teaser */}
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs">
-                <h3 className="font-bold text-base text-[#071B3A] mb-1.5">
+              <div className="p-6 rounded-3xl bg-white border border-[#EAE3D9] shadow-xs">
+                <h3 className="font-bold text-base text-[#281010] mb-1.5">
                   Want this customized for your team?
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm text-[#706B67] leading-relaxed mb-4">
                   LetsVibeAI adapts skills to your proprietary databases, tools, and workflows, then deploys them with deterministic testing gates.
                 </p>
                 <a
                   href="mailto:contact@letsvibeai.com"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2F80ED] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FA5929] hover:underline"
                 >
                   <span>Request Custom Skill Deployment</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -318,8 +308,8 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
           {/* Related Skills */}
           {relatedSkills.length > 0 && (
-            <div className="mt-16 pt-10 border-t border-slate-200">
-              <h2 className="text-2xl font-bold text-[#071B3A] mb-6">
+            <div className="mt-16 pt-10 border-t border-[#EAE3D9]">
+              <h2 className="text-2xl font-bold font-display text-[#281010] mb-6">
                 More in {activeSkill.category}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -330,12 +320,12 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                       setSelectedSlug(rel.slug);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="p-5 rounded-2xl bg-white border border-slate-200 hover:border-slate-400 cursor-pointer shadow-xs hover:shadow-md transition-all group"
+                    className="p-6 rounded-3xl bg-white border border-[#EAE3D9] hover:border-[#FA5929]/50 cursor-pointer shadow-xs hover:shadow-md transition-all group"
                   >
-                    <div className="font-bold text-base text-[#071B3A] group-hover:text-[#2F80ED] transition-colors">
+                    <div className="font-bold text-base text-[#281010] group-hover:text-[#FA5929] transition-colors">
                       {rel.name}
                     </div>
-                    <p className="text-xs text-slate-500 line-clamp-2 mt-2 leading-relaxed">
+                    <p className="text-xs text-[#706B67] line-clamp-2 mt-2 leading-relaxed">
                       {rel.tagline}
                     </p>
                   </div>
@@ -350,28 +340,28 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
   // 2. MAIN LIST VIEW
   return (
-    <div className="min-h-screen bg-[#F4F7FB] text-[#10213F] font-sans pb-24 pt-24 selection:bg-[#2F80ED] selection:text-white">
+    <div className="min-h-screen bg-[#F8F3EC] text-[#281010] font-sans pb-24 pt-24 selection:bg-[#FA5929] selection:text-white">
       
       {/* Hero Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#2F80ED] text-xs font-mono font-bold uppercase tracking-wider mb-6">
-          <span className="w-2 h-2 rounded-full bg-[#2F80ED] animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-mono font-bold uppercase tracking-wider mb-6">
+          <span className="w-2 h-2 rounded-full bg-[#FA5929] animate-pulse" />
           <span>Skills Library · {GENCY_SKILLS_LIBRARY.length} Free Production Skills · No Sign-Up</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#071B3A] leading-[1.05] max-w-4xl">
+        <h1 className="text-4xl sm:text-6xl font-black font-display tracking-tight text-[#281010] leading-[1.05] max-w-4xl">
           Skills you can drop into <br className="hidden sm:inline" />
-          <span className="text-[#2F80ED]">Claude & AI Agents today.</span>
+          <span className="text-[#FA5929]">Claude & AI Agents today.</span>
         </h1>
 
-        <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+        <p className="mt-4 text-base sm:text-lg text-[#706B67] leading-relaxed max-w-2xl">
           Production-tested `SKILL.md` packages from verified client builds. Download any skill, add it
           to Claude Code, Antigravity, or Cursor, and your agent immediately knows how to complete the job.
         </p>
 
         {/* Global Search Bar */}
-        <div className="mt-8 max-w-2xl bg-white rounded-2xl border border-slate-200 p-2 shadow-xs flex items-center gap-3">
-          <Search className="w-5 h-5 text-slate-400 ml-3 shrink-0" />
+        <div className="mt-8 max-w-2xl bg-white rounded-full border border-[#EAE3D9] p-2 shadow-xs flex items-center gap-3">
+          <Search className="w-5 h-5 text-[#706B67] ml-3 shrink-0" />
           <input
             type="text"
             value={query}
@@ -380,7 +370,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
               setCurrentPage(1);
             }}
             placeholder="Search skills — context-engine, session-overview, n8n, cap table, prompt-studio..."
-            className="flex-1 bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none py-2"
+            className="flex-1 bg-transparent text-sm text-[#281010] placeholder-[#706B67] focus:outline-none py-2 font-sans"
           />
           {query && (
             <button
@@ -388,7 +378,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                 setQuery('');
                 setCurrentPage(1);
               }}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 mr-2"
+              className="p-1.5 rounded-full text-[#706B67] hover:text-[#281010] hover:bg-[#F8F3EC] mr-2"
             >
               <X className="w-4 h-4" />
             </button>
@@ -398,7 +388,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
       {/* Filter and Control Bar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
-        <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between gap-4 flex-wrap">
+        <div className="p-4 bg-white rounded-3xl border border-[#EAE3D9] shadow-xs flex items-center justify-between gap-4 flex-wrap">
           
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
@@ -415,10 +405,10 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                     setSelectedCategory(cat);
                     setCurrentPage(1);
                   }}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-[#071B3A] text-white shadow-2xs'
-                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                      ? 'bg-[#281010] text-white shadow-2xs'
+                      : 'bg-[#F8F3EC] hover:bg-[#FBE1CE] text-[#281010]'
                   }`}
                 >
                   <span>{cat}</span>
@@ -435,26 +425,26 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                 setCoreOnly(!coreOnly);
                 setCurrentPage(1);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 border ${
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 border ${
                 coreOnly
-                  ? 'bg-amber-50 border-amber-300 text-[#B8741A]'
-                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  ? 'bg-[#FBE1CE] border-[#FCAA91]/60 text-[#FA5929]'
+                  : 'bg-white border-[#EAE3D9] text-[#706B67] hover:bg-[#F8F3EC]'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full ${coreOnly ? 'bg-[#E9A93B]' : 'bg-slate-300'}`} />
+              <span className={`w-2 h-2 rounded-full ${coreOnly ? 'bg-[#FA5929]' : 'bg-slate-300'}`} />
               <span>Core only</span>
             </button>
 
             <button
               onClick={() => setSortBy(sortBy === 'core' ? 'az' : 'core')}
-              className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-mono font-bold text-slate-700 hover:bg-slate-50 shadow-2xs"
+              className="px-4 py-2 rounded-full bg-white border border-[#EAE3D9] text-xs font-mono font-bold text-[#281010] hover:bg-[#F8F3EC] shadow-2xs"
             >
               Sort: {sortBy === 'core' ? 'Core First' : 'A–Z'}
             </button>
           </div>
         </div>
 
-        <div className="py-3 text-xs font-mono text-slate-500">
+        <div className="py-3 text-xs font-mono text-[#706B67]">
           Showing {filteredSkills.length === 0 ? 0 : startIndex + 1}–
           {Math.min(startIndex + ITEMS_PER_PAGE, filteredSkills.length)} of {filteredSkills.length} skills
         </div>
@@ -463,9 +453,9 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
       {/* Skills Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
         {filteredSkills.length === 0 ? (
-          <div className="p-12 text-center bg-white rounded-3xl border border-slate-200 shadow-xs">
-            <div className="text-xl font-bold text-[#071B3A]">No skills match your search query.</div>
-            <p className="text-sm text-slate-500 mt-2">
+          <div className="p-12 text-center bg-white rounded-3xl border border-[#EAE3D9] shadow-xs">
+            <div className="text-xl font-bold text-[#281010]">No skills match your search query.</div>
+            <p className="text-sm text-[#706B67] mt-2">
               Try searching for different keywords or reset your filters.
             </p>
             <button
@@ -475,7 +465,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                 setCoreOnly(false);
                 setCurrentPage(1);
               }}
-              className="mt-6 px-5 py-2.5 rounded-xl bg-[#071B3A] text-white text-xs font-bold"
+              className="mt-6 px-6 py-2.5 rounded-full bg-[#281010] text-white text-xs font-bold"
             >
               Reset Filters
             </button>
@@ -489,31 +479,31 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                   setSelectedSlug(skill.slug);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-slate-400 shadow-xs hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between group"
+                className="p-6 rounded-3xl bg-white border border-[#EAE3D9] hover:border-[#FA5929]/50 shadow-xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#706B67]">
                       {skill.category}
                     </span>
                     {skill.core && (
-                      <span className="px-2 py-0.5 rounded bg-amber-50 text-[#B8741A] border border-amber-300 font-mono text-[10px] font-bold">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#FBE1CE] text-[#FA5929] border border-[#FCAA91]/60 font-mono text-[10px] font-bold">
                         CORE
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-lg font-bold text-[#071B3A] group-hover:text-[#2F80ED] transition-colors">
+                  <h3 className="text-lg font-bold text-[#281010] group-hover:text-[#FA5929] transition-colors">
                     {skill.name}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2.5 line-clamp-3">
+                  <p className="text-xs sm:text-sm text-[#706B67] leading-relaxed mt-2.5 line-clamp-3">
                     {skill.tagline}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-mono text-slate-400">
+                <div className="mt-6 pt-4 border-t border-[#EAE3D9] flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-mono text-[#706B67]">
                     {skill.compat.length} platforms
                   </span>
 
@@ -521,11 +511,11 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                     <button
                       onClick={(e) => handleDownloadSkill(skill, e)}
                       title="Download SKILL.md"
-                      className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                      className="p-2 rounded-full bg-[#F8F3EC] hover:bg-[#FBE1CE] text-[#281010] transition-colors"
                     >
                       <Download className="w-3.5 h-3.5" />
                     </button>
-                    <span className="px-3 py-1.5 rounded-xl bg-[#071B3A] group-hover:bg-[#2F80ED] text-white text-xs font-bold transition-colors">
+                    <span className="px-4 py-1.5 rounded-full bg-[#281010] group-hover:bg-[#FA5929] text-white text-xs font-bold transition-colors">
                       View Skill
                     </span>
                   </div>
@@ -541,7 +531,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={activePage === 1}
-              className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 disabled:opacity-40 hover:bg-slate-50 shadow-2xs"
+              className="px-4 py-2 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#281010] disabled:opacity-40 hover:bg-[#F8F3EC] shadow-2xs"
             >
               ← Prev
             </button>
@@ -553,10 +543,10 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
                   setCurrentPage(pgNum);
                   window.scrollTo({ top: 300, behavior: 'smooth' });
                 }}
-                className={`w-9 h-9 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`w-9 h-9 rounded-full font-mono text-xs font-bold transition-all ${
                   pgNum === activePage
-                    ? 'bg-[#071B3A] text-white shadow-xs'
-                    : 'bg-white hover:bg-slate-100 border border-slate-200 text-slate-700'
+                    ? 'bg-[#FA5929] text-white shadow-xs'
+                    : 'bg-white hover:bg-[#F8F3EC] border border-[#EAE3D9] text-[#281010]'
                 }`}
               >
                 {pgNum}
@@ -566,7 +556,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={activePage === totalPages}
-              className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 disabled:opacity-40 hover:bg-slate-50 shadow-2xs"
+              className="px-4 py-2 rounded-full bg-white border border-[#EAE3D9] text-xs font-bold text-[#281010] disabled:opacity-40 hover:bg-[#F8F3EC] shadow-2xs"
             >
               Next →
             </button>
@@ -576,12 +566,12 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
       {/* Bottom Video Teaser Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
-        <div className="bg-[#071B3A] text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-800 flex items-center justify-between gap-8 flex-wrap">
+        <div className="bg-[#281010] text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-[#3D1E1E] flex items-center justify-between gap-8 flex-wrap">
           <div className="max-w-xl">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black font-display tracking-tight">
               New to authoring skills? Watch the free video course.
             </h2>
-            <p className="mt-2 text-slate-300 text-xs sm:text-sm leading-relaxed">
+            <p className="mt-2 text-white/70 text-xs sm:text-sm leading-relaxed">
               Lesson 04 of our Agent Harness Mastery course walks step-by-step through writing, testing,
               and trigger-tuning your own custom `SKILL.md` from scratch.
             </p>
@@ -589,7 +579,7 @@ export const SkillsLibraryView: React.FC<SkillsLibraryViewProps> = ({
 
           <button
             onClick={onNavigateToHarness}
-            className="px-6 py-3.5 rounded-xl bg-[#E9A93B] hover:bg-amber-400 text-[#071B3A] font-extrabold text-xs sm:text-sm transition-all shadow-md flex items-center gap-2"
+            className="px-6 py-3.5 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-extrabold text-xs sm:text-sm transition-all shadow-md flex items-center gap-2"
           >
             <span>Watch Lesson 04 (Free)</span>
             <ArrowRight className="w-4 h-4" />

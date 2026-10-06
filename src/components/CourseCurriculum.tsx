@@ -99,17 +99,17 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
   };
 
   return (
-    <section id="curriculum" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white border-t border-slate-200">
+    <section id="curriculum" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-[#F8F3EC] border-t border-[#EAE3D9]">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-14">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4F7FB] border border-slate-200 text-[#071B3A] text-xs font-semibold mb-3 shadow-xs">
-          <BookOpen className="w-3.5 h-3.5 text-[#2F80ED]" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FBE1CE] border border-[#FCAA91]/60 text-[#FA5929] text-xs font-bold uppercase tracking-wider mb-3 shadow-xs">
+          <BookOpen className="w-3.5 h-3.5 text-[#FA5929]" />
           <span>Complete 10-Module Syllabus</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#10213F] tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#281010] tracking-tight font-display">
           From Concept to Production App
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-slate-600 font-normal">
+        <p className="mt-3 text-base sm:text-lg text-[#706B67] font-normal">
           Each module includes plain-English theory, a real-world analogy, copy-paste prompts, an exercise, and an interactive 3-question knowledge check.
         </p>
       </div>
@@ -126,8 +126,8 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
               key={mod.id}
               className={`rounded-3xl border transition-all duration-200 overflow-hidden ${
                 isExpanded
-                  ? 'bg-white border-[#071B3A] shadow-lg ring-1 ring-[#071B3A]'
-                  : 'bg-[#F4F7FB] border-slate-200 hover:border-slate-300 hover:bg-white shadow-xs'
+                  ? 'bg-white border-[#FA5929] shadow-lg ring-1 ring-[#FA5929]'
+                  : 'bg-white border-[#EAE3D9] hover:border-[#FA5929]/50 shadow-xs'
               }`}
             >
               {/* Module Top Row Summary */}
@@ -139,31 +139,31 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border ${
                       isCompleted
-                        ? 'bg-emerald-50 text-[#34D399] border-emerald-200'
-                        : 'bg-white text-[#071B3A] border-slate-200 shadow-2xs'
+                        ? 'bg-[#C4DAC8]/50 text-[#1B4D2B] border-[#C4DAC8]'
+                        : 'bg-[#F8F3EC] text-[#FA5929] border-[#EAE3D9] shadow-2xs'
                     }`}
                   >
-                    {isCompleted ? <CheckCircle2 className="w-6 h-6 text-[#34D399]" /> : <Icon className="w-6 h-6 text-[#2F80ED]" />}
+                    {isCompleted ? <CheckCircle2 className="w-6 h-6 text-[#34D399]" /> : <Icon className="w-6 h-6 text-[#FA5929]" />}
                   </div>
 
                   <div className="min-w-0">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-xs font-mono font-bold text-[#2F80ED]">
+                      <span className="text-xs font-mono font-bold text-[#FA5929]">
                         MODULE {mod.id}
                       </span>
-                      <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
+                      <span className="text-xs text-[#706B67] font-mono flex items-center gap-1">
                         <Clock className="w-3 h-3" /> {mod.estimatedHours}
                       </span>
                       {isCompleted && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-50 text-[#34D399] border border-emerald-200 font-bold">
+                        <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#C4DAC8]/60 text-[#1B4D2B] border border-[#C4DAC8] font-bold uppercase">
                           COMPLETED
                         </span>
                       )}
                     </div>
-                    <h3 className="text-base sm:text-xl font-bold text-[#10213F] mt-1 truncate">
+                    <h3 className="text-base sm:text-xl font-bold text-[#281010] mt-1 truncate">
                       {mod.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 mt-0.5 hidden sm:block">
+                    <p className="text-xs sm:text-sm text-[#706B67] mt-0.5 hidden sm:block">
                       {mod.tagline}
                     </p>
                   </div>
@@ -175,48 +175,48 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                       e.stopPropagation();
                       openQuiz(mod);
                     }}
-                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs font-bold text-[#10213F] shadow-2xs transition-colors"
+                    className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F8F3EC] hover:bg-[#FAF7F2] border border-[#EAE3D9] text-xs font-bold text-[#281010] shadow-2xs transition-colors"
                   >
-                    <HelpCircle className="w-3.5 h-3.5 text-[#2F80ED]" />
+                    <HelpCircle className="w-3.5 h-3.5 text-[#FA5929]" />
                     <span>Quiz</span>
                   </button>
 
-                  <div className="p-2 text-slate-400">
-                    {isExpanded ? <ChevronUp className="w-5 h-5 text-[#071B3A]" /> : <ChevronDown className="w-5 h-5" />}
+                  <div className="p-2 text-[#706B67]">
+                    {isExpanded ? <ChevronUp className="w-5 h-5 text-[#FA5929]" /> : <ChevronDown className="w-5 h-5" />}
                   </div>
                 </div>
               </div>
 
               {/* Module Expanded Details */}
               {isExpanded && (
-                <div className="px-5 sm:px-8 pb-8 pt-2 border-t border-slate-200 space-y-6 bg-white">
+                <div className="px-5 sm:px-8 pb-8 pt-2 border-t border-[#EAE3D9] space-y-6 bg-white">
                   
                   {/* Real World Analogy Box */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
-                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#2F80ED] uppercase mb-1.5">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9]">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#FA5929] uppercase mb-1.5">
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>{mod.analogy.title}</span>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+                    <p className="text-xs sm:text-sm text-[#706B67] leading-relaxed italic">
                       "{mod.analogy.description}"
                     </p>
                   </div>
 
                   {/* Lessons Grid */}
                   <div>
-                    <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-3">
+                    <h4 className="text-xs font-mono font-bold text-[#706B67] uppercase tracking-wider mb-3">
                       Lesson Breakdown
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {mod.lessons.map((lesson) => (
-                        <div key={lesson.id} className="p-4 rounded-2xl bg-[#F4F7FB] border border-slate-200 shadow-2xs">
-                          <div className="text-xs font-mono text-[#2F80ED] font-bold mb-1">
+                        <div key={lesson.id} className="p-4 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9] shadow-2xs">
+                          <div className="text-xs font-mono text-[#FA5929] font-bold mb-1">
                             Lesson {lesson.id}
                           </div>
-                          <div className="text-sm font-bold text-[#10213F] mb-1.5">
+                          <div className="text-sm font-bold text-[#281010] mb-1.5">
                             {lesson.title}
                           </div>
-                          <p className="text-xs text-slate-600 leading-relaxed">
+                          <p className="text-xs text-[#706B67] leading-relaxed">
                             {lesson.summary}
                           </p>
                         </div>
@@ -225,39 +225,39 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   </div>
 
                   {/* Copy Prompt for Module */}
-                  <div className="p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
+                  <div className="p-5 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9]">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
+                        <span className="text-xs font-mono font-bold text-[#FA5929] uppercase">
                           {mod.copyPrompt.title}
                         </span>
-                        <span className="text-[11px] font-mono text-slate-500">
+                        <span className="text-[11px] font-mono text-[#706B67]">
                           → Saves to {mod.copyPrompt.targetDoc}
                         </span>
                       </div>
                       <button
                         onClick={() => handleCopyPrompt(mod.copyPrompt.prompt, mod.id)}
-                        className="flex items-center gap-1.5 text-xs text-[#071B3A] hover:text-[#2F80ED] font-bold"
+                        className="flex items-center gap-1.5 text-xs text-[#281010] hover:text-[#FA5929] font-bold"
                       >
                         {copiedPromptId === mod.id ? <Check className="w-3.5 h-3.5 text-[#34D399]" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{copiedPromptId === mod.id ? 'Copied Prompt!' : 'Copy Prompt'}</span>
                       </button>
                     </div>
-                    <pre className="p-3.5 rounded-xl bg-white border border-slate-200 text-xs font-mono text-slate-800 whitespace-pre-wrap leading-relaxed overflow-x-auto shadow-2xs">
+                    <pre className="p-3.5 rounded-xl bg-white border border-[#EAE3D9] text-xs font-mono text-[#281010] whitespace-pre-wrap leading-relaxed overflow-x-auto shadow-2xs">
                       {mod.copyPrompt.prompt}
                     </pre>
                   </div>
 
                   {/* Action Bar (Exercise, Quiz, Completion) */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-xs text-slate-600">
-                      <strong className="text-[#10213F] font-mono">Exercise:</strong> {mod.exercise}
+                    <div className="text-xs text-[#706B67]">
+                      <strong className="text-[#281010] font-mono">Exercise:</strong> {mod.exercise}
                     </div>
 
                     <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
                       <button
                         onClick={() => openQuiz(mod)}
-                        className="flex-1 sm:flex-initial px-4 py-2 text-xs font-bold text-white bg-[#2F80ED] hover:bg-blue-600 rounded-xl transition-all flex items-center justify-center gap-2 shadow-xs"
+                        className="flex-1 sm:flex-initial px-5 py-2.5 text-xs font-bold text-white bg-[#FA5929] hover:bg-[#E0491B] rounded-full transition-all flex items-center justify-center gap-2 shadow-xs"
                       >
                         <HelpCircle className="w-3.5 h-3.5" />
                         <span>Take 3-Question Quiz</span>
@@ -265,10 +265,10 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
                       <button
                         onClick={() => onToggleCompleteModule(mod.id)}
-                        className={`px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-center gap-2 shadow-xs ${
+                        className={`px-5 py-2.5 text-xs font-bold rounded-full border transition-all flex items-center justify-center gap-2 shadow-xs ${
                           isCompleted
-                            ? 'bg-emerald-50 text-[#34D399] border-emerald-300'
-                            : 'bg-white hover:bg-slate-50 text-[#10213F] border-slate-200'
+                            ? 'bg-[#C4DAC8]/60 text-[#1B4D2B] border-[#C4DAC8]'
+                            : 'bg-white hover:bg-[#FAF7F2] text-[#281010] border-[#EAE3D9]'
                         }`}
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
@@ -286,21 +286,21 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
 
       {/* Interactive Quiz Modal */}
       {activeQuizModule && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="bg-white border border-[#EAE3D9] rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left">
             
-            <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-200">
+            <div className="flex items-start justify-between gap-4 pb-4 border-b border-[#EAE3D9]">
               <div>
-                <span className="text-xs font-mono font-bold text-[#2F80ED] uppercase">
+                <span className="text-xs font-mono font-bold text-[#FA5929] uppercase">
                   Module {activeQuizModule.id} Knowledge Check
                 </span>
-                <h3 className="text-xl font-bold text-[#10213F] mt-1">
+                <h3 className="text-xl font-bold text-[#281010] mt-1 font-display">
                   {activeQuizModule.title}
                 </h3>
               </div>
               <button
                 onClick={() => setActiveQuizModule(null)}
-                className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-[#10213F]"
+                className="p-1.5 rounded-full bg-[#F8F3EC] text-[#706B67] hover:text-[#281010]"
               >
                 ✕
               </button>
@@ -313,31 +313,31 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                 const isCorrect = selected === q.correctIndex;
 
                 return (
-                  <div key={q.id} className="p-4 sm:p-5 rounded-2xl bg-[#F4F7FB] border border-slate-200">
-                    <div className="text-sm font-bold text-[#10213F] mb-3">
+                  <div key={q.id} className="p-4 sm:p-5 rounded-2xl bg-[#F8F3EC] border border-[#EAE3D9]">
+                    <div className="text-sm font-bold text-[#281010] mb-3">
                       {qIndex + 1}. {q.question}
                     </div>
 
                     <div className="space-y-2">
                       {q.options.map((opt, optIndex) => {
                         const isThisSelected = selected === optIndex;
-                        let optionStyle = 'border-slate-200 bg-white text-slate-700 hover:border-slate-300';
+                        let optionStyle = 'border-[#EAE3D9] bg-white text-[#706B67] hover:border-[#FA5929]/50';
 
                         if (quizSubmitted) {
                           if (optIndex === q.correctIndex) {
-                            optionStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-semibold';
+                            optionStyle = 'border-emerald-500 bg-[#C4DAC8]/40 text-[#1B4D2B] font-semibold';
                           } else if (isThisSelected && !isCorrect) {
                             optionStyle = 'border-rose-500 bg-rose-50 text-rose-900';
                           }
                         } else if (isThisSelected) {
-                          optionStyle = 'border-[#2F80ED] bg-blue-50 text-[#071B3A] font-semibold';
+                          optionStyle = 'border-[#FA5929] bg-[#FBE1CE] text-[#FA5929] font-semibold';
                         }
 
                         return (
                           <button
                             key={optIndex}
                             onClick={() => selectAnswer(q.id, optIndex)}
-                            className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all flex items-center justify-between ${optionStyle}`}
+                            className={`w-full text-left p-3 rounded-2xl border text-xs sm:text-sm transition-all flex items-center justify-between ${optionStyle}`}
                           >
                             <span>{opt}</span>
                             {quizSubmitted && optIndex === q.correctIndex && (
@@ -351,7 +351,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                     {/* Explanation after submission */}
                     {quizSubmitted && (
                       <div className={`mt-3 p-3 rounded-xl text-xs leading-relaxed ${
-                        isCorrect ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200'
+                        isCorrect ? 'bg-[#C4DAC8]/40 text-[#1B4D2B] border border-[#C4DAC8]' : 'bg-rose-50 text-rose-800 border border-rose-200'
                       }`}>
                         <strong>Explanation:</strong> {q.explanation}
                       </div>
@@ -362,11 +362,11 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
             </div>
 
             {/* Quiz Bottom Submit / Result */}
-            <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between">
+            <div className="mt-8 pt-4 border-t border-[#EAE3D9] flex items-center justify-between">
               {quizSubmitted ? (
                 <div className="flex items-center gap-3">
-                  <div className="text-sm font-mono text-slate-700">
-                    Score: <strong className="text-[#10213F]">
+                  <div className="text-sm font-mono text-[#706B67]">
+                    Score: <strong className="text-[#281010]">
                       {Object.keys(quizAnswers).filter(k => {
                         const q = activeQuizModule.quiz.find(x => x.id === k);
                         return q && quizAnswers[k] === q.correctIndex;
@@ -375,7 +375,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                   </div>
                   <button
                     onClick={() => setActiveQuizModule(null)}
-                    className="px-5 py-2.5 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-xs shadow-xs"
+                    className="px-5 py-2.5 rounded-full bg-[#281010] hover:bg-[#3D1E1E] text-white font-bold text-xs shadow-xs"
                   >
                     Done & Close
                   </button>
@@ -384,7 +384,7 @@ export const CourseCurriculum: React.FC<CourseCurriculumProps> = ({
                 <button
                   onClick={submitQuiz}
                   disabled={Object.keys(quizAnswers).length < activeQuizModule.quiz.length}
-                  className="w-full py-3 rounded-xl bg-[#071B3A] hover:bg-[#10213F] text-white font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition-all"
+                  className="w-full py-3 rounded-full bg-[#FA5929] hover:bg-[#E0491B] text-white font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed shadow-sm transition-all"
                 >
                   Submit & Check Answers
                 </button>

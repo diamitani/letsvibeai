@@ -190,3 +190,36 @@ export interface AgentRunRecord {
   status: 'DONE' | 'REVIEW' | 'ACTION' | 'FAILED';
 }
 
+// GencyAI Agent Harness Mastery Specification
+export interface HarnessLesson {
+  id: string;
+  num: string;
+  title: string;
+  dur: string;
+  desc: string;
+  src?: string;
+  isAvailable: boolean;
+}
+
+export interface HarnessPractice {
+  n: string;
+  title: string;
+  desc: string;
+}
+
+export interface HarnessConceptTrack {
+  key: string;
+  name: string;
+  meta: string;
+  desc: string;
+  ship: string;
+  modules: string[];
+}
+
+export interface HarnessFormatEntry {
+  title: string;
+  note: string;
+  harnesses: Record<string, { path: string; code: string }>;
+}
+
+

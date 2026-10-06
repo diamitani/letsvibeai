@@ -19,8 +19,8 @@ import {
 } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform';
-  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform') => void;
+  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery';
+  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery') => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onOpenSearch: () => void;
@@ -171,6 +171,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <button
+              onClick={() => setCurrentView('harness-mastery')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                currentView === 'harness-mastery'
+                  ? 'bg-amber-50 text-[#071B3A] border border-amber-300/80 font-bold shadow-2xs'
+                  : 'text-slate-600 hover:text-[#10213F] hover:bg-slate-50'
+              }`}
+            >
+              <Play className="w-3.5 h-3.5 text-[#E9A93B]" />
+              <span>Harnesses</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-[#B8741A] font-mono font-bold">8</span>
+            </button>
+
+            <button
               onClick={() => setCurrentView('marketplace')}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 currentView === 'marketplace'
@@ -295,6 +308,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <Cpu className="w-4 h-4 text-[#2F80ED]" />
               <span>Skills Hub (32)</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentView('harness-mastery');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-3 rounded-xl text-xs font-bold flex items-center gap-2 ${
+                currentView === 'harness-mastery' ? 'bg-amber-50 text-[#071B3A] border border-amber-300' : 'text-slate-600'
+              }`}
+            >
+              <Play className="w-4 h-4 text-[#E9A93B]" />
+              <span>Harnesses (8)</span>
             </button>
             <button
               onClick={() => {

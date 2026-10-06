@@ -18,13 +18,14 @@ import { MarketplaceView } from './components/views/MarketplaceView';
 import { DirectoryView } from './components/views/DirectoryView';
 import { DashboardView } from './components/views/DashboardView';
 import { AgentPlatformView } from './components/views/AgentPlatformView';
+import { HarnessMasteryView } from './components/views/HarnessMasteryView';
 import { AuthModal } from './components/views/AuthModal';
 import { supabase } from './lib/supabase';
 import { PricingPlan, MarketplaceItem, AgentPlatformSkill } from './types';
 import { Bot, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform'>('saas');
+  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery'>('saas');
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
     try {
@@ -85,6 +86,11 @@ export const App: React.FC = () => {
   const handleSelectResult = (targetSection: string, detailId?: string | number) => {
     if (targetSection === 'agent-platform') {
       setCurrentView('agent-platform');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (targetSection === 'harness-mastery') {
+      setCurrentView('harness-mastery');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -209,6 +215,12 @@ export const App: React.FC = () => {
         {currentView === 'agent-platform' && (
           <div className="animate-in fade-in duration-300">
             <AgentPlatformView onSelectCheckout={handleSkillCheckout} />
+          </div>
+        )}
+
+        {currentView === 'harness-mastery' && (
+          <div className="animate-in fade-in duration-300">
+            <HarnessMasteryView />
           </div>
         )}
 

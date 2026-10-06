@@ -1,10 +1,10 @@
--- CurriculumOS Initial MVP Schema
+-- CurriculumOS Initial MVP Schema (Idempotent)
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- 1. Profiles (Tied to Supabase Auth)
-CREATE TABLE public.profiles (
+CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   full_name TEXT,
@@ -15,12 +15,20 @@ CREATE TABLE public.profiles (
 
 -- RLS for profiles
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Public profiles are viewable by everyone." ON public.profiles FOR SELECT USING (true);
-CREATE POLICY "Users can insert their own profile." ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
-CREATE POLICY "Users can update own profile." ON public.profiles FOR UPDATE USING (auth.uid() = id);
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'profiles' AND policyname = 'Public profiles are viewable by everyone.') THEN
+    CREATE POLICY "Public profiles are viewable by everyone." ON public.profiles FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'profiles' AND policyname = 'Users can insert their own profile.') THEN
+    CREATE POLICY "Users can insert their own profile." ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'profiles' AND policyname = 'Users can update own profile.') THEN
+    CREATE POLICY "Users can update own profile." ON public.profiles FOR UPDATE USING (auth.uid() = id);
+  END IF;
+END $$;
 
 -- 2. Brand Kits
-CREATE TABLE public.brand_kits (
+CREATE TABLE IF NOT EXISTS public.brand_kits (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   author_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
   name TEXT NOT NULL,
@@ -35,13 +43,23 @@ CREATE TABLE public.brand_kits (
 
 -- RLS for brand_kits
 ALTER TABLE public.brand_kits ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can view own brand kits" ON public.brand_kits FOR SELECT USING (auth.uid() = author_id);
-CREATE POLICY "Users can insert own brand kits" ON public.brand_kits FOR INSERT WITH CHECK (auth.uid() = author_id);
-CREATE POLICY "Users can update own brand kits" ON public.brand_kits FOR UPDATE USING (auth.uid() = author_id);
-CREATE POLICY "Users can delete own brand kits" ON public.brand_kits FOR DELETE USING (auth.uid() = author_id);
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'brand_kits' AND policyname = 'Users can view own brand kits') THEN
+    CREATE POLICY "Users can view own brand kits" ON public.brand_kits FOR SELECT USING (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'brand_kits' AND policyname = 'Users can insert own brand kits') THEN
+    CREATE POLICY "Users can insert own brand kits" ON public.brand_kits FOR INSERT WITH CHECK (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'brand_kits' AND policyname = 'Users can update own brand kits') THEN
+    CREATE POLICY "Users can update own brand kits" ON public.brand_kits FOR UPDATE USING (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'brand_kits' AND policyname = 'Users can delete own brand kits') THEN
+    CREATE POLICY "Users can delete own brand kits" ON public.brand_kits FOR DELETE USING (auth.uid() = author_id);
+  END IF;
+END $$;
 
 -- 3. Curricula
-CREATE TABLE public.curricula (
+CREATE TABLE IF NOT EXISTS public.curricula (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   author_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
   brand_kit_id UUID REFERENCES public.brand_kits(id) ON DELETE SET NULL,
@@ -55,14 +73,26 @@ CREATE TABLE public.curricula (
 
 -- RLS for curricula
 ALTER TABLE public.curricula ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can view own curricula" ON public.curricula FOR SELECT USING (auth.uid() = author_id);
-CREATE POLICY "Users can view published curricula" ON public.curricula FOR SELECT USING (status = 'published');
-CREATE POLICY "Users can insert own curricula" ON public.curricula FOR INSERT WITH CHECK (auth.uid() = author_id);
-CREATE POLICY "Users can update own curricula" ON public.curricula FOR UPDATE USING (auth.uid() = author_id);
-CREATE POLICY "Users can delete own curricula" ON public.curricula FOR DELETE USING (auth.uid() = author_id);
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'curricula' AND policyname = 'Users can view own curricula') THEN
+    CREATE POLICY "Users can view own curricula" ON public.curricula FOR SELECT USING (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'curricula' AND policyname = 'Users can view published curricula') THEN
+    CREATE POLICY "Users can view published curricula" ON public.curricula FOR SELECT USING (status = 'published');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'curricula' AND policyname = 'Users can insert own curricula') THEN
+    CREATE POLICY "Users can insert own curricula" ON public.curricula FOR INSERT WITH CHECK (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'curricula' AND policyname = 'Users can update own curricula') THEN
+    CREATE POLICY "Users can update own curricula" ON public.curricula FOR UPDATE USING (auth.uid() = author_id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'curricula' AND policyname = 'Users can delete own curricula') THEN
+    CREATE POLICY "Users can delete own curricula" ON public.curricula FOR DELETE USING (auth.uid() = author_id);
+  END IF;
+END $$;
 
 -- 4. Modules
-CREATE TABLE public.modules (
+CREATE TABLE IF NOT EXISTS public.modules (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   curriculum_id UUID REFERENCES public.curricula(id) ON DELETE CASCADE NOT NULL,
   title TEXT NOT NULL,
@@ -75,19 +105,26 @@ CREATE TABLE public.modules (
 
 -- RLS for modules
 ALTER TABLE public.modules ENABLE ROW LEVEL SECURITY;
--- For modules, we check if the user owns the parent curriculum, or if the parent curriculum is published.
-CREATE POLICY "Users can view modules of published curricula" ON public.modules FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND status = 'published')
-);
-CREATE POLICY "Users can view own modules" ON public.modules FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND author_id = auth.uid())
-);
-CREATE POLICY "Users can manage own modules" ON public.modules FOR ALL USING (
-  EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND author_id = auth.uid())
-);
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'modules' AND policyname = 'Users can view modules of published curricula') THEN
+    CREATE POLICY "Users can view modules of published curricula" ON public.modules FOR SELECT USING (
+      EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND status = 'published')
+    );
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'modules' AND policyname = 'Users can view own modules') THEN
+    CREATE POLICY "Users can view own modules" ON public.modules FOR SELECT USING (
+      EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND author_id = auth.uid())
+    );
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'modules' AND policyname = 'Users can manage own modules') THEN
+    CREATE POLICY "Users can manage own modules" ON public.modules FOR ALL USING (
+      EXISTS (SELECT 1 FROM public.curricula WHERE id = modules.curriculum_id AND author_id = auth.uid())
+    );
+  END IF;
+END $$;
 
 -- 5. Video Assets
-CREATE TABLE public.video_assets (
+CREATE TABLE IF NOT EXISTS public.video_assets (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   module_id UUID REFERENCES public.modules(id) ON DELETE CASCADE NOT NULL,
   status TEXT DEFAULT 'queued' CHECK (status IN ('queued', 'rendering', 'completed', 'failed')),
@@ -99,46 +136,14 @@ CREATE TABLE public.video_assets (
 
 -- RLS for video_assets
 ALTER TABLE public.video_assets ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Users can view own video assets" ON public.video_assets FOR SELECT USING (
-  EXISTS (
-    SELECT 1 FROM public.modules m 
-    JOIN public.curricula c ON m.curriculum_id = c.id 
-    WHERE m.id = video_assets.module_id AND (c.author_id = auth.uid() OR c.status = 'published')
-  )
-);
-CREATE POLICY "Users can manage own video assets" ON public.video_assets FOR ALL USING (
-  EXISTS (
-    SELECT 1 FROM public.modules m 
-    JOIN public.curricula c ON m.curriculum_id = c.id 
-    WHERE m.id = video_assets.module_id AND c.author_id = auth.uid()
-  )
-);
-
--- Function to automatically update 'updated_at' on modify
-CREATE OR REPLACE FUNCTION update_modified_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ language 'plpgsql';
-
--- Triggers for updated_at
-CREATE TRIGGER update_brand_kits_modtime BEFORE UPDATE ON public.brand_kits FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-CREATE TRIGGER update_curricula_modtime BEFORE UPDATE ON public.curricula FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-CREATE TRIGGER update_modules_modtime BEFORE UPDATE ON public.modules FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-CREATE TRIGGER update_video_assets_modtime BEFORE UPDATE ON public.video_assets FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-
--- Setup Auth Trigger for Profiles
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO public.profiles (id, email, full_name)
-  VALUES (new.id, new.email, new.raw_user_meta_data->>'full_name');
-  RETURN new;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'video_assets' AND policyname = 'Users can view own video assets') THEN
+    CREATE POLICY "Users can view own video assets" ON public.video_assets FOR SELECT USING (
+      EXISTS (
+        SELECT 1 FROM public.modules
+        JOIN public.curricula ON public.modules.curriculum_id = public.curricula.id
+        WHERE public.modules.id = video_assets.module_id AND public.curricula.author_id = auth.uid()
+      )
+    );
+  END IF;
+END $$;

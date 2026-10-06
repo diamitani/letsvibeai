@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { COURSE_MODULES, ARCHITECTURE_BLOCKS, DOC_TEMPLATES } from '../data/courseData';
-import { Search, BookOpen, Layers, FileText, ArrowRight, X } from 'lucide-react';
+import { AGENT_SKILLS } from '../data/agentPlatformData';
+import { Search, BookOpen, Layers, FileText, ArrowRight, X, Cpu } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -54,6 +55,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       d.title.toLowerCase().includes(normalizedQuery) ||
       d.filename.toLowerCase().includes(normalizedQuery) ||
       d.purpose.toLowerCase().includes(normalizedQuery)
+  );
+
+  const skillResults = AGENT_SKILLS.filter(
+    (s) =>
+      s.name.toLowerCase().includes(normalizedQuery) ||
+      s.summary.toLowerCase().includes(normalizedQuery) ||
+      s.cat.toLowerCase().includes(normalizedQuery)
   );
 
   const handleItemClick = (section: string, detailId?: string | number) => {
@@ -174,9 +182,38 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             </div>
           )}
 
-          {moduleResults.length === 0 && blockResults.length === 0 && docResults.length === 0 && (
+          {/* Agent Skills Group */}
+          {skillResults.length > 0 && (
+            <div>
+              <div className="text-[10px] font-mono font-bold text-slate-500 uppercase px-3 py-1">
+                Modular Agent Skills ({skillResults.length})
+              </div>
+              <div className="space-y-1">
+                {skillResults.slice(0, 6).map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => handleItemClick('agent-platform', s.id)}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#F4F7FB] flex items-center justify-between group transition-colors"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Cpu className="w-4 h-4 text-[#2F80ED] shrink-0" />
+                      <div>
+                        <div className="text-xs font-bold text-[#10213F] group-hover:text-[#2F80ED]">
+                          {s.name} <span className="text-[10px] text-slate-400 font-mono">({s.cat})</span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 line-clamp-1">{s.summary}</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#2F80ED]" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {moduleResults.length === 0 && blockResults.length === 0 && docResults.length === 0 && skillResults.length === 0 && (
             <div className="p-8 text-center text-xs text-slate-500 font-mono">
-              No matching modules, architecture nodes, or documents found for "{query}".
+              No matching modules, architecture nodes, documents, or agent skills found for "{query}".
             </div>
           )}
 

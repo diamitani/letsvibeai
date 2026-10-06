@@ -145,3 +145,48 @@ export interface WorkspaceProject {
   lastDeployed: string;
   url: string;
 }
+
+// Agent Platform & Skills Hub Specification
+export interface AgentPlatformSkill {
+  id: string;
+  name: string;
+  cat: 'form' | 'pub' | 'dist' | 'brand' | 'content' | 'merch' | 'strat' | 'build';
+  modes: Array<'s' | 'k' | 'p'>; // service, skill (attach), package
+  servicePrice: number;
+  credits: number;
+  runtime: string;
+  summary: string;
+  inputs: string[];
+  outputs: string[];
+  steps: string[];
+  tools: string[];
+}
+
+export interface AgentSubAgent {
+  id: string;
+  kind: string;
+  name: string;
+  status: 'RUNNING' | 'WAITING' | 'DRAFT' | 'COMPLETED';
+  brief: string;
+  skills: string[];
+  spentCredits: number;
+  budgetCredits: number;
+  due: string;
+  nextAction: string;
+}
+
+export interface AgentMemoryRecord {
+  key: string;
+  value: string;
+  category?: string;
+}
+
+export interface AgentRunRecord {
+  id: string;
+  skillName: string;
+  actor: string;
+  timestamp: string;
+  outputArtifact: string;
+  status: 'DONE' | 'REVIEW' | 'ACTION' | 'FAILED';
+}
+

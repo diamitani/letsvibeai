@@ -17,13 +17,14 @@ import { CurriculumAgentDrawer } from './components/CurriculumAgentDrawer';
 import { MarketplaceView } from './components/views/MarketplaceView';
 import { DirectoryView } from './components/views/DirectoryView';
 import { DashboardView } from './components/views/DashboardView';
+import { AgentPlatformView } from './components/views/AgentPlatformView';
 import { AuthModal } from './components/views/AuthModal';
 import { supabase } from './lib/supabase';
-import { PricingPlan, MarketplaceItem } from './types';
+import { PricingPlan, MarketplaceItem, AgentPlatformSkill } from './types';
 import { Bot, Sparkles } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard'>('saas');
+  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform'>('saas');
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
     try {
@@ -82,6 +83,11 @@ export const App: React.FC = () => {
   };
 
   const handleSelectResult = (targetSection: string, detailId?: string | number) => {
+    if (targetSection === 'agent-platform') {
+      setCurrentView('agent-platform');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     if (currentView !== 'saas') {
       setCurrentView('saas');
     }
@@ -123,6 +129,27 @@ export const App: React.FC = () => {
         'One-click Vercel Deploy integration'
       ],
       cta: 'Deploy Now',
+      ctaAction: 'checkout'
+    });
+  };
+
+  const handleSkillCheckout = (skill: AgentPlatformSkill, mode: 'service' | 'skill' | 'package') => {
+    const price = mode === 'service' ? skill.servicePrice : mode === 'package' ? 99 : 29;
+    setSelectedPlan({
+      id: `skill-${skill.id}-${mode}`,
+      name: `${skill.name} (${mode === 'service' ? 'Done-For-You' : mode === 'package' ? 'Portable Export' : 'Agent Skill'})`,
+      tagline: skill.summary,
+      monthlyPrice: price,
+      annualPrice: price,
+      featured: true,
+      badge: mode === 'service' ? 'DFY Service' : mode === 'package' ? 'Code Bundle' : 'Skill Attachment',
+      features: [
+        `Category: ${skill.cat.toUpperCase()}`,
+        `4-Step Execution Runbook included`,
+        `Portable MCP / Agent instruction format`,
+        `Direct integration with Supabase & Vercel AI SDK`
+      ],
+      cta: 'Complete Purchase',
       ctaAction: 'checkout'
     });
   };
@@ -176,6 +203,12 @@ export const App: React.FC = () => {
             <PricingSection onSelectPlan={(plan) => setSelectedPlan(plan)} />
 
             <Testimonials />
+          </div>
+        )}
+
+        {currentView === 'agent-platform' && (
+          <div className="animate-in fade-in duration-300">
+            <AgentPlatformView onSelectCheckout={handleSkillCheckout} />
           </div>
         )}
 

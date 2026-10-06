@@ -14,12 +14,13 @@ import {
   Compass,
   LayoutDashboard,
   User as UserIcon,
-  Sparkles
+  Sparkles,
+  Cpu
 } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard';
-  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard') => void;
+  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform';
+  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform') => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onOpenSearch: () => void;
@@ -157,6 +158,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <button
+              onClick={() => setCurrentView('agent-platform')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                currentView === 'agent-platform'
+                  ? 'bg-blue-50 text-[#071B3A] border border-blue-200/80 font-bold shadow-2xs'
+                  : 'text-slate-600 hover:text-[#10213F] hover:bg-slate-50'
+              }`}
+            >
+              <Cpu className="w-3.5 h-3.5 text-[#2F80ED]" />
+              <span>Skills Hub</span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-blue-100 text-[#2F80ED] font-mono font-bold">32</span>
+            </button>
+
+            <button
               onClick={() => setCurrentView('marketplace')}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 currentView === 'marketplace'
@@ -257,7 +271,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="xl:hidden max-w-7xl mx-auto mt-2 bg-white border border-slate-200 rounded-2xl p-5 shadow-xl pointer-events-auto space-y-3">
-          <div className="grid grid-cols-2 gap-2 pb-3 border-b border-slate-100">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pb-3 border-b border-slate-100">
             <button
               onClick={() => {
                 setCurrentView('saas');
@@ -269,6 +283,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <BookOpen className="w-4 h-4 text-[#2F80ED]" />
               <span>Academy</span>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentView('agent-platform');
+                setMobileMenuOpen(false);
+              }}
+              className={`p-3 rounded-xl text-xs font-bold flex items-center gap-2 ${
+                currentView === 'agent-platform' ? 'bg-blue-50 text-[#071B3A] border border-blue-200' : 'text-slate-600'
+              }`}
+            >
+              <Cpu className="w-4 h-4 text-[#2F80ED]" />
+              <span>Skills Hub (32)</span>
             </button>
             <button
               onClick={() => {
@@ -304,7 +330,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <LayoutDashboard className="w-4 h-4 text-[#7C5CFC]" />
-              <span>Dashboard</span>
+              <span>Console</span>
             </button>
           </div>
 

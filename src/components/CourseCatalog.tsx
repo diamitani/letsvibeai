@@ -10,7 +10,11 @@ import {
   Layers,
   Zap,
   Code,
-  ShieldCheck
+  ShieldCheck,
+  X,
+  Video,
+  FileCheck,
+  Award
 } from 'lucide-react';
 
 export interface CourseCardData {
@@ -27,6 +31,7 @@ export interface CourseCardData {
   description: string;
   featured?: boolean;
   moduleId: number;
+  whatYouWillLearn: string[];
 }
 
 const COURSES: CourseCardData[] = [
@@ -43,7 +48,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80',
     description: 'Master fast prototyping with Vite, TypeScript, Tailwind, and React 19 server components.',
-    featured: true
+    featured: true,
+    whatYouWillLearn: [
+      'Set up Vite 6 with React 19 and strict TypeScript configurations',
+      'Implement atomic component design systems with zero AI-slop tells',
+      'Integrate Vercel AI SDK 4.0 stream hooks and client state',
+      'Deploy production-ready web apps with CI/CD and custom domains'
+    ]
   },
   {
     id: 'course-2',
@@ -58,7 +69,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80',
     description: 'Build agent loops, tool schemas, rate-limiting guards, and self-healing error circuits.',
-    featured: true
+    featured: true,
+    whatYouWillLearn: [
+      'Define Model Context Protocol (MCP) server adapters for real APIs',
+      'Construct self-healing agent retry loops with exponential backoff',
+      'Manage agent token budgets and prevent unbounded autonomous spend',
+      'Orchestrate multi-agent handoffs with persistent conversation transcripts'
+    ]
   },
   {
     id: 'course-3',
@@ -73,7 +90,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
     description: 'Deploy battle-tested database migrations, encrypted vaults, and workspace tenant boundaries.',
-    featured: false
+    featured: false,
+    whatYouWillLearn: [
+      'Author strict Row-Level Security (RLS) policies for multi-tenant SaaS',
+      'Implement workspace memberships, owner roles, and granular permissions',
+      'Protect user PII and secure API secrets from client bundle leaks',
+      'Automate migration rollback scripts and point-in-time recovery'
+    ]
   },
   {
     id: 'course-4',
@@ -88,7 +111,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80',
     description: 'Implement idempotent webhook handlers, metered AI credit packs, and dunning workflows.',
-    featured: false
+    featured: false,
+    whatYouWillLearn: [
+      'Create secure Stripe Checkout Sessions with server-side signing',
+      'Handle idempotent webhook events and verify signatures reliably',
+      'Build self-serve Customer Portals for payment method updates',
+      'Calculate sales taxes, issue receipts, and manage failed renewals'
+    ]
   },
   {
     id: 'course-5',
@@ -103,7 +132,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80',
     description: 'Ground AI agents in pgvector embeddings, dynamic chunking, and hybrid BM25 search.',
-    featured: true
+    featured: true,
+    whatYouWillLearn: [
+      'Generate high-accuracy embeddings with pgvector and OpenAI models',
+      'Implement hybrid search combining semantic distance and keyword BM25',
+      'Eliminate AI hallucinations through grounded source citations',
+      'Benchmark retrieval latency and optimize vector indexes for scale'
+    ]
   },
   {
     id: 'course-6',
@@ -118,7 +153,13 @@ const COURSES: CourseCardData[] = [
     instructorAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
     description: 'End-to-end multi-tenant platform with custom domain routing, team invites, and production CI/CD.',
-    featured: true
+    featured: true,
+    whatYouWillLearn: [
+      'Assemble all 5 core pillars into a shippable commercial product',
+      'Deploy to production Vercel and link custom DNS and SSL certificates',
+      'Pass security audits, accessibility WCAG AA checks, and error budgets',
+      'Generate accredited LetsVibeAI Vibe Engineer Certificate upon completion'
+    ]
   }
 ];
 
@@ -132,6 +173,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
   onEnrollPlan
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [activeCourseModal, setActiveCourseModal] = useState<CourseCardData | null>(null);
 
   const categories = ['All', 'Full-Stack AI', 'Autonomous Agents', 'Data & Security', 'Monetization', 'Capstone Project'];
 
@@ -185,7 +227,8 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            className="group bg-white rounded-[26px] p-5 border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,27,36,0.09)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+            onClick={() => setActiveCourseModal(course)}
+            className="group bg-white rounded-[26px] p-5 border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,27,36,0.09)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer"
           >
             
             <div className="space-y-4">
@@ -256,10 +299,13 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 
               {/* Card Action Button */}
               <button
-                onClick={() => onSelectModule(course.moduleId)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveCourseModal(course);
+                }}
                 className="w-full py-2.5 px-4 rounded-full bg-[#f7f4f2] hover:bg-[#ec4909] hover:text-white text-[#101b24] font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer group/btn"
               >
-                <span>View Full Curriculum & Code</span>
+                <span>View Full Course Details</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
               </button>
 
@@ -268,6 +314,126 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
           </div>
         ))}
       </div>
+
+      {/* OPENCLASS COURSE DETAIL MODAL (Exact OpenClass Course Page Frame) */}
+      {activeCourseModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101b24]/60 backdrop-blur-sm">
+          <div className="bg-white border border-black/10 rounded-[32px] max-w-3xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left animate-fadeIn">
+            
+            {/* Modal Header */}
+            <div className="flex items-start justify-between pb-4 border-b border-[#4a4d4f]/10">
+              <div className="space-y-1">
+                <span className="text-[11px] font-mono font-bold px-3 py-1 rounded-full bg-[#ec4909]/10 text-[#ec4909] border border-[#ec4909]/20">
+                  {activeCourseModal.category}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-[#101b24] font-sans mt-2">
+                  {activeCourseModal.title}
+                </h3>
+              </div>
+
+              <button
+                onClick={() => setActiveCourseModal(null)}
+                className="p-2 rounded-full bg-[#f7f4f2] text-[#4a4d4f] hover:text-[#101b24] border border-[#4a4d4f]/10 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="my-6 space-y-6">
+              
+              {/* Top Banner with Stats */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center p-5 rounded-2xl bg-[#f7f4f2] border border-[#4a4d4f]/10">
+                <div className="sm:col-span-4 rounded-xl overflow-hidden aspect-video bg-[#101b24]">
+                  <img
+                    src={activeCourseModal.image}
+                    alt={activeCourseModal.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="sm:col-span-8 space-y-2 text-xs">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={activeCourseModal.instructorAvatar}
+                      alt={activeCourseModal.instructorName}
+                      className="w-8 h-8 rounded-full object-cover ring-1 ring-[#ec4909]"
+                    />
+                    <div>
+                      <strong className="text-sm font-bold text-[#101b24] block">{activeCourseModal.instructorName}</strong>
+                      <span className="text-[11px] text-[#4a4d4f]">Lead Architect & Instructor</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-4 pt-1 text-[#4a4d4f]">
+                    <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-[#ec4909]" /> {activeCourseModal.duration} On-Demand</span>
+                    <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5 text-[#ec4909]" /> {activeCourseModal.lessonsCount} Lessons</span>
+                    <span className="flex items-center gap-1 font-bold text-[#101b24]"><Star className="w-3.5 h-3.5 fill-[#fcd554] text-[#fcd554]" /> {activeCourseModal.rating}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* About the Course */}
+              <div>
+                <h4 className="text-sm font-bold text-[#101b24] mb-2 uppercase tracking-wide font-mono">
+                  About the Course
+                </h4>
+                <p className="text-xs sm:text-sm text-[#4a4d4f] leading-relaxed">
+                  {activeCourseModal.description} You will explore production-ready architectures, secure your Postgres data layers with Row-Level Security, and deploy client-ready applications with zero boilerplate overhead.
+                </p>
+              </div>
+
+              {/* What You'll Learn (OpenClass Checklist) */}
+              <div>
+                <h4 className="text-sm font-bold text-[#101b24] mb-3 uppercase tracking-wide font-mono">
+                  What You'll Learn:
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {activeCourseModal.whatYouWillLearn.map((item, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-[#f7f4f2] border border-[#4a4d4f]/10 text-xs flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#ec4909] shrink-0 mt-0.5" />
+                      <span className="text-[#101b24] font-medium leading-snug">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Modal Bottom Actions */}
+            <div className="pt-4 border-t border-[#4a4d4f]/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-black text-[#101b24]">{activeCourseModal.price}</span>
+                <span className="text-xs text-[#4a4d4f]">Full Lifetime Access</span>
+              </div>
+
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <button
+                  onClick={() => {
+                    const modId = activeCourseModal.moduleId;
+                    setActiveCourseModal(null);
+                    onSelectModule(modId);
+                  }}
+                  className="px-5 py-2.5 rounded-full bg-[#f7f4f2] hover:bg-white text-[#101b24] border border-[#4a4d4f]/10 text-xs font-bold transition-all cursor-pointer"
+                >
+                  View Syllabus
+                </button>
+
+                <button
+                  onClick={() => {
+                    const title = activeCourseModal.title;
+                    setActiveCourseModal(null);
+                    onEnrollPlan(title);
+                  }}
+                  className="px-6 py-2.5 rounded-full bg-[#ec4909] hover:bg-[#d43f05] text-white text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
+                >
+                  <span>Enroll in Course</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </section>
   );

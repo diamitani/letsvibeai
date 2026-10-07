@@ -352,3 +352,75 @@ export function ContactSection() {
     </section>
   );
 }
+
+/* ── Launch Video Section ─────────────────────────────── */
+export function LaunchVideoSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <section className="section section--dark launch-video-section" aria-labelledby="launch-video-title">
+      <div className="container">
+        <Reveal className="center" style={{ maxWidth: 840, margin: '0 auto 40px' }}>
+          <span className="badge" style={{ marginBottom: 16, background: 'rgba(52, 211, 153, 0.15)', color: '#34d399', borderColor: 'rgba(52, 211, 153, 0.3)' }}>
+            THE AI SKILLS INSTITUTION
+          </span>
+          <h2 className="h2" id="launch-video-title" style={{ color: '#ffffff' }}>
+            Real Skills. <span className="gradient-text">Lasting Impact.</span>
+          </h2>
+          <p className="lead" style={{ color: '#cbd5e1', marginTop: 16 }}>
+            Watch the official LetsVibeAI trailer — discover how we empower learners, teams, and communities to master practical AI for everyday jobs and what's next.
+          </p>
+        </Reveal>
+
+        <Reveal delay={120} className="launch-video-wrapper">
+          <div className="launch-video-card">
+            <video
+              ref={videoRef}
+              src="/videos/letsvibeai-brand-launch.mp4"
+              poster="/images/launch-video-poster.png"
+              controls
+              playsInline
+              preload="metadata"
+              className="launch-video-player"
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            />
+          </div>
+        </Reveal>
+
+        <div className="launch-pillars-grid">
+          <Reveal delay={180} className="launch-pillar-item">
+            <span className="launch-pillar-icon">✦</span>
+            <div>
+              <h4>AI-Powered Learning</h4>
+              <p>Practical, hands-on training to help you use AI with confidence.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={240} className="launch-pillar-item">
+            <span className="launch-pillar-icon">👥</span>
+            <div>
+              <h4>Real-World Skills</h4>
+              <p>From everyday tasks to career advancement and leadership.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={300} className="launch-pillar-item">
+            <span className="launch-pillar-icon">🎯</span>
+            <div>
+              <h4>Workforce & Community</h4>
+              <p>Workshops and programs for education, business, and cities.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={360} className="launch-pillar-item">
+            <span className="launch-pillar-icon">🌱</span>
+            <div>
+              <h4>Your Future, Amplified</h4>
+              <p>More skills. More opportunities. A brighter tomorrow.</p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+

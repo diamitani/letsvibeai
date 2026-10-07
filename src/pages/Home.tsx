@@ -1,6 +1,6 @@
 import { courses } from '../content/courses';
 import { primaryCta, site } from '../content/site';
-import { BentoSection, BuildsCarousel, ContactSection, CourseCard, FaqSection, GlassFeatures, GuidesSection, OffersSection } from '../components/sections';
+import { BentoSection, BuildsCarousel, ContactSection, CourseCard, FaqSection, GlassFeatures, GuidesSection, LaunchVideoSection, OffersSection } from '../components/sections';
 import { Button, IconStack, Reveal, SectionHead, usePageTitle } from '../components/ui';
 
 export function Home() {
@@ -34,6 +34,9 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      {/* Official Brand Launch Trailer */}
+      <LaunchVideoSection />
 
       <OffersSection />
 

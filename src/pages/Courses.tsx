@@ -64,7 +64,22 @@ export function CourseDetail() {
 
       <section className="section section--white">
         <div className="container container--narrow">
-          <Reveal className="detail-figure"><img src={course.image} alt="" /></Reveal>
+          <Reveal className="detail-figure" style={{ overflow: 'hidden', borderRadius: 20, boxShadow: '0 16px 40px rgba(8, 16, 40, 0.12)', marginBottom: 40 }}>
+            {course.video ? (
+              <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#081028', borderRadius: 20, overflow: 'hidden' }}>
+                <video
+                  src={course.video}
+                  poster={course.videoPoster || course.image}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+            ) : (
+              <img src={course.image} alt="" />
+            )}
+          </Reveal>
           <div className="prose">
             <h2>{course.intro.heading}</h2>
             <p>{course.intro.body}</p>

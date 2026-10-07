@@ -90,7 +90,7 @@ export const guides = [
   {
     name: 'Pat Diamitani',
     role: 'Founder & Lead Instructor',
-    bio: 'Learned AI from YouTube. Now leads GTM AI & automation at a 500+ person company and has built 150+ custom GPTs.',
+    bio: 'Learned AI from practical execution. Now leads GTM AI & automation at scale and has built 150+ custom AI workflows and applications.',
     image: '', // add /images/guide-pat.jpg and set the path here
     initials: 'PD',
     links: [
@@ -99,17 +99,9 @@ export const guides = [
     ],
   },
   {
-    name: 'Sebastian Mertens',
-    role: 'Guest Expert · Make.com',
-    bio: 'Head of Applied AI at Make.com. Featured on LiveBuildAI, sharing how real teams put AI automation to work.',
-    image: '/images/guide-sebastian.jpg',
-    initials: 'SM',
-    links: [{ kind: 'web', href: 'https://www.make.com', label: 'Make.com' }],
-  },
-  {
     name: 'Your Seat Is Open',
-    role: 'Guest Instructor',
-    bio: 'Built something great with AI? Teach a Build Night and share it with the community.',
+    role: 'Guest Instructor & Community Builder',
+    bio: 'Built something great with AI? Teach a workshop, lead a build lab, and share your practical knowledge with the community.',
     image: '',
     initials: '+',
     links: [{ kind: 'mail', href: 'mailto:hello@letsvibeai.com?subject=Guest%20instructor', label: 'Email us' }],

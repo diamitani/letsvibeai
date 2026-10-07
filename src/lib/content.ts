@@ -78,7 +78,7 @@ export const totalLessons = () =>
 
 const postImages: Record<string, string> = {
   'ai-today-whats-moving': '/images/features-bg.jpg',
-  'livebuildai-october-6': '/images/livebuildai-sebastian.jpg',
+  'livebuildai-october-6': '/images/features-bg.jpg',
   'livebuildai-september-9': '/images/about-hero.jpg',
   'livebuildai-september-8': '/images/event-group.jpg',
   'free-perplexity-pro-comet': '/images/build-outreach.jpg',

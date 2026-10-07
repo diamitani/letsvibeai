@@ -90,10 +90,48 @@ export function OffersSection() {
 /* ── Course card (Lexio "Explore Our Courses") ─────────── */
 export function CourseCard({ course, light }: { course: Course; light?: boolean }) {
   const count = getLessons(course.slug).length;
+  const [showVideoModal, setShowVideoModal] = useState(false);
+
   return (
-    <Link to={`/courses/${course.slug}`} className={`course-card${light ? ' course-card--light' : ''}`}>
-      <div className="course-card__img"><img src={course.image} alt="" loading="lazy" /></div>
-      <div className="course-card__body">
+    <div className={`course-card${light ? ' course-card--light' : ''}`} style={{ position: 'relative' }}>
+      <div className="course-card__img" style={{ position: 'relative', overflow: 'hidden' }}>
+        <img src={course.image} alt="" loading="lazy" />
+        {course.video && (
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowVideoModal(true); }}
+            className="video-trailer-badge"
+            aria-label={`Watch ${course.title} Trailer`}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(8, 16, 40, 0.45)',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '8px 18px',
+              borderRadius: 9999,
+              background: 'rgba(255, 255, 255, 0.95)',
+              color: '#081028',
+              fontWeight: 700,
+              fontSize: 13,
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+            }}>
+              <span style={{ fontSize: 14 }}>▶</span> Watch Trailer
+            </span>
+          </button>
+        )}
+      </div>
+      <Link to={`/courses/${course.slug}`} className="course-card__body">
         <h3 className="h4">{course.title}</h3>
         <p className="course-card__summary">{course.summary}</p>
         <div className="course-card__meta">
@@ -103,10 +141,63 @@ export function CourseCard({ course, light }: { course: Course; light?: boolean 
         </div>
         <div className="course-card__foot">
           <div className="price"><strong>Free</strong><span>/ Self-paced</span></div>
-          <span className="text-link">Learn More <Icon name="chevron" /></span>
+          <span className="text-link">Explore Course <Icon name="chevron" /></span>
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {showVideoModal && course.video && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setShowVideoModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 99999,
+            background: 'rgba(4, 8, 22, 0.88)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 24,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: 960,
+              background: '#081028',
+              borderRadius: 20,
+              overflow: 'hidden',
+              boxShadow: '0 24px 60px rgba(0,0,0,0.8)',
+              border: '1px solid rgba(255,255,255,0.15)'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <h3 style={{ color: '#ffffff', fontSize: 18, margin: 0 }}>{course.title} · Course Overview Trailer</h3>
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(false)}
+                style={{ background: 'none', border: 'none', color: '#94a3b8', fontSize: 24, cursor: 'pointer', padding: '4px 8px' }}
+              >
+                ✕
+              </button>
+            </div>
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#000000' }}>
+              <video
+                src={course.video}
+                poster={course.videoPoster || course.image}
+                controls
+                autoPlay
+                playsInline
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

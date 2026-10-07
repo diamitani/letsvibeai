@@ -9,6 +9,8 @@ export interface Course {
   heroTitle: string;
   summary: string;
   image: string;
+  video?: string;
+  videoPoster?: string;
   level: 'Beginner' | 'Intermediate';
   duration: string;
   unit: string; // what a lesson is called: Module, Day, Lab
@@ -28,6 +30,8 @@ export const courses: Course[] = [
     heroTitle: 'Vibe Coding: Idea to Shipped App',
     summary: 'The architecture-first course: learn how apps fit together, direct AI agents precisely and ship a real product.',
     image: '/images/course-foundations.jpg',
+    video: '/videos/letsvibeai-course-vibe-coding.mp4',
+    videoPoster: '/images/course-vibe-coding-poster.jpg',
     level: 'Beginner',
     duration: '~25 hours',
     unit: 'Module',
@@ -64,6 +68,8 @@ export const courses: Course[] = [
     heroTitle: 'Zero to Ship in 10 Days',
     summary: 'Ten short daily lessons: a custom GPT, two automations, an AI assistant and a live portfolio site.',
     image: '/images/course-zero-to-ship.jpg',
+    video: '/videos/letsvibeai-course-zero-to-ship.mp4',
+    videoPoster: '/images/course-zero-to-ship-poster.jpg',
     level: 'Beginner',
     duration: '~3.5 hours',
     unit: 'Day',
@@ -98,6 +104,8 @@ export const courses: Course[] = [
     heroTitle: 'Three Hands-On Project Labs',
     summary: 'Build and deploy a marketing site, an e-commerce store and a directory marketplace — portfolio-ready.',
     image: '/images/course-project-labs.jpg',
+    video: '/videos/letsvibeai-course-project-labs.mp4',
+    videoPoster: '/images/course-project-labs-poster.jpg',
     level: 'Intermediate',
     duration: '~17 hours',
     unit: 'Lab',
@@ -131,6 +139,8 @@ export const courses: Course[] = [
     heroTitle: 'AI Automation for Sales & Marketing',
     summary: 'Build the email, LinkedIn and outreach automations that go-to-market teams actually use.',
     image: '/images/course-gtm-automation.jpg',
+    video: '/videos/letsvibeai-course-gtm-automation.mp4',
+    videoPoster: '/images/course-gtm-automation-poster.jpg',
     level: 'Intermediate',
     duration: '~6 hours',
     unit: 'Lab',

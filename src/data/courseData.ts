@@ -1,4 +1,4 @@
-import { CourseModule, ArchitectureBlock, DocTemplate, PricingPlan, Testimonial, CapstoneDeliverable } from '../types';
+import { CourseModule, ArchitectureBlock, DocTemplate, CapstoneDeliverable } from '../types';
 
 export const ARCHITECTURE_BLOCKS: ArchitectureBlock[] = [
   {
@@ -1302,100 +1302,5 @@ export const CAPSTONE_DELIVERABLES: CapstoneDeliverable[] = [
     title: 'Clean GitHub Repo & 5-Min Video Demo',
     description: 'Clean commit history, public GitHub repository, and video demo explaining the architecture.',
     points: 10
-  }
-];
-
-export const PRICING_PLANS: PricingPlan[] = [
-  {
-    id: 'free',
-    name: 'Curious Starter',
-    tagline: 'Explore the foundations of vibe coding at your own pace.',
-    monthlyPrice: 0,
-    annualPrice: 0,
-    featured: false,
-    features: [
-      'Access to Modules 1, 2, and 3',
-      'Interactive 11-Block Architecture Map',
-      'Prompt Library (Core Prompts)',
-      'Basic Token & Cost Calculator',
-      'Community Discord Access'
-    ],
-    cta: 'Start Free Learning',
-    ctaAction: 'free-enroll'
-  },
-  {
-    id: 'pro',
-    name: 'Master Builder Pro',
-    tagline: 'The complete self-paced mastercourse to build and ship real apps.',
-    monthlyPrice: 29,
-    annualPrice: 199,
-    featured: true,
-    badge: 'MOST POPULAR',
-    features: [
-      'All 10 Core Modules + Capstone Project',
-      'Interactive Knowledge Checks & Quizzes',
-      'Full 11-Document Planning Stack & Templates',
-      'Autonomous Agent & Skill Scaffoldings',
-      'Capstone Grading & Verified Certificate',
-      'Lifetime Course Updates (2026+ AI Stack)',
-      'Private Builder Lounge Access'
-    ],
-    cta: 'Unlock Full Access',
-    ctaAction: 'checkout-pro'
-  },
-  {
-    id: 'cohort',
-    name: 'Live 6-Week Cohort',
-    tagline: 'Build alongside founders with live weekly architecture reviews.',
-    monthlyPrice: 99,
-    annualPrice: 499,
-    featured: false,
-    badge: 'LIMITED SEATS',
-    features: [
-      'Everything in Master Builder Pro',
-      '6 Weekly Live Architecture & Code Review Labs',
-      '1-on-1 Capstone Project Advisory',
-      'Direct Private Slack with Course Instructors',
-      'Demo Day Pitch Session to Angel Investors',
-      'Graduate Referral Network'
-    ],
-    cta: 'Apply for Next Cohort',
-    ctaAction: 'apply-cohort'
-  }
-];
-
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    id: 'test-1',
-    name: 'Elena Rostova',
-    role: 'Former Product Marketing Lead',
-    company: 'Now Founder of AI Counsel',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    quote: 'I spent 5 years thinking I had to learn JavaScript syntax to build my ideas. LetsVibeAI taught me that architecture is the real skill. I launched a $4k/mo legal document agent in 14 days.',
-    highlight: 'Launched $4k/mo SaaS in 14 days',
-    builtApp: 'AICounsel.dev',
-    builtTime: '2 weeks'
-  },
-  {
-    id: 'test-2',
-    name: 'Marcus Vance',
-    role: 'Operations Director',
-    company: 'Founder of SupplySync',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-    quote: 'The 11-document stack alone saved me thousands in agency fees. When you give Claude or Antigravity an exact system architecture, it writes production code on the first prompt.',
-    highlight: 'Saved $25k in dev agency costs',
-    builtApp: 'SupplySync AI',
-    builtTime: '3 weeks'
-  },
-  {
-    id: 'test-3',
-    name: 'Dr. Sophia Chen',
-    role: 'Biotech Researcher',
-    company: 'Creator of ClinicalSummaries',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-    quote: 'Module 4 on web architecture and Row-Level Security demystified databases for me. The capstone gave me the exact confidence to launch a HIPAA-aware research summary tool.',
-    highlight: 'Deployed production medical tool',
-    builtApp: 'ClinicalSummaries.io',
-    builtTime: '10 days'
   }
 ];

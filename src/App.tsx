@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
-import { VideoShowcase } from './components/VideoShowcase';
+import { OverviewVideoShowcase } from './components/OverviewVideoShowcase';
 import { CourseCatalog } from './components/CourseCatalog';
+import { AgentHarnessExplorer } from './components/AgentHarnessExplorer';
 import { HowItWorks } from './components/HowItWorks';
 import { CourseCurriculum } from './components/CourseCurriculum';
 import { PortfolioSandbox } from './components/PortfolioSandbox';
@@ -198,17 +199,17 @@ export const App: React.FC = () => {
             {/* 1. Hero Section */}
             <Hero
               onStartCourse={() => scrollTo('courses')}
-              onWatchVideo={() => scrollTo('video')}
+              onWatchVideo={() => scrollTo('overview-video')}
               onExploreArchitecture={() => scrollTo('about-mentor')}
             />
 
-            {/* 2. About Mentor & Program Section */}
+            {/* 2. About Mentor & Leadership Showcase */}
             <AboutSection onExploreCourses={() => scrollTo('courses')} />
 
-            {/* 3. Masterclass Video Showcase & Live Coding */}
-            <VideoShowcase />
+            {/* 3. Interactive Overview & HyperFrames Animated Video Showcase */}
+            <OverviewVideoShowcase />
 
-            {/* 4. Top Courses & Tracks Catalog */}
+            {/* 4. Top Courses & Tracks Catalog (with Videos for every course) */}
             <CourseCatalog
               onSelectModule={(moduleId) => {
                 scrollTo('curriculum');
@@ -218,16 +219,19 @@ export const App: React.FC = () => {
               }}
             />
 
-            {/* 5. 3-Step Learning Process */}
+            {/* 5. GencyAI Agent Harness Mastery Section (8 Video Lessons, 8 Practices, 5 Concept Tracks, 6-Harness Format Modal) */}
+            <AgentHarnessExplorer />
+
+            {/* 6. 3-Step Learning Process */}
             <HowItWorks onStartCourse={() => scrollTo('curriculum')} />
 
-            {/* 6. Full 10-Module Syllabus Deep Dive */}
+            {/* 7. Full 10-Module Syllabus Deep Dive */}
             <CourseCurriculum
               completedModules={completedModules}
               onToggleCompleteModule={handleToggleCompleteModule}
             />
 
-            {/* 7. Interactive Sandboxes & Engineering Tools Section */}
+            {/* 8. Interactive Sandboxes & Engineering Tools Section */}
             <section id="sandboxes" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
               
               <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
@@ -309,22 +313,22 @@ export const App: React.FC = () => {
 
             </section>
 
-            {/* 8. Capstone Project & Credential */}
+            {/* 9. Capstone Project & Credential */}
             <CapstoneHub />
 
-            {/* 9. Student Testimonials */}
+            {/* 10. Student Testimonials */}
             <Testimonials />
 
-            {/* 10. Blog & Insights */}
+            {/* 11. Blog & Insights */}
             <BlogSection />
 
-            {/* 11. Frequently Asked Questions */}
+            {/* 12. Frequently Asked Questions */}
             <FaqSection />
 
-            {/* 12. Tuition & Pricing */}
+            {/* 13. Tuition & Pricing */}
             <PricingSection onSelectPlan={(plan) => setSelectedPlan(plan)} />
 
-            {/* 13. Community Call To Action Banner */}
+            {/* 14. Community Call To Action Banner */}
             <CommunityCta onJoinCohort={() => scrollTo('pricing')} />
 
           </div>
@@ -339,7 +343,7 @@ export const App: React.FC = () => {
 
         {currentView === 'harness-mastery' && (
           <div className="animate-in fade-in duration-300">
-            <HarnessMasteryView />
+            <HarnessMasteryView onBackToHome={() => setCurrentView('saas')} />
           </div>
         )}
 

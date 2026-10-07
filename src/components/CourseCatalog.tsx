@@ -13,6 +13,11 @@ import {
   ShieldCheck,
   X,
   Video,
+  Play,
+  Pause,
+  Maximize,
+  Volume2,
+  VolumeX,
   FileCheck,
   Award
 } from 'lucide-react';
@@ -31,6 +36,8 @@ export interface CourseCardData {
   description: string;
   featured?: boolean;
   moduleId: number;
+  videoId?: string;
+  chapters: { title: string; time: string }[];
   whatYouWillLearn: string[];
 }
 
@@ -49,6 +56,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80',
     description: 'Master fast prototyping with Vite, TypeScript, Tailwind, and React 19 server components.',
     featured: true,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'Project Initialization & Vite 6 Configuration', time: '00:00' },
+      { title: 'React 19 Server Actions & Hooks', time: '12:45' },
+      { title: 'Tailwind Design System & Typography Tokens', time: '28:10' },
+      { title: 'Vercel Preview Deployments & CI/CD', time: '44:30' }
+    ],
     whatYouWillLearn: [
       'Set up Vite 6 with React 19 and strict TypeScript configurations',
       'Implement atomic component design systems with zero AI-slop tells',
@@ -70,6 +84,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80',
     description: 'Build agent loops, tool schemas, rate-limiting guards, and self-healing error circuits.',
     featured: true,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'Agent Harness Architecture & Execution Order', time: '00:00' },
+      { title: 'Model Context Protocol (MCP) Server Setup', time: '15:20' },
+      { title: 'Self-Healing Retry Loops & Exponential Backoff', time: '34:40' },
+      { title: 'Budget Limits & Parallel Subagent Handoffs', time: '52:15' }
+    ],
     whatYouWillLearn: [
       'Define Model Context Protocol (MCP) server adapters for real APIs',
       'Construct self-healing agent retry loops with exponential backoff',
@@ -91,6 +112,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
     description: 'Deploy battle-tested database migrations, encrypted vaults, and workspace tenant boundaries.',
     featured: false,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'PostgreSQL Relational Data Modeling for SaaS', time: '00:00' },
+      { title: 'Writing Bulletproof Row-Level Security Policies', time: '14:30' },
+      { title: 'Tenant Boundaries & Workspace Role Hierarchies', time: '31:10' },
+      { title: 'Encrypted Secrets Vaults & Client Bundle Protection', time: '48:50' }
+    ],
     whatYouWillLearn: [
       'Author strict Row-Level Security (RLS) policies for multi-tenant SaaS',
       'Implement workspace memberships, owner roles, and granular permissions',
@@ -112,6 +140,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80',
     description: 'Implement idempotent webhook handlers, metered AI credit packs, and dunning workflows.',
     featured: false,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'Stripe Checkout Sessions & Payment Element', time: '00:00' },
+      { title: 'Idempotent Webhook Processing & Cryptographic Verification', time: '16:45' },
+      { title: 'Metered AI Usage Credits & Tiered Subscriptions', time: '35:20' },
+      { title: 'Dunning Sequences & Self-Serve Customer Portals', time: '51:10' }
+    ],
     whatYouWillLearn: [
       'Create secure Stripe Checkout Sessions with server-side signing',
       'Handle idempotent webhook events and verify signatures reliably',
@@ -133,6 +168,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80',
     description: 'Ground AI agents in pgvector embeddings, dynamic chunking, and hybrid BM25 search.',
     featured: true,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'High-Accuracy Chunking & Token Optimization', time: '00:00' },
+      { title: 'pgvector Cosine Distance & HNSW Indexing', time: '18:15' },
+      { title: 'Hybrid Retrieval Combining Semantic Search & BM25', time: '39:00' },
+      { title: 'Citation Grounding & Hallucination Elimination', time: '58:30' }
+    ],
     whatYouWillLearn: [
       'Generate high-accuracy embeddings with pgvector and OpenAI models',
       'Implement hybrid search combining semantic distance and keyword BM25',
@@ -154,6 +196,13 @@ const COURSES: CourseCardData[] = [
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
     description: 'End-to-end multi-tenant platform with custom domain routing, team invites, and production CI/CD.',
     featured: true,
+    videoId: 'gv0WHhKelSE',
+    chapters: [
+      { title: 'Full Architecture Assembly & Project Scaffolding', time: '00:00' },
+      { title: 'Tenant Isolation, Auth & Role-Based Access Control', time: '22:10' },
+      { title: 'Stripe Monetization & Metered Webhook Billing', time: '46:30' },
+      { title: 'Production Vercel Deployment & Audit Scorecard', time: '1:12:00' }
+    ],
     whatYouWillLearn: [
       'Assemble all 5 core pillars into a shippable commercial product',
       'Deploy to production Vercel and link custom DNS and SSL certificates',
@@ -174,6 +223,8 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeCourseModal, setActiveCourseModal] = useState<CourseCardData | null>(null);
+  const [activeVideoChapter, setActiveVideoChapter] = useState<number>(0);
+  const [isPlayingModalVideo, setIsPlayingModalVideo] = useState<boolean>(false);
 
   const categories = ['All', 'Full-Stack AI', 'Autonomous Agents', 'Data & Security', 'Monetization', 'Capstone Project'];
 
@@ -184,7 +235,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
   return (
     <section id="courses" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-left">
       
-      {/* Section Header: OpenClass Top Stack with Tag and Filter Button */}
+      {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div className="space-y-3 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ec4909]/10 border border-[#ec4909]/20 text-[#ec4909] text-xs font-semibold">
@@ -200,7 +251,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
           </h2>
 
           <p className="text-base text-[#4a4d4f] leading-relaxed">
-            Every course includes complete verified source code, architecture diagrams, production tests, and lifetime repo access.
+            Every course includes complete verified source code, dedicated video masterclasses, architecture diagrams, and lifetime repo access.
           </p>
         </div>
 
@@ -222,12 +273,16 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         </div>
       </div>
 
-      {/* Course Cards Grid - OpenClass Exact Frame Structure */}
+      {/* Course Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-8">
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            onClick={() => setActiveCourseModal(course)}
+            onClick={() => {
+              setActiveCourseModal(course);
+              setActiveVideoChapter(0);
+              setIsPlayingModalVideo(false);
+            }}
             className="group bg-white rounded-[26px] p-5 border border-black/[0.06] shadow-[0_4px_24px_-4px_rgba(16,27,36,0.04)] hover:shadow-[0_16px_36px_-6px_rgba(16,27,36,0.09)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between cursor-pointer"
           >
             
@@ -240,7 +295,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
                   alt={course.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#101b24]/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#101b24]/50 via-transparent to-transparent" />
 
                 {/* Category Pill Tag (Top Left) */}
                 <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[11px] font-bold text-[#101b24] shadow-xs">
@@ -250,6 +305,12 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
                 {/* Price Tag Pill (Top Right) */}
                 <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#ec4909] text-white text-[11px] font-black shadow-sm">
                   {course.price}
+                </div>
+
+                {/* Video Indicator Pill (Bottom Left) */}
+                <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-full bg-[#101b24]/80 backdrop-blur-md text-white text-[10px] font-mono font-bold flex items-center gap-1.5 border border-white/15">
+                  <Video className="w-3 h-3 text-[#ec4909]" />
+                  <span>HD VIDEO INCLUDED</span>
                 </div>
               </div>
 
@@ -302,11 +363,13 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   setActiveCourseModal(course);
+                  setActiveVideoChapter(0);
+                  setIsPlayingModalVideo(false);
                 }}
                 className="w-full py-2.5 px-4 rounded-full bg-[#f7f4f2] hover:bg-[#ec4909] hover:text-white text-[#101b24] font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer group/btn"
               >
-                <span>View Full Course Details</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>Watch Video & View Details</span>
               </button>
 
             </div>
@@ -315,10 +378,10 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         ))}
       </div>
 
-      {/* OPENCLASS COURSE DETAIL MODAL (Exact OpenClass Course Page Frame) */}
+      {/* OPENCLASS COURSE DETAIL & VIDEO MODAL */}
       {activeCourseModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101b24]/60 backdrop-blur-sm">
-          <div className="bg-white border border-black/10 rounded-[32px] max-w-3xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101b24]/70 backdrop-blur-sm">
+          <div className="bg-white border border-black/10 rounded-[32px] max-w-4xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto shadow-2xl text-left animate-fadeIn">
             
             {/* Modal Header */}
             <div className="flex items-start justify-between pb-4 border-b border-[#4a4d4f]/10">
@@ -342,7 +405,69 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
             {/* Modal Body */}
             <div className="my-6 space-y-6">
               
-              {/* Top Banner with Stats */}
+              {/* VIDEO PLAYER AREA */}
+              <div className="bg-[#101b24] rounded-[24px] p-4 sm:p-5 text-white border border-black/10 shadow-xl space-y-4">
+                
+                <div className="aspect-video bg-[#020335] rounded-xl overflow-hidden relative border border-white/10 flex flex-col justify-between p-4">
+                  
+                  {activeCourseModal.videoId ? (
+                    <div className="absolute inset-0">
+                      <iframe
+                        src={`https://www.youtube-nocookie.com/embed/${activeCourseModal.videoId}?rel=0&modestbranding=1`}
+                        title={activeCourseModal.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full border-0"
+                      />
+                    </div>
+                  ) : (
+                    <div className="my-auto text-center space-y-2 z-10">
+                      <button
+                        onClick={() => setIsPlayingModalVideo(!isPlayingModalVideo)}
+                        className="w-14 h-14 rounded-full bg-[#ec4909] text-white flex items-center justify-center mx-auto shadow-lg cursor-pointer"
+                      >
+                        {isPlayingModalVideo ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-1" />}
+                      </button>
+                      <h4 className="text-sm font-bold text-white">
+                        {activeCourseModal.chapters[activeVideoChapter]?.title || activeCourseModal.title}
+                      </h4>
+                    </div>
+                  )}
+
+                  {/* Scrubber footer */}
+                  <div className="z-10 flex items-center justify-between text-xs text-white/70 pt-2 bg-gradient-to-t from-[#020335] to-transparent">
+                    <span className="font-mono">{activeCourseModal.duration} Total Video Content</span>
+                    <span className="text-[#ec4909] font-mono font-bold">4K ULTRA HD</span>
+                  </div>
+
+                </div>
+
+                {/* Chapter Selectors */}
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-mono font-bold text-white/70 block uppercase">
+                    Video Chapters
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {activeCourseModal.chapters.map((ch, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveVideoChapter(idx)}
+                        className={`p-2 rounded-xl text-left text-xs font-medium border transition-all cursor-pointer flex items-center justify-between gap-2 ${
+                          activeVideoChapter === idx
+                            ? 'bg-white/15 border-[#ec4909] text-white'
+                            : 'bg-white/5 border-transparent text-white/60 hover:text-white hover:bg-white/10'
+                        }`}
+                      >
+                        <span className="truncate">{ch.title}</span>
+                        <span className="text-[10px] font-mono text-[#ec4909] shrink-0">{ch.time}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Instructor & Meta Row */}
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center p-5 rounded-2xl bg-[#f7f4f2] border border-[#4a4d4f]/10">
                 <div className="sm:col-span-4 rounded-xl overflow-hidden aspect-video bg-[#101b24]">
                   <img
@@ -381,7 +506,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
                 </p>
               </div>
 
-              {/* What You'll Learn (OpenClass Checklist) */}
+              {/* What You'll Learn Checklist */}
               <div>
                 <h4 className="text-sm font-bold text-[#101b24] mb-3 uppercase tracking-wide font-mono">
                   What You'll Learn:

@@ -58,25 +58,23 @@ export function Blog() {
   return (
     <>
       {/* ── Page Hero ───────────────────────────────────── */}
-      <section className="page-hero page-hero--plain" style={{ paddingBottom: 40 }}>
+      <section className="page-hero page-hero--plain">
         <div className="container page-hero__inner">
-          <Reveal>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '6px 18px', background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.25)', borderRadius: 9999, marginBottom: 16 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 10px #34d399', display: 'inline-block' }}></span>
-              <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#38bdf8' }}>
-                AI Intelligence Radar · Top 100 Sources
-              </span>
-            </div>
-          </Reveal>
-          <Reveal delay={100}><h1 className="h1">AI Intelligence &amp; Feeds</h1></Reveal>
-          <Reveal delay={200}>
-            <p style={{ maxWidth: 780, margin: '0 auto' }}>
-              Real-time briefings, research breakdowns, and actionable guides curated from the top 100 AI newsletters, frontier labs, developer platforms, and LetsVibeAI deep dives.
-            </p>
-          </Reveal>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '7px 18px', background: 'rgba(56, 189, 248, 0.12)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: 9999, marginBottom: 18, backdropFilter: 'blur(8px)' }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 12px #34d399', display: 'inline-block' }}></span>
+            <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#38bdf8' }}>
+              AI Intelligence Radar · Top 100 Sources
+            </span>
+          </div>
+
+          <h1 className="h1" style={{ color: '#ffffff', margin: '0 auto 14px', maxWidth: 760 }}>AI Intelligence &amp; Feeds</h1>
+
+          <p style={{ maxWidth: 660, margin: '0 auto 28px', color: 'rgba(255, 255, 255, 0.86)', fontSize: '1.0625rem', lineHeight: 1.6 }}>
+            Real-time briefings, research breakdowns, and actionable guides curated from the top 100 AI newsletters, frontier labs, developer platforms, and LetsVibeAI deep dives.
+          </p>
 
           {/* Search bar & quick filters */}
-          <Reveal delay={280} style={{ maxWidth: 680, margin: '36px auto 0' }}>
+          <div style={{ maxWidth: 680, margin: '0 auto', position: 'relative' }}>
             <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
               <input
                 type="search"
@@ -86,12 +84,13 @@ export function Blog() {
                 style={{
                   width: '100%',
                   padding: '16px 20px 16px 48px',
-                  fontSize: 16,
+                  fontSize: 15,
                   borderRadius: 14,
-                  border: '1px solid var(--border-soft, #cbd5e1)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
                   background: '#ffffff',
-                  boxShadow: '0 4px 20px rgba(8, 16, 40, 0.06)',
-                  color: '#081028',
+                  boxShadow: '0 8px 30px rgba(0, 0, 0, 0.18)',
+                  color: '#071b3a',
+                  outline: 'none',
                 }}
               />
               <span style={{ position: 'absolute', left: 18, color: '#64748b', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
@@ -101,18 +100,18 @@ export function Blog() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  style={{ position: 'absolute', right: 16, background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', fontSize: 14 }}
+                  style={{ position: 'absolute', right: 16, background: '#f1f5f9', border: 'none', borderRadius: 6, padding: '4px 8px', cursor: 'pointer', color: '#64748b', fontSize: 12, fontWeight: 600 }}
                 >
                   Clear
                 </button>
               )}
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── Filter Bar & Content ────────────────────────── */}
-      <section className="section section--white" style={{ paddingTop: 20 }}>
+      <section className="section section--mist" style={{ paddingTop: 36, paddingBottom: 80 }}>
         <div className="container">
           
           {/* Category Tabs */}

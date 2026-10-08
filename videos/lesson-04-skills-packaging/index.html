@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI — Lesson 04: Skills: Package Your Expertise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #071B3A;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #skills-packaging-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 50% 20%, #152E58 0%, #071B3A 60%, #030C1A 100%);
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(52, 211, 153, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(52, 211, 153, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-green { width: 700px; height: 700px; background: rgba(52, 211, 153, 0.2); top: -100px; right: 150px; }
+    .glow-blue { width: 650px; height: 650px; background: rgba(47, 128, 237, 0.18); bottom: -100px; left: 150px; }
+
+    /* Top Brand Bar */
+    .top-brand {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 14px; }
+    .brand-logo-svg { width: 44px; height: 44px; }
+    .brand-name { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; }
+    .brand-name span { color: #34D399; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      border-radius: 9999px;
+      color: #34D399;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Subtitle & Narration Bar */
+    .caption-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      right: 120px;
+      background: rgba(7, 27, 58, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 16px 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 60;
+    }
+    .caption-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 12px #34D399;
+      flex-shrink: 0;
+    }
+    .caption-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F4F7FB;
+      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Typography & Gradients */
+    .hero-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 140px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(52, 211, 153, 0.25);
+      margin-bottom: -20px;
+    }
+    .main-title {
+      font-size: 70px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+    .main-sub {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+    .gradient-text-green {
+      background: linear-gradient(135deg, #34D399 0%, #20C7D9 50%, #2F80ED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Code Window */
+    .code-window {
+      width: 100%;
+      max-width: 1100px;
+      background: #030C1A;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+    .code-header {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-body {
+      padding: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #F4F7FB;
+    }
+    .code-body .yaml-key { color: #34D399; font-weight: 700; }
+    .code-body .yaml-val { color: #20C7D9; }
+
+    /* 3 Pillars */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 1400px;
+    }
+    .pillar-card {
+      padding: 32px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="skills-packaging-root" data-composition-id="skills-packaging-root" data-duration="25" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-green"></div>
+    <div class="ambient-glow glow-blue"></div>
+
+    <!-- Top Navigation Branding -->
+    <div class="top-brand">
+      <div class="brand-lockup">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none">
+          <path d="M50 15L85 80H70L50 42L30 80H15L50 15Z" fill="url(#brand-grad-4)"/>
+          <circle cx="50" cy="62" r="9" fill="#34D399"/>
+          <defs>
+            <linearGradient id="brand-grad-4" x1="15" y1="15" x2="85" y2="80" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#34D399"/>
+              <stop offset="0.5" stop-color="#20C7D9"/>
+              <stop offset="1" stop-color="#2F80ED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-name">LetsVibe<span>AI</span></span>
+      </div>
+      <div class="badge-pill">Lesson 04 · Skills Packaging</div>
+      <div class="course-badge">vibe-coding-course / module-04</div>
+    </div>
+
+    <!-- Scene 1: Title (0s - 4s) -->
+    <div id="s1" class="clip">
+      <div id="s1-badge" class="badge-pill" style="margin-bottom: 24px;">Fat Skills Architecture</div>
+      <div id="s1-num" class="hero-number">04</div>
+      <h1 id="s1-title" class="main-title">Skills: Package Your <span class="gradient-text-green">Expertise</span></h1>
+      <p id="s1-sub" class="main-sub">Teach the agent a job once. If you have explained a process three times, package it as an auto-triggering skill.</p>
+    </div>
+
+    <!-- Scene 2: What is a Skill (4s - 8s) -->
+    <div id="s2" class="clip">
+      <div id="s2-badge" class="badge-pill" style="margin-bottom: 20px;">The Definition</div>
+      <h2 id="s2-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">A Skill Teaches One Job, <span class="gradient-text-green">Your Way</span></h2>
+      <div id="s2-card" style="width: 100%; max-width: 1300px; padding: 40px;" class="glass-card">
+        <div style="font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 16px;">
+          A skill is a self-contained directory with a single <code>SKILL.md</code> file inside.
+        </div>
+        <div style="font-size: 20px; color: #94A3B8; line-height: 1.6;">
+          When a user prompt matches the description triggers, the agent automatically loads the full instructions, tool requirements, and step-by-step checklists into context.
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: Anatomy of SKILL.md (8s - 13s) -->
+    <div id="s3" class="clip">
+      <div id="s3-badge" class="badge-pill" style="margin-bottom: 20px;">Anatomy</div>
+      <h2 id="s3-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">Name. Description. <span class="gradient-text-green">Steps.</span></h2>
+      <div id="s3-code" class="code-window">
+        <div class="code-header">
+          <div class="code-dot" style="background:#EF4444;"></div>
+          <div class="code-dot" style="background:#F59E0B;"></div>
+          <div class="code-dot" style="background:#10B981;"></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#94A3B8;margin-left:12px;">skills/stripe-payments/SKILL.md</span>
+        </div>
+        <div class="code-body">
+          <div style="color:#64748B;">---</div>
+          <div><span class="yaml-key">name:</span> <span class="yaml-val">stripe-payments</span></div>
+          <div><span class="yaml-key">description:</span> <span class="yaml-val">Create PCI-compliant Stripe checkout sessions & webhooks. Use when asked for billing, checkout, or subscriptions.</span></div>
+          <div style="color:#64748B;">---</div>
+          <br>
+          <div style="color:#A78BFA; font-weight: 700;"># Execution Steps</div>
+          <div>1. Generate server-side Checkout Session with client_reference_id</div>
+          <div>2. Implement webhook signature verification handler</div>
+          <div>3. Upsert user entitlement idempotently in Postgres</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Progressive Disclosure (13s - 17s) -->
+    <div id="s4" class="clip">
+      <div id="s4-badge" class="badge-pill" style="margin-bottom: 20px;">Scale & Efficiency</div>
+      <h2 id="s4-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Progressive <span class="gradient-text-green">Disclosure</span></h2>
+      <div id="s4-pillars" class="pillars-grid">
+        <div class="pillar-card">
+          <div style="font-size: 40px; font-weight: 900; color: #34D399;">1</div>
+          <div style="font-size: 22px; font-weight: 800; color: #fff;">Fast Indexing</div>
+          <div style="color: #94A3B8; font-size: 16px;">Only the name and description load into agent memory at boot time.</div>
+        </div>
+        <div class="pillar-card">
+          <div style="font-size: 40px; font-weight: 900; color: #20C7D9;">2</div>
+          <div style="font-size: 22px; font-weight: 800; color: #fff;">On-Demand Body</div>
+          <div style="color: #94A3B8; font-size: 16px;">The full procedural instructions load only when a matching task occurs.</div>
+        </div>
+        <div class="pillar-card">
+          <div style="font-size: 40px; font-weight: 900; color: #2F80ED;">3</div>
+          <div style="font-size: 22px; font-weight: 800; color: #fff;">Modular Docs</div>
+          <div style="color: #94A3B8; font-size: 16px;">Large schemas, API references, and templates live in separate files.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 5: Cross-Harness Folders (17s - 21s) -->
+    <div id="s5" class="clip">
+      <div id="s5-badge" class="badge-pill" style="margin-bottom: 20px;">Portability</div>
+      <h2 id="s5-title" class="main-title" style="font-size: 52px; margin-bottom: 30px;">Same Skill File. <span class="gradient-text-green">Different Folders.</span></h2>
+      <div id="s5-box" style="width: 100%; max-width: 1200px; padding: 36px;" class="glass-card">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-family: 'JetBrains Mono', monospace;">
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#34D399;">Claude Code:</strong> .claude/skills/</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#20C7D9;">Codex / OpenClaw:</strong> .agents/skills/</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#2F80ED;">Hermes:</strong> ~/.hermes/skills/</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#A78BFA;">Antigravity:</strong> .agent/skills/</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 6: Master Catalogue Wrap-up (21s - 25s) -->
+    <div id="s6" class="clip">
+      <div id="s6-badge" class="badge-pill" style="margin-bottom: 20px;">Library</div>
+      <h2 id="s6-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">60+ Production Skills in the <span class="gradient-text-green">LetsVibeAI Hub</span></h2>
+      <div id="s6-stats" style="display: flex; gap: 24px; width: 100%; max-width: 1300px;">
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(52,211,153,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #34D399; margin-bottom: 8px;">60+</div>
+          <div style="font-size: 20px; font-weight: 700;">Curated Skills</div>
+        </div>
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(32,199,217,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #20C7D9; margin-bottom: 8px;">5</div>
+          <div style="font-size: 20px; font-weight: 700;">Core Domains</div>
+        </div>
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(47,128,237,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #2F80ED; margin-bottom: 8px;">100%</div>
+          <div style="font-size: 20px; font-weight: 700;">Cross-Compatible</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Subtitle Bar -->
+    <div class="caption-bar">
+      <div class="caption-dot"></div>
+      <div id="caption-live" class="caption-text">Lesson 04: Skills package your expertise — teach your agent once, reuse everywhere.</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+        const captionEl = document.getElementById("caption-live");
+
+        function setCaption(text) {
+          if (captionEl) captionEl.textContent = text;
+        }
+
+        // Scene 1: 0s - 4s
+        tl.call(() => setCaption("Lesson 04: Skills package your expertise — teach your agent once, reuse everywhere."), null, 0.1);
+        tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+        tl.fromTo("#s1-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.2);
+        tl.fromTo("#s1-num", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.4);
+        tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.6);
+        tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
+        tl.to("#s1", { opacity: 0, y: -20, duration: 0.4 }, 3.6);
+
+        // Scene 2: 4s - 8s
+        tl.call(() => setCaption("A skill is a folder with a single SKILL.md file inside, encapsulating domain knowledge and automated triggers."), null, 4.0);
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
+        tl.fromTo("#s2-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 4.2);
+        tl.fromTo("#s2-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.4);
+        tl.fromTo("#s2-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.7);
+        tl.to("#s2", { opacity: 0, y: -20, duration: 0.4 }, 7.6);
+
+        // Scene 3: 8s - 13s
+        tl.call(() => setCaption("The anatomy is simple: YAML frontmatter with a triggering description at top, followed by exact step-by-step instructions."), null, 8.0);
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.0);
+        tl.fromTo("#s3-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 8.2);
+        tl.fromTo("#s3-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.4);
+        tl.fromTo("#s3-code", { y: 30, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 8.7);
+        tl.to("#s3", { opacity: 0, y: -20, duration: 0.4 }, 12.6);
+
+        // Scene 4: 13s - 17s
+        tl.call(() => setCaption("Skills scale effortlessly through progressive disclosure: only lightweight descriptions load until a task triggers the full body."), null, 13.0);
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 13.0);
+        tl.fromTo("#s4-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 13.2);
+        tl.fromTo("#s4-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 13.4);
+        tl.fromTo(".pillar-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out(1.2)" }, 13.7);
+        tl.to("#s4", { opacity: 0, y: -20, duration: 0.4 }, 16.6);
+
+        // Scene 5: 17s - 21s
+        tl.call(() => setCaption("Skill files are 100% portable across Claude Code, Codex, Hermes, and Antigravity."), null, 17.0);
+        tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.0);
+        tl.fromTo("#s5-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 17.2);
+        tl.fromTo("#s5-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 17.4);
+        tl.fromTo("#s5-box", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.2)" }, 17.7);
+        tl.to("#s5", { opacity: 0, y: -20, duration: 0.4 }, 20.6);
+
+        // Scene 6: 21s - 25s
+        tl.call(() => setCaption("Explore over sixty production skills across development, GTM, and ops in the LetsVibeAI master catalogue."), null, 21.0);
+        tl.fromTo("#s6", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 21.0);
+        tl.fromTo("#s6-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 21.2);
+        tl.fromTo("#s6-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 21.4);
+        tl.fromTo("#s6-stats > div", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out(1.3)" }, 21.7);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["skills-packaging-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas HXM Brand AI Skill Suite</title>
+<style>
+  :root {
+    --navy:      #1E1244;
+    --lavender:  #E8DEFF;
+    --white:     #FFFFFF;
+    --off-white: #F7F5FC;
+    --purple:    #7C3AED;
+    --blue:      #2563EB;
+    --green:     #10B981;
+    --amber:     #F59E0B;
+    --coral:     #FF595A;
+    --border:    #D4C5F9;
+    --muted:     #6B7280;
+    --font:      'Segoe UI', 'Calibri', 'Arial', sans-serif;
+    --radius:    8px;
+    --radius-lg: 14px;
+    --shadow:    0 2px 10px rgba(30,18,68,0.08);
+    --shadow-md: 0 6px 20px rgba(30,18,68,0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font);
+    background: var(--off-white);
+    color: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── HEADER ── */
+  .atlas-header {
+    background: var(--navy);
+    padding: 14px 36px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .atlas-logo {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+  }
+  .dot { font-size: 18px; line-height: 1; }
+  .dot-p { color: #7C3AED; }
+  .dot-b { color: #2563EB; }
+  .dot-g { color: #10B981; }
+  .wordmark {
+    color: white;
+    font-weight: 700;
+    font-size: 17px;
+    margin-left: 7px;
+    letter-spacing: -0.3px;
+  }
+  .wordmark sup { font-size: 9px; font-weight: 400; opacity: 0.7; vertical-align: super; letter-spacing: 0.5px; }
+  .header-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.2); margin: 0 8px; }
+  .header-title { color: white; font-size: 14px; font-weight: 600; }
+  .header-sub { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 2px; }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .badge-new {
+    background: linear-gradient(135deg, #7C3AED, #2563EB);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .header-date { color: rgba(255,255,255,0.45); font-size: 12px; }
+
+  /* ── NAV TABS ── */
+  .nav-bar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 36px;
+    display: flex;
+    gap: 0;
+    position: sticky;
+    top: 57px;
+    z-index: 100;
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--navy); border-bottom-color: var(--lavender); }
+  .nav-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1E1244 0%, #2d1a5e 50%, #1a2d6b 100%);
+    padding: 56px 36px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(124,58,237,0.25);
+    border: 1px solid rgba(124,58,237,0.4);
+    color: #c4b5fd;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  .hero-h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .hero-h1 span { background: linear-gradient(90deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, #7C3AED, #5b21b6);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(124,58,237,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(124,58,237,0.5); }
+  .btn-outline {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 0 36px;
+  }
+  .stats-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 32px 18px 0;
+    border-right: 1px solid var(--border);
+    margin-right: 32px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .si-purple { background: rgba(124,58,237,0.1); }
+  .si-blue   { background: rgba(37,99,235,0.1); }
+  .si-green  { background: rgba(16,185,129,0.1); }
+  .si-amber  { background: rgba(245,158,11,0.1); }
+  .stat-num { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .stat-lbl { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+  /* ── PAGE BODY ── */
+  .page-body {
+    flex: 1;
+    padding: 32px 36px;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px; height: 20px;
+    background: linear-gradient(180deg, var(--purple), var(--blue));
+    border-radius: 2px;
+  }
+  .section-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  /* ── TAB PANELS ── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── MASTER SKILL CARD ── */
+  .master-card {
+    background: linear-gradient(135deg, #1E1244 0%, #2d1a5e 100%);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .master-card::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+  }
+  .master-icon {
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .master-content { flex: 1; position: relative; z-index: 1; }
+  .master-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #a78bfa;
+    margin-bottom: 8px;
+  }
+  .master-name { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .master-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 560px; margin-bottom: 20px; }
+  .master-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .feature-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.85);
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .master-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+  }
+  .master-meta strong { color: rgba(255,255,255,0.75); }
+  .master-actions { display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; flex-shrink: 0; }
+  .btn-dl {
+    background: white;
+    color: var(--navy);
+    border: none;
+    padding: 11px 22px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-dl:hover { background: var(--lavender); transform: translateY(-1px); }
+  .btn-dl-outline {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-dl-outline:hover { background: rgba(255,255,255,0.15); }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px; }
+  .filter-chip {
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: white;
+    color: var(--muted);
+    transition: all 0.18s;
+    user-select: none;
+  }
+  .filter-chip:hover { border-color: var(--purple); color: var(--purple); }
+  .filter-chip.active { background: var(--purple); border-color: var(--purple); color: white; }
+
+  /* ── SKILL GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .skill-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    transition: all 0.2s;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+  }
+  .skill-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--purple);
+  }
+  .skill-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .skill-emoji {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .skill-card-info { flex: 1; }
+  .skill-name { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .skill-filename { font-size: 11px; color: var(--muted); font-family: 'Courier New', monospace; background: var(--off-white); padding: 2px 6px; border-radius: 4px; display: inline-block; }
+  .skill-desc { font-size: 12px; color: #4b5563; line-height: 1.55; margin-bottom: 14px; flex: 1; }
+  .skill-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+  .use-case-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid;
+  }
+  .tag-copy     { color: #7C3AED; border-color: rgba(124,58,237,0.25); background: rgba(124,58,237,0.06); }
+  .tag-social   { color: #2563EB; border-color: rgba(37,99,235,0.25); background: rgba(37,99,235,0.06); }
+  .tag-outreach { color: #059669; border-color: rgba(5,150,105,0.25); background: rgba(5,150,105,0.06); }
+  .tag-sales    { color: #D97706; border-color: rgba(217,119,6,0.25); background: rgba(217,119,6,0.06); }
+  .tag-ops      { color: #DC2626; border-color: rgba(220,38,38,0.25); background: rgba(220,38,38,0.06); }
+  .tag-digital  { color: #7C3AED; border-color: rgba(124,58,237,0.25); background: rgba(124,58,237,0.06); }
+  .tag-content  { color: #0891B2; border-color: rgba(8,145,178,0.25); background: rgba(8,145,178,0.06); }
+  .skill-dl-btn {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--purple);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border: 1.5px solid rgba(124,58,237,0.3);
+    border-radius: var(--radius);
+    transition: all 0.18s;
+    background: rgba(124,58,237,0.04);
+  }
+  .skill-dl-btn:hover { background: var(--purple); color: white; border-color: var(--purple); }
+
+  /* ── BRAND VOICE PANEL ── */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .voice-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .voice-card-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .voice-icon { font-size: 20px; }
+  .voice-desc { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 14px; }
+  .voice-example {
+    background: var(--off-white);
+    border-left: 3px solid var(--purple);
+    padding: 10px 14px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 12px;
+    color: var(--navy);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .never-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .never-card {
+    background: white;
+    border: 1.5px solid #fecaca;
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .never-title { font-size: 13px; font-weight: 700; color: #DC2626; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .never-examples { display: flex; flex-direction: column; gap: 6px; }
+  .never-bad, .never-good {
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: var(--radius);
+    line-height: 1.4;
+  }
+  .never-bad { background: rgba(220,38,38,0.07); color: #991b1b; }
+  .never-good { background: rgba(16,185,129,0.07); color: #065f46; }
+
+  .trait-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .trait-chip {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .trait-emoji { font-size: 24px; margin-bottom: 6px; }
+  .trait-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .trait-desc { font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+  /* ── GETTING STARTED ── */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+  .step-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--purple), var(--blue));
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+  }
+  .step-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: #4b5563; line-height: 1.6; }
+  .step-code {
+    margin-top: 12px;
+    background: var(--navy);
+    color: #a78bfa;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+  }
+
+  .prompt-examples { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .prompt-row {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.18s;
+  }
+  .prompt-row:hover { border-color: var(--purple); box-shadow: var(--shadow); }
+  .prompt-skill-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: rgba(124,58,237,0.1);
+    color: var(--purple);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .prompt-text {
+    font-size: 13px;
+    color: var(--navy);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .prompt-text em { color: var(--muted); font-style: normal; font-size: 12px; display: block; margin-top: 2px; }
+
+  /* ── VOCAB TABLE ── */
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .vocab-table thead th {
+    background: var(--navy);
+    color: white;
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .vocab-table tbody tr:nth-child(even) { background: var(--off-white); }
+  .vocab-table tbody tr:hover { background: var(--lavender); }
+  .vocab-table tbody td {
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--navy);
+  }
+  .vocab-use { color: #059669; font-weight: 600; }
+  .vocab-not { color: #DC2626; text-decoration: line-through; opacity: 0.7; }
+
+  /* ── FOOTER ── */
+  .atlas-footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 36px;
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-dots { font-size: 16px; display: flex; gap: 4px; }
+  .footer-right { display: flex; align-items: center; gap: 16px; }
+  .footer-link { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 11px; }
+  .footer-link:hover { color: rgba(255,255,255,0.7); }
+
+  /* ── DOWNLOAD ALL BAR ── */
+  .dl-all-bar {
+    background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(37,99,235,0.08));
+    border: 1.5px solid rgba(124,58,237,0.2);
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 20px;
+  }
+  .dl-all-info h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .dl-all-info p { font-size: 13px; color: var(--muted); }
+  .dl-all-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .btn-purple {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
+  .btn-navy {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-navy:hover { opacity: 0.85; }
+
+  /* ── HIDDEN ── */
+  .hidden { display: none !important; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .voice-grid { grid-template-columns: 1fr 1fr; }
+    .never-grid { grid-template-columns: 1fr; }
+    .trait-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 700px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .hero-h1 { font-size: 28px; }
+    .master-card { flex-direction: column; }
+  }
+
+  .skill-card.hidden { display: none; }
+
+  /* Count badge */
+  .count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(124,58,237,0.12);
+    color: var(--purple);
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    margin-left: 6px;
+  }
+
+  .tag-all { color: #1E1244; border-color: rgba(30,18,68,0.2); background: rgba(30,18,68,0.05); }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="atlas-header">
+  <div class="atlas-logo">
+    <span class="dot dot-p">●</span>
+    <span class="dot dot-b">●</span>
+    <span class="dot dot-g">●</span>
+    <span class="wordmark">atlas<sup>HXM</sup></span>
+  </div>
+  <div class="header-divider"></div>
+  <div>
+    <div class="header-title">Brand AI Skill Suite</div>
+    <div class="header-sub">GTM AI & Automation — Patrick Diamitani</div>
+  </div>
+  <div class="header-right">
+    <span class="badge-new">✦ New Release</span>
+    <span class="header-date">March 2026</span>
+  </div>
+</header>
+
+<!-- ── NAV TABS ── -->
+<nav class="nav-bar" role="navigation">
+  <div class="nav-tab active" data-tab="overview" onclick="switchTab('overview')">Overview</div>
+  <div class="nav-tab" data-tab="skills" onclick="switchTab('skills')">Skills Library</div>
+  <div class="nav-tab" data-tab="brand" onclick="switchTab('brand')">Brand Voice</div>
+  <div class="nav-tab" data-tab="resources" onclick="switchTab('resources')">Brand Index &amp; Assets</div>
+  <div class="nav-tab" data-tab="start" onclick="switchTab('start')">Getting Started</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     TAB: OVERVIEW
+══════════════════════════════════════════════ -->
+<div id="tab-overview" class="tab-panel active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">GTM AI &amp; Automation · Internal Resource · March 2026</div>
+      <h1 class="hero-h1">Atlas Brand <span>AI Skill Suite</span></h1>
+      <p class="hero-sub">18 AI skills built around the full Atlas brand system — covering voice, assets, and content standards across every format. Install once. Every rep and marketer stays on-brand, in every channel, without needing to know the guidelines.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary" onclick="switchTab('skills'); return false;">Browse &amp; Download Skills</a>
+        <a href="#" class="btn-outline" onclick="switchTab('resources'); return false;">Brand Resources &amp; Assets</a>
+        <a href="#" class="btn-outline" onclick="switchTab('start'); return false;">How to Install</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-icon si-purple">🧠</div>
+        <div>
+          <div class="stat-num">18</div>
+          <div class="stat-lbl">Skills Total</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon si-blue">🎯</div>
+        <div>
+          <div class="stat-num">17</div>
+          <div class="stat-lbl">Use Cases Covered</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon si-green">🌍</div>
+        <div>
+          <div class="stat-num">160+</div>
+          <div class="stat-lbl">Countries Supported</div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon si-amber">⚡</div>
+        <div>
+          <div class="stat-num">1-click</div>
+          <div class="stat-lbl">Install & Go</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="page-body">
+
+    <!-- Master Skill -->
+    <div class="section-header" style="margin-bottom:14px">
+      <div>
+        <div class="section-title">Master Skill</div>
+        <div class="section-sub">The complete Atlas brand system — all assets bundled</div>
+      </div>
+    </div>
+
+    <div class="master-card">
+      <div class="master-icon">🏛️</div>
+      <div class="master-content">
+        <div class="master-label">● Master Skill — Full Bundle</div>
+        <div class="master-name">atlas-brand-guidelines.skill</div>
+        <div class="master-desc">The definitive Atlas HXM brand intelligence skill. Contains the full brand system: Gelion font family (14 weights), official logo SVGs and PNGs (44 files), the 2026 PowerPoint template, complete brand voice guidelines, content playbooks for all 17 use cases, and the Atlas Agent architecture. Install this first.</div>
+        <div class="master-features">
+          <span class="feature-chip">🔤 Gelion Font Family</span>
+          <span class="feature-chip">🖼️ 44 Logo Files</span>
+          <span class="feature-chip">📊 PPT Template 2026</span>
+          <span class="feature-chip">🎨 Color System</span>
+          <span class="feature-chip">📐 Brand Portal Index</span>
+          <span class="feature-chip">🤖 Agent Architecture</span>
+        </div>
+        <div class="master-meta">
+          <span><strong>28 MB</strong> — Full asset bundle</span>
+          <span><strong>Updated:</strong> March 2026</span>
+          <span><strong>Font:</strong> Gelion (Isabel Maldonado, Brand Creative)</span>
+        </div>
+      </div>
+      <div class="master-actions">
+        <a href="atlas-brand-skill-suite/atlas-brand-guidelines.skill" download class="btn-dl">⬇ Download Master Skill</a>
+        <a href="#" class="btn-dl-outline" onclick="switchTab('skills'); return false;">View All 18 Skills →</a>
+      </div>
+    </div>
+
+    <!-- Sub-skill overview grid -->
+    <div class="section-header" style="margin-bottom:14px">
+      <div>
+        <div class="section-title">Sub-Skills by Use Case</div>
+        <div class="section-sub">Lightweight, fast-loading skills for specific content needs</div>
+      </div>
+      <a href="#" class="btn-purple" onclick="switchTab('skills'); return false;">View All + Download →</a>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:14px; margin-bottom:32px;">
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">✍️</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Copy & Content</div><div style="font-size:12px;color:var(--muted);">atlas-copy, atlas-social, atlas-blog, atlas-docs</div></div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">📧</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Outreach & Comms</div><div style="font-size:12px;color:var(--muted);">atlas-email, atlas-phone, atlas-dm, atlas-internal-messaging</div></div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">💼</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Sales Enablement</div><div style="font-size:12px;color:var(--muted);">atlas-intro, atlas-demo, atlas-proposal, atlas-pricing</div></div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">📊</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Presentations & Reports</div><div style="font-size:12px;color:var(--muted);">atlas-presentations, atlas-reports</div></div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">🌍</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Global & Ads</div><div style="font-size:12px;color:var(--muted);">atlas-country, atlas-ads</div></div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">🏢</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">Internal</div><div style="font-size:12px;color:var(--muted);">atlas-internal</div></div>
+      </div>
+    </div>
+
+    <!-- Quick brand snapshot -->
+    <div class="section-header" style="margin-bottom:14px">
+      <div>
+        <div class="section-title">Brand at a Glance</div>
+        <div class="section-sub">The Atlas voice — always authoritative, inclusive, and measured</div>
+      </div>
+      <a href="#" class="btn-purple" onclick="switchTab('brand'); return false;">Full Brand Guide →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:12px;">
+      <div style="background:var(--navy);color:white;border-radius:12px;padding:22px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;">Voice Pillar 1</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Authoritative</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.55;">Confident but never pushy. Smart but never sassy. We speak from real expertise.</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#7C3AED,#5b21b6);color:white;border-radius:12px;padding:22px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;">Voice Pillar 2</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Inclusive</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.55;">Welcoming to every level — CHR Director in Singapore or startup founder in Austin.</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#2563EB,#1d4ed8);color:white;border-radius:12px;padding:22px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;">Voice Pillar 3</div>
+        <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Measured</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.55;">Clear-sighted, focused, purposeful. We speak to one person at a specific point in their journey.</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(90deg,rgba(124,58,237,0.07),rgba(37,99,235,0.07));border:1.5px solid rgba(124,58,237,0.15);border-radius:12px;padding:20px 28px;margin-bottom:8px;display:flex;align-items:center;gap:20px;">
+      <div style="font-size:28px;">🏷️</div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;">Tagline: <em style="font-style:normal;color:var(--purple);">"For People, By People"</em></div>
+        <div style="font-size:12px;color:var(--muted);">Use on presentation footers, campaign materials, and event collateral. Never alter it.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     TAB: SKILLS LIBRARY
+══════════════════════════════════════════════ -->
+<div id="tab-skills" class="tab-panel">
+  <div class="page-body">
+
+    <!-- Download all bar -->
+    <div class="dl-all-bar">
+      <div class="dl-all-info">
+        <h3>📦 Full Skill Suite — 18 Skills Ready to Install</h3>
+        <p>Install the master skill for full asset access, then add sub-skills for specific use cases.</p>
+      </div>
+      <div class="dl-all-actions">
+        <a href="atlas-brand-skill-suite/atlas-brand-guidelines.skill" download class="btn-purple">⬇ Master Skill (28MB)</a>
+        <a href="atlas-brand-skill-suite/" class="btn-navy">📁 Open Skills Folder</a>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <div class="filter-chip active" onclick="filterSkills('all')">All <span class="count-badge">17</span></div>
+      <div class="filter-chip" onclick="filterSkills('copy')">Copy & Content</div>
+      <div class="filter-chip" onclick="filterSkills('outreach')">Outreach</div>
+      <div class="filter-chip" onclick="filterSkills('social')">Social & Digital</div>
+      <div class="filter-chip" onclick="filterSkills('sales')">Sales</div>
+      <div class="filter-chip" onclick="filterSkills('ops')">Reports & Ops</div>
+      <div class="filter-chip" onclick="filterSkills('ops2')">Internal</div>
+    </div>
+
+    <!-- Skills Grid -->
+    <div class="skills-grid" id="skills-grid">
+
+      <!-- COPY -->
+      <div class="skill-card" data-cat="copy">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-purple">✍️</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Copy</div>
+            <span class="skill-filename">atlas-copy.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">General brand copywriting for any format. Lead-with-value framework, Atlas proof points, vocabulary guide, and full brand compliance built in.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-copy">Copy & Content</span>
+          <a href="atlas-brand-skill-suite/atlas-copy.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- SOCIAL -->
+      <div class="skill-card" data-cat="social">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-blue">📱</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Social</div>
+            <span class="skill-filename">atlas-social.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">LinkedIn thought leadership (150-300w), announcements (50-100w), Twitter/X punchy copy, and Instagram. No HTML carousels — native-format text output only.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-social">Social & Digital</span>
+          <a href="atlas-brand-skill-suite/atlas-social.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="skill-card" data-cat="outreach">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-green">📧</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Email</div>
+            <span class="skill-filename">atlas-email.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Cold email structure, follow-up sequences, and nurture drips. Forbidden phrases list, subject line bank, and single-CTA discipline built in.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-outreach">Outreach</span>
+          <a href="atlas-brand-skill-suite/atlas-email.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- PHONE -->
+      <div class="skill-card" data-cat="outreach">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-amber">📞</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Phone</div>
+            <span class="skill-filename">atlas-phone.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Cold call scripts (30-60 sec), voicemails (under 30 sec), and discovery call talking points. Rooted in Atlas EOR positioning and ICP pain points.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-outreach">Outreach</span>
+          <a href="atlas-brand-skill-suite/atlas-phone.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- ADS -->
+      <div class="skill-card" data-cat="social">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-purple">📣</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Ads</div>
+            <span class="skill-filename">atlas-ads.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">LinkedIn sponsored content, lead gen ads, retargeting copy, and Google search ads. Headline bank and rational/emotional test pairs included.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-social">Social & Digital</span>
+          <a href="atlas-brand-skill-suite/atlas-ads.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- INTERNAL MESSAGING -->
+      <div class="skill-card" data-cat="ops2">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-blue">💬</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Internal Messaging</div>
+            <span class="skill-filename">atlas-internal-messaging.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Slack/Teams messages, company announcements, and internal memos. Keeps internal comms on-brand without being stiff — human, clear, direct.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-ops">Internal</span>
+          <a href="atlas-brand-skill-suite/atlas-internal-messaging.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- DM -->
+      <div class="skill-card" data-cat="outreach">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-green">💌</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas DM</div>
+            <span class="skill-filename">atlas-dm.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">LinkedIn DMs for first contact, follow-up, and post-engagement. Platform-aware tone differences and connection request copy included.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-outreach">Outreach</span>
+          <a href="atlas-brand-skill-suite/atlas-dm.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- REPORTS -->
+      <div class="skill-card" data-cat="ops">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-amber">📋</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Reports</div>
+            <span class="skill-filename">atlas-reports.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Standard report structure, compliance brief format, and executive summaries. Gelion required. Outputs as .pdf or .pptx — always properly branded.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-ops">Reports & Ops</span>
+          <a href="atlas-brand-skill-suite/atlas-reports.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- BLOG -->
+      <div class="skill-card" data-cat="copy">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-purple">✒️</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Blog</div>
+            <span class="skill-filename">atlas-blog.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">600-1,200w standard posts and 1,200-2,000w deep-dive guides. Opens with the business problem, not Atlas. SEO guidance and newsletter format included.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-copy">Copy & Content</span>
+          <a href="atlas-brand-skill-suite/atlas-blog.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- DOCS -->
+      <div class="skill-card" data-cat="copy">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-blue">📄</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Docs</div>
+            <span class="skill-filename">atlas-docs.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">One-pagers, white papers, case studies, and project briefs. Visual standards table, Gelion required, proper branded document structure.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-copy">Copy & Content</span>
+          <a href="atlas-brand-skill-suite/atlas-docs.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- PRESENTATIONS -->
+      <div class="skill-card" data-cat="sales">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-green">🖥️</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Presentations</div>
+            <span class="skill-filename">atlas-presentations.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Always uses the 2026 "For People, By People" PPT template. Gelion required. Slide structure playbook, never outputs as HTML — proper .pptx every time.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-sales">Sales</span>
+          <a href="atlas-brand-skill-suite/atlas-presentations.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- INTRO -->
+      <div class="skill-card" data-cat="sales">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-amber">🤝</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Intro</div>
+            <span class="skill-filename">atlas-intro.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">5-7 slide structure: problem → who Atlas is → differentiator → services → proof → how it works → CTA. Perfect for first-call decks and intro meetings.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-sales">Sales</span>
+          <a href="atlas-brand-skill-suite/atlas-intro.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- DEMO -->
+      <div class="skill-card" data-cat="sales">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-purple">🎯</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Demo</div>
+            <span class="skill-filename">atlas-demo.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Pre-demo checklist, demo script structure, objection-ready moments, and leave-behind content. Designed for HXM platform demos and EOR walkthroughs.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-sales">Sales</span>
+          <a href="atlas-brand-skill-suite/atlas-demo.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- PROPOSAL -->
+      <div class="skill-card" data-cat="sales">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-blue">📑</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Proposal</div>
+            <span class="skill-filename">atlas-proposal.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">10-section proposal structure anchored to the prospect's specific situation. Gelion required, visual standards, and competitive differentiation baked in.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-sales">Sales</span>
+          <a href="atlas-brand-skill-suite/atlas-proposal.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- COUNTRY -->
+      <div class="skill-card" data-cat="ops">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-green">🌍</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Country</div>
+            <span class="skill-filename">atlas-country.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Country profile structure covering contract, hours, compensation, termination, and compliance traps. References atlas-eor-knowledge for authoritative data.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-ops">Reports & Ops</span>
+          <a href="atlas-brand-skill-suite/atlas-country.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- PRICING -->
+      <div class="skill-card" data-cat="sales">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-amber">💰</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Pricing</div>
+            <span class="skill-filename">atlas-pricing.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">EOR vs. entity setup comparison table, ROI talking points, and pricing email templates. Helps reps handle cost objections with specificity and confidence.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-sales">Sales</span>
+          <a href="atlas-brand-skill-suite/atlas-pricing.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- INTERNAL -->
+      <div class="skill-card" data-cat="ops2">
+        <div class="skill-card-top">
+          <div class="skill-emoji si-purple">🏢</div>
+          <div class="skill-card-info">
+            <div class="skill-name">Atlas Internal</div>
+            <span class="skill-filename">atlas-internal.skill</span>
+          </div>
+        </div>
+        <div class="skill-desc">Internal presentations, training materials, playbooks, and knowledge base articles. Keeps internal content on-brand and structured for Atlas audiences.</div>
+        <div class="skill-card-footer">
+          <span class="use-case-tag tag-ops">Internal</span>
+          <a href="atlas-brand-skill-suite/atlas-internal.skill" download class="skill-dl-btn">⬇ Download</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     TAB: BRAND VOICE
+══════════════════════════════════════════════ -->
+<div id="tab-brand" class="tab-panel">
+  <div class="page-body">
+
+    <!-- 8 Traits -->
+    <div class="section-header"><div><div class="section-title">8 Core Brand Traits</div><div class="section-sub">Every piece of Atlas content should reflect one or more of these</div></div></div>
+    <div class="trait-grid" style="margin-bottom:32px;">
+      <div class="trait-chip"><div class="trait-emoji">🔒</div><div class="trait-name">Reliable</div><div class="trait-desc">A partner clients can count on. We deliver what we promise, efficiently and appropriately.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">🤝</div><div class="trait-name">Honest</div><div class="trait-desc">We value integrity and transparency. We manage expectations accurately. We don't oversell.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">⚙️</div><div class="trait-name">Hard-working</div><div class="trait-desc">No shortcuts. Diligent, conscientious, committed to the best solution.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">🌱</div><div class="trait-name">Wholesome</div><div class="trait-desc">Deep relationships matter. We approach challenges with optimism and value human connection.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">🏆</div><div class="trait-name">Successful</div><div class="trait-desc">Proven track record. Confident about our capabilities — but never boastful.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">🌿</div><div class="trait-name">Down-to-earth</div><div class="trait-desc">Pragmatic, no pretensions. We let our work speak for itself. No false promises.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">🧠</div><div class="trait-name">Intelligent</div><div class="trait-desc">A team of experts. Pioneers of the EOR industry. Technology that actually works.</div></div>
+      <div class="trait-chip"><div class="trait-emoji">☀️</div><div class="trait-name">Positive</div><div class="trait-desc">Always optimistic, proactive in tackling challenges, confident in the value we bring.</div></div>
+    </div>
+
+    <!-- 3 Voice Pillars -->
+    <div class="section-header"><div><div class="section-title">Tone of Voice — 3 Pillars</div><div class="section-sub">The Atlas voice is constant. Tone flexes with context.</div></div></div>
+    <div class="voice-grid" style="margin-bottom:32px;">
+      <div class="voice-card" style="border-top:3px solid var(--navy);">
+        <div class="voice-card-title"><span class="voice-icon">🎯</span> Authoritative</div>
+        <div class="voice-desc">We've explored every corner of global expansion — so we speak with real authority. Confident but never pushy. Smart but never sassy. Knowledgeable, substantiated, definitive.</div>
+        <div class="voice-example">"When you hire in Brazil, statutory benefits aren't optional — they're the cost of doing business right. Here's what you need to know."</div>
+      </div>
+      <div class="voice-card" style="border-top:3px solid var(--purple);">
+        <div class="voice-card-title"><span class="voice-icon">🌐</span> Inclusive</div>
+        <div class="voice-desc">Our language empowers decision-makers at every level. We never condescend to experts or alienate newcomers. Culturally neutral. Cross-functional.</div>
+        <div class="voice-example">"Whether you're hiring your first international employee or managing a team across 30 countries, the principles are the same: compliance first, people always."</div>
+      </div>
+      <div class="voice-card" style="border-top:3px solid var(--blue);">
+        <div class="voice-card-title"><span class="voice-icon">🎯</span> Measured</div>
+        <div class="voice-desc">Clear-sighted, focused, purposeful. We speak as if addressing a single professional at a specific point in their journey. Never scatter-shot.</div>
+        <div class="voice-example">"Your next hire in Germany requires a works council notification. Here's the exact process, so there are no surprises."</div>
+      </div>
+    </div>
+
+    <!-- What we're never -->
+    <div class="section-header"><div><div class="section-title">What Atlas is NEVER</div><div class="section-sub">Avoid these tones in all content</div></div></div>
+    <div class="never-grid" style="margin-bottom:32px;">
+      <div class="never-card">
+        <div class="never-title">🚫 Weak</div>
+        <div class="never-examples">
+          <div class="never-bad">❌ "We could potentially help with some of your global hiring needs, depending on your situation."</div>
+          <div class="never-good">✅ "We handle global hiring in 160+ countries — compliantly, directly, and fast."</div>
+        </div>
+      </div>
+      <div class="never-card">
+        <div class="never-title">🚫 Exclusive / Jargon-heavy</div>
+        <div class="never-examples">
+          <div class="never-bad">❌ "Leveraging our best-in-class synergies across our vertically-integrated EOR ecosystem..."</div>
+          <div class="never-good">✅ "Our global team handles the legal and compliance complexity — so you can focus on the hire."</div>
+        </div>
+      </div>
+      <div class="never-card">
+        <div class="never-title">🚫 Careless / Loud</div>
+        <div class="never-examples">
+          <div class="never-bad">❌ "WE ARE THE BEST IN GLOBAL HIRING!! 🔥🔥🔥 DON'T MISS OUT!!!"</div>
+          <div class="never-good">✅ "160+ countries. One partner. Zero shortcuts."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vocabulary -->
+    <div class="section-header"><div><div class="section-title">Atlas Vocabulary</div><div class="section-sub">Preferred terms — always use these, not the alternatives</div></div></div>
+    <table class="vocab-table">
+      <thead>
+        <tr><th>✅ Use This</th><th>❌ Not This</th><th>Why It Matters</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="vocab-use">Employer of Record (EOR)</td><td class="vocab-not">PEO, staffing agency</td><td>EOR is the correct category — PEO is a different service model</td></tr>
+        <tr><td class="vocab-use">Atlas HXM or Atlas</td><td class="vocab-not">"we" on first mention</td><td>Always name the brand on first reference in any piece</td></tr>
+        <tr><td class="vocab-use">Global talent management</td><td class="vocab-not">HR outsourcing</td><td>Too generic — undersells the scope of what Atlas provides</td></tr>
+        <tr><td class="vocab-use">Direct EOR model</td><td class="vocab-not">Third-party model</td><td>Highlights Atlas's key differentiator: no intermediaries</td></tr>
+        <tr><td class="vocab-use">Hire in [country]</td><td class="vocab-not">Expand to [country]</td><td>Hiring is the specific action — expansion is too vague</td></tr>
+        <tr><td class="vocab-use">HXM Platform</td><td class="vocab-not">"our software" / "the tool"</td><td>Always use the product name — it's a named product</td></tr>
+        <tr><td class="vocab-use">160+ countries</td><td class="vocab-not">"global" (alone)</td><td>Specificity builds credibility — never say global without a number</td></tr>
+        <tr><td class="vocab-use">Compliance</td><td class="vocab-not">"legal stuff"</td><td>Compliance is serious — casual language undercuts trust</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     TAB: GETTING STARTED
+══════════════════════════════════════════════ -->
+<div id="tab-start" class="tab-panel">
+  <div class="page-body">
+
+    <!-- Steps -->
+    <div class="section-header"><div><div class="section-title">Install in 3 Steps</div><div class="section-sub">Works in Claude desktop (Cowork mode) — takes under 2 minutes</div></div></div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Download Your Skills</div>
+        <div class="step-desc">Go to the Skills Library tab and download the master skill (<strong>atlas-brand-guidelines.skill</strong>) plus any sub-skills you need for your role — sales, marketing, ops, or all of them.</div>
+        <div class="step-code">📦 atlas-brand-guidelines.skill (28MB)<br>📝 atlas-[use-case].skill (~3KB each)</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Install in Cowork</div>
+        <div class="step-desc">Open Claude desktop in Cowork mode. Navigate to Settings → Plugins → Install. Drop in the <strong>.skill</strong> files one at a time. Install the master skill first so fonts and assets are available.</div>
+        <div class="step-code">Settings → Plugins → Install Plugin<br>→ Select .skill file → Confirm</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Start Creating</div>
+        <div class="step-desc">Just describe what you need in plain language. Claude will automatically apply the right brand skill, tone, format, and assets. No prompt engineering required.</div>
+        <div class="step-code">"Write a LinkedIn post about EOR in Japan"<br>"Build me a proposal for [Company]"<br>"Draft a cold email to a CHR Director"</div>
+      </div>
+    </div>
+
+    <!-- Who uses which skills -->
+    <div class="section-header" style="margin-top:12px"><div><div class="section-title">Skills by Role</div><div class="section-sub">Recommended install set for each team member</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px;">
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;"><span>🧑‍💼</span> Sales Reps & AEs</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-brand-guidelines ⭐</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-email</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-phone</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-dm</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-intro</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-demo</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-proposal</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-pricing</span>
+          <span style="font-size:11px;background:var(--lavender);color:var(--purple);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-country</span>
+        </div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px;">
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;"><span>📢</span> Marketing Team</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-brand-guidelines ⭐</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-copy</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-social</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-blog</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-ads</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-email</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-docs</span>
+          <span style="font-size:11px;background:rgba(37,99,235,0.1);color:var(--blue);padding:3px 10px;border-radius:99px;font-weight:600;">atlas-presentations</span>
+        </div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px;">
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;"><span>⚙️</span> RevOps & GTM Ops</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#059669;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-brand-guidelines ⭐</span>
+          <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#059669;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-reports</span>
+          <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#059669;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-internal</span>
+          <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#059669;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-presentations</span>
+          <span style="font-size:11px;background:rgba(16,185,129,0.1);color:#059669;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-internal-messaging</span>
+        </div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:12px;padding:22px;">
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;"><span>🏢</span> Executives & Leadership</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#92400e;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-brand-guidelines ⭐</span>
+          <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#92400e;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-presentations</span>
+          <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#92400e;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-copy</span>
+          <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#92400e;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-internal</span>
+          <span style="font-size:11px;background:rgba(245,158,11,0.12);color:#92400e;padding:3px 10px;border-radius:99px;font-weight:600;">atlas-blog</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example Prompts -->
+    <div class="section-header"><div><div class="section-title">Example Prompts to Try</div><div class="section-sub">Just type these in Claude — the right skill activates automatically</div></div></div>
+    <div class="prompt-examples">
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-social</span>
+        <div class="prompt-text">Write a LinkedIn thought leadership post about what companies get wrong when hiring their first international employee.
+          <em>→ Delivers 150-300w Atlas-voice post with hook, insight, and soft CTA</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-email</span>
+        <div class="prompt-text">Draft a cold email to the VP of HR at a Series B tech company that just announced hiring in 3 new countries.
+          <em>→ Delivers subject line + 4-sentence email + single CTA, Atlas tone</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-intro</span>
+        <div class="prompt-text">Build an intro deck for a first call with a logistics company that wants to hire in Germany and Brazil.
+          <em>→ Delivers 5-7 slide .pptx using the 2026 Atlas PPT template, Gelion font</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-country</span>
+        <div class="prompt-text">Create a country profile for Japan covering employment contracts, termination rules, and compliance traps.
+          <em>→ Delivers structured brief pulled from Atlas EOR Knowledge base</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-ads</span>
+        <div class="prompt-text">Write 3 LinkedIn ad headline pairs for our Q2 campaign targeting HR Directors at US tech companies hiring abroad.
+          <em>→ Delivers rational + emotional test pairs, Atlas headline style</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-blog</span>
+        <div class="prompt-text">Write a 900-word blog post on why the direct EOR model matters more than ever in 2026.
+          <em>→ Delivers full post with sub-headers, starts with business problem, not Atlas</em>
+        </div>
+      </div>
+      <div class="prompt-row">
+        <span class="prompt-skill-tag">atlas-pricing</span>
+        <div class="prompt-text">Generate a cost comparison between EOR with Atlas vs. setting up a legal entity in the UK for 5 employees.
+          <em>→ Delivers comparison table with ROI framing and Atlas proof points</em>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     TAB: BRAND INDEX & ASSETS
+══════════════════════════════════════════════ -->
+<div id="tab-resources" class="tab-panel">
+  <div class="page-body">
+
+    <!-- Downloadable Files -->
+    <div class="section-header"><div><div class="section-title">Download: Skill Files</div><div class="section-sub">All skills are ready to install in Claude (Cowork). Start with the master skill.</div></div></div>
+    <div class="dl-all-bar" style="margin-bottom:16px;">
+      <div class="dl-all-info">
+        <h3>🏛️ atlas-brand-guidelines.skill — Master Bundle (28 MB)</h3>
+        <p>Gelion font family (14 weights) · 44 official logo files (SVG + PNG) · 2026 PPT template · Full brand system · Agent architecture · All 17 use-case playbooks</p>
+      </div>
+      <div class="dl-all-actions">
+        <a href="atlas-brand-skill-suite/atlas-brand-guidelines.skill" download class="btn-purple">⬇ Download Master Skill</a>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;">
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-copy</div><div style="font-size:11px;color:var(--muted);">General copywriting</div></div>
+        <a href="atlas-brand-skill-suite/atlas-copy.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-social</div><div style="font-size:11px;color:var(--muted);">LinkedIn, Twitter/X, Instagram</div></div>
+        <a href="atlas-brand-skill-suite/atlas-social.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-email</div><div style="font-size:11px;color:var(--muted);">Cold email, follow-up, nurture</div></div>
+        <a href="atlas-brand-skill-suite/atlas-email.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-phone</div><div style="font-size:11px;color:var(--muted);">Cold call, voicemail, discovery</div></div>
+        <a href="atlas-brand-skill-suite/atlas-phone.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-ads</div><div style="font-size:11px;color:var(--muted);">LinkedIn ads, Google search</div></div>
+        <a href="atlas-brand-skill-suite/atlas-ads.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-dm</div><div style="font-size:11px;color:var(--muted);">LinkedIn DMs, connection requests</div></div>
+        <a href="atlas-brand-skill-suite/atlas-dm.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-internal-messaging</div><div style="font-size:11px;color:var(--muted);">Slack, Teams, internal memos</div></div>
+        <a href="atlas-brand-skill-suite/atlas-internal-messaging.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-blog</div><div style="font-size:11px;color:var(--muted);">Blog posts, deep-dive guides</div></div>
+        <a href="atlas-brand-skill-suite/atlas-blog.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-docs</div><div style="font-size:11px;color:var(--muted);">One-pagers, white papers, case studies</div></div>
+        <a href="atlas-brand-skill-suite/atlas-docs.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-presentations</div><div style="font-size:11px;color:var(--muted);">Slides using 2026 PPT template</div></div>
+        <a href="atlas-brand-skill-suite/atlas-presentations.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-reports</div><div style="font-size:11px;color:var(--muted);">Reports, compliance briefs</div></div>
+        <a href="atlas-brand-skill-suite/atlas-reports.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-intro</div><div style="font-size:11px;color:var(--muted);">First-call decks, intro presentations</div></div>
+        <a href="atlas-brand-skill-suite/atlas-intro.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-demo</div><div style="font-size:11px;color:var(--muted);">Demo scripts, leave-behinds</div></div>
+        <a href="atlas-brand-skill-suite/atlas-demo.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-proposal</div><div style="font-size:11px;color:var(--muted);">10-section branded proposals</div></div>
+        <a href="atlas-brand-skill-suite/atlas-proposal.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-pricing</div><div style="font-size:11px;color:var(--muted);">Cost comparison, ROI, objections</div></div>
+        <a href="atlas-brand-skill-suite/atlas-pricing.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-country</div><div style="font-size:11px;color:var(--muted);">Country profiles, EOR compliance</div></div>
+        <a href="atlas-brand-skill-suite/atlas-country.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy);">atlas-internal</div><div style="font-size:11px;color:var(--muted);">Internal decks, playbooks, training</div></div>
+        <a href="atlas-brand-skill-suite/atlas-internal.skill" download class="skill-dl-btn" style="flex-shrink:0;">⬇</a>
+      </div>
+    </div>
+
+    <!-- External Brand Assets -->
+    <div class="section-header"><div><div class="section-title">Brand Portal Assets</div><div class="section-sub">Official resources at brand.atlashxm.com/resources — updated periodically</div></div></div>
+    <div style="background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);margin-bottom:32px;">
+      <table class="vocab-table" style="margin-bottom:0;">
+        <thead><tr><th>Asset</th><th>Format</th><th>Notes</th><th>Access</th></tr></thead>
+        <tbody>
+          <tr><td>Primary Logo</td><td>SVG, PNG</td><td>Light, dark, reversed, all-white, all-dark variants — 44 files total</td><td><span style="font-size:11px;background:rgba(124,58,237,0.1);color:var(--purple);padding:2px 8px;border-radius:99px;font-weight:600;">Bundled in master .skill</span></td></tr>
+          <tr><td>Secondary Logo</td><td>SVG, PNG</td><td>Compact spaces, social icons, square layouts</td><td><span style="font-size:11px;background:rgba(124,58,237,0.1);color:var(--purple);padding:2px 8px;border-radius:99px;font-weight:600;">Bundled in master .skill</span></td></tr>
+          <tr><td>Gelion Font Family</td><td>OTF</td><td>14 weights — Thin through Black, italic variants</td><td><span style="font-size:11px;background:rgba(124,58,237,0.1);color:var(--purple);padding:2px 8px;border-radius:99px;font-weight:600;">Bundled in master .skill</span></td></tr>
+          <tr><td>PowerPoint Template 2026</td><td>PPTX</td><td>"For People, By People" master deck — Gelion embedded</td><td><span style="font-size:11px;background:rgba(124,58,237,0.1);color:var(--purple);padding:2px 8px;border-radius:99px;font-weight:600;">Bundled in master .skill</span></td></tr>
+          <tr><td>Email Signature</td><td>ZIP</td><td>Atlas_HXM_Email_Signatures.zip — standard format</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>Teams / Zoom Backgrounds</td><td>ZIP</td><td>Atlas_HXM_Teams_Backgrounds.zip</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>LinkedIn Personal Banners</td><td>ZIP</td><td>Atlas_HXM_LinkedIn_Personal_Banners.zip</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>Word Template</td><td>DOCX</td><td>Company-standard Word document template</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>Lifestyle Photography</td><td>Various</td><td>Approved brand photography for presentations and materials</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>ESG Logos</td><td>Various</td><td>Community initiative logos</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+          <tr><td>Icons</td><td>Various</td><td>Digital application icons — SharePoint</td><td><a href="https://brand.atlashxm.com/resources" target="_blank" style="font-size:11px;color:var(--blue);font-weight:600;">brand.atlashxm.com/resources ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Color Palette -->
+    <div class="section-header"><div><div class="section-title">Color System</div><div class="section-sub">From brand.atlashxm.com · Source: brand-visual.md (Isabel Maldonado, Brand Creative)</div></div></div>
+
+    <div style="margin-bottom:10px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Primary Palette</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#DAE6FE;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Blue 100</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#DAE6FE</div><div style="font-size:11px;color:var(--muted);">Backgrounds, light tints</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#82ACFC;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Blue 250</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#82ACFC</div><div style="font-size:11px;color:var(--muted);">Secondary accent</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#0559FA;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Blue 500 ⭐</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#0559FA</div><div style="font-size:11px;color:var(--muted);">Primary CTAs, highlights</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#06195E;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Blue 900</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#06195E</div><div style="font-size:11px;color:var(--muted);">Deep emphasis</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#E6DFFB;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Purple 100</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#E6DFFB</div><div style="font-size:11px;color:var(--muted);">Light backgrounds</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#AB93F1;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Purple 250</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#AB93F1</div><div style="font-size:11px;color:var(--muted);">Secondary</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#5827E3;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Purple 500 ⭐</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#5827E3</div><div style="font-size:11px;color:var(--muted);">Accent</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#1E046A;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Purple 900</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#1E046A</div><div style="font-size:11px;color:var(--muted);">Deep</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#F5E0F7;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Magenta 100</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#F5E0F7</div><div style="font-size:11px;color:var(--muted);">Light background</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#DD98E5;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Magenta 250</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#DD98E5</div><div style="font-size:11px;color:var(--muted);">Secondary</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#BA33CA;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Magenta 500 ⭐</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#BA33CA</div><div style="font-size:11px;color:var(--muted);">Accent</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:56px;background:#48114F;"></div>
+        <div style="padding:10px 12px;"><div style="font-size:12px;font-weight:700;color:var(--navy);">Magenta 900</div><div style="font-family:monospace;font-size:11px;color:var(--muted);">#48114F</div><div style="font-size:11px;color:var(--muted);">Deep</div></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;">Secondary &amp; Neutral</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px;">
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#FF595A;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Coral 500</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#FF595A</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#FF8F77;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Coral 300</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#FF8F77</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#FF782C;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Orangellow 500</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#FF782C</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#F8F8F8;border:1px solid #eee;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Gray 50</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#F8F8F8</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#E9E9E9;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Gray 300</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#E9E9E9</div></div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;box-shadow:var(--shadow);background:white;">
+        <div style="height:44px;background:#160629;"></div>
+        <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:700;color:var(--navy);">Gray 900 ⭐</div><div style="font-family:monospace;font-size:10px;color:var(--muted);">#160629</div></div>
+      </div>
+    </div>
+
+    <div style="background:rgba(220,38,38,0.06);border:1.5px solid rgba(220,38,38,0.2);border-radius:10px;padding:14px 18px;margin-bottom:32px;font-size:13px;color:#991b1b;">
+      <strong>Never use:</strong> Green of any shade · Old navy #1E1244 · Old purple #7C3AED · Old blue #2563EB · Any color not listed above. Text on light backgrounds must always be Gray 900 (#160629).
+    </div>
+
+    <!-- Typography -->
+    <div class="section-header"><div><div class="section-title">Typography</div><div class="section-sub">Gelion is the required typeface. Never default to Poppins unless a platform genuinely blocks custom fonts.</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;">
+      <div style="background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Type Hierarchy</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:var(--navy);color:white;">
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Role</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Font</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Size</th>
+            <th style="padding:8px 10px;text-align:left;font-size:11px;">Leading</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;font-weight:700;">Headline</td><td style="padding:9px 10px;color:var(--purple);">Gelion SemiBold</td><td style="padding:9px 10px;">80pt</td><td style="padding:9px 10px;">86pt / 105%</td></tr>
+            <tr style="border-bottom:1px solid var(--border);background:var(--off-white);"><td style="padding:9px 10px;font-weight:700;">Subhead</td><td style="padding:9px 10px;color:var(--purple);">Gelion Medium</td><td style="padding:9px 10px;">30pt</td><td style="padding:9px 10px;">37pt / 110%</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;font-weight:700;">Body</td><td style="padding:9px 10px;color:var(--purple);">Gelion Regular</td><td style="padding:9px 10px;">18pt</td><td style="padding:9px 10px;">24pt / 110%</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:14px;font-size:11px;color:var(--muted);line-height:1.6;">Kerning: -3 on all roles. Avoid ligatures. Never mix alignment styles in the same layout.</div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Gelion Weights Available</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">Thin</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">ExtraLight</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">Light</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">Regular ★ Body</span>
+          <span style="font-size:12px;background:rgba(88,39,227,0.15);color:#5827E3;padding:5px 12px;border-radius:99px;border:1px solid rgba(88,39,227,0.3);font-weight:600;">Medium ★ Subhead</span>
+          <span style="font-size:12px;background:rgba(88,39,227,0.15);color:#5827E3;padding:5px 12px;border-radius:99px;border:1px solid rgba(88,39,227,0.3);font-weight:700;">SemiBold ★ Headline</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">Bold</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">ExtraBold</span>
+          <span style="font-size:12px;background:rgba(124,58,237,0.08);color:var(--navy);padding:5px 12px;border-radius:99px;border:1px solid var(--border);">Black</span>
+        </div>
+        <div style="margin-top:16px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.15);border-radius:8px;padding:10px 14px;font-size:12px;color:#991b1b;line-height:1.5;">
+          Poppins is a technical fallback only — for platforms that genuinely block custom font files. Never use Poppins as a default. Always use Gelion.
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="section-header"><div><div class="section-title">Logo Guidelines</div><div class="section-sub">All logo files are bundled in atlas-brand-guidelines.skill</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;">
+      <div style="background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:14px;">Logo Specs</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="background:var(--navy);color:white;"><th style="padding:8px 10px;text-align:left;font-size:11px;">Type</th><th style="padding:8px 10px;text-align:left;font-size:11px;">Min Size</th><th style="padding:8px 10px;text-align:left;font-size:11px;">Ratio</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:9px 10px;font-weight:600;">Primary Logo</td><td style="padding:9px 10px;">120px wide</td><td style="padding:9px 10px;font-family:monospace;">1.77:1</td></tr>
+            <tr style="background:var(--off-white);border-bottom:1px solid var(--border);"><td style="padding:9px 10px;font-weight:600;">Secondary Logo</td><td style="padding:9px 10px;">22px wide</td><td style="padding:9px 10px;font-family:monospace;">1:1 (sq)</td></tr>
+            <tr><td style="padding:9px 10px;font-weight:600;">Social Icon</td><td style="padding:9px 10px;">—</td><td style="padding:9px 10px;">Square</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;font-size:11px;color:var(--muted);">Clear space = height + width of the "a" character in the logo. Tagline: "For People, By People" — logo must remain dominant.</div>
+      </div>
+      <div style="background:white;border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow);">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:14px;">Logo Don'ts</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't stretch or distort the logo</div>
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't outline or add shadows or effects</div>
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't use unapproved colors</div>
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't rotate or apply patterns</div>
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't use old logo versions</div>
+          <div style="font-size:12px;color:#991b1b;background:rgba(220,38,38,0.06);padding:7px 12px;border-radius:6px;">❌ Don't recreate the logo in CSS or text</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand Quick Reference Table -->
+    <div class="section-header"><div><div class="section-title">Quick Reference — Do's &amp; Don'ts</div><div class="section-sub">Summary from brand.atlashxm.com</div></div></div>
+    <table class="vocab-table" style="margin-bottom:32px;">
+      <thead><tr><th>✅ Do This</th><th>❌ Not This</th></tr></thead>
+      <tbody>
+        <tr><td class="vocab-use">Use Gelion (bundled in master .skill)</td><td class="vocab-not">Default to Poppins or system fonts</td></tr>
+        <tr><td class="vocab-use">Use approved color palette only</td><td class="vocab-not">Introduce new colors including green</td></tr>
+        <tr><td class="vocab-use">Lead with insight, not Atlas</td><td class="vocab-not">"We at Atlas HXM are excited to…"</td></tr>
+        <tr><td class="vocab-use">Be specific (countries, numbers, names)</td><td class="vocab-not">Be vague ("global compliance varies")</td></tr>
+        <tr><td class="vocab-use">Use official logo files (SVG/PNG)</td><td class="vocab-not">Recreate logo in CSS or text characters</td></tr>
+        <tr><td class="vocab-use">Preserve logo aspect ratio (1.77:1)</td><td class="vocab-not">Stretch or distort to fit a space</td></tr>
+        <tr><td class="vocab-use">Maintain clear space around logo</td><td class="vocab-not">Crowd the logo with other elements</td></tr>
+        <tr><td class="vocab-use">Output presentations as .pptx (2026 template)</td><td class="vocab-not">Create visual slides as HTML or image</td></tr>
+        <tr><td class="vocab-use">Always proofread before sharing externally</td><td class="vocab-not">Assume AI output is print-ready</td></tr>
+        <tr><td class="vocab-use">Text on light backgrounds → Gray 900 (#160629)</td><td class="vocab-not">Use off-brand text colors on light bg</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Brand Portal Links -->
+    <div class="section-header"><div><div class="section-title">Brand Portal Navigation</div><div class="section-sub">Direct links to live sections of brand.atlashxm.com (as of January 2026)</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;">
+      <a href="https://brand.atlashxm.com/" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Home</div>
+        <div style="font-size:11px;color:var(--muted);">brand.atlashxm.com</div>
+      </a>
+      <a href="https://brand.atlashxm.com/manifesto" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Manifesto</div>
+        <div style="font-size:11px;color:var(--muted);">Vision · Mission · Values · Tone of Voice</div>
+      </a>
+      <a href="https://brand.atlashxm.com/logo" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Logo</div>
+        <div style="font-size:11px;color:var(--muted);">Primary · Secondary · Misuse · Tagline</div>
+      </a>
+      <a href="https://brand.atlashxm.com/typography" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Typography</div>
+        <div style="font-size:11px;color:var(--muted);">Gelion · Weights · Hierarchy · Tester</div>
+      </a>
+      <a href="https://brand.atlashxm.com/photography" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Photography</div>
+        <div style="font-size:11px;color:var(--muted);">Brand · Product photography guidelines</div>
+      </a>
+      <a href="https://brand.atlashxm.com/resources" target="_blank" style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:16px;text-decoration:none;display:block;transition:all 0.18s;" onmouseover="this.style.borderColor='#5827E3'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">Resources ⭐</div>
+        <div style="font-size:11px;color:var(--muted);">Logos · Signatures · Banners · Templates</div>
+      </a>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:0;">Brand contact: <strong>brand@atlashxm.com</strong> · Creative projects: Martin Gaik (Vantage Access)</div>
+
+  </div>
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer class="atlas-footer">
+  <div>Atlas HXM Brand AI Skill Suite &nbsp;·&nbsp; Built by GTM AI &amp; Automation &nbsp;·&nbsp; March 2026</div>
+  <div class="footer-right">
+    <a href="https://brand.atlashxm.com" target="_blank" class="footer-link">brand.atlashxm.com</a>
+    <a href="mailto:brand@atlashxm.com" class="footer-link">brand@atlashxm.com</a>
+  </div>
+  <div class="footer-dots">
+    <span style="color:#7C3AED">●</span>
+    <span style="color:#2563EB">●</span>
+    <span style="color:#10B981">●</span>
+    <span style="color:rgba(255,255,255,0.3);font-size:12px;margin-left:8px;">For People, By People</span>
+  </div>
+</footer>
+
+<script>
+  // ── TAB SWITCHING ──
+  function switchTab(name) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const tab = document.querySelector(`[data-tab="${name}"]`);
+    const panel = document.getElementById(`tab-${name}`);
+    if (tab) tab.classList.add('active');
+    if (panel) panel.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Allow inline onclick for resources tab link
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tab]').forEach(function(el) {
+      el.addEventListener('click', function() { switchTab(this.getAttribute('data-tab')); });
+    });
+  });
+
+  // ── SKILL FILTER ──
+  function filterSkills(cat) {
+    // Update active chip
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const cards = document.querySelectorAll('#skills-grid .skill-card');
+    const catMap = {
+      'copy':     ['copy'],
+      'outreach': ['outreach'],
+      'social':   ['social'],
+      'sales':    ['sales'],
+      'ops':      ['ops'],
+      'ops2':     ['ops2'],
+      'all':      ['copy','outreach','social','sales','ops','ops2'],
+    };
+    const allowed = catMap[cat] || ['copy','outreach','social','sales','ops','ops2'];
+
+    cards.forEach(card => {
+      const cardCat = card.getAttribute('data-cat');
+      if (allowed.includes(cardCat)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

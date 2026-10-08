@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Agent Harness Mastery — The GencyAI Course & Video Library</title>
+<meta name="description" content="Harness-agnostic training for AI coding and work agents: context files, skills, artifacts, commands and agents — with exact file formats for Claude Code, Codex, Hermes, Antigravity, VS Code and Cursor.">
+<meta property="og:title" content="Agent Harness Mastery by GencyAI">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F5F4EF;color:#14224A;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#14224A;text-decoration:none}
+a:hover{color:#B8741A}
+*{box-sizing:border-box}
+input::placeholder{color:#8A8FA3}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#14224A"></rect><text x="50" y="64" text-anchor="middle" font-family="sans-serif" font-size="38" font-weight="600" fill="#E9A93B">G</text></svg></template>
+<div style="min-height:100vh;background:#F5F4EF">
+
+<nav style="position:sticky;top:0;z-index:50;background:rgba(245,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid #E2E0D8">
+  <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <a href="GencyAI Agent Harness Mastery.dc.html" style="display:flex;align-items:baseline;gap:0">
+      <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;color:#14224A">Gency</span>
+      <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;color:#14224A">AI</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+      <a href="#library" style="color:#B8741A">Videos</a>
+      <a href="#stack">Architecture</a>
+      <a href="#learn">Concepts</a>
+      <a href="GencyAI Skills Library.dc.html">Skills</a>
+      <a href="GencyAI Claude Mastery.dc.html">Claude edition</a>
+      <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;padding:10px 18px;border-radius:999px">Work with GencyAI</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" style="max-width:1200px;margin:0 auto;padding:72px 24px 40px">
+  <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">
+    <span style="width:8px;height:8px;border-radius:50%;background:#E9A93B"></span>
+    <span>Agent Harness Mastery · 100% free · any harness</span>
+  </div>
+  <h1 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(44px,7vw,92px);line-height:0.98;letter-spacing:-0.035em;margin:22px 0 0;max-width:15ch;text-wrap:balance">Learn the agent. Not the brand.</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;margin-top:32px;align-items:end">
+    <p style="font-size:19px;line-height:1.55;color:#3B4466;margin:0;max-width:52ch;text-wrap:pretty">Context, skills, artifacts, markdown files and agents exist in every harness. Learn the ideas once, then open the format guide at the end of each section for the exact files in Claude Code, Codex, Hermes, Antigravity, VS Code and Cursor.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start">
+      <a href="#library" style="background:#E9A93B;color:#14224A;font-weight:700;padding:16px 26px;border-radius:999px;font-size:15px">Start watching</a>
+      <a href="#learn" style="border:1.5px solid #14224A;color:#14224A;font-weight:700;padding:15px 26px;border-radius:999px;font-size:15px">Learn the core concepts</a>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:36px">
+    <sc-for list="{{ harnessChips }}" as="h" hint-placeholder-count="6">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#3B4466;border:1px solid #D5D2C7;background:#FFFFFF;padding:6px 12px;border-radius:999px">{{ h.name }}</span>
+    </sc-for>
+  </div>
+</header>
+
+<section id="library" style="max-width:1200px;margin:0 auto;padding:16px 24px 88px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px;align-items:start">
+    <div style="background:#0E1834;border-radius:20px;overflow:hidden">
+      <div style="position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#13204A 0 14px,#101B3E 14px 28px);display:flex;align-items:center;justify-content:center">
+        <sc-if value="{{ current.isYt }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ current.embed }}" title="{{ current.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </sc-if>
+        <sc-if value="{{ current.isMp4 }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ current.src }}" title="{{ current.title }}" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#0E1834"></iframe>
+        </sc-if>
+        <sc-if value="{{ current.isEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:24px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#E9A93B;text-transform:uppercase">Lesson {{ current.num }} · recording now</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:clamp(22px,2.6vw,30px);font-weight:600;color:#F5F4EF;max-width:22ch;line-height:1.15">This video drops soon. Get it the day it's live.</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+              <a href="#subscribe" style="background:#E9A93B;color:#14224A;font-weight:700;padding:12px 20px;border-radius:999px;font-size:14px">Notify me</a>
+              <button onClick="{{ playAvailable }}" style="border:1.5px solid #F5F4EF;background:transparent;color:#F5F4EF;cursor:pointer;font-family:inherit;font-weight:700;padding:11px 20px;border-radius:999px;font-size:14px">Watch an available lesson</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="padding:26px 28px 30px;color:#F5F4EF">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#AEB6D3;letter-spacing:0.06em">LESSON {{ current.num }} · {{ current.dur }}</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.02em;margin:10px 0 10px">{{ current.title }}</h2>
+        <p style="margin:0;color:#C9CFE3;font-size:16px;line-height:1.6;max-width:60ch;text-wrap:pretty">{{ current.desc }}</p>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 14px 12px">
+        <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:18px">The core library</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">8 lessons · 12 min · free</div>
+      </div>
+      <sc-for list="{{ lessons }}" as="l" hint-placeholder-count="8">
+        <button onClick="{{ l.select }}" style="width:100%;display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;text-align:left;border:0;cursor:pointer;padding:13px 14px;border-radius:12px;font-family:inherit;color:#14224A;background:{{ l.bg }}">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:{{ l.numColor }}">{{ l.num }}</span>
+          <span style="font-weight:600;font-size:15px;line-height:1.35">{{ l.title }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">{{ l.meta }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:#FFFFFF;border:1px solid #E2E0D8;border-radius:16px;padding:18px 22px">
+    <div style="font-size:15px;color:#3B4466;line-height:1.5"><b style="color:#14224A">Connecting tools (MCP)</b> is configured differently in every harness.</div>
+    <button onClick="{{ openLib }}" style="border:0;cursor:pointer;background:#14224A;color:#F5F4EF;font-family:inherit;font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px">Config formats by harness →</button>
+  </div>
+</section>
+
+<section id="stack" style="background:#14224A;color:#F5F4EF">
+  <div style="max-width:1200px;margin:0 auto;padding:96px 24px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#E9A93B">The architecture</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 20px;text-wrap:balance">Five layers. Every harness has them.</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9CFE3;margin:0 0 28px;max-width:44ch;text-wrap:pretty">Names and folders differ. The layers don't. Learn what each one is for and you can move between harnesses in an afternoon.</p>
+        <button onClick="{{ openStack }}" style="border:0;cursor:pointer;background:#E9A93B;color:#14224A;font-family:inherit;font-weight:700;font-size:14px;padding:13px 22px;border-radius:999px">Folder layout by harness →</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">05</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Orchestration</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Subagents, hooks, workflows and scheduled runs — work that goes parallel or on a timer.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">04</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Surfaces</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Chat to think, terminal or editor to build, a manager view to delegate.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">03</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Capabilities</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Skills package your know-how. MCP servers reach your real tools.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">02</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Context</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Project rules, AGENTS.md-style files, reference docs and memory — say it once, reuse it forever.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;border:1px solid #33457A">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">01</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Model</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Whichever model the harness runs. Pick for the job and the budget.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:88px">
+      <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);letter-spacing:-0.025em;margin:0">Eight habits of people who get real output.</h3>
+        <button onClick="{{ openPractices }}" style="border:1.5px solid #E9A93B;cursor:pointer;background:transparent;color:#E9A93B;font-family:inherit;font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px">Where to write the rules →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1px;background:#33457A;border:1px solid #33457A;border-radius:16px;overflow:hidden">
+        <sc-for list="{{ practices }}" as="p" hint-placeholder-count="8">
+          <div style="background:#14224A;padding:26px 24px 28px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E9A93B">{{ p.n }}</div>
+            <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:19px;margin:12px 0 8px">{{ p.t }}</div>
+            <div style="color:#C9CFE3;font-size:15px;line-height:1.55;text-wrap:pretty">{{ p.d }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="learn" style="max-width:1200px;margin:0 auto;padding:96px 24px">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">Core concepts</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 36px;max-width:18ch;text-wrap:balance">Five things to understand before anything else.</h2>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="5">
+      <button onClick="{{ t.select }}" style="border:1.5px solid #14224A;cursor:pointer;padding:11px 20px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;background:{{ t.bg }};color:{{ t.fg }}">{{ t.name }}</button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:clamp(24px,4vw,44px)">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">{{ track.meta }}</div>
+      <h3 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;margin:10px 0 14px">{{ track.name }}</h3>
+      <p style="font-size:17px;line-height:1.6;color:#3B4466;margin:0 0 22px;max-width:40ch;text-wrap:pretty">{{ track.desc }}</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078;margin-bottom:6px">USE IT WHEN</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:26px">{{ track.ship }}</div>
+      <button onClick="{{ openConcept }}" style="border:0;cursor:pointer;background:#14224A;color:#F5F4EF;font-family:inherit;font-weight:700;font-size:14px;padding:13px 22px;border-radius:999px">How {{ track.name }} is formatted per harness →</button>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ track.modules }}" as="m" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid #E2E0D8">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#B8741A">{{ m.n }}</span>
+          <span style="font-size:16px;font-weight:600;line-height:1.4">{{ m.t }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="work" style="max-width:1200px;margin:0 auto;padding:0 24px 96px">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">Work with us</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 14px;max-width:20ch;text-wrap:balance">Rather have it built for you?</h2>
+  <p style="font-size:17px;line-height:1.6;color:#3B4466;margin:0 0 36px;max-width:56ch">The lessons stay free. When you want a team to design, build and deploy it with you, that's what our consulting practices do.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px">
+    <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;border-radius:22px;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:18px;min-height:340px">
+      <div style="display:flex;align-items:baseline;gap:0"><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em">Gency</span><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em">AI</span></div>
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:28px;line-height:1.15;max-width:20ch">AI systems that people actually use.</div>
+      <p style="margin:0;color:#C9CFE3;font-size:16px;line-height:1.6;flex:1">Agent rollouts, custom skills, subagents and automations — built with audit trails and deployed to production, not left as a prototype.</p>
+      <span style="align-self:flex-start;background:#E9A93B;color:#14224A;font-weight:700;padding:13px 22px;border-radius:999px;font-size:15px">Book an AI consult →</span>
+    </a>
+    <a href="https://salesgency.com" target="_blank" rel="noopener" style="background:#FFFFFF;color:#14224A;border:1px solid #E2E0D8;border-radius:22px;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:18px;min-height:340px">
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em">SalesGency</div>
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:28px;line-height:1.15;max-width:20ch">GTM that turns into pipeline.</div>
+      <p style="margin:0;color:#3B4466;font-size:16px;line-height:1.6;flex:1">Sales strategy, outbound engines and AI-assisted inbound — designed by operators who've carried enterprise quota.</p>
+      <span style="align-self:flex-start;background:#14224A;color:#F5F4EF;font-weight:700;padding:13px 22px;border-radius:999px;font-size:15px">Talk to SalesGency →</span>
+    </a>
+  </div>
+</section>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px 96px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px">
+    <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,44px);letter-spacing:-0.025em;margin:0">Questions</h2>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+        <div style="border-top:1px solid #D5D2C7">
+          <button onClick="{{ f.toggle }}" style="width:100%;display:flex;justify-content:space-between;gap:16px;background:transparent;border:0;cursor:pointer;padding:22px 0;font-family:'Outfit',sans-serif;font-weight:600;font-size:19px;color:#14224A;text-align:left">
+            <span>{{ f.q }}</span><span style="font-family:'IBM Plex Mono',monospace">{{ f.sign }}</span>
+          </button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 22px;font-size:16px;line-height:1.6;color:#3B4466;max-width:60ch">{{ f.a }}</p></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="subscribe" style="padding:0 24px 24px">
+  <div style="max-width:1200px;margin:0 auto;background:#E9A93B;border-radius:28px;padding:clamp(36px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:end">
+    <div>
+      <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-0.035em;margin:0;color:#14224A;text-wrap:balance">Want more free resources?</h2>
+      <p style="font-size:17px;line-height:1.55;color:#14224A;margin:18px 0 0;max-width:44ch">New lessons, skill and AGENTS.md templates, and one email a month when harnesses ship something worth knowing. Optional — everything above stays open.</p>
+    </div>
+    <div>
+      <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ subscribe }}" style="display:flex;gap:8px;flex-wrap:wrap;background:#F5F4EF;border-radius:999px;padding:6px">
+          <input type="email" required="required" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@company.com" aria-label="Email address" style="flex:1;min-width:180px;border:0;background:transparent;padding:14px 18px;font-family:inherit;font-size:16px;color:#14224A;outline:none">
+          <button type="submit" style="border:0;cursor:pointer;background:#14224A;color:#F5F4EF;font-family:inherit;font-weight:700;font-size:15px;padding:14px 24px;border-radius:999px">{{ subLabel }}</button>
+        </form>
+        <div style="font-size:13px;color:#14224A;margin-top:12px;padding-left:18px">No spam. Unsubscribe in one click.</div>
+      </sc-if>
+      <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#14224A;color:#F5F4EF;border-radius:20px;padding:26px 28px">
+          <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:24px">You're in.</div>
+          <p style="margin:8px 0 16px;color:#C9CFE3;font-size:15px;line-height:1.5">You'll get new lessons and templates as they drop. Need help sooner?</p>
+          <a href="https://gencyai.com" target="_blank" rel="noopener" style="color:#E9A93B;font-weight:700">Talk to GencyAI →</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer style="max-width:1200px;margin:0 auto;padding:40px 24px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:14px;color:#5A6078">
+  <div style="display:flex;align-items:baseline;gap:0"><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:#14224A">Gency</span><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;color:#14224A">AI</span></div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+    <a href="https://gencyai.com" target="_blank" rel="noopener" style="font-weight:600">gencyai.com</a>
+    <a href="https://salesgency.com" target="_blank" rel="noopener" style="font-weight:600">salesgency.com</a>
+    <span>© 2026 GencyAI. Independent training — not affiliated with any harness vendor.</span>
+  </div>
+</footer>
+
+</div>
+
+<sc-if value="{{ boxOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeBox }}" style="position:fixed;inset:0;z-index:100;background:rgba(14,24,52,0.72);display:flex;align-items:center;justify-content:center;padding:20px">
+    <div onClick="{{ stop }}" role="dialog" aria-modal="true" style="background:#F5F4EF;border-radius:22px;width:100%;max-width:920px;max-height:92vh;overflow:auto;padding:clamp(22px,3.5vw,36px)">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:16px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#B8741A">Format guide</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(24px,3vw,32px);letter-spacing:-0.02em;margin:8px 0 0">{{ box.title }}</h3>
+        </div>
+        <button onClick="{{ closeBox }}" aria-label="Close" style="border:1.5px solid #14224A;background:transparent;color:#14224A;cursor:pointer;width:40px;height:40px;border-radius:50%;font-size:18px;font-family:inherit;flex:none">✕</button>
+      </div>
+      <p style="font-size:16px;line-height:1.55;color:#3B4466;margin:14px 0 20px;max-width:64ch">{{ box.note }}</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+        <sc-for list="{{ hTabs }}" as="h" hint-placeholder-count="6">
+          <button onClick="{{ h.select }}" style="border:1.5px solid #14224A;cursor:pointer;padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:700;font-size:13px;background:{{ h.bg }};color:{{ h.fg }}">{{ h.name }}</button>
+        </sc-for>
+      </div>
+      <div style="background:#0E1834;border-radius:14px;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid #26366B">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B;word-break:break-all">{{ box.path }}</span>
+          <button onClick="{{ copyCode }}" style="border:1px solid #AEB6D3;background:transparent;color:#F5F4EF;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:5px 12px;border-radius:999px;flex:none">{{ copyLabel }}</button>
+        </div>
+        <pre style="margin:0;padding:18px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.65;color:#E8ECF8;overflow:auto;white-space:pre">{{ box.code }}</pre>
+      </div>
+      <p style="font-size:13px;line-height:1.5;color:#5A6078;margin:16px 0 0">Harnesses change fast. Paths and keys are accurate as of writing — confirm against each tool's docs before rolling out to a team.</p>
+    </div>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;video1&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video2&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video3&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video4&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video5&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video6&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video7&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://www.youtube.com/watch?v=gv0WHhKelSE&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video8&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;}}">
+const DEFAULT_VIDEOS = ["", "", "", "", "", "", "https://www.youtube.com/watch?v=gv0WHhKelSE", ""];
+function ytId(u) { if (!u) return ""; const m = u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : ""; }
+const H = [["claude", "Claude Code"], ["codex", "Codex"], ["hermes", "Hermes"], ["anti", "Antigravity"], ["vscode", "VS Code"], ["cursor", "Cursor"]];
+const LESSONS = [
+  ["Setup: pick and install a harness", "1:55", "What a harness is, how the five layers map onto each one, and how to install your first."],
+  ["Context files that remember for you", "1:42", "Write project rules once — AGENTS.md, CLAUDE.md, rules folders — so every session starts smart."],
+  ["Prompts that survive production", "1:16", "Role, goal, constraints, examples, output format. Iterate instead of restarting."],
+  ["Skills: package your expertise", "1:30", "Write a SKILL.md, use progressive disclosure, test triggers, share skills across harnesses."],
+  ["Connectors & MCP", "1:23", "Wire the agent into Drive, Slack, GitHub and your own APIs — with least-privilege access."],
+  ["Commands, prompts & workflows", "1:14", "Turn repeat requests into slash commands and reusable prompt files."],
+  ["Agents & subagents: plan, build, ship", "1:26", "Plan first, delegate to specialist agents, verify with tests, deploy to Vercel."],
+  ["Governance for teams", "1:18", "Data rules, permissions, shared skill libraries and a rollout plan that sticks."]
+];
+const PRACTICES = [
+  ["Start in a project", "Never work in a bare chat. Give every workstream its own rules and files."],
+  ["Write context once", "A tight rules file beats re-explaining yourself in every prompt."],
+  ["Plan before you build", "Ask for a plan, correct it, then execute. Cheaper than fixing the wrong build."],
+  ["Package repeat work", "Done it three times? Make it a skill so it's done right every time after."],
+  ["Connect, don't paste", "Use MCP for live data. Grant the least access that works."],
+  ["Keep context clean", "Reset between tasks. Hand research to subagents so the main thread stays sharp."],
+  ["Verify automatically", "Tests, hooks and checklists catch what a quick read misses."],
+  ["Review before you ship", "The agent drafts. You own accuracy, tone and anything confidential."]
+];
+const TRACKS = [
+  { key: "context", name: "Context", meta: "CONCEPT 01 · CONTEXT", desc: "A project with its own instructions, reference files and memory. Every session inside it starts already knowing who you are and what you're building.", ship: "Any ongoing workstream — a client, a product, a campaign.", modules: ["Write project instructions in one markdown file", "Add reference files: briefs, examples, style guides", "Global vs project vs folder-level rules", "How memory works and how to steer it", "Share context through git, not chat"] },
+  { key: "skills", name: "Skills", meta: "CONCEPT 02 · CAPABILITIES", desc: "A SKILL.md file that teaches the agent one job your way. It loads automatically when a request matches — no prompt needed.", ship: "You've explained the same process three times.", modules: ["Anatomy of a SKILL.md: name, description, steps", "Write a description that triggers reliably", "Progressive disclosure: keep the core file short", "Test, version and share skills", "Browse free skills in the GencyAI library"] },
+  { key: "artifacts", name: "Artifacts", meta: "CONCEPT 03 · OUTPUT", desc: "Standalone things the agent makes next to the chat — documents, plans, diagrams, small apps you can open, edit and share.", ship: "You want a usable thing, not a wall of text.", modules: ["What deserves to be an artifact", "Iterate without starting over", "Plans, task lists and walkthroughs as artifacts", "Interactive tools: calculators, dashboards, forms", "When to graduate an artifact into a real app"] },
+  { key: "commands", name: "Commands & prompts", meta: "CONCEPT 04 · MARKDOWN", desc: "Reusable markdown files you trigger by name. Most harnesses share the same shape: frontmatter for metadata, plain instructions for the body.", ship: "You keep pasting the same prompt.", modules: ["Frontmatter basics: description, arguments, tools", "Slash commands vs prompt files vs workflows", "Pass arguments and reference files", "Project-level vs personal commands", "Keep everything in git next to the code"] },
+  { key: "agents", name: "Agents", meta: "CONCEPT 05 · DELEGATION", desc: "Specialist agents with their own instructions, tools and model — one reviews, one researches, one tests — each in a clean context.", ship: "The task is big enough to split up.", modules: ["Define an agent: role, tools, model", "Write a delegation brief that works", "Parallel agents and a manager view", "Hooks, permissions and approvals", "Review, merge and keep a human in the loop"] }
+];
+const FAQS = [
+  ["Is it really free?", "Yes. Every lesson and skill is open — no account, no paywall, no trial. The email list is optional and only sends new resources."],
+  ["Which harness should I start with?", "Whichever you already have. The concepts transfer, and the format guides show how each idea is written in the others."],
+  ["Do I need to code?", "No. Context, skills and commands are plain markdown. The agent lessons walk through every step, prompts included."],
+  ["Will skills work across harnesses?", "Mostly. SKILL.md is now a shared convention. Folders and a few frontmatter keys differ — the format guides list them."]
+];
+
+const MD_RULES = "# Project rules\n\nStack: Next.js 15, TypeScript, pnpm.\n\n## Always\n- Run `pnpm test` before saying a task is done\n- Small commits, imperative messages\n\n## Never\n- Edit generated files in /dist\n- Commit .env files";
+const MD_SKILL = "---\nname: pdf-report\ndescription: Build a branded PDF report from a CSV. Use when the user asks for a report, summary PDF or one-pager.\n---\n\n# PDF report\n\n1. Read the CSV and summarise the 3 key trends\n2. Fill templates/report.html\n3. Export to PDF and list the file path";
+const SHARED_SKILL = "Same SKILL.md body everywhere:\n\n" + MD_SKILL;
+const FM = {
+  context: { title: "Context & rules files", note: "Every harness reads a markdown rules file from your repo root. AGENTS.md is the closest thing to a shared standard — if in doubt, write that and symlink the rest.", h: {
+    claude: ["CLAUDE.md  (also ~/.claude/CLAUDE.md for personal rules)", MD_RULES],
+    codex: ["AGENTS.md  (also ~/.codex/AGENTS.md)", MD_RULES],
+    hermes: ["AGENTS.md or .hermes.md  ·  memory in ~/.hermes/memories/", MD_RULES + "\n\n# Memory files (agent-written)\nMEMORY.md  → facts about your projects\nUSER.md    → facts about you"],
+    anti: ["GEMINI.md  ·  .agent/rules/*.md  (AGENTS.md also read)", "# .agent/rules/project.md\n" + MD_RULES + "\n\n# Rules can be set to: Always On · Model Decision · Glob · Manual"],
+    vscode: [".github/copilot-instructions.md  (AGENTS.md also read)", MD_RULES + "\n\n# Scoped rules: .github/instructions/api.instructions.md\n---\napplyTo: \"src/api/**\"\n---\nValidate every request body with zod."],
+    cursor: [".cursor/rules/project.mdc  (AGENTS.md also read)", "---\ndescription: Project rules\nglobs:\nalwaysApply: true\n---\n" + MD_RULES]
+  } },
+  skills: { title: "Skills (SKILL.md)", note: "One folder per skill with a SKILL.md inside: frontmatter for name and description, markdown body for the steps. The body is portable; only the folder location changes.", h: {
+    claude: [".claude/skills/pdf-report/SKILL.md  ·  ~/.claude/skills/ for personal", MD_SKILL],
+    codex: [".agents/skills/pdf-report/SKILL.md  ·  ~/.codex/skills/ for personal", SHARED_SKILL],
+    hermes: ["~/.hermes/skills/pdf-report/SKILL.md", SHARED_SKILL],
+    anti: [".agent/skills/pdf-report/SKILL.md  ·  ~/.gemini/antigravity/skills/ global", SHARED_SKILL],
+    vscode: [".github/skills/pdf-report/SKILL.md", SHARED_SKILL],
+    cursor: [".cursor/rules/pdf-report.mdc  (rule fallback; native skills folders in newer builds)", "---\ndescription: Build a branded PDF report from a CSV. Use for reports, summary PDFs, one-pagers.\nalwaysApply: false\n---\n\n1. Read the CSV and summarise the 3 key trends\n2. Fill templates/report.html\n3. Export to PDF and list the file path"]
+  } },
+  artifacts: { title: "Artifacts & deliverables", note: "Only some harnesses have a dedicated artifact pane. Everywhere else, the portable pattern is the same: tell the agent to save deliverables as files in a known folder.", h: {
+    claude: ["Claude.ai: built-in Artifacts pane  ·  Claude Code: files in ./artifacts/", "# CLAUDE.md\n## Deliverables\nSave reports, plans and demos to ./artifacts/ as\nself-contained .html or .md. Never leave them only in chat."],
+    codex: ["./artifacts/  (files in the workspace)", "# AGENTS.md\n## Deliverables\nWrite outputs to ./artifacts/<date>-<name>.md or .html.\nSummarise the path in your final message."],
+    hermes: ["./artifacts/  or the agent's workspace folder", "# AGENTS.md\n## Deliverables\nWrite outputs to ./artifacts/. Reuse an existing file\ninstead of creating a new version."],
+    anti: ["Built-in artifacts: task list · implementation plan · walkthrough", "Antigravity generates these as markdown artifacts you\ncomment on in the Manager view, alongside screenshots\nand browser recordings.\n\n# .agent/rules/deliverables.md\nAlways produce an implementation plan before editing\nmore than 3 files."],
+    vscode: ["Chat code blocks → Apply · files in ./artifacts/", "# .github/copilot-instructions.md\n## Deliverables\nSave documents to ./artifacts/ and open them in the\neditor. Preview HTML with the Live Preview extension."],
+    cursor: ["./artifacts/  (files in the workspace)", "---\ndescription: Where deliverables go\nalwaysApply: true\n---\nSave documents and demos to ./artifacts/ as .md or .html."]
+  } },
+  commands: { title: "Commands, prompts & workflows", note: "Reusable markdown you trigger by name. Frontmatter holds metadata; the body is just the prompt. Rename the folder and tweak the keys to port between tools.", h: {
+    claude: [".claude/commands/review.md  →  /review", "---\ndescription: Review staged changes\nargument-hint: [focus area]\n---\nReview `git diff --staged`. Focus on: $ARGUMENTS\nList bugs first, then style nits."],
+    codex: ["~/.codex/prompts/review.md  →  /prompts:review", "---\ndescription: Review staged changes\nargument-hint: FOCUS=<area>\n---\nReview `git diff --staged`. Focus on: $FOCUS\nList bugs first, then style nits."],
+    hermes: ["~/.hermes/skills/review/SKILL.md  →  /review", "---\nname: review\ndescription: Review staged changes\n---\nReview `git diff --staged`. List bugs first,\nthen style nits."],
+    anti: [".agent/workflows/review.md  →  /review", "---\ndescription: Review staged changes\n---\n1. Run `git diff --staged`\n2. List bugs first, then style nits\n3. Propose fixes as a plan"],
+    vscode: [".github/prompts/review.prompt.md  →  /review", "---\nmode: agent\ndescription: Review staged changes\n---\nReview the staged changes. Focus on ${input:focus}.\nList bugs first, then style nits."],
+    cursor: [".cursor/commands/review.md  →  /review", "Review `git diff --staged`.\nList bugs first, then style nits.\n\n(Commands are plain markdown — no frontmatter required.)"]
+  } },
+  agents: { title: "Agents & subagents", note: "Custom agents are markdown files with a role, a tool list and sometimes a model. Where a tool has no agent file, roles live in your rules or config instead.", h: {
+    claude: [".claude/agents/reviewer.md", "---\nname: reviewer\ndescription: Reviews diffs for bugs. Use proactively after edits.\ntools: Read, Grep, Bash\nmodel: sonnet\n---\nYou are a strict code reviewer. Report bugs by severity.\nNever edit files."],
+    codex: ["~/.codex/config.toml  (profiles) + AGENTS.md roles", "[profiles.reviewer]\nmodel = \"gpt-5-codex\"\napproval_policy = \"never\"\nsandbox_mode = \"read-only\"\n\n# run:  codex --profile reviewer \"review my diff\""],
+    hermes: ["Delegation tool + skill-defined personas", "# ~/.hermes/skills/reviewer/SKILL.md\n---\nname: reviewer\ndescription: Strict code review persona\n---\nWhen delegated a review, report bugs by severity.\nNever edit files.\n\n# Hermes can spawn isolated subagents for parallel work."],
+    anti: [".agent/rules/ + Manager view (parallel agents)", "# .agent/rules/reviewer.md\nWhen asked to review: read only, report bugs by\nseverity, never edit.\n\n# Spawn several agents at once from the Manager view;\neach gets its own task, plan and artifacts."],
+    vscode: [".github/agents/reviewer.agent.md", "---\ndescription: Reviews diffs for bugs\ntools: ['codebase', 'search', 'usages']\nmodel: GPT-5\n---\nYou are a strict code reviewer. Report bugs by severity.\nNever edit files."],
+    cursor: [".cursor/agents/reviewer.md  (or a custom mode)", "---\nname: reviewer\ndescription: Reviews diffs for bugs\n---\nYou are a strict code reviewer. Report bugs by severity.\nNever edit files."]
+  } },
+  stack: { title: "Folder layout by harness", note: "The same five layers, five different folders. Keep one source of truth in AGENTS.md and a skills folder, then link into whichever harness you run.", h: {
+    claude: ["project root", "CLAUDE.md\n.mcp.json\n.claude/\n  skills/<name>/SKILL.md\n  commands/*.md\n  agents/*.md\n  settings.json   (permissions, hooks)"],
+    codex: ["project root", "AGENTS.md\n.agents/skills/<name>/SKILL.md\n~/.codex/\n  config.toml     (MCP, profiles, approvals)\n  prompts/*.md"],
+    hermes: ["~/.hermes/", "AGENTS.md  (project root)\n~/.hermes/\n  config.yaml     (model, MCP, tools)\n  skills/<name>/SKILL.md\n  memories/MEMORY.md, USER.md"],
+    anti: ["project root", "GEMINI.md / AGENTS.md\n.agent/\n  rules/*.md\n  workflows/*.md\n  skills/<name>/SKILL.md"],
+    vscode: ["project root", "AGENTS.md\n.github/\n  copilot-instructions.md\n  instructions/*.instructions.md\n  prompts/*.prompt.md\n  agents/*.agent.md\n  skills/<name>/SKILL.md\n.vscode/mcp.json"],
+    cursor: ["project root", "AGENTS.md\n.cursor/\n  rules/*.mdc\n  commands/*.md\n  agents/*.md\n  mcp.json"]
+  } },
+  library: { title: "Connecting tools (MCP)", note: "Same idea everywhere: a named server with a command and arguments. The key names and file format change. Never paste secrets — reference environment variables.", h: {
+    claude: [".mcp.json", "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": { \"GITHUB_TOKEN\": \"${GITHUB_TOKEN}\" }\n    }\n  }\n}"],
+    codex: ["~/.codex/config.toml", "[mcp_servers.github]\ncommand = \"npx\"\nargs = [\"-y\", \"@modelcontextprotocol/server-github\"]\nenv = { GITHUB_TOKEN = \"...\" }   # prefer env_vars passthrough"],
+    hermes: ["~/.hermes/config.yaml", "mcp_servers:\n  github:\n    command: npx\n    args: [\"-y\", \"@modelcontextprotocol/server-github\"]\n    env:\n      GITHUB_TOKEN: ${GITHUB_TOKEN}"],
+    anti: ["mcp_config.json  (Agent panel → Manage MCP servers)", "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": { \"GITHUB_TOKEN\": \"...\" }\n    }\n  }\n}"],
+    vscode: [".vscode/mcp.json", "{\n  \"inputs\": [{ \"id\": \"gh\", \"type\": \"promptString\", \"password\": true, \"description\": \"GitHub token\" }],\n  \"servers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": { \"GITHUB_TOKEN\": \"${input:gh}\" }\n    }\n  }\n}"],
+    cursor: [".cursor/mcp.json", "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": { \"GITHUB_TOKEN\": \"${env:GITHUB_TOKEN}\" }\n    }\n  }\n}"]
+  } },
+  practices: { title: "Where to write the rules", note: "Habits 1–2 and 6–7 all end up in the same place: a rules file the agent reads first. Here's its name and location in each harness.", h: null }
+};
+FM.practices.h = FM.context.h;
+
+class Component extends DCLogic {
+  state = { lesson: Math.max(0, DEFAULT_VIDEOS.findIndex(Boolean)), track: 0, faq: 0, email: "", subStatus: "idle", subscribed: false, box: null, hi: 0, copied: false };
+
+  componentDidMount() {
+    try { if (localStorage.getItem("gency_subscribed") === "1") this.setState({ subscribed: true }); } catch (e) {}
+    this.esc = (e) => { if (e.key === "Escape") this.setState({ box: null }); };
+    window.addEventListener("keydown", this.esc);
+  }
+  componentWillUnmount() { window.removeEventListener("keydown", this.esc); }
+
+  subscribe = async (e) => {
+    e.preventDefault();
+    this.setState({ subStatus: "loading" });
+    try { await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: this.state.email, source: "harness-mastery" }) }); } catch (err) {}
+    try { localStorage.setItem("gency_subscribed", "1"); } catch (e2) {}
+    this.setState({ subStatus: "done", subscribed: true });
+  };
+  open = (key) => () => this.setState({ box: key, hi: 0, copied: false });
+
+  renderVals() {
+    const { lesson, track, faq, subscribed, box, hi, copied } = this.state;
+    const srcs = LESSONS.map((l, i) => (this.props["video" + (i + 1)] ?? DEFAULT_VIDEOS[i] ?? "").trim());
+    const lessons = LESSONS.map(([title, dur, desc], i) => {
+      const active = i === lesson;
+      return { num: String(i + 1).padStart(2, "0"), title, dur, desc, src: srcs[i], meta: srcs[i] ? dur : "SOON", bg: active ? "#F0EDE3" : "transparent", numColor: active ? "#B8741A" : "#8A8FA3", select: () => this.setState({ lesson: i }) };
+    });
+    const cur = lessons[lesson];
+    const yt = ytId(cur.src);
+    const current = { ...cur, isYt: !!yt, embed: yt ? "https://www.youtube-nocookie.com/embed/" + yt + "?rel=0&modestbranding=1" : "", isMp4: !!cur.src && !yt, isEmpty: !cur.src };
+    const firstAvail = srcs.findIndex(Boolean);
+    const entry = box ? FM[box] : null;
+    const pair = entry ? entry.h[H[hi][0]] : ["", ""];
+    return {
+      lessons, current,
+      harnessChips: H.map(([k, name]) => ({ name })),
+      playAvailable: () => { if (firstAvail >= 0) this.setState({ lesson: firstAvail }); },
+      practices: PRACTICES.map(([t, d], i) => ({ n: String(i + 1).padStart(2, "0"), t, d })),
+      tracks: TRACKS.map((t, i) => ({ name: t.name, bg: i === track ? "#14224A" : "transparent", fg: i === track ? "#F5F4EF" : "#14224A", select: () => this.setState({ track: i }) })),
+      track: { ...TRACKS[track], modules: TRACKS[track].modules.map((t, i) => ({ n: String(i + 1).padStart(2, "0"), t })) },
+      faqs: FAQS.map(([q, a], i) => ({ q, a, open: i === faq, sign: i === faq ? "−" : "+", toggle: () => this.setState({ faq: i === faq ? -1 : i }) })),
+      email: this.state.email, setEmail: e => this.setState({ email: e.target.value }), subscribe: this.subscribe,
+      subLabel: this.state.subStatus === "loading" ? "Sending…" : "Send me more",
+      subscribed, notSubscribed: !subscribed,
+      openLib: this.open("library"), openStack: this.open("stack"), openPractices: this.open("practices"), openConcept: this.open(TRACKS[track].key),
+      boxOpen: !!box, closeBox: () => this.setState({ box: null }), stop: e => e.stopPropagation(),
+      box: entry ? { title: entry.title, note: entry.note, path: pair[0], code: pair[1] } : { title: "", note: "", path: "", code: "" },
+      hTabs: H.map(([k, name], i) => ({ name, bg: i === hi ? "#14224A" : "transparent", fg: i === hi ? "#F5F4EF" : "#14224A", select: () => this.setState({ hi: i, copied: false }) })),
+      copyLabel: copied ? "Copied" : "Copy",
+      copyCode: () => { try { navigator.clipboard.writeText(pair[1]); this.setState({ copied: true }); } catch (e) {} }
+    };
+  }
+}
+</script>
+</body>
+</html>

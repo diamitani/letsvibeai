@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI — Lesson 02: Context Files That Remember For You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #071B3A;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #context-memory-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 50% 20%, #102652 0%, #071B3A 60%, #030B17 100%);
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(124, 92, 252, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(124, 92, 252, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-violet { width: 700px; height: 700px; background: rgba(124, 92, 252, 0.22); top: -100px; right: 150px; }
+    .glow-blue { width: 650px; height: 650px; background: rgba(47, 128, 237, 0.18); bottom: -100px; left: 150px; }
+
+    /* Top Brand Bar */
+    .top-brand {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 14px; }
+    .brand-logo-svg { width: 44px; height: 44px; }
+    .brand-name { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; }
+    .brand-name span { color: #7C5CFC; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(124, 92, 252, 0.15);
+      border: 1px solid rgba(124, 92, 252, 0.4);
+      border-radius: 9999px;
+      color: #A78BFA;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Subtitle & Narration Bar */
+    .caption-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      right: 120px;
+      background: rgba(7, 27, 58, 0.85);
+      border: 1px solid rgba(124, 92, 252, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 16px 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 60;
+    }
+    .caption-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #7C5CFC;
+      box-shadow: 0 0 12px #7C5CFC;
+      flex-shrink: 0;
+    }
+    .caption-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F4F7FB;
+      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Typography & Gradients */
+    .hero-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 140px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(124, 92, 252, 0.25);
+      margin-bottom: -20px;
+    }
+    .main-title {
+      font-size: 70px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+    .main-sub {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+    .gradient-text-violet {
+      background: linear-gradient(135deg, #A78BFA 0%, #7C5CFC 50%, #20C7D9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-text-blue {
+      background: linear-gradient(135deg, #38BDF8 0%, #2F80ED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Problem comparison */
+    .compare-container {
+      display: flex;
+      gap: 36px;
+      width: 100%;
+      max-width: 1400px;
+    }
+    .bad-box {
+      flex: 1;
+      padding: 36px;
+      border-radius: 20px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .good-box {
+      flex: 1;
+      padding: 36px;
+      border-radius: 20px;
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    /* Code Window */
+    .code-window {
+      width: 100%;
+      max-width: 1100px;
+      background: #030B17;
+      border: 1px solid rgba(124, 92, 252, 0.3);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+    .code-header {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-body {
+      padding: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #F4F7FB;
+    }
+    .code-body .md-h1 { color: #A78BFA; font-weight: 700; }
+    .code-body .md-h2 { color: #20C7D9; font-weight: 700; }
+    .code-body .md-val { color: #34D399; }
+    .code-body .md-item { color: #E2E8F0; }
+
+    /* 4 Elements Grid */
+    .elements-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 1300px;
+    }
+    .element-card {
+      padding: 30px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .elem-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #7C5CFC;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="context-memory-root" data-composition-id="context-memory-root" data-duration="25" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-violet"></div>
+    <div class="ambient-glow glow-blue"></div>
+
+    <!-- Top Navigation Branding -->
+    <div class="top-brand">
+      <div class="brand-lockup">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none">
+          <path d="M50 15L85 80H70L50 42L30 80H15L50 15Z" fill="url(#brand-grad-2)"/>
+          <circle cx="50" cy="62" r="9" fill="#7C5CFC"/>
+          <defs>
+            <linearGradient id="brand-grad-2" x1="15" y1="15" x2="85" y2="80" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#7C5CFC"/>
+              <stop offset="0.5" stop-color="#2F80ED"/>
+              <stop offset="1" stop-color="#20C7D9"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-name">LetsVibe<span>AI</span></span>
+      </div>
+      <div class="badge-pill">Lesson 02 · Persistent Context</div>
+      <div class="course-badge">vibe-coding-course / module-02</div>
+    </div>
+
+    <!-- Scene 1: Title (0s - 4s) -->
+    <div id="s1" class="clip">
+      <div id="s1-badge" class="badge-pill" style="margin-bottom: 24px;">Memory & Instructions</div>
+      <div id="s1-num" class="hero-number">02</div>
+      <h1 id="s1-title" class="main-title">Context Files That <span class="gradient-text-violet">Remember For You</span></h1>
+      <p id="s1-sub" class="main-sub">Write it once. Stop repeating yourself. Every session starts smart with full project awareness.</p>
+    </div>
+
+    <!-- Scene 2: The Problem (4s - 8s) -->
+    <div id="s2" class="clip">
+      <div id="s2-badge" class="badge-pill" style="margin-bottom: 20px;">The Problem & Fix</div>
+      <h2 id="s2-title" class="main-title" style="font-size: 54px; margin-bottom: 32px;">Say It Once. <span class="gradient-text-blue">Reuse It Forever.</span></h2>
+      <div id="s2-compare" class="compare-container">
+        <div class="bad-box">
+          <div style="color: #EF4444; font-weight: 800; font-size: 22px; margin-bottom: 12px;">WITHOUT CONTEXT FILE</div>
+          <div style="color: #CBD5E1; font-size: 19px; line-height: 1.6;">
+            Every session starts with blank memory. You waste 15 minutes re-explaining your stack, formatting rules, test commands, and styling preferences.
+          </div>
+        </div>
+        <div class="good-box">
+          <div style="color: #34D399; font-weight: 800; font-size: 22px; margin-bottom: 12px;">WITH CLAUDE.md / AGENTS.md</div>
+          <div style="color: #CBD5E1; font-size: 19px; line-height: 1.6;">
+            The agent automatically ingests your architectural guidelines, testing protocols, and strict constraints before writing a single line of code.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: A Real AGENTS.md (8s - 13s) -->
+    <div id="s3" class="clip">
+      <div id="s3-badge" class="badge-pill" style="margin-bottom: 20px;">Live Anatomy</div>
+      <h2 id="s3-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">It Is Just <span class="gradient-text-violet">Clean Markdown</span></h2>
+      <div id="s3-code" class="code-window">
+        <div class="code-header">
+          <div class="code-dot" style="background:#EF4444;"></div>
+          <div class="code-dot" style="background:#F59E0B;"></div>
+          <div class="code-dot" style="background:#10B981;"></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#94A3B8;margin-left:12px;">AGENTS.md / CLAUDE.md</span>
+        </div>
+        <div class="code-body">
+          <div class="md-h1"># Project Rules</div>
+          <div>Stack: <span class="md-val">Next.js 15, TypeScript, TailwindCSS, Supabase</span></div>
+          <br>
+          <div class="md-h2">## Always</div>
+          <div class="md-item">- Run `pnpm test` and `pnpm lint` before marking tasks complete</div>
+          <div class="md-item">- Follow atomic git commits with semantic messages</div>
+          <br>
+          <div class="md-h2">## Never</div>
+          <div class="md-item">- Never edit files in `/dist` directly</div>
+          <div class="md-item">- Never commit `.env` or plaintext API keys</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: 4 Core Elements (13s - 17s) -->
+    <div id="s4" class="clip">
+      <div id="s4-badge" class="badge-pill" style="margin-bottom: 20px;">Structure</div>
+      <h2 id="s4-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">4 Things That <span class="gradient-text-blue">Belong in Your File</span></h2>
+      <div id="s4-grid" class="elements-grid">
+        <div class="element-card">
+          <div class="elem-num">1</div>
+          <div>
+            <div style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px;">Stack & Commands</div>
+            <div style="color: #94A3B8; font-size: 17px;">Exact scripts to install, build, run dev servers, and execute test suites.</div>
+          </div>
+        </div>
+        <div class="element-card">
+          <div class="elem-num">2</div>
+          <div>
+            <div style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px;">Always & Never Rules</div>
+            <div style="color: #94A3B8; font-size: 17px;">Inviolable constraints, security standards, and coding conventions.</div>
+          </div>
+        </div>
+        <div class="element-card">
+          <div class="elem-num">3</div>
+          <div>
+            <div style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px;">Where Things Live</div>
+            <div style="color: #94A3B8; font-size: 17px;">Repository map: schemas, routes, components, artifacts, and documentation.</div>
+          </div>
+        </div>
+        <div class="element-card">
+          <div class="elem-num">4</div>
+          <div>
+            <div style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px;">How to Verify</div>
+            <div style="color: #94A3B8; font-size: 17px;">Explicit definition of done: unit tests, visual QA, and contract validation.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 5: Cross-Harness Standards (17s - 21s) -->
+    <div id="s5" class="clip">
+      <div id="s5-badge" class="badge-pill" style="margin-bottom: 20px;">Universal Compatibility</div>
+      <h2 id="s5-title" class="main-title" style="font-size: 52px; margin-bottom: 30px;">Every Harness Reads One: <span class="gradient-text-violet">The Naming Map</span></h2>
+      <div id="s5-table" style="width: 100%; max-width: 1200px;" class="glass-card">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-family: 'JetBrains Mono', monospace;">
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#A78BFA;">Claude Code:</strong> CLAUDE.md</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#38BDF8;">Codex / OpenClaw:</strong> AGENTS.md</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#34D399;">Hermes:</strong> AGENTS.md · ~/.hermes/memories</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#20C7D9;">Antigravity:</strong> GEMINI.md · .agent/rules/</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#F59E0B;">VS Code:</strong> .github/copilot-instructions.md</div>
+          <div style="padding: 14px; background: rgba(255,255,255,0.03); border-radius: 10px;"><strong style="color:#EC4899;">Cursor:</strong> .cursor/rules/*.mdc</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 6: Golden Rules & Wrap-up (21s - 25s) -->
+    <div id="s6" class="clip">
+      <div id="s6-badge" class="badge-pill" style="margin-bottom: 20px;">Pro Best Practices</div>
+      <h2 id="s6-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Keep It Sharp: <span class="gradient-text-blue">Short Beats Complete</span></h2>
+      <div id="s6-rules" style="display: flex; gap: 24px; width: 100%; max-width: 1400px;">
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(124,92,252,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #7C5CFC; margin-bottom: 8px;">&lt; 200</div>
+          <div style="font-size: 22px; font-weight: 700; margin-bottom: 6px;">Lines of Code</div>
+          <div style="color: #94A3B8; font-size: 16px;">Keep context focused to prevent token bloat.</div>
+        </div>
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(47,128,237,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #2F80ED; margin-bottom: 8px;">Rules</div>
+          <div style="font-size: 22px; font-weight: 700; margin-bottom: 6px;">Not Long Essays</div>
+          <div style="color: #94A3B8; font-size: 16px;">Bullet points and concise directives win.</div>
+        </div>
+        <div style="flex: 1; padding: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(52,211,153,0.3); border-radius: 18px; text-align: center;">
+          <div style="font-size: 48px; font-weight: 900; color: #34D399; margin-bottom: 8px;">Live Patch</div>
+          <div style="font-size: 22px; font-weight: 700; margin-bottom: 6px;">Fix on Slip</div>
+          <div style="color: #94A3B8; font-size: 16px;">Whenever the agent slips, add a rule so it never recurs.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Subtitle Bar -->
+    <div class="caption-bar">
+      <div class="caption-dot"></div>
+      <div id="caption-live" class="caption-text">Lesson 02: Context files that remember for you — the single highest ROI AI upgrade.</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+        const captionEl = document.getElementById("caption-live");
+
+        function setCaption(text) {
+          if (captionEl) captionEl.textContent = text;
+        }
+
+        // Scene 1: 0s - 4s
+        tl.call(() => setCaption("Lesson 02: Context files that remember for you — the single highest ROI AI upgrade."), null, 0.1);
+        tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+        tl.fromTo("#s1-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.2);
+        tl.fromTo("#s1-num", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.4);
+        tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.6);
+        tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
+        tl.to("#s1", { opacity: 0, y: -20, duration: 0.4 }, 3.6);
+
+        // Scene 2: 4s - 8s
+        tl.call(() => setCaption("Stop re-explaining your stack and rules in every new chat. Write it once in your repository."), null, 4.0);
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
+        tl.fromTo("#s2-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 4.2);
+        tl.fromTo("#s2-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.4);
+        tl.fromTo(".bad-box", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.7);
+        tl.fromTo(".good-box", { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.9);
+        tl.to("#s2", { opacity: 0, y: -20, duration: 0.4 }, 7.6);
+
+        // Scene 3: 8s - 13s
+        tl.call(() => setCaption("A context file is clean markdown: define your stack, always-do rules, and never-do constraints."), null, 8.0);
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.0);
+        tl.fromTo("#s3-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 8.2);
+        tl.fromTo("#s3-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.4);
+        tl.fromTo("#s3-code", { y: 30, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 8.7);
+        tl.to("#s3", { opacity: 0, y: -20, duration: 0.4 }, 12.6);
+
+        // Scene 4: 13s - 17s
+        tl.call(() => setCaption("Include the four vital elements: stack & commands, always/never rules, folder map, and verification criteria."), null, 13.0);
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 13.0);
+        tl.fromTo("#s4-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 13.2);
+        tl.fromTo("#s4-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 13.4);
+        tl.fromTo(".element-card", { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power3.out" }, 13.7);
+        tl.to("#s4", { opacity: 0, y: -20, duration: 0.4 }, 16.6);
+
+        // Scene 5: 17s - 21s
+        tl.call(() => setCaption("Every major AI coding harness supports context files — AGENTS.md is the emerging universal standard."), null, 17.0);
+        tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.0);
+        tl.fromTo("#s5-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 17.2);
+        tl.fromTo("#s5-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 17.4);
+        tl.fromTo("#s5-table", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.2)" }, 17.7);
+        tl.to("#s5", { opacity: 0, y: -20, duration: 0.4 }, 20.6);
+
+        // Scene 6: 21s - 25s
+        tl.call(() => setCaption("Keep context files under 200 lines, use concise rules, and update them whenever the agent slips."), null, 21.0);
+        tl.fromTo("#s6", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 21.0);
+        tl.fromTo("#s6-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 21.2);
+        tl.fromTo("#s6-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 21.4);
+        tl.fromTo("#s6-rules > div", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out(1.3)" }, 21.7);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["context-memory-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

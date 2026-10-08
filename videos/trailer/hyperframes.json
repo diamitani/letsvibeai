@@ -2,7 +2,7 @@
   "name": "letsvibeai-trailer",
   "version": "1.0.0",
   "duration": 16,
-  "fps": 60,
+  "fps": 30,
   "width": 1920,
   "height": 1080
 }

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI — Deep Dive: Master Skills Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #071B3A;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #catalog-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 50% 20%, #152E58 0%, #071B3A 60%, #030C1A 100%);
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(52, 211, 153, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(52, 211, 153, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-green { width: 700px; height: 700px; background: rgba(52, 211, 153, 0.2); top: -100px; right: 150px; }
+    .glow-blue { width: 650px; height: 650px; background: rgba(47, 128, 237, 0.2); bottom: -100px; left: 150px; }
+
+    /* Top Brand Bar */
+    .top-brand {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 14px; }
+    .brand-logo-svg { width: 44px; height: 44px; }
+    .brand-name { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; }
+    .brand-name span { color: #34D399; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      border-radius: 9999px;
+      color: #34D399;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Subtitle & Narration Bar */
+    .caption-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      right: 120px;
+      background: rgba(7, 27, 58, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 16px 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 60;
+    }
+    .caption-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 12px #34D399;
+      flex-shrink: 0;
+    }
+    .caption-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F4F7FB;
+      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Typography & Gradients */
+    .hero-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 110px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(52, 211, 153, 0.3);
+      margin-bottom: -15px;
+    }
+    .main-title {
+      font-size: 68px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+    .main-sub {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+    .gradient-text-green {
+      background: linear-gradient(135deg, #34D399 0%, #20C7D9 50%, #2F80ED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* 5 Categories Grid */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 1500px;
+    }
+    .cat-card {
+      padding: 24px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      text-align: center;
+    }
+
+    /* Featured Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 1400px;
+    }
+    .skill-box {
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="catalog-root" data-composition-id="catalog-root" data-duration="25" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-green"></div>
+    <div class="ambient-glow glow-blue"></div>
+
+    <!-- Top Navigation Branding -->
+    <div class="top-brand">
+      <div class="brand-lockup">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none">
+          <path d="M50 15L85 80H70L50 42L30 80H15L50 15Z" fill="url(#brand-grad-cat)"/>
+          <circle cx="50" cy="62" r="9" fill="#34D399"/>
+          <defs>
+            <linearGradient id="brand-grad-cat" x1="15" y1="15" x2="85" y2="80" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#34D399"/>
+              <stop offset="0.5" stop-color="#20C7D9"/>
+              <stop offset="1" stop-color="#2F80ED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-name">LetsVibe<span>AI</span></span>
+      </div>
+      <div class="badge-pill">Deep Dive · Master Skills Catalog</div>
+      <div class="course-badge">vibe-coding-course / master-files</div>
+    </div>
+
+    <!-- Scene 1: Title (0s - 4s) -->
+    <div id="s1" class="clip">
+      <div id="s1-badge" class="badge-pill" style="margin-bottom: 24px;">Skill Suite</div>
+      <div id="s1-num" class="hero-number">DEEP DIVE</div>
+      <h1 id="s1-title" class="main-title">Master Skills Catalog & <span class="gradient-text-green">60+ Tool Suite</span></h1>
+      <p id="s1-sub" class="main-sub">Explore the comprehensive library of production-grade AI agent skills across modern engineering and GTM.</p>
+    </div>
+
+    <!-- Scene 2: 5 Core Categories (4s - 8s) -->
+    <div id="s2" class="clip">
+      <div id="s2-badge" class="badge-pill" style="margin-bottom: 20px;">Taxonomy</div>
+      <h2 id="s2-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">5 Core <span class="gradient-text-green">Domains</span></h2>
+      <div id="s2-cats" class="cat-grid">
+        <div class="cat-card">
+          <div style="font-size: 28px; margin-bottom: 8px;">🤖</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">Agents & Frameworks</div>
+          <div style="color: #94A3B8; font-size: 13px; margin-top: 6px;">PAL, ROSTR, Soul Builder</div>
+        </div>
+        <div class="cat-card">
+          <div style="font-size: 28px; margin-bottom: 8px;">📈</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">Productivity</div>
+          <div style="color: #94A3B8; font-size: 13px; margin-top: 6px;">Session Overview, Scheduler</div>
+        </div>
+        <div class="cat-card">
+          <div style="font-size: 28px; margin-bottom: 8px;">🎨</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">Design & Content</div>
+          <div style="color: #94A3B8; font-size: 13px; margin-top: 6px;">Site Build OS, Diagrams</div>
+        </div>
+        <div class="cat-card">
+          <div style="font-size: 28px; margin-bottom: 8px;">💼</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">GTM & Sales</div>
+          <div style="color: #94A3B8; font-size: 13px; margin-top: 6px;">PAE Outbound, HubSpot Lists</div>
+        </div>
+        <div class="cat-card">
+          <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
+          <div style="font-size: 18px; font-weight: 800; color: #fff;">Automation</div>
+          <div style="color: #94A3B8; font-size: 13px; margin-top: 6px;">n8n Engineer, MCP Guide</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: Featured Skills (8s - 13s) -->
+    <div id="s3" class="clip">
+      <div id="s3-badge" class="badge-pill" style="margin-bottom: 20px;">Top Tier</div>
+      <h2 id="s3-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">Featured <span class="gradient-text-green">Production Skills</span></h2>
+      <div id="s3-skills" class="skills-grid">
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #34D399;">context-engine</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Persistent cross-session memory and context logging.</div>
+        </div>
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #20C7D9;">rostr-pal</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Compiles vague intent into structured agent specs.</div>
+        </div>
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #38BDF8;">premium-site-build-os</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Full SDLC and payments architecture from day one.</div>
+        </div>
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #A78BFA;">n8n-engineer</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Build and debug complex autonomous workflow nodes.</div>
+        </div>
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #F59E0B;">prospect-automation-engine</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Autonomous outbound research, enrichment, and copy.</div>
+        </div>
+        <div class="skill-box">
+          <div style="font-size: 20px; font-weight: 800; color: #EC4899;">monarch-video</div>
+          <div style="color: #CBD5E1; font-size: 14px;">Brand-locked neural narration and MP4 rendering.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Instant Loading (13s - 17s) -->
+    <div id="s4" class="clip">
+      <div id="s4-badge" class="badge-pill" style="margin-bottom: 20px;">Zero Setup</div>
+      <h2 id="s4-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">One-Line <span class="gradient-text-green">Skill Injection</span></h2>
+      <div id="s4-box" style="width: 100%; max-width: 1100px; padding: 32px; background: #030C1A; border-radius: 16px; border: 1px solid rgba(52,211,153,0.3); font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #34D399;">
+        Read https://raw.githubusercontent.com/diamitani/[skill-repo]/main/SKILL.md to load this skill into your agent context.
+      </div>
+    </div>
+
+    <!-- Scene 5: Wrap-up (17s - 25s) -->
+    <div id="s5" class="clip">
+      <div id="s5-badge" class="badge-pill" style="margin-bottom: 20px;">Mastery</div>
+      <h2 id="s5-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Composable <span class="gradient-text-green">Superpowers</span></h2>
+      <div id="s5-box" style="width: 100%; max-width: 1100px; padding: 36px; text-align: center; background: rgba(255,255,255,0.04); border-radius: 20px; border: 1px solid rgba(52,211,153,0.3);">
+        <div style="font-size: 28px; font-weight: 800; color: #34D399; margin-bottom: 12px;">Next Up: Claude Center of Excellence</div>
+        <div style="font-size: 18px; color: #94A3B8;">Enterprise governance, rollout strategies, and security compliance.</div>
+      </div>
+    </div>
+
+    <!-- Dynamic Subtitle Bar -->
+    <div class="caption-bar">
+      <div class="caption-dot"></div>
+      <div id="caption-live" class="caption-text">Deep Dive: Master Skills Catalog — over sixty production skills for every workflow.</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+        const captionEl = document.getElementById("caption-live");
+
+        function setCaption(text) {
+          if (captionEl) captionEl.textContent = text;
+        }
+
+        // Scene 1: 0s - 4s
+        tl.call(() => setCaption("Deep Dive: Master Skills Catalog — over sixty production skills for every workflow."), null, 0.1);
+        tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+        tl.fromTo("#s1-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.2);
+        tl.fromTo("#s1-num", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.4);
+        tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.6);
+        tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
+        tl.to("#s1", { opacity: 0, y: -20, duration: 0.4 }, 3.6);
+
+        // Scene 2: 4s - 8s
+        tl.call(() => setCaption("Skills cover five core domains: Agents, Productivity, Design, GTM, and Automation."), null, 4.0);
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
+        tl.fromTo("#s2-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 4.2);
+        tl.fromTo("#s2-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.4);
+        tl.fromTo(".cat-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: "power2.out" }, 4.7);
+        tl.to("#s2", { opacity: 0, y: -20, duration: 0.4 }, 7.6);
+
+        // Scene 3: 8s - 13s
+        tl.call(() => setCaption("Top-tier skills include context-engine, rostr-pal, site-build-os, n8n-engineer, and monarch-video."), null, 8.0);
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.0);
+        tl.fromTo("#s3-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 8.2);
+        tl.fromTo("#s3-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.4);
+        tl.fromTo(".skill-box", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.08, duration: 0.5, ease: "back.out(1.2)" }, 8.7);
+        tl.to("#s3", { opacity: 0, y: -20, duration: 0.4 }, 12.6);
+
+        // Scene 4: 13s - 17s
+        tl.call(() => setCaption("Load any skill instantly into your agent context using a single raw markdown URL."), null, 13.0);
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 13.0);
+        tl.fromTo("#s4-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 13.2);
+        tl.fromTo("#s4-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 13.4);
+        tl.fromTo("#s4-box", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 13.7);
+        tl.to("#s4", { opacity: 0, y: -20, duration: 0.4 }, 16.6);
+
+        // Scene 5: 17s - 25s
+        tl.call(() => setCaption("Next up: Claude Center of Excellence — rolling out AI capabilities enterprise-wide."), null, 17.0);
+        tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.0);
+        tl.fromTo("#s5-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 17.2);
+        tl.fromTo("#s5-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 17.4);
+        tl.fromTo("#s5-box", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.3)" }, 17.7);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["catalog-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

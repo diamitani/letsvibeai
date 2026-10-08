@@ -1,8 +1,8 @@
 {
   "name": "letsvibeai-course-trailer",
   "version": "1.0.0",
-  "duration": 120,
-  "fps": 60,
+  "duration": 20,
+  "fps": 30,
   "width": 1920,
   "height": 1080
 }

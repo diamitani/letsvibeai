@@ -27,13 +27,14 @@ import { DashboardView } from './components/views/DashboardView';
 import { AgentPlatformView } from './components/views/AgentPlatformView';
 import { HarnessMasteryView } from './components/views/HarnessMasteryView';
 import { SkillsLibraryView } from './components/views/SkillsLibraryView';
+import { CourseVideoTheaterView } from './components/views/CourseVideoTheaterView';
 import { AuthModal } from './components/views/AuthModal';
 import { supabase } from './lib/supabase';
 import { PricingPlan, MarketplaceItem, AgentPlatformSkill } from './types';
 import { Sparkles, Layers, Cpu, Terminal, FileCode } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library'>('saas');
+  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library' | 'theater'>('saas');
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [activeSandboxTab, setActiveSandboxTab] = useState<'model-sandbox' | 'prompt-compiler' | 'pal-architecture' | 'doc-stack'>('model-sandbox');
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
@@ -207,7 +208,7 @@ export const App: React.FC = () => {
             <AboutSection onExploreCourses={() => scrollTo('courses')} />
 
             {/* 3. Interactive Overview & HyperFrames Animated Video Showcase */}
-            <OverviewVideoShowcase />
+            <OverviewVideoShowcase onOpenTheater={() => setCurrentView('theater')} />
 
             {/* 4. Top Courses & Tracks Catalog (with Videos for every course) */}
             <CourseCatalog
@@ -350,6 +351,12 @@ export const App: React.FC = () => {
         {currentView === 'skills-library' && (
           <div className="animate-in fade-in duration-300">
             <SkillsLibraryView onNavigateToHarness={() => setCurrentView('harness-mastery')} />
+          </div>
+        )}
+
+        {currentView === 'theater' && (
+          <div className="animate-in fade-in duration-300">
+            <CourseVideoTheaterView onBackToHome={() => setCurrentView('saas')} />
           </div>
         )}
 

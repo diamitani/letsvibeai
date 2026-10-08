@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude AI Training Guide — Atlas HXM</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-100: #DAE6FE;
+    --blue-250: #82ACFC;
+    --blue-500: #0559FA;
+    --blue-900: #06195E;
+    --purple-100: #E6DFFB;
+    --purple-250: #AB93F1;
+    --purple-500: #5827E3;
+    --purple-900: #1E046A;
+    --magenta-100: #F5E0F7;
+    --magenta-250: #DD98E5;
+    --magenta-500: #BA33CA;
+    --magenta-900: #48114F;
+    --coral-100: #FFC6C5;
+    --coral-300: #FF8F77;
+    --coral-500: #FF595A;
+    --orangellow-100: #F6D991;
+    --orangellow-300: #F6B942;
+    --orangellow-500: #FF782C;
+    --gray-50: #F8F8F8;
+    --gray-300: #E9E9E9;
+    --gray-900: #160629;
+    --white: #FFFFFF;
+  }
+
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+
+  html, body {
+    font-family: 'Poppins', sans-serif;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0;
+    background: var(--gray-900);
+    color: var(--gray-900);
+    width: 1280px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    position: relative;
+  }
+
+  .slide:last-child {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* ── Backgrounds ── */
+  .bg-white   { background: var(--white); color: var(--gray-900); }
+  .bg-navy    { background: var(--gray-900); color: var(--white); }
+  .bg-blue    { background: var(--blue-900); color: var(--white); }
+  .bg-purple  { background: var(--purple-900); color: var(--white); }
+  .bg-magenta { background: var(--magenta-900); color: var(--white); }
+  .bg-gradient-blue { background: linear-gradient(135deg, var(--blue-900) 0%, var(--purple-900) 100%); color: var(--white); }
+  .bg-gradient-purple { background: linear-gradient(135deg, var(--purple-900) 0%, var(--magenta-900) 100%); color: var(--white); }
+  .bg-light   { background: var(--gray-50); color: var(--gray-900); }
+  .bg-blue-light { background: var(--blue-100); color: var(--gray-900); }
+  .bg-purple-light { background: var(--purple-100); color: var(--gray-900); }
+
+  /* ── Typography ── */
+  h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+  h2 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  h3 { font-size: 1.5rem; font-weight: 600; line-height: 1.3; margin-bottom: 12px; }
+  p, li { font-size: 1.15rem; line-height: 1.6; font-weight: 400; }
+  .subtitle { font-size: 1.35rem; font-weight: 400; opacity: 0.85; margin-bottom: 24px; }
+  .small { font-size: 0.9rem; opacity: 0.7; }
+  .tag { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; }
+  .tag-blue { background: var(--blue-500); color: white; }
+  .tag-purple { background: var(--purple-500); color: white; }
+  .tag-magenta { background: var(--magenta-500); color: white; }
+  .tag-coral { background: var(--coral-500); color: white; }
+
+  /* ── Accent lines ── */
+  .accent-bar { width: 60px; height: 4px; border-radius: 2px; margin-bottom: 20px; }
+  .accent-blue { background: var(--blue-500); }
+  .accent-purple { background: var(--purple-500); }
+  .accent-magenta { background: var(--magenta-500); }
+
+  /* ── Layout helpers ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start; }
+  .four-col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px; align-items: start; }
+
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(22,6,41,0.08);
+  }
+  .card-dark {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .card h3 { color: var(--gray-900); }
+  .card-dark h3 { color: var(--white); }
+
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 6px 0 6px 28px; position: relative; }
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--blue-500);
+  }
+  .bg-navy ul li::before,
+  .bg-blue ul li::before,
+  .bg-purple ul li::before,
+  .bg-magenta ul li::before,
+  .bg-gradient-blue ul li::before,
+  .bg-gradient-purple ul li::before { background: var(--blue-250); }
+
+  ol { padding-left: 24px; }
+  ol li { padding: 6px 0; }
+  ol li::before { display: none; }
+  ol li::marker { color: var(--blue-500); font-weight: 700; }
+
+  .icon-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--blue-500); color: white;
+    font-weight: 700; font-size: 1.1rem; margin-bottom: 12px;
+  }
+  .icon-num.purple { background: var(--purple-500); }
+  .icon-num.magenta { background: var(--magenta-500); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 1rem; margin-top: 12px; }
+  th { text-align: left; padding: 12px 16px; font-weight: 600; border-bottom: 2px solid var(--blue-500); }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--gray-300); }
+  .bg-navy th { border-bottom-color: var(--blue-250); }
+  .bg-navy td { border-bottom-color: rgba(255,255,255,0.12); }
+
+  .highlight-box {
+    border-left: 4px solid var(--blue-500);
+    background: var(--blue-100);
+    padding: 20px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+  .highlight-box.purple { border-left-color: var(--purple-500); background: var(--purple-100); }
+  .highlight-box.magenta { border-left-color: var(--magenta-500); background: var(--magenta-100); }
+
+  a { color: var(--blue-500); text-decoration: underline; }
+  .bg-navy a, .bg-blue a, .bg-purple a, .bg-gradient-blue a, .bg-gradient-purple a { color: var(--blue-250); }
+
+  /* ── Logo positioning ── */
+  .logo-top {
+    position: absolute;
+    top: 28px; left: 40px;
+    z-index: 10;
+  }
+  .logo-bottom {
+    position: absolute;
+    bottom: 28px; right: 40px;
+    opacity: 0.5;
+  }
+  .tagline {
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 0.6;
+    margin-top: 16px;
+  }
+
+  /* ── Comparison table ── */
+  .compare-table { width: 100%; }
+  .compare-table th { background: var(--blue-500); color: white; padding: 14px 20px; }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 12px 20px; vertical-align: top; }
+  .compare-table tr:nth-child(even) td { background: var(--blue-100); }
+
+  /* Page number footer */
+  .page-num {
+    position: absolute;
+    bottom: 18px;
+    right: 32px;
+    font-size: 0.75rem;
+    opacity: 0.4;
+    font-family: 'Poppins', sans-serif;
+  }
+  .bg-navy .page-num,
+  .bg-blue .page-num,
+  .bg-purple .page-num,
+  .bg-magenta .page-num,
+  .bg-gradient-blue .page-num,
+  .bg-gradient-purple .page-num { color: white; }
+  .bg-white .page-num,
+  .bg-light .page-num { color: var(--gray-900); }
+</style>
+</head>
+<body>
+
+<!-- ═══ SLIDE 1 — Title ═══ -->
+<div class="slide bg-gradient-blue">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;height:100%;">
+    <div style="margin-bottom: 40px;">
+      <svg width="280" height="72" viewBox="0 0 796 208" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="m1" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="631" height="208"><path d="M630.113 0H0V208H630.113V0Z" fill="white"/></mask><g mask="url(#m1)"><path fill-rule="evenodd" clip-rule="evenodd" d="M131.332 0C141.462 0 149.67 8.189 149.67 18.338C149.67 28.489 141.482 36.677 131.332 36.677C121.182 36.677 112.994 28.489 112.994 18.338C112.963 8.209 121.182 0 131.332 0Z" fill="#BA33CA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.376 0C32.505 0 40.714 8.189 40.714 18.338C40.714 28.489 32.526 36.677 22.376 36.677C12.226 36.677 4.037 28.468 4.037 18.338C4.037 8.209 12.226 0 22.376 0Z" fill="#0559FA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M76.854 0C86.983 0 95.192 8.189 95.192 18.338C95.192 28.489 87.004 36.677 76.854 36.677C66.704 36.677 58.516 28.489 58.516 18.338C58.485 8.209 66.704 0 76.854 0Z" fill="#5827E3"/><path d="M67.994 56.905C30.75 56.905 0 89.647 0 132.055C0 174.462 30.76 207.205 68.025 207.205C87.087 207.205 101.037 200.648 110.443 189.858V203.23H153.15V60.89L110.412 74.262C101.016 63.441 87.087 56.915 67.994 56.915V56.905ZM76.554 166.77C56.905 166.77 42.707 153.398 42.707 132.034C42.707 110.67 56.956 97.299 76.554 97.299C96.153 97.299 110.402 110.67 110.402 132.034C110.402 153.398 96.184 166.77 76.554 166.77ZM219.585 40.952L176.878 53.735V152.211C176.878 192.037 193.09 208.847 248.89 203.157V164.488C230.128 165.613 219.554 164.488 219.554 152.241V101.883H248.931V60.89H219.596V40.952H219.575H219.585ZM273.114 203.219H315.82V12.68L273.114 25.463V203.23V203.209V203.219ZM560.105 102.461C560.105 97.33 564.648 94.48 572.052 94.48C581.448 94.48 587.137 99.612 591.113 107.015L627.562 87.365C615.616 67.148 595.119 56.905 572.062 56.905C542.479 56.905 516.262 72.579 516.262 103.587C516.262 152.82 586.27 144.58 586.27 160.223C586.27 165.913 581.138 169.052 570.895 169.052C558.36 169.052 550.419 163.073 546.702 152.252L509.716 173.316C520.826 196.394 542.438 207.164 570.895 207.164C601.655 207.164 630.113 193.203 630.113 160.481C630.113 107.851 560.105 118.673 560.105 102.461ZM404.673 56.905C367.387 56.905 336.647 89.627 336.647 132.055C336.647 174.483 367.407 207.205 404.673 207.205C423.734 207.205 437.684 200.648 447.091 189.858V203.23H489.797V60.89L447.091 74.262C437.694 63.441 423.765 56.915 404.673 56.915V56.905ZM413.233 166.77C393.583 166.77 379.385 153.398 379.385 132.034C379.385 110.67 393.635 97.299 413.233 97.299C432.831 97.299 447.08 110.67 447.08 132.034C447.08 153.398 432.862 166.77 413.233 166.77Z" fill="#F8F8F8"/></g><path d="M745.605 56.409H754.685L764.129 94.958H764.71L786.842 56.409H795.923L787.69 106H780.571L786.552 70.114H786.092L765.509 105.927H759.577L750.956 70.09H750.496L744.491 106H737.372L745.605 56.409Z" fill="#F8F8F8"/><path d="M705.276 56.409L713.944 75.804H714.332L729.393 56.409H738.183L718.666 81.204L730.047 106H721.402L712.685 86.871H712.298L697.188 106H688.398L708.375 81.204L696.728 56.409H705.276Z" fill="#F8F8F8"/><path d="M641.349 106L649.582 56.409H657.064L653.48 77.96H678.203L681.787 56.409H689.294L681.061 106H673.554L677.138 84.376H652.415L648.831 106H641.349Z" fill="#F8F8F8"/></svg>
+    </div>
+    <span class="tag tag-blue" style="font-size:1rem;padding:6px 20px;">Internal Training Guide</span>
+    <h1 style="font-size:3.2rem;max-width:900px;margin-top:16px;">Mastering Claude AI<br>for Your Team</h1>
+    <p class="subtitle" style="max-width:680px;">A complete guide to setting up Chat, Cowork, Skills, Projects, Plugins, and Artifacts for Marketing, Sales, RevOps, and Operations.</p>
+    <p class="small" style="margin-top:24px;">Estimated time: ~15 minutes &nbsp;|&nbsp; March 2026</p>
+    <p class="tagline">For People, By People</p>
+  </div>
+  <span class="page-num">1 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 2 — Agenda ═══ -->
+<div class="slide bg-white">
+  <div class="logo-top">
+    <svg width="140" height="36" viewBox="0 0 796 208" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="m2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="631" height="208"><path d="M630.113 0H0V208H630.113V0Z" fill="white"/></mask><g mask="url(#m2)"><path fill-rule="evenodd" clip-rule="evenodd" d="M131.332 0C141.462 0 149.67 8.189 149.67 18.338C149.67 28.489 141.482 36.677 131.332 36.677C121.182 36.677 112.994 28.489 112.994 18.338C112.963 8.209 121.182 0 131.332 0Z" fill="#BA33CA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.376 0C32.505 0 40.714 8.189 40.714 18.338C40.714 28.489 32.526 36.677 22.376 36.677C12.226 36.677 4.037 28.468 4.037 18.338C4.037 8.209 12.226 0 22.376 0Z" fill="#0559FA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M76.854 0C86.983 0 95.192 8.189 95.192 18.338C95.192 28.489 87.004 36.677 76.854 36.677C66.704 36.677 58.516 28.489 58.516 18.338C58.485 8.209 66.704 0 76.854 0Z" fill="#5827E3"/><path d="M67.994 56.905C30.75 56.905 0 89.647 0 132.055C0 174.462 30.76 207.205 68.025 207.205C87.087 207.205 101.037 200.648 110.443 189.858V203.23H153.15V60.89L110.412 74.262C101.016 63.441 87.087 56.915 67.994 56.915V56.905ZM76.554 166.77C56.905 166.77 42.707 153.398 42.707 132.034C42.707 110.67 56.956 97.299 76.554 97.299C96.153 97.299 110.402 110.67 110.402 132.034C110.402 153.398 96.184 166.77 76.554 166.77ZM219.585 40.952L176.878 53.735V152.211C176.878 192.037 193.09 208.847 248.89 203.157V164.488C230.128 165.613 219.554 164.488 219.554 152.241V101.883H248.931V60.89H219.596V40.952H219.575H219.585ZM273.114 203.219H315.82V12.68L273.114 25.463V203.23V203.209V203.219ZM560.105 102.461C560.105 97.33 564.648 94.48 572.052 94.48C581.448 94.48 587.137 99.612 591.113 107.015L627.562 87.365C615.616 67.148 595.119 56.905 572.062 56.905C542.479 56.905 516.262 72.579 516.262 103.587C516.262 152.82 586.27 144.58 586.27 160.223C586.27 165.913 581.138 169.052 570.895 169.052C558.36 169.052 550.419 163.073 546.702 152.252L509.716 173.316C520.826 196.394 542.438 207.164 570.895 207.164C601.655 207.164 630.113 193.203 630.113 160.481C630.113 107.851 560.105 118.673 560.105 102.461ZM404.673 56.905C367.387 56.905 336.647 89.627 336.647 132.055C336.647 174.483 367.407 207.205 404.673 207.205C423.734 207.205 437.684 200.648 447.091 189.858V203.23H489.797V60.89L447.091 74.262C437.694 63.441 423.765 56.915 404.673 56.915V56.905ZM413.233 166.77C393.583 166.77 379.385 153.398 379.385 132.034C379.385 110.67 393.635 97.299 413.233 97.299C432.831 97.299 447.08 110.67 447.08 132.034C447.08 153.398 432.862 166.77 413.233 166.77Z" fill="#160629"/></g><path d="M745.605 56.409H754.685L764.129 94.958H764.71L786.842 56.409H795.923L787.69 106H780.571L786.552 70.114H786.092L765.509 105.927H759.577L750.956 70.09H750.496L744.491 106H737.372L745.605 56.409Z" fill="#160629"/><path d="M705.276 56.409L713.944 75.804H714.332L729.393 56.409H738.183L718.666 81.204L730.047 106H721.402L712.685 86.871H712.298L697.188 106H688.398L708.375 81.204L696.728 56.409H705.276Z" fill="#160629"/><path d="M641.349 106L649.582 56.409H657.064L653.48 77.96H678.203L681.787 56.409H689.294L681.061 106H673.554L677.138 84.376H652.415L648.831 106H641.349Z" fill="#160629"/></svg>
+  </div>
+  <div style="margin-top:40px;">
+    <div class="accent-bar accent-blue"></div>
+    <h2>What We'll Cover Today</h2>
+    <p class="subtitle" style="color:var(--gray-900);">Your roadmap from Claude basics to team-wide productivity.</p>
+    <div class="three-col" style="margin-top:32px;">
+      <div class="card">
+        <div class="icon-num">1</div>
+        <h3>The Foundations</h3>
+        <ul>
+          <li>What is Claude &amp; subscription tiers</li>
+          <li>Chat vs. Cowork vs. Code</li>
+          <li>When to use which mode</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="icon-num purple">2</div>
+        <h3>Setting Up for Success</h3>
+        <ul>
+          <li>Projects &amp; workspace folders</li>
+          <li>Global &amp; project instructions</li>
+          <li>Memory &amp; connectors</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="icon-num magenta">3</div>
+        <h3>Power Features</h3>
+        <ul>
+          <li>Skills — what they are &amp; how to create</li>
+          <li>Artifacts &amp; prototyping</li>
+          <li>Plugins, MCP, &amp; team workflows</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">2 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 3 — What is Claude ═══ -->
+<div class="slide bg-light">
+  <div class="logo-top">
+    <svg width="140" height="36" viewBox="0 0 796 208" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="m3a" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="631" height="208"><path d="M630.113 0H0V208H630.113V0Z" fill="white"/></mask><g mask="url(#m3a)"><path fill-rule="evenodd" clip-rule="evenodd" d="M131.332 0C141.462 0 149.67 8.189 149.67 18.338C149.67 28.489 141.482 36.677 131.332 36.677C121.182 36.677 112.994 28.489 112.994 18.338C112.963 8.209 121.182 0 131.332 0Z" fill="#BA33CA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.376 0C32.505 0 40.714 8.189 40.714 18.338C40.714 28.489 32.526 36.677 22.376 36.677C12.226 36.677 4.037 28.468 4.037 18.338C4.037 8.209 12.226 0 22.376 0Z" fill="#0559FA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M76.854 0C86.983 0 95.192 8.189 95.192 18.338C95.192 28.489 87.004 36.677 76.854 36.677C66.704 36.677 58.516 28.489 58.516 18.338C58.485 8.209 66.704 0 76.854 0Z" fill="#5827E3"/><path d="M67.994 56.905C30.75 56.905 0 89.647 0 132.055C0 174.462 30.76 207.205 68.025 207.205C87.087 207.205 101.037 200.648 110.443 189.858V203.23H153.15V60.89L110.412 74.262C101.016 63.441 87.087 56.915 67.994 56.915V56.905ZM76.554 166.77C56.905 166.77 42.707 153.398 42.707 132.034C42.707 110.67 56.956 97.299 76.554 97.299C96.153 97.299 110.402 110.67 110.402 132.034C110.402 153.398 96.184 166.77 76.554 166.77ZM219.585 40.952L176.878 53.735V152.211C176.878 192.037 193.09 208.847 248.89 203.157V164.488C230.128 165.613 219.554 164.488 219.554 152.241V101.883H248.931V60.89H219.596V40.952H219.575H219.585ZM273.114 203.219H315.82V12.68L273.114 25.463V203.23V203.209V203.219ZM560.105 102.461C560.105 97.33 564.648 94.48 572.052 94.48C581.448 94.48 587.137 99.612 591.113 107.015L627.562 87.365C615.616 67.148 595.119 56.905 572.062 56.905C542.479 56.905 516.262 72.579 516.262 103.587C516.262 152.82 586.27 144.58 586.27 160.223C586.27 165.913 581.138 169.052 570.895 169.052C558.36 169.052 550.419 163.073 546.702 152.252L509.716 173.316C520.826 196.394 542.438 207.164 570.895 207.164C601.655 207.164 630.113 193.203 630.113 160.481C630.113 107.851 560.105 118.673 560.105 102.461ZM404.673 56.905C367.387 56.905 336.647 89.627 336.647 132.055C336.647 174.483 367.407 207.205 404.673 207.205C423.734 207.205 437.684 200.648 447.091 189.858V203.23H489.797V60.89L447.091 74.262C437.694 63.441 423.765 56.915 404.673 56.915V56.905ZM413.233 166.77C393.583 166.77 379.385 153.398 379.385 132.034C379.385 110.67 393.635 97.299 413.233 97.299C432.831 97.299 447.08 110.67 447.08 132.034C447.08 153.398 432.862 166.77 413.233 166.77Z" fill="#160629"/></g><path d="M745.605 56.409H754.685L764.129 94.958H764.71L786.842 56.409H795.923L787.69 106H780.571L786.552 70.114H786.092L765.509 105.927H759.577L750.956 70.09H750.496L744.491 106H737.372L745.605 56.409Z" fill="#160629"/><path d="M705.276 56.409L713.944 75.804H714.332L729.393 56.409H738.183L718.666 81.204L730.047 106H721.402L712.685 86.871H712.298L697.188 106H688.398L708.375 81.204L696.728 56.409H705.276Z" fill="#160629"/><path d="M641.349 106L649.582 56.409H657.064L653.48 77.96H678.203L681.787 56.409H689.294L681.061 106H673.554L677.138 84.376H652.415L648.831 106H641.349Z" fill="#160629"/></svg>
+  </div>
+  <div style="margin-top:40px;">
+    <span class="tag tag-blue">Foundations</span>
+    <h2>What Is Claude?</h2>
+    <p style="max-width:800px;margin-bottom:28px;">Claude is Anthropic's AI assistant — available through the web, a desktop app, a mobile app, and an API. For Atlas teams, the <strong>Claude Desktop App</strong> is where the magic happens.</p>
+    <div class="two-col">
+      <div>
+        <h3>Access &amp; Subscription Tiers</h3>
+        <table>
+          <tr><th>Plan</th><th>Access</th></tr>
+          <tr><td><strong>Free</strong></td><td>Chat on web &amp; desktop (limited messages)</td></tr>
+          <tr><td><strong>Pro — $20/mo</strong></td><td>Chat + Cowork + Code + higher limits</td></tr>
+          <tr><td><strong>Max — $100/mo</strong></td><td>Everything Pro + 20x usage + research mode</td></tr>
+          <tr><td><strong>Team / Enterprise</strong></td><td>Admin controls, SSO, shared projects</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Model Options (March 2026)</h3>
+        <div class="highlight-box">
+          <p><strong>Claude Opus 4.6</strong> — Most capable. Best for complex analysis, strategy, long documents.</p>
+        </div>
+        <div class="highlight-box purple">
+          <p><strong>Claude Sonnet 4.6</strong> — Fast &amp; smart. Great daily driver for most tasks.</p>
+        </div>
+        <div class="highlight-box magenta">
+          <p><strong>Claude Haiku 4.5</strong> — Fastest. Ideal for quick lookups, short drafts, simple Q&amp;A.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">3 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 4 — Chat vs Cowork vs Code ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-blue">Foundations</span>
+  <h2>Chat vs. Cowork vs. Code — When to Use Each</h2>
+  <p style="margin-bottom:20px;">The Claude Desktop App has three distinct modes. Here's how they differ and when each is the right choice.</p>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="width:18%;">Feature</th>
+        <th style="width:27%;">Chat</th>
+        <th style="width:27%;">Cowork</th>
+        <th style="width:28%;">Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>What it does</strong></td>
+        <td>Responds to prompts one at a time — Q&amp;A, brainstorming, drafting</td>
+        <td>Executes multi-step tasks autonomously on your files &amp; apps</td>
+        <td>CLI tool for developers — agentic coding in the terminal</td>
+      </tr>
+      <tr>
+        <td><strong>File access</strong></td>
+        <td>Upload files to conversation only</td>
+        <td>Direct access to a local folder on your computer</td>
+        <td>Full codebase access via terminal</td>
+      </tr>
+      <tr>
+        <td><strong>Scheduled tasks</strong></td>
+        <td>No</td>
+        <td>Yes — runs tasks on a recurring schedule</td>
+        <td>Via cron/hooks</td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>Quick questions, edits, brainstorms, one-off drafts</td>
+        <td>Reports, file organization, research, presentations, data work</td>
+        <td>Software development, debugging, code review</td>
+      </tr>
+      <tr>
+        <td><strong>Usage cost</strong></td>
+        <td>Lower</td>
+        <td>Higher (agentic = more tokens)</td>
+        <td>Higher (agentic)</td>
+      </tr>
+      <tr>
+        <td><strong>Who at Atlas</strong></td>
+        <td>Everyone — daily driver</td>
+        <td>Marketing, Sales, RevOps, Ops, Enablement</td>
+        <td>Engineering, DevOps, technical Ops</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box" style="margin-top:20px;">
+    <p><strong>Rule of thumb:</strong> Use Chat for simple back-and-forth. Switch to Cowork when you need Claude to do the work — create files, process data, execute multi-step workflows — and come back with finished output.</p>
+  </div>
+  <span class="page-num">4 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 5 — Setting Up Cowork ═══ -->
+<div class="slide bg-gradient-purple">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Setup Guide</span>
+  <h2>Getting Started with Cowork — 5 Steps</h2>
+  <p class="subtitle">Set this up once, and every future conversation starts smarter.</p>
+  <div class="three-col" style="margin-top:24px;">
+    <div class="card-dark">
+      <div class="icon-num">1</div>
+      <h3>Install the Desktop App</h3>
+      <p>Download from claude.com/download. Log in with your Pro, Max, or Team account. You'll see Chat and Cowork tabs at the top.</p>
+    </div>
+    <div class="card-dark">
+      <div class="icon-num purple">2</div>
+      <h3>Set Global Instructions</h3>
+      <p>Go to <strong>Settings &rarr; Cowork &rarr; Edit</strong> next to "Global Instructions." These persist across every conversation and project. Include your role, team context, and output preferences.</p>
+    </div>
+    <div class="card-dark">
+      <div class="icon-num magenta">3</div>
+      <h3>Create Your First Project</h3>
+      <p>In the sidebar, find <strong>Projects</strong> and click <strong>"+"</strong>. Pick a local folder — this is where Claude reads from and saves finished work. Give it a clear name and add project-specific instructions.</p>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:24px;">
+    <div class="card-dark">
+      <div class="icon-num">4</div>
+      <h3>Connect Your Tools</h3>
+      <p>Go to <strong>Settings &rarr; Connectors</strong>. Connect Google Calendar, Slack, Asana, Outlook, SharePoint, or other tools your team uses. Claude can then read emails, pull tasks, and work across apps.</p>
+    </div>
+    <div class="card-dark">
+      <div class="icon-num purple">5</div>
+      <h3>Add Skills &amp; Plugins</h3>
+      <p>Install plugins that match your role. Skills give Claude domain expertise — like brand voice, document formatting, or sales workflows. We'll cover these in detail shortly.</p>
+    </div>
+  </div>
+  <span class="page-num">5 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 6 — Projects Deep Dive ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-purple">Projects</span>
+  <h2>Projects — Your Dedicated Workspace</h2>
+  <p style="max-width:800px;margin-bottom:24px;">Projects are the organizational backbone of Cowork. Each project is a dedicated local folder with its own context, instructions, memory, and scheduled tasks.</p>
+  <div class="two-col">
+    <div>
+      <h3>What Lives Inside a Project</h3>
+      <ul>
+        <li><strong>Working folder</strong> — a local directory on your computer. Claude reads from and saves to this folder.</li>
+        <li><strong>Project instructions</strong> — custom rules and context specific to this project (separate from global instructions).</li>
+        <li><strong>Memory</strong> — Claude builds knowledge about your work over time. Preferences, decisions, and context persist across conversations.</li>
+        <li><strong>Scheduled tasks</strong> — set recurring automations (weekly reports, daily summaries, etc.).</li>
+        <li><strong>Conversation history</strong> — past conversations stay scoped to the project for easy reference.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Best Practices for Project Setup</h3>
+      <div class="highlight-box">
+        <p><strong>One project per workstream.</strong> Don't dump everything into a single project. Create separate projects for "Q1 Campaign," "Sales Enablement Content," "RevOps Reporting," etc.</p>
+      </div>
+      <div class="highlight-box purple">
+        <p><strong>Add context files to the folder.</strong> Drop in brand guidelines, ICPs, messaging docs, templates — anything Claude should reference when working. The more context, the better the output.</p>
+      </div>
+      <div class="highlight-box magenta">
+        <p><strong>Write clear project instructions.</strong> Tell Claude who the audience is, what standards to follow, what format outputs should take, and what to avoid.</p>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">6 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 7 — Memory & Instructions ═══ -->
+<div class="slide bg-navy">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Deep Dive</span>
+  <h2>Memory &amp; Instructions — Making Claude Smarter Over Time</h2>
+  <div class="two-col" style="margin-top:20px;">
+    <div>
+      <h3 style="color:var(--blue-250);">Global Instructions</h3>
+      <p>Found in <strong>Settings &rarr; Cowork &rarr; Global Instructions</strong>. These apply to every conversation and project. Use them for:</p>
+      <ul>
+        <li>Your name, role, and team</li>
+        <li>Communication style preferences</li>
+        <li>Default output formats (e.g., "always save as .docx")</li>
+        <li>Tools and platforms your team uses</li>
+      </ul>
+      <div class="card-dark" style="margin-top:16px;">
+        <p class="small" style="opacity:1;font-family:monospace;font-size:0.85rem;line-height:1.7;">
+          <em>Example global instruction:</em><br>
+          "I'm a GTM Manager at Atlas HXM. I work across marketing, sales enablement, and RevOps. Always follow Atlas brand voice: authoritative, inclusive, measured. Use Gelion/Poppins fonts. Never use green. Save final outputs as .docx or .pptx."
+        </p>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--magenta-250);">Project-Level Memory</h3>
+      <p>Claude automatically saves patterns, preferences, and decisions to a MEMORY.md file per project. It persists across sessions — no manual setup required.</p>
+      <ul>
+        <li><strong>User memories:</strong> your role, expertise, how you like to work</li>
+        <li><strong>Feedback memories:</strong> corrections and confirmed approaches</li>
+        <li><strong>Project memories:</strong> deadlines, stakeholders, decisions</li>
+        <li><strong>Reference memories:</strong> where to find external info (Slack channels, dashboards, etc.)</li>
+      </ul>
+      <div class="card-dark" style="margin-top:16px;">
+        <p class="small" style="opacity:1;"><strong>Tip:</strong> You can tell Claude "remember that our Q2 campaign launches April 15" or "forget the old positioning doc" and it will update its memory immediately.</p>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">7 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 8 — Skills Overview ═══ -->
+<div class="slide bg-light">
+  <span class="tag tag-magenta">Skills</span>
+  <h2>Skills — Persistent Instructions That Never Expire</h2>
+  <p style="max-width:800px;margin-bottom:24px;">A Skill is a markdown file (.md) that gives Claude specialized knowledge for a specific type of task. Unlike a prompt that vanishes after a conversation, a Skill persists and activates automatically when relevant.</p>
+  <div class="two-col">
+    <div>
+      <h3>How Skills Work</h3>
+      <ul>
+        <li>A Skill is a <code>SKILL.md</code> file stored in your <code>.claude/skills/</code> folder</li>
+        <li>No code, no API, no build step — just instructions in markdown</li>
+        <li>Claude reads the skill automatically when a matching task is detected</li>
+        <li>Skills can include templates, rules, examples, and reference links</li>
+        <li>Multiple skills can combine for a single task (e.g., brand guidelines + document formatting)</li>
+      </ul>
+      <h3 style="margin-top:20px;">Examples of Atlas Skills</h3>
+      <table>
+        <tr><td><strong>atlas-brand-guidelines</strong></td><td>Enforces Atlas voice, colors, logo, tone on all content</td></tr>
+        <tr><td><strong>atlas-presentations</strong></td><td>Uses official PPT template for all slide decks</td></tr>
+        <tr><td><strong>atlas-reports</strong></td><td>Formats client &amp; market reports to brand standards</td></tr>
+        <tr><td><strong>docx / xlsx / pdf / pptx</strong></td><td>Best-practice document creation for each format</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Anatomy of a SKILL.md File</h3>
+      <div style="background:var(--gray-900);color:var(--gray-50);border-radius:10px;padding:24px;font-family:monospace;font-size:0.85rem;line-height:1.7;">
+        <span style="color:var(--blue-250);"># Content Creator Skill</span><br><br>
+        <span style="color:var(--magenta-250);">## Role</span><br>
+        You are an Atlas HXM content creator...<br><br>
+        <span style="color:var(--magenta-250);">## Voice &amp; Tone</span><br>
+        - Authoritative, inclusive, measured<br>
+        - Never use buzzwords: synergy, leverage...<br><br>
+        <span style="color:var(--magenta-250);">## Output Rules</span><br>
+        - Lead with insight, not "We at Atlas..."<br>
+        - Use active voice, short sentences<br>
+        - Include specific data points<br><br>
+        <span style="color:var(--magenta-250);">## Templates</span><br>
+        ### LinkedIn Post Template<br>
+        [Hook: 1 line, counterintuitive insight]<br>
+        [Body: 3-4 short paragraphs]<br>
+        [CTA: soft, value-oriented question]<br>
+        [3-5 hashtags]
+      </div>
+    </div>
+  </div>
+  <span class="page-num">8 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 9 — Creating Skills ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-magenta">Skills</span>
+  <h2>Creating Your Own Skills — Step by Step</h2>
+  <p style="margin-bottom:24px;">You don't need to write code. Skills are markdown files with clear instructions. Here's how to create one.</p>
+  <div class="three-col">
+    <div class="card" style="border-top:4px solid var(--blue-500);">
+      <div class="icon-num">1</div>
+      <h3>Define the Task</h3>
+      <p>What type of work should this skill handle? Be specific. "Write LinkedIn posts for Atlas" is better than "write social media content."</p>
+      <p style="margin-top:12px;"><strong>Ask yourself:</strong> What instructions would I give a new hire to do this task perfectly every time?</p>
+    </div>
+    <div class="card" style="border-top:4px solid var(--purple-500);">
+      <div class="icon-num purple">2</div>
+      <h3>Write the SKILL.md</h3>
+      <p>Structure it clearly with sections: Role, Rules, Tone, Templates, Examples, and References. Include "do this" and "never do this" guidance.</p>
+      <p style="margin-top:12px;"><strong>Pro tip:</strong> Include 2-3 before/after examples showing bad output vs. good output. This dramatically improves results.</p>
+    </div>
+    <div class="card" style="border-top:4px solid var(--magenta-500);">
+      <div class="icon-num magenta">3</div>
+      <h3>Save &amp; Test</h3>
+      <p>Save the file to <code>.claude/skills/your-skill-name/SKILL.md</code> in your project folder. Then test it by asking Claude to perform the task. Iterate on the instructions until the output is consistently on target.</p>
+      <p style="margin-top:12px;"><strong>Use the skill-creator:</strong> Ask Claude to "create a new skill for [task]" and it will scaffold the file for you.</p>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:20px;">
+    <p><strong>Team tip:</strong> Skills are just files in a folder. Share them with teammates by dropping them into a shared project directory or a team Git repo. When everyone uses the same skills, outputs are consistent across the whole team.</p>
+  </div>
+  <span class="page-num">9 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 10 — Artifacts ═══ -->
+<div class="slide bg-blue">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Artifacts</span>
+  <h2>Artifacts — From Idea to Interactive Prototype</h2>
+  <p class="subtitle">Artifacts are self-contained pieces of content Claude creates in a dedicated panel — code, documents, apps, charts, and more.</p>
+  <div class="two-col" style="margin-top:16px;">
+    <div>
+      <h3 style="color:var(--blue-100);">What Artifacts Can Do</h3>
+      <ul>
+        <li><strong>React apps &amp; components</strong> — interactive dashboards, calculators, forms</li>
+        <li><strong>HTML pages</strong> — landing pages, email templates, one-pagers</li>
+        <li><strong>SVG graphics</strong> — diagrams, infographics, flowcharts</li>
+        <li><strong>Mermaid diagrams</strong> — org charts, process maps, timelines</li>
+        <li><strong>Markdown documents</strong> — reports, guides, blog posts</li>
+        <li><strong>Data visualizations</strong> — charts with Recharts, D3, Chart.js</li>
+      </ul>
+      <h3 style="margin-top:20px;color:var(--blue-100);">Sharing Artifacts</h3>
+      <p>Publish any artifact and share the link — recipients don't need a Claude account. Perfect for prototypes, client previews, and team review.</p>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-100);">Best Practices</h3>
+      <div class="card-dark">
+        <p><strong>Be specific with your first prompt.</strong> The clearer your initial request, the better the first version. Include layout, data, colors, and behavior requirements up front.</p>
+      </div>
+      <div class="card-dark" style="margin-top:12px;">
+        <p><strong>Iterate through conversation.</strong> Ask Claude to modify specific parts: "change the header to navy" or "add a pie chart for Q1 data." Each request builds on the previous version.</p>
+      </div>
+      <div class="card-dark" style="margin-top:12px;">
+        <p><strong>Know the limits.</strong> Artifacts get you ~70% of the way to a production app. They're perfect for prototypes, demos, and internal tools — not production-grade software.</p>
+      </div>
+      <div class="card-dark" style="margin-top:12px;">
+        <p><strong>Security check.</strong> Before publishing, make sure the artifact doesn't contain confidential data, internal metrics, or client information.</p>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">10 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 11 — Plugins & MCP ═══ -->
+<div class="slide bg-light">
+  <span class="tag tag-purple">Plugins &amp; MCP</span>
+  <h2>Plugins, Connectors, &amp; MCP Servers</h2>
+  <p style="max-width:800px;margin-bottom:24px;">These are the three ways Claude extends its reach beyond conversation — connecting to your tools, data, and workflows.</p>
+  <div class="three-col">
+    <div class="card" style="border-left:4px solid var(--blue-500);">
+      <h3>Connectors</h3>
+      <p>Built-in integrations with a graphical setup flow. Connect via <strong>Settings &rarr; Connectors</strong> in the desktop app.</p>
+      <ul>
+        <li>Google Calendar, Gmail</li>
+        <li>Slack, Microsoft Teams</li>
+        <li>Asana, Linear, Jira</li>
+        <li>Outlook, SharePoint, OneDrive</li>
+        <li>Salesforce, HubSpot</li>
+      </ul>
+      <p style="margin-top:12px;font-size:0.95rem;">Once connected, Claude can read your calendar, send messages, pull tasks, and work across apps directly.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--purple-500);">
+      <h3>MCP Servers</h3>
+      <p><strong>Model Context Protocol</strong> gives Claude access to external tools, databases, and live documentation.</p>
+      <ul>
+        <li>GitHub, Filesystem, databases</li>
+        <li>Web scraping &amp; data enrichment</li>
+        <li>Custom internal APIs</li>
+      </ul>
+      <p style="margin-top:12px;font-size:0.95rem;"><strong>Best practice:</strong> Most teams need 2-3 MCP servers (e.g., GitHub + one domain-specific) plus a few custom Skills. Don't overload — each server uses context tokens.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--magenta-500);">
+      <h3>Plugins</h3>
+      <p>Bundles that package multiple customizations: skills, MCP configs, slash commands, and hooks into a single installable unit.</p>
+      <ul>
+        <li>Install from the plugin marketplace</li>
+        <li>Or create your own for team use</li>
+        <li>Sales plugins: call prep, pipeline review</li>
+        <li>Marketing plugins: content calendar, SEO</li>
+      </ul>
+      <p style="margin-top:12px;font-size:0.95rem;">Search the plugin registry from within Cowork to find plugins built for your role.</p>
+    </div>
+  </div>
+  <span class="page-num">11 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 12 — Team Use Cases ═══ -->
+<div class="slide bg-navy">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Team Playbooks</span>
+  <h2>Claude by Team — Real Use Cases at Atlas</h2>
+  <div class="four-col" style="margin-top:20px;">
+    <div class="card-dark">
+      <h3 style="color:var(--blue-250);">Marketing</h3>
+      <ul>
+        <li>Generate on-brand LinkedIn posts, blog drafts, email campaigns</li>
+        <li>Build competitive intel briefs on a weekly schedule</li>
+        <li>Create branded slide decks using Atlas PPT template</li>
+        <li>Analyze campaign performance data and summarize results</li>
+        <li>Prototype landing pages as HTML artifacts</li>
+      </ul>
+    </div>
+    <div class="card-dark">
+      <h3 style="color:var(--purple-250);">Sales &amp; Enablement</h3>
+      <ul>
+        <li>Pre-call research briefs with company data and talking points</li>
+        <li>Post-call summaries with action items auto-drafted</li>
+        <li>Pipeline review reports flagging stale deals</li>
+        <li>Battle cards and objection-handling guides</li>
+        <li>Prospect research: ICP matching and outreach drafts</li>
+      </ul>
+    </div>
+    <div class="card-dark">
+      <h3 style="color:var(--magenta-250);">Revenue Operations</h3>
+      <ul>
+        <li>CRM data cleanup and enrichment workflows</li>
+        <li>Lead scoring model design and documentation</li>
+        <li>Funnel analysis reports with charts</li>
+        <li>Process documentation for sales-to-CS handoff</li>
+        <li>Territory planning and account segmentation</li>
+      </ul>
+    </div>
+    <div class="card-dark">
+      <h3 style="color:var(--coral-300);">Operations</h3>
+      <ul>
+        <li>SOPs and process documentation from scratch</li>
+        <li>Vendor comparison spreadsheets</li>
+        <li>Meeting prep: agenda + background from calendar &amp; email</li>
+        <li>Internal comms drafts (all-hands, newsletters)</li>
+        <li>Scheduled daily/weekly status rollups</li>
+      </ul>
+    </div>
+  </div>
+  <span class="page-num">12 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 13 — Recommended Skills by Team ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-purple">Setup Recommendations</span>
+  <h2>Recommended Starter Skills by Team</h2>
+  <p style="margin-bottom:20px;">Start with these foundational skills before building advanced automations. Each one makes every future conversation better.</p>
+  <div class="two-col">
+    <div>
+      <h3>Foundational Skills (Everyone)</h3>
+      <table>
+        <tr><th>Skill</th><th>What It Does</th></tr>
+        <tr><td><strong>atlas-brand-guidelines</strong></td><td>Ensures all content matches Atlas voice, colors, logo, and tone</td></tr>
+        <tr><td><strong>ICP Definition</strong></td><td>Describes your ideal customer profile — grounds all messaging</td></tr>
+        <tr><td><strong>Persona Profiles</strong></td><td>Buyer personas with pain points, motivations, and language</td></tr>
+        <tr><td><strong>Messaging Framework</strong></td><td>Core value props, positioning, competitive differentiators</td></tr>
+      </table>
+      <div class="highlight-box" style="margin-top:16px;">
+        <p><strong>Why foundational skills matter:</strong> When every person on your team works from the same foundation files, outputs are consistent, messaging is aligned, and when something changes, you update one file and the whole system reflects it.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Role-Specific Additions</h3>
+      <table>
+        <tr><th>Team</th><th>Add These Skills</th></tr>
+        <tr><td><strong>Marketing</strong></td><td>Content Creator, SEO Guidelines, Campaign Brief Template</td></tr>
+        <tr><td><strong>Sales</strong></td><td>Call Prep, Objection Handling, Outbound Sequence Writer</td></tr>
+        <tr><td><strong>RevOps</strong></td><td>Data Analysis, Report Template, Process Documentation</td></tr>
+        <tr><td><strong>Enablement</strong></td><td>Training Content Creator, Battle Card Template, Playbook Builder</td></tr>
+        <tr><td><strong>Operations</strong></td><td>SOP Writer, Meeting Prep, Vendor Evaluation Framework</td></tr>
+      </table>
+      <p style="margin-top:16px;font-size:0.95rem;">Remember: skills are reusable building blocks. Your ICP skill will power your Content Creator skill, which powers your Campaign Brief skill, and so on.</p>
+    </div>
+  </div>
+  <span class="page-num">13 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 14 — Best Practices ═══ -->
+<div class="slide bg-gradient-blue">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Best Practices</span>
+  <h2>10 Best Practices for Getting the Most from Claude</h2>
+  <div class="two-col" style="margin-top:16px;">
+    <div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--blue-250);">1. Be specific, not vague.</strong> "Write a 200-word LinkedIn post about EOR compliance in Germany targeting HR Directors" beats "write a LinkedIn post about compliance."</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--blue-250);">2. Use Projects — always.</strong> Never work in a bare conversation when you could use a project with context files and instructions.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--blue-250);">3. Front-load context.</strong> Drop brand docs, ICPs, past examples, and reference materials into your project folder before you start asking for outputs.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--blue-250);">4. Iterate, don't restart.</strong> If the first output is 80% right, ask Claude to fix the 20% — don't start a new conversation.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--blue-250);">5. Give feedback to build memory.</strong> Say "that was perfect" or "never do X again" — Claude remembers and improves over time.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--magenta-250);">6. Use scheduled tasks for recurring work.</strong> Weekly competitive briefs, daily pipeline summaries, monthly report templates — set them once, get them forever.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--magenta-250);">7. Combine skills for complex tasks.</strong> "Use the brand guidelines skill AND the presentation skill to build a deck" produces better results than using either alone.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--magenta-250);">8. Use Chat for quick things.</strong> Don't burn Cowork tokens on a simple question. Chat mode is faster and cheaper for brainstorming and Q&amp;A.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--magenta-250);">9. Review before sharing.</strong> Always check Claude's output for accuracy, brand compliance, and confidential data before sending externally.</p>
+      </div>
+      <div class="card-dark" style="margin-bottom:12px;">
+        <p><strong style="color:var(--magenta-250);">10. Share skills with your team.</strong> If you build a skill that works well, share the file with teammates so everyone benefits from the same quality bar.</p>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">14 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 15 — Prompting Tips ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-blue">Prompting</span>
+  <h2>Prompting Claude — Quick Reference</h2>
+  <p style="margin-bottom:20px;">The quality of Claude's output directly reflects the quality of your input. Here's a framework.</p>
+  <div class="two-col">
+    <div>
+      <h3>The CRAFT Framework</h3>
+      <div class="highlight-box">
+        <p><strong>C</strong>ontext — Who you are, what project this is for, who the audience is</p>
+      </div>
+      <div class="highlight-box purple">
+        <p><strong>R</strong>ole — Tell Claude what role to play: "You are an Atlas content strategist"</p>
+      </div>
+      <div class="highlight-box magenta">
+        <p><strong>A</strong>ction — What specifically you want done: "Write a 300-word blog intro"</p>
+      </div>
+      <div class="highlight-box">
+        <p><strong>F</strong>ormat — How you want the output: "As a .docx with H2 headers"</p>
+      </div>
+      <div class="highlight-box purple">
+        <p><strong>T</strong>one — Specify the voice: "Authoritative but not formal, per Atlas brand guidelines"</p>
+      </div>
+    </div>
+    <div>
+      <h3>Good vs. Weak Prompts</h3>
+      <table>
+        <tr><th>Weak</th><th>Strong</th></tr>
+        <tr>
+          <td style="color:var(--coral-500);">"Write a blog post about EOR"</td>
+          <td style="color:var(--blue-500);">"Write a 600-word blog post targeting HR Directors at mid-market companies (500-2000 employees) considering their first international hire. Focus on the top 3 compliance risks of hiring in Germany without a local entity. Use Atlas brand voice. Save as .docx."</td>
+        </tr>
+        <tr>
+          <td style="color:var(--coral-500);">"Make a presentation"</td>
+          <td style="color:var(--blue-500);">"Create a 10-slide .pptx deck for our Q2 sales kickoff. Audience: AEs and SDRs. Cover new messaging, updated ICP, competitive positioning vs. Deel. Use the Atlas PPT template."</td>
+        </tr>
+      </table>
+      <p style="margin-top:16px;font-size:0.95rem;">For more prompting guidance: docs.claude.com — Prompt Engineering</p>
+    </div>
+  </div>
+  <span class="page-num">15 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 16 — Scheduled Tasks ═══ -->
+<div class="slide bg-purple">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Automation</span>
+  <h2>Scheduled Tasks — Set It and Forget It</h2>
+  <p class="subtitle">One of Cowork's most powerful features. Claude runs tasks on a schedule — no manual prompting needed.</p>
+  <div class="three-col" style="margin-top:24px;">
+    <div class="card-dark">
+      <h3>How to Set Up</h3>
+      <p>In any Cowork conversation, ask Claude to create a scheduled task. You can also go to your project settings to manage existing schedules. Claude will confirm the task, frequency, and output location.</p>
+      <p style="margin-top:12px;"><strong>Example:</strong> "Schedule a weekly competitive intelligence brief every Monday at 8am. Save it as a .docx in this project folder."</p>
+    </div>
+    <div class="card-dark">
+      <h3>Marketing Ideas</h3>
+      <ul>
+        <li>Weekly competitive landscape summary</li>
+        <li>Daily content calendar reminder with draft ideas</li>
+        <li>Monthly campaign performance rollup</li>
+        <li>Bi-weekly SEO keyword tracking report</li>
+      </ul>
+    </div>
+    <div class="card-dark">
+      <h3>Sales &amp; RevOps Ideas</h3>
+      <ul>
+        <li>Daily pipeline health snapshot</li>
+        <li>Weekly stale-deal alerts</li>
+        <li>Monthly win/loss analysis summary</li>
+        <li>Quarterly territory planning data refresh</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-dark" style="margin-top:20px;text-align:center;">
+    <p><strong>Requirement:</strong> Cowork must be running (desktop app open) at the scheduled time for the task to execute. If missed, it runs at the next available time.</p>
+  </div>
+  <span class="page-num">16 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 17 — Security & Compliance ═══ -->
+<div class="slide bg-light">
+  <span class="tag tag-coral" style="background:var(--coral-500);">Important</span>
+  <h2>Security, Compliance &amp; Data Handling</h2>
+  <p style="max-width:800px;margin-bottom:24px;">Claude is a powerful tool, but it requires responsible use — especially at a company that handles global HR and compliance data.</p>
+  <div class="two-col">
+    <div>
+      <h3 style="color:var(--coral-500);">What NOT to Share with Claude</h3>
+      <ul>
+        <li><strong>PII / employee data</strong> — social security numbers, passport numbers, salary data, medical info</li>
+        <li><strong>Client contracts &amp; financials</strong> — unless explicitly approved by Legal</li>
+        <li><strong>Credentials &amp; passwords</strong> — API keys, login credentials, tokens</li>
+        <li><strong>Confidential strategy docs</strong> — board materials, M&amp;A information, unreleased financials</li>
+      </ul>
+      <div class="highlight-box magenta" style="margin-top:16px;">
+        <p><strong>Rule of thumb:</strong> If you wouldn't email it to an external consultant, don't share it with Claude.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Best Practices</h3>
+      <ul>
+        <li><strong>Review before sharing externally.</strong> Always check Claude's output for accuracy and unintended data exposure before sending outside Atlas.</li>
+        <li><strong>Use Team/Enterprise plans</strong> for admin controls, SSO, and data governance policies.</li>
+        <li><strong>Don't publish artifacts</strong> with internal metrics, client names, or strategic data.</li>
+        <li><strong>Check connector permissions.</strong> When connecting tools like Slack or email, understand what data Claude can access.</li>
+        <li><strong>Report concerns</strong> to your manager or IT if anything seems off.</li>
+      </ul>
+    </div>
+  </div>
+  <span class="page-num">17 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 18 — Resources ═══ -->
+<div class="slide bg-navy">
+  <span class="tag" style="background:rgba(255,255,255,0.15);color:white;">Resources</span>
+  <h2>Resources &amp; Links</h2>
+  <p class="subtitle">Bookmark these for quick reference as you get started.</p>
+  <div class="two-col" style="margin-top:20px;">
+    <div>
+      <h3 style="color:var(--blue-250);">Official Claude Resources</h3>
+      <table>
+        <tr><td><a href="https://claude.com/download">Claude Desktop App Download</a></td></tr>
+        <tr><td><a href="https://support.claude.com/en/articles/13345190-get-started-with-cowork">Getting Started with Cowork — Help Center</a></td></tr>
+        <tr><td><a href="https://claude.com/resources/tutorials/cowork-onboarding-guide">Cowork Onboarding Guide — Claude.com</a></td></tr>
+        <tr><td><a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-cowork">Organizing Tasks with Projects — Help Center</a></td></tr>
+        <tr><td><a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Desktop App: Chat, Cowork, Code</a></td></tr>
+        <tr><td><a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them">What Are Artifacts — Help Center</a></td></tr>
+        <tr><td><a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview">Prompt Engineering Guide — Docs</a></td></tr>
+        <tr><td><a href="https://code.claude.com/docs/en/plugins">Creating Plugins — Claude Code Docs</a></td></tr>
+        <tr><td><a href="https://anthropic.skilljar.com/introduction-to-claude-cowork">Introduction to Claude Cowork — Anthropic Academy</a></td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="color:var(--magenta-250);">Community &amp; Learning</h3>
+      <table>
+        <tr><td><a href="https://newsletter.mkt1.co/p/build-marketing-strategy-skill-in-claude-code">Building Marketing Skills in Claude — MKT1</a></td></tr>
+        <tr><td><a href="https://databar.ai/blog/article/claude-cowork-for-gtm-what-sales-and-revops-teams-need-to-know">Claude Cowork for GTM Teams — Databar</a></td></tr>
+        <tr><td><a href="https://aiblewmymind.substack.com/p/claude-skills-36-examples">39 Claude Skills Examples — AIble w/ My Mind</a></td></tr>
+        <tr><td><a href="https://www.thevibemarketer.com/skills">Marketing Methodology Skills — The Vibe Marketer</a></td></tr>
+        <tr><td><a href="https://www.builder.io/blog/claude-code-tips-best-practices">50 Claude Tips &amp; Best Practices — Builder.io</a></td></tr>
+        <tr><td><a href="https://findskill.ai/blog/claude-cowork-guide/">Cowork Guide: Skills, Plugins &amp; Setup — FindSkill.ai</a></td></tr>
+      </table>
+      <h3 style="color:var(--magenta-250);margin-top:20px;">Atlas Internal</h3>
+      <table>
+        <tr><td><a href="https://brand.atlashxm.com/">Atlas Brand Portal</a> — logos, colors, templates</td></tr>
+        <tr><td>Atlas Brand SharePoint — PPT templates, font files</td></tr>
+        <tr><td>Contact: brand@atlashxm.com for assets</td></tr>
+      </table>
+    </div>
+  </div>
+  <span class="page-num">18 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 19 — Quick-Start Checklist ═══ -->
+<div class="slide bg-white">
+  <span class="tag tag-blue">Action Items</span>
+  <h2>Your Quick-Start Checklist</h2>
+  <p style="margin-bottom:24px;">Complete these steps this week to get up and running with Claude at Atlas.</p>
+  <div class="two-col">
+    <div>
+      <h3>This Week</h3>
+      <div style="font-size:1.1rem;line-height:2.2;">
+        <p>&#9744; Download the Claude Desktop App</p>
+        <p>&#9744; Set up your Global Instructions with your role and preferences</p>
+        <p>&#9744; Create your first Project with a working folder</p>
+        <p>&#9744; Add the atlas-brand-guidelines skill to your project</p>
+        <p>&#9744; Connect at least one tool (Calendar, Slack, or Asana)</p>
+        <p>&#9744; Complete one real task in Cowork mode</p>
+      </div>
+    </div>
+    <div>
+      <h3>This Month</h3>
+      <div style="font-size:1.1rem;line-height:2.2;">
+        <p>&#9744; Create or install 2-3 role-specific skills</p>
+        <p>&#9744; Set up at least one scheduled task</p>
+        <p>&#9744; Try creating an Artifact (dashboard, template, or tool)</p>
+        <p>&#9744; Share a skill with a teammate</p>
+        <p>&#9744; Build a project with your full team context files</p>
+        <p>&#9744; Experiment with combining skills for complex tasks</p>
+      </div>
+      <div class="highlight-box" style="margin-top:20px;">
+        <p><strong>Need help?</strong> Ask Claude to "create a new skill for [your task]" or "help me set up a project for [your workstream]" — it will walk you through it step by step.</p>
+      </div>
+    </div>
+  </div>
+  <span class="page-num">19 / 20</span>
+</div>
+
+<!-- ═══ SLIDE 20 — Closing ═══ -->
+<div class="slide bg-gradient-purple">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;height:100%;">
+    <div style="margin-bottom: 40px;">
+      <svg width="280" height="72" viewBox="0 0 796 208" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mEnd" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="631" height="208"><path d="M630.113 0H0V208H630.113V0Z" fill="white"/></mask><g mask="url(#mEnd)"><path fill-rule="evenodd" clip-rule="evenodd" d="M131.332 0C141.462 0 149.67 8.189 149.67 18.338C149.67 28.489 141.482 36.677 131.332 36.677C121.182 36.677 112.994 28.489 112.994 18.338C112.963 8.209 121.182 0 131.332 0Z" fill="#BA33CA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22.376 0C32.505 0 40.714 8.189 40.714 18.338C40.714 28.489 32.526 36.677 22.376 36.677C12.226 36.677 4.037 28.468 4.037 18.338C4.037 8.209 12.226 0 22.376 0Z" fill="#0559FA"/><path fill-rule="evenodd" clip-rule="evenodd" d="M76.854 0C86.983 0 95.192 8.189 95.192 18.338C95.192 28.489 87.004 36.677 76.854 36.677C66.704 36.677 58.516 28.489 58.516 18.338C58.485 8.209 66.704 0 76.854 0Z" fill="#5827E3"/><path d="M67.994 56.905C30.75 56.905 0 89.647 0 132.055C0 174.462 30.76 207.205 68.025 207.205C87.087 207.205 101.037 200.648 110.443 189.858V203.23H153.15V60.89L110.412 74.262C101.016 63.441 87.087 56.915 67.994 56.915V56.905ZM76.554 166.77C56.905 166.77 42.707 153.398 42.707 132.034C42.707 110.67 56.956 97.299 76.554 97.299C96.153 97.299 110.402 110.67 110.402 132.034C110.402 153.398 96.184 166.77 76.554 166.77ZM219.585 40.952L176.878 53.735V152.211C176.878 192.037 193.09 208.847 248.89 203.157V164.488C230.128 165.613 219.554 164.488 219.554 152.241V101.883H248.931V60.89H219.596V40.952H219.575H219.585ZM273.114 203.219H315.82V12.68L273.114 25.463V203.23V203.209V203.219ZM560.105 102.461C560.105 97.33 564.648 94.48 572.052 94.48C581.448 94.48 587.137 99.612 591.113 107.015L627.562 87.365C615.616 67.148 595.119 56.905 572.062 56.905C542.479 56.905 516.262 72.579 516.262 103.587C516.262 152.82 586.27 144.58 586.27 160.223C586.27 165.913 581.138 169.052 570.895 169.052C558.36 169.052 550.419 163.073 546.702 152.252L509.716 173.316C520.826 196.394 542.438 207.164 570.895 207.164C601.655 207.164 630.113 193.203 630.113 160.481C630.113 107.851 560.105 118.673 560.105 102.461ZM404.673 56.905C367.387 56.905 336.647 89.627 336.647 132.055C336.647 174.483 367.407 207.205 404.673 207.205C423.734 207.205 437.684 200.648 447.091 189.858V203.23H489.797V60.89L447.091 74.262C437.694 63.441 423.765 56.915 404.673 56.915V56.905ZM413.233 166.77C393.583 166.77 379.385 153.398 379.385 132.034C379.385 110.67 393.635 97.299 413.233 97.299C432.831 97.299 447.08 110.67 447.08 132.034C447.08 153.398 432.862 166.77 413.233 166.77Z" fill="#F8F8F8"/></g><path d="M745.605 56.409H754.685L764.129 94.958H764.71L786.842 56.409H795.923L787.69 106H780.571L786.552 70.114H786.092L765.509 105.927H759.577L750.956 70.09H750.496L744.491 106H737.372L745.605 56.409Z" fill="#F8F8F8"/><path d="M705.276 56.409L713.944 75.804H714.332L729.393 56.409H738.183L718.666 81.204L730.047 106H721.402L712.685 86.871H712.298L697.188 106H688.398L708.375 81.204L696.728 56.409H705.276Z" fill="#F8F8F8"/><path d="M641.349 106L649.582 56.409H657.064L653.48 77.96H678.203L681.787 56.409H689.294L681.061 106H673.554L677.138 84.376H652.415L648.831 106H641.349Z" fill="#F8F8F8"/></svg>
+    </div>
+    <h1 style="font-size:2.8rem;">Start Building with Claude Today</h1>
+    <p class="subtitle" style="max-width:700px;margin-top:8px;">Claude gets smarter every time you use it. The skills you build, the memory it accumulates, and the workflows you automate will compound over time into a real productivity advantage for your team.</p>
+    <div style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+      <span style="display:inline-block;background:var(--blue-500);color:white;padding:14px 32px;border-radius:8px;font-weight:600;font-size:1.05rem;">claude.com/download</span>
+      <span style="display:inline-block;background:rgba(255,255,255,0.15);color:white;padding:14px 32px;border-radius:8px;font-weight:600;font-size:1.05rem;border:1px solid rgba(255,255,255,0.3);">support.claude.com</span>
+    </div>
+    <p class="tagline" style="margin-top:40px;font-size:1.2rem;">For People, By People</p>
+    <p class="small" style="margin-top:12px;">Questions? Reach out to the GTM AI &amp; Automation team.</p>
+  </div>
+  <span class="page-num">20 / 20</span>
+</div>
+
+</body>
+</html>

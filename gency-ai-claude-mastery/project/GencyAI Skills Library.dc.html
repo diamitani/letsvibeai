@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Free Claude Skills Library — GencyAI</title>
+<meta name="description" content="Download free, production-tested Claude skills: agent frameworks, automation, GTM, design and productivity. SKILL.md files that work in Claude Code, Cursor, Gemini and more.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./skills-data.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"GencyAI Claude Skills Library","description":"Free downloadable SKILL.md files for Claude and other AI agents.","publisher":{"@type":"Organization","name":"GencyAI","url":"https://gencyai.com"},"isAccessibleForFree":true}</script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F5F4EF;color:#14224A;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#14224A;text-decoration:none}
+a:hover{color:#B8741A}
+*{box-sizing:border-box}
+input::placeholder{color:#8A8FA3}
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#14224A"></rect><text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="34" font-weight="600" fill="#E9A93B">G</text></svg></template>
+
+<div style="min-height:100vh;background:#F5F4EF">
+
+<nav style="position:sticky;top:0;z-index:50;background:rgba(245,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid #E2E0D8">
+  <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <a href="GencyAI Claude Mastery.dc.html" style="display:flex;align-items:baseline;gap:6px">
+      <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;color:#14224A">Gency</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#14224A;border:1px solid #14224A;padding:1px 5px;border-radius:4px">AI</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+      <a href="GencyAI Claude Mastery.dc.html#library">Videos</a>
+      <a href="GencyAI Claude Mastery.dc.html#learn">Learn</a>
+      <a href="GencyAI Skills Library.dc.html" style="color:#B8741A">Skills</a>
+      <a href="https://salesgency.com" target="_blank" rel="noopener">SalesGency</a>
+      <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;padding:10px 18px;border-radius:999px">Work with GencyAI</a>
+    </div>
+  </div>
+</nav>
+
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+<header style="max-width:1200px;margin:0 auto;padding:64px 24px 28px">
+  <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">
+    <span style="width:8px;height:8px;border-radius:50%;background:#E9A93B"></span>
+    <span>Skills library · {{ total }} free skills · no sign-up</span>
+  </div>
+  <h1 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(40px,6vw,80px);line-height:0.98;letter-spacing:-0.035em;margin:20px 0 18px;max-width:16ch;text-wrap:balance">Skills you can drop into Claude today.</h1>
+  <p style="font-size:18px;line-height:1.55;color:#3B4466;margin:0 0 36px;max-width:56ch;text-wrap:pretty">Production-tested SKILL.md files from our own builds. Download one, add it to Claude, and it knows how to do the job.</p>
+  <div style="display:flex;gap:10px;align-items:center;background:#FFFFFF;border:1px solid #E2E0D8;border-radius:999px;padding:6px 6px 6px 22px;max-width:640px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#8A8FA3">/</span>
+    <input value="{{ query }}" onChange="{{ setQuery }}" placeholder="Search skills — memory, n8n, diagrams, HubSpot…" aria-label="Search skills" style="flex:1;min-width:0;border:0;background:transparent;padding:12px 4px;font-family:inherit;font-size:16px;color:#14224A;outline:none">
+    <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearQuery }}" style="border:0;background:#F0EDE3;color:#14224A;cursor:pointer;border-radius:999px;padding:10px 16px;font-family:inherit;font-weight:700;font-size:13px">Clear</button></sc-if>
+  </div>
+</header>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 0;border-top:1px solid #E2E0D8;border-bottom:1px solid #E2E0D8">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+        <button onClick="{{ c.select }}" style="border:1.5px solid #14224A;cursor:pointer;padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:700;font-size:13px;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }} <span style="opacity:0.6;font-weight:600">{{ c.count }}</span></button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <button onClick="{{ toggleCore }}" style="display:flex;align-items:center;gap:10px;border:0;background:transparent;cursor:pointer;font-family:inherit;font-weight:700;font-size:13px;color:#14224A">
+        <span style="width:36px;height:20px;border-radius:999px;padding:2px;display:flex;background:{{ coreTrack }};justify-content:{{ coreAlign }}"><span style="width:16px;height:16px;border-radius:50%;background:#FFFFFF"></span></span>
+        <span>Core only</span>
+      </button>
+      <button onClick="{{ toggleSort }}" style="border:1px solid #D5D2C7;background:#FFFFFF;cursor:pointer;padding:9px 14px;border-radius:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#14224A">Sort: {{ sortLabel }}</button>
+    </div>
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078;padding:18px 0">{{ resultLabel }}</div>
+</section>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px 72px">
+  <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:56px 28px;text-align:center">
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px">No skills match that.</div>
+      <p style="color:#3B4466;margin:10px 0 20px">Try a broader word, or ask us to build the one you need.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button onClick="{{ resetAll }}" style="border:1.5px solid #14224A;background:transparent;cursor:pointer;padding:12px 20px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;color:#14224A">Reset filters</button>
+        <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;padding:13px 20px;border-radius:999px;font-weight:700;font-size:14px">Request a custom skill</a>
+      </div>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:16px">
+    <sc-for list="{{ pageItems }}" as="s" hint-placeholder-count="12">
+      <div onClick="{{ s.open }}" role="link" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px;cursor:pointer;min-height:250px;transition:transform .2s, box-shadow .2s, border-color .2s" style-hover="transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,34,74,0.08);border-color:#14224A">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6078">{{ s.category }}</span>
+          <sc-if value="{{ s.core }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;background:#E9A93B;color:#14224A;padding:3px 7px;border-radius:5px">CORE</span></sc-if>
+        </div>
+        <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:23px;letter-spacing:-0.015em;line-height:1.15;word-break:break-word">{{ s.name }}</div>
+        <p style="margin:0;color:#3B4466;font-size:15px;line-height:1.55;flex:1;text-wrap:pretty">{{ s.tagline }}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:14px;border-top:1px solid #EFECE3">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5A6078">{{ s.compatLabel }}</span>
+          <a href="{{ s.raw }}" target="_blank" rel="noopener" download="SKILL.md" onClick="{{ stop }}" style="background:#14224A;color:#F5F4EF;font-weight:700;font-size:13px;padding:9px 14px;border-radius:999px">Download</a>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ multiPage }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:40px;flex-wrap:wrap">
+      <button onClick="{{ prevPage }}" disabled="{{ atFirst }}" style="border:1px solid #D5D2C7;background:#FFFFFF;cursor:pointer;padding:10px 16px;border-radius:999px;font-family:inherit;font-weight:700;font-size:13px;color:#14224A;opacity:{{ prevOpacity }}">← Prev</button>
+      <sc-for list="{{ pages }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.go }}" style="width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:13px;background:{{ p.bg }};color:{{ p.fg }}">{{ p.n }}</button>
+      </sc-for>
+      <button onClick="{{ nextPage }}" disabled="{{ atLast }}" style="border:1px solid #D5D2C7;background:#FFFFFF;cursor:pointer;padding:10px 16px;border-radius:999px;font-family:inherit;font-weight:700;font-size:13px;color:#14224A;opacity:{{ nextOpacity }}">Next →</button>
+    </div>
+  </sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+<section style="max-width:1200px;margin:0 auto;padding:40px 24px 56px">
+  <div style="display:flex;gap:8px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078;margin-bottom:28px;flex-wrap:wrap">
+    <a href="#" onClick="{{ goHome }}" style="color:#5A6078">← All skills</a><span>/</span><span>{{ skill.category }}</span><span>/</span><span style="color:#14224A">{{ skill.name }}</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px;align-items:start">
+    <div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#5A6078">{{ skill.category }}</span>
+        <sc-if value="{{ skill.core }}" hint-placeholder-val="{{ false }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;background:#E9A93B;color:#14224A;padding:3px 7px;border-radius:5px">CORE SKILL</span></sc-if>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;border:1px solid #14224A;padding:2px 7px;border-radius:5px">FREE</span>
+      </div>
+      <h1 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(38px,5.4vw,68px);line-height:1;letter-spacing:-0.035em;margin:18px 0 18px;word-break:break-word">{{ skill.name }}</h1>
+      <p style="font-size:20px;line-height:1.5;color:#3B4466;margin:0 0 30px;max-width:40ch;text-wrap:pretty">{{ skill.tagline }}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="{{ skill.raw }}" target="_blank" rel="noopener" download="SKILL.md" style="background:#E9A93B;color:#14224A;font-weight:700;padding:16px 26px;border-radius:999px;font-size:15px">Download SKILL.md — free</a>
+        <a href="{{ skill.github }}" target="_blank" rel="noopener" style="border:1.5px solid #14224A;color:#14224A;font-weight:700;padding:15px 24px;border-radius:999px;font-size:15px">View on GitHub</a>
+      </div>
+
+      <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:24px;margin:52px 0 12px">What it does</h2>
+      <p style="font-size:16px;line-height:1.7;color:#3B4466;margin:0;max-width:64ch;text-wrap:pretty">{{ skill.description }}</p>
+
+      <sc-if value="{{ skill.hasTriggers }}" hint-placeholder-val="{{ false }}">
+        <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:24px;margin:40px 0 14px">Say this to trigger it</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <sc-for list="{{ skill.triggers }}" as="t" hint-placeholder-count="4">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#FFFFFF;border:1px solid #E2E0D8;padding:8px 12px;border-radius:8px">"{{ t }}"</span>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:24px;margin:40px 0 14px">Install in two minutes</h2>
+      <div style="display:flex;flex-direction:column;gap:1px;background:#E2E0D8;border:1px solid #E2E0D8;border-radius:16px;overflow:hidden">
+        <div style="background:#FFFFFF;padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;color:#B8741A">01</span><span style="line-height:1.55"><strong>Claude app:</strong> download the file, then add it under Settings → Capabilities → Skills.</span></div>
+        <div style="background:#FFFFFF;padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;color:#B8741A">02</span><span style="line-height:1.55;word-break:break-word"><strong>Claude Code:</strong> save it to <code style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#F0EDE3;padding:2px 6px;border-radius:4px">~/.claude/skills/{{ skill.name }}/SKILL.md</code></span></div>
+        <div style="background:#FFFFFF;padding:18px 20px;display:grid;grid-template-columns:36px 1fr;gap:10px"><span style="font-family:'IBM Plex Mono',monospace;color:#B8741A">03</span><span style="line-height:1.55"><strong>Any other agent:</strong> paste the install prompt into a new chat.</span></div>
+      </div>
+    </div>
+
+    <aside style="display:flex;flex-direction:column;gap:16px;position:sticky;top:90px">
+      <div style="background:#14224A;color:#F5F4EF;border-radius:20px;padding:26px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:#E9A93B">INSTALL PROMPT</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;color:#C9CFE3;background:#0E1834;border-radius:12px;padding:16px;margin:14px 0;word-break:break-all">{{ skill.install }}</div>
+        <button onClick="{{ copyInstall }}" style="width:100%;border:0;cursor:pointer;background:#E9A93B;color:#14224A;font-family:inherit;font-weight:700;font-size:14px;padding:14px;border-radius:999px">{{ copyLabel }}</button>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#AEB6D3;margin:22px 0 10px">WORKS WITH</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ skill.compat }}" as="c" hint-placeholder-count="8"><span style="font-size:12px;font-weight:600;border:1px solid #33457A;padding:5px 10px;border-radius:999px">{{ c }}</span></sc-for>
+        </div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:26px">
+        <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:21px;line-height:1.2">Want this tuned to your stack?</div>
+        <p style="margin:10px 0 18px;color:#3B4466;font-size:15px;line-height:1.55">GencyAI adapts skills to your tools, data and team, then deploys them with audit trails.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;font-weight:700;padding:12px 18px;border-radius:999px;font-size:14px">Talk to GencyAI</a>
+          <a href="https://salesgency.com" target="_blank" rel="noopener" style="border:1.5px solid #14224A;font-weight:700;padding:11px 18px;border-radius:999px;font-size:14px">SalesGency</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px 72px">
+  <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;margin-bottom:18px">More in {{ skill.category }}</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:14px">
+    <sc-for list="{{ related }}" as="r" hint-placeholder-count="3">
+      <div onClick="{{ r.open }}" role="link" tabindex="0" style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:16px;padding:20px;cursor:pointer" style-hover="border-color:#14224A">
+        <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:19px;word-break:break-word">{{ r.name }}</div>
+        <p style="margin:8px 0 0;color:#3B4466;font-size:14px;line-height:1.5">{{ r.tagline }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<section style="padding:0 24px 24px">
+  <div style="max-width:1200px;margin:0 auto;background:#14224A;color:#F5F4EF;border-radius:28px;padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;align-items:end">
+    <div>
+      <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(32px,4.4vw,54px);line-height:1;letter-spacing:-0.03em;margin:0;text-wrap:balance">New to skills? Start with the free videos.</h2>
+      <p style="font-size:17px;line-height:1.55;color:#C9CFE3;margin:16px 0 0;max-width:46ch">Lesson 04 walks through writing, testing and sharing a SKILL.md from scratch.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a href="GencyAI Claude Mastery.dc.html#library" style="background:#E9A93B;color:#14224A;font-weight:700;padding:16px 26px;border-radius:999px;font-size:15px">Watch the lessons</a>
+      <a href="https://gencyai.com" target="_blank" rel="noopener" style="border:1.5px solid #F5F4EF;color:#F5F4EF;font-weight:700;padding:15px 24px;border-radius:999px;font-size:15px">Build a custom skill with us</a>
+    </div>
+  </div>
+</section>
+
+<footer style="max-width:1200px;margin:0 auto;padding:40px 24px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:14px;color:#5A6078">
+  <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:#14224A">Gency</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#14224A;border:1px solid #14224A;padding:0 4px;border-radius:3px">AI</span></div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+    <a href="https://gencyai.com" target="_blank" rel="noopener" style="font-weight:600">gencyai.com</a>
+    <a href="https://salesgency.com" target="_blank" rel="noopener" style="font-weight:600">salesgency.com</a>
+    <span>© 2026 GencyAI. Independent resource — not affiliated with Anthropic.</span>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PER_PAGE = 12;
+class Component extends DCLogic {
+  state = { query: "", cat: "All", core: false, sort: "featured", page: 1, slug: null, copied: false };
+
+  componentDidMount() {
+    this.onHash = () => {
+      const m = (window.location.hash || "").match(/^#\/skill\/(.+)$/);
+      this.setState({ slug: m ? decodeURIComponent(m[1]) : null, copied: false });
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", this.onHash);
+    this.onHash();
+  }
+  componentWillUnmount() { window.removeEventListener("hashchange", this.onHash); }
+
+  open(slug) { window.location.hash = "/skill/" + encodeURIComponent(slug); }
+
+  renderVals() {
+    const all = window.GENCY_SKILLS || [];
+    const { query, cat, core, sort, page, slug } = this.state;
+    const q = query.trim().toLowerCase();
+    const base = all.filter(s => (!core || s.core) && (!q || (s.name + " " + s.tagline + " " + s.description + " " + s.category).toLowerCase().includes(q)));
+    let list = base.filter(s => cat === "All" || s.category === cat);
+    list = sort === "az" ? [...list].sort((a, b) => a.name.localeCompare(b.name)) : [...list].sort((a, b) => (b.core - a.core));
+    const pagesN = Math.max(1, Math.ceil(list.length / PER_PAGE));
+    const pg = Math.min(page, pagesN);
+    const start = (pg - 1) * PER_PAGE;
+    const catNames = ["All", ...Array.from(new Set(all.map(s => s.category)))];
+    const cats = catNames.map(c => ({
+      label: c, count: c === "All" ? base.length : base.filter(s => s.category === c).length,
+      bg: c === cat ? "#14224A" : "transparent", fg: c === cat ? "#F5F4EF" : "#14224A",
+      select: () => this.setState({ cat: c, page: 1 })
+    }));
+    const card = s => ({ ...s, compatLabel: s.compat.length + " platforms", open: () => this.open(s.slug) });
+    const skillRaw = all.find(s => s.slug === slug);
+    const skill = skillRaw ? { ...skillRaw, hasTriggers: skillRaw.triggers.length > 0, triggers: Array.from(new Set(skillRaw.triggers)) } : { name: "", category: "", tagline: "", description: "", compat: [], triggers: [], install: "", raw: "#", github: "#" };
+    const related = skillRaw ? all.filter(s => s.category === skillRaw.category && s.slug !== skillRaw.slug).slice(0, 3).map(card) : [];
+    return {
+      total: all.length,
+      isList: !skillRaw, isDetail: !!skillRaw,
+      query, hasQuery: !!q,
+      setQuery: e => this.setState({ query: e.target.value, page: 1 }),
+      clearQuery: () => this.setState({ query: "", page: 1 }),
+      cats,
+      toggleCore: () => this.setState(s => ({ core: !s.core, page: 1 })),
+      coreTrack: core ? "#14224A" : "#D5D2C7", coreAlign: core ? "flex-end" : "flex-start",
+      toggleSort: () => this.setState(s => ({ sort: s.sort === "az" ? "featured" : "az" })),
+      sortLabel: sort === "az" ? "A–Z" : "Core first",
+      resultLabel: list.length === 0 ? "0 results" : `Showing ${start + 1}–${Math.min(start + PER_PAGE, list.length)} of ${list.length}`,
+      empty: list.length === 0,
+      pageItems: list.slice(start, start + PER_PAGE).map(card),
+      multiPage: pagesN > 1,
+      pages: Array.from({ length: pagesN }, (_, i) => ({ n: i + 1, bg: i + 1 === pg ? "#14224A" : "transparent", fg: i + 1 === pg ? "#F5F4EF" : "#14224A", go: () => { this.setState({ page: i + 1 }); window.scrollTo({ top: 300, behavior: "smooth" }); } })),
+      atFirst: pg === 1, atLast: pg === pagesN,
+      prevOpacity: pg === 1 ? 0.4 : 1, nextOpacity: pg === pagesN ? 0.4 : 1,
+      prevPage: () => this.setState({ page: Math.max(1, pg - 1) }),
+      nextPage: () => this.setState({ page: Math.min(pagesN, pg + 1) }),
+      resetAll: () => this.setState({ query: "", cat: "All", core: false, page: 1 }),
+      stop: e => e.stopPropagation(),
+      goHome: e => { e.preventDefault(); history.pushState("", document.title, window.location.pathname + window.location.search); this.setState({ slug: null }); },
+      skill, related,
+      copyInstall: () => { try { navigator.clipboard.writeText(skill.install); } catch (e) {} this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 1800); },
+      copyLabel: this.state.copied ? "Copied" : "Copy install prompt"
+    };
+  }
+}
+</script>
+</body>
+</html>

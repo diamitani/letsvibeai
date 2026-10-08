@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Claude Skills — Atlas HXM Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-100: #DAE6FE;
+    --blue-250: #82ACFC;
+    --blue-500: #0559FA;
+    --blue-900: #06195E;
+    --purple-100: #E6DFFB;
+    --purple-250: #AB93F1;
+    --purple-500: #5827E3;
+    --purple-900: #1E046A;
+    --magenta-100: #F5E0F7;
+    --magenta-250: #DD98E5;
+    --magenta-500: #BA33CA;
+    --magenta-900: #48114F;
+    --coral-100: #FFC6C5;
+    --coral-300: #FF8F77;
+    --coral-500: #FF595A;
+    --gold-300: #F6B942;
+    --gold-500: #FF782C;
+    --gray-50: #F8F8F8;
+    --gray-300: #E9E9E9;
+    --gray-900: #160629;
+    --white: #FFFFFF;
+    --pad-x: 72px;
+    --pad-y: 52px;
+  }
+
+  body {
+    font-family: 'Poppins', 'Gelion', sans-serif;
+    font-variant-ligatures: none;
+    background: var(--gray-900);
+    color: var(--gray-900);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── Slide Engine ── */
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: var(--pad-y) var(--pad-x); padding-bottom: 68px;
+    opacity: 0; pointer-events: none; transition: opacity .4s ease;
+    overflow-y: auto; overflow-x: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide.vc { justify-content: center; }
+
+  /* ── Backgrounds ── */
+  .bg-w { background: var(--white); }
+  .bg-navy { background: var(--gray-900); color: var(--white); }
+  .bg-blue { background: var(--blue-900); color: var(--white); }
+  .bg-purple { background: var(--purple-900); color: var(--white); }
+  .bg-magenta { background: var(--magenta-900); color: var(--white); }
+  .bg-gb { background: linear-gradient(135deg, var(--blue-900), var(--purple-900)); color: var(--white); }
+  .bg-gp { background: linear-gradient(135deg, var(--purple-900), var(--magenta-900)); color: var(--white); }
+  .bg-light { background: var(--gray-50); }
+
+  /* ── Typography ── */
+  h1 { font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 12px; }
+  h2 { font-size: clamp(1.2rem, 2.6vw, 1.9rem); font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+  h3 { font-size: clamp(0.95rem, 1.6vw, 1.2rem); font-weight: 600; line-height: 1.3; margin-bottom: 8px; }
+  p, li { font-size: clamp(0.8rem, 1.15vw, 0.98rem); line-height: 1.55; }
+  .sub { font-size: clamp(0.88rem, 1.3vw, 1.1rem); opacity: .8; margin-bottom: 16px; }
+  .sm { font-size: .78rem; opacity: .65; }
+  code { background: rgba(0,0,0,.06); padding: 2px 6px; border-radius: 4px; font-size: .88em; }
+  .bg-navy code, .bg-blue code, .bg-purple code, .bg-gb code, .bg-gp code { background: rgba(255,255,255,.12); }
+
+  .tag { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: .75rem; font-weight: 600; margin-bottom: 10px; }
+  .tag-b { background: var(--blue-500); color: white; }
+  .tag-p { background: var(--purple-500); color: white; }
+  .tag-m { background: var(--magenta-500); color: white; }
+  .tag-g { background: rgba(255,255,255,.12); color: white; }
+
+  /* ── Layout ── */
+  .cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .cols-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+  .card {
+    background: var(--white); border-radius: 10px; padding: 20px;
+    box-shadow: 0 2px 10px rgba(22,6,41,.06);
+  }
+  .card-dk {
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px; padding: 20px;
+  }
+  .card h3, .card p { color: var(--gray-900); }
+
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 3px 0 3px 20px; position: relative; }
+  ul li::before {
+    content: ''; position: absolute; left: 0; top: 10px;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--blue-500);
+  }
+  .bg-navy ul li::before, .bg-blue ul li::before, .bg-purple ul li::before,
+  .bg-gb ul li::before, .bg-gp ul li::before { background: var(--blue-250); }
+
+  ol { padding-left: 22px; }
+  ol li { padding: 3px 0; }
+  ol li::before { display: none; }
+  ol li::marker { color: var(--blue-500); font-weight: 700; }
+
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--blue-500); color: white; font-weight: 700; font-size: .9rem;
+    margin-bottom: 8px; flex-shrink: 0;
+  }
+  .num.p { background: var(--purple-500); }
+  .num.m { background: var(--magenta-500); }
+  .num.c { background: var(--coral-500); }
+
+  .accent { width: 50px; height: 3px; border-radius: 2px; margin-bottom: 14px; }
+  .accent-b { background: var(--blue-500); }
+  .accent-p { background: var(--purple-500); }
+
+  .hl {
+    border-left: 3px solid var(--blue-500); background: var(--blue-100);
+    padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 10px 0;
+  }
+  .hl.p { border-left-color: var(--purple-500); background: var(--purple-100); }
+  .hl.m { border-left-color: var(--magenta-500); background: var(--magenta-100); }
+  .hl.dk { border-left-color: var(--blue-250); background: rgba(255,255,255,.06); }
+
+  .codeblock {
+    background: var(--gray-900); color: var(--gray-50); border-radius: 8px;
+    padding: 16px 18px; font-family: 'Courier New', monospace; font-size: .78rem;
+    line-height: 1.6; overflow-x: auto; white-space: pre-wrap;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: clamp(.72rem, 1vw, .88rem); margin-top: 6px; }
+  th { text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid var(--blue-500); }
+  td { padding: 7px 12px; border-bottom: 1px solid var(--gray-300); vertical-align: top; }
+  .bg-navy th { border-bottom-color: var(--blue-250); }
+  .bg-navy td { border-bottom-color: rgba(255,255,255,.1); }
+
+  .ct { width: 100%; min-width: 580px; }
+  .ct th { background: var(--blue-500); color: white; padding: 10px 14px; }
+  .ct th:first-child { border-radius: 6px 0 0 0; }
+  .ct th:last-child { border-radius: 0 6px 0 0; }
+  .ct tr:nth-child(even) td { background: var(--blue-100); }
+
+  /* ── Top elements ── */
+  .tagline { position: absolute; top: 18px; left: 24px; font-size: .68rem; opacity: .55; z-index: 10; }
+  .logo-top { position: absolute; top: 16px; right: 24px; z-index: 10; }
+  .logo-top svg { width: 120px; height: auto; }
+
+  /* ── Three dots ── */
+  .dots { display: flex; gap: 6px; margin-bottom: 12px; }
+  .dots span { width: 12px; height: 12px; border-radius: 50%; }
+  .dots .d1 { background: var(--blue-500); }
+  .dots .d2 { background: var(--purple-500); }
+  .dots .d3 { background: var(--magenta-500); }
+
+  /* ── Nav ── */
+  .nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 20px; background: rgba(22,6,41,.94);
+    backdrop-filter: blur(8px); z-index: 100; color: white; gap: 10px;
+  }
+  .nav button {
+    background: var(--blue-500); color: white; border: none;
+    padding: 7px 20px; border-radius: 8px; font-family: inherit;
+    font-size: .82rem; font-weight: 600; cursor: pointer;
+  }
+  .nav button:hover { background: var(--purple-500); }
+  .nav button:disabled { opacity: .3; cursor: default; background: var(--blue-500); }
+  .progress { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .progress .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.2);
+    transition: all .3s; cursor: pointer;
+  }
+  .progress .dot.active { background: var(--blue-500); transform: scale(1.4); }
+  .progress .dot:hover { background: var(--blue-250); }
+  .counter { font-size: .76rem; opacity: .6; min-width: 55px; text-align: center; }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    :root { --pad-x: 44px; --pad-y: 40px; }
+    .cols-4 { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    :root { --pad-x: 18px; --pad-y: 24px; }
+    .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; gap: 14px; }
+    .card, .card-dk { padding: 16px; }
+    .logo-top svg { width: 100px; }
+  }
+  @media (max-width: 480px) { h1 { font-size: 1.4rem; } .progress { display: none; } }
+
+  .slide::-webkit-scrollbar { width: 5px; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(0,0,0,.12); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 1 — Title ═══ -->
+<div class="slide bg-gb vc active" data-slide="0">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:20px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <span class="tag tag-b" style="font-size:.85rem;padding:5px 18px;">Atlas HXM Training Series</span>
+    <h1 style="margin-top:10px;">Mastering Claude Skills</h1>
+    <p class="sub" style="max-width:620px;">Everything you need to know about building, using, and sharing Skills — from fundamentals to advanced patterns.</p>
+    <p class="sm" style="margin-top:16px;">Part 1 of the Claude Training Series &nbsp;|&nbsp; ~20 minutes &nbsp;|&nbsp; March 2026</p>
+    <p style="font-size:.88rem;font-style:italic;opacity:.5;margin-top:12px;">For People, By People</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 — What is a Skill ═══ -->
+<div class="slide bg-w" data-slide="1">
+  <div class="tagline">For People, By People</div>
+  <div class="accent accent-b"></div>
+  <h2>What Is a Skill?</h2>
+  <p class="sub" style="color:var(--gray-900);">A skill is a set of instructions — packaged as a simple folder — that teaches Claude how to handle specific tasks or workflows.</p>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3>The Core Idea</h3>
+      <p>Instead of re-explaining your preferences, processes, and domain expertise in every conversation, skills let you <strong>teach Claude once and benefit every time</strong>.</p>
+      <ul style="margin-top:12px;">
+        <li>Skills are <strong>persistent</strong> — they don't expire after a conversation</li>
+        <li>Skills <strong>activate automatically</strong> when Claude detects a matching task</li>
+        <li>Multiple skills can <strong>combine</strong> for a single task</li>
+        <li>Skills work across <strong>Claude.ai, Claude Code, and API</strong></li>
+      </ul>
+      <div class="hl" style="margin-top:14px;">
+        <p><strong>Think of skills as SOPs for Claude.</strong> What instructions would you give a new hire to do this task perfectly every time? That's your skill.</p>
+      </div>
+    </div>
+    <div>
+      <h3>What's Inside a Skill Folder</h3>
+      <div class="codeblock" style="margin-top:8px;"><span style="color:var(--blue-250);">your-skill-name/</span>
+├── <strong>SKILL.md</strong>         <span style="color:var(--magenta-250);"># Required — main instructions</span>
+├── scripts/          <span style="color:var(--magenta-250);"># Optional — executable code</span>
+│   ├── process_data.py
+│   └── validate.sh
+├── references/       <span style="color:var(--magenta-250);"># Optional — docs loaded on demand</span>
+│   └── api-guide.md
+└── assets/           <span style="color:var(--magenta-250);"># Optional — templates, fonts, icons</span>
+    └── report-template.md</div>
+      <div class="hl p" style="margin-top:12px;">
+        <p><strong>Only SKILL.md is required.</strong> Everything else is optional. You can start with just a single markdown file and add complexity later.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — Progressive Disclosure ═══ -->
+<div class="slide bg-navy" data-slide="2">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Core Concept</span>
+  <h2>Progressive Disclosure — How Skills Load</h2>
+  <p class="sub">Skills use a three-level system to minimize token usage while maintaining deep expertise.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3 style="color:var(--blue-250);">YAML Frontmatter</h3>
+      <p><strong>Always loaded</strong> in Claude's system prompt. Provides just enough info for Claude to know <em>when</em> to use the skill — without loading everything.</p>
+      <div style="background:rgba(0,0,0,.3);border-radius:6px;padding:10px 12px;margin-top:10px;font-family:monospace;font-size:.72rem;color:var(--blue-250);line-height:1.5;">
+        ---<br>name: atlas-email<br>description: Cold outbound email<br>&nbsp;&nbsp;sequences for Atlas HXM...<br>---
+      </div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3 style="color:var(--purple-250);">SKILL.md Body</h3>
+      <p><strong>Loaded when triggered.</strong> Contains the full instructions, rules, templates, and guidance. This is the meat of the skill.</p>
+      <div style="background:rgba(0,0,0,.3);border-radius:6px;padding:10px 12px;margin-top:10px;font-family:monospace;font-size:.72rem;color:var(--purple-250);line-height:1.5;">
+        # Atlas Email Skill<br>## Voice & Tone<br>- Authoritative, inclusive<br>## Templates<br>### Cold Outreach<br>[Hook] [Value] [CTA]
+      </div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3 style="color:var(--magenta-250);">Linked Files</h3>
+      <p><strong>Loaded on demand.</strong> Additional files in <code>references/</code>, <code>scripts/</code>, and <code>assets/</code> that Claude discovers only when needed.</p>
+      <div style="background:rgba(0,0,0,.3);border-radius:6px;padding:10px 12px;margin-top:10px;font-family:monospace;font-size:.72rem;color:var(--magenta-250);line-height:1.5;">
+        references/<br>&nbsp;&nbsp;brand-visual.md<br>&nbsp;&nbsp;content-examples.md<br>assets/fonts/<br>&nbsp;&nbsp;Gelion-Regular.otf
+      </div>
+    </div>
+  </div>
+  <div class="hl dk" style="margin-top:14px;">
+    <p><strong>Why this matters:</strong> A skill with 5,000 words of instructions doesn't load all 5,000 words every time. Level 1 is ~100 words. Only when relevant does Claude load Level 2, and Level 3 only as needed. This saves tokens and keeps Claude fast.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — Technical Requirements ═══ -->
+<div class="slide bg-w" data-slide="3">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Technical</span>
+  <h2>SKILL.md — The Rules</h2>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <h3>File & Folder Requirements</h3>
+      <table>
+        <tr><th>Rule</th><th>Details</th></tr>
+        <tr><td><strong>File name</strong></td><td>Must be exactly <code>SKILL.md</code> (case-sensitive). Not <code>skill.md</code>, not <code>SKILL.MD</code>.</td></tr>
+        <tr><td><strong>Folder name</strong></td><td>kebab-case only. <code>atlas-email</code> ✅ <code>Atlas Email</code> ❌ <code>atlas_email</code> ❌</td></tr>
+        <tr><td><strong>YAML delimiters</strong></td><td>Must start and end with <code>---</code></td></tr>
+        <tr><td><strong>No README.md</strong></td><td>Don't include README in the skill folder. All docs go in SKILL.md or references/</td></tr>
+        <tr><td><strong>No XML tags</strong></td><td>No <code>&lt;</code> or <code>&gt;</code> in frontmatter — security restriction</td></tr>
+        <tr><td><strong>Reserved names</strong></td><td>Can't use "claude" or "anthropic" in skill name</td></tr>
+      </table>
+      <div class="hl m" style="margin-top:14px;">
+        <p><strong>SKILL.md size limit:</strong> Keep under <strong>5,000 words</strong>. Move detailed docs to <code>references/</code> and link to them.</p>
+      </div>
+    </div>
+    <div>
+      <h3>YAML Frontmatter Fields</h3>
+      <table>
+        <tr><th>Field</th><th>Required?</th><th>Notes</th></tr>
+        <tr><td><code>name</code></td><td>✅ Yes</td><td>kebab-case, must match folder name</td></tr>
+        <tr><td><code>description</code></td><td>✅ Yes</td><td>Under 1,024 chars. Must include WHAT + WHEN.</td></tr>
+        <tr><td><code>license</code></td><td>Optional</td><td>MIT, Apache-2.0, etc.</td></tr>
+        <tr><td><code>compatibility</code></td><td>Optional</td><td>Environment requirements (1-500 chars)</td></tr>
+        <tr><td><code>metadata</code></td><td>Optional</td><td>author, version, mcp-server, tags</td></tr>
+        <tr><td><code>allowed-tools</code></td><td>Optional</td><td>Restrict tool access</td></tr>
+      </table>
+      <h3 style="margin-top:16px;">Critical: The Description Field</h3>
+      <p>This is the <strong>most important part</strong>. It's how Claude decides whether to load your skill. Structure:</p>
+      <p style="margin-top:8px;font-weight:600;color:var(--purple-500);">[What it does] + [When to use it] + [Key capabilities]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — Good vs Bad Descriptions ═══ -->
+<div class="slide bg-light" data-slide="4">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Critical Skill</span>
+  <h2>Writing Descriptions That Trigger Correctly</h2>
+  <p class="sub" style="color:var(--gray-900);">Your description determines whether Claude loads the skill. Get this right.</p>
+  <div class="cols-2">
+    <div>
+      <h3 style="color:var(--coral-500);">❌ Bad Descriptions</h3>
+      <div style="background:var(--coral-100);border-left:3px solid var(--coral-500);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+        <code style="background:transparent;font-size:.82rem;">"Helps with projects."</code>
+        <p style="font-size:.78rem;margin-top:4px;color:var(--coral-500);"><strong>Too vague</strong> — won't trigger on anything specific</p>
+      </div>
+      <div style="background:var(--coral-100);border-left:3px solid var(--coral-500);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+        <code style="background:transparent;font-size:.82rem;">"Creates sophisticated multi-page documentation systems."</code>
+        <p style="font-size:.78rem;margin-top:4px;color:var(--coral-500);"><strong>Missing triggers</strong> — no user phrases to match</p>
+      </div>
+      <div style="background:var(--coral-100);border-left:3px solid var(--coral-500);padding:12px 16px;border-radius:0 8px 8px 0;">
+        <code style="background:transparent;font-size:.82rem;">"Implements the Project entity model with hierarchical relationships."</code>
+        <p style="font-size:.78rem;margin-top:4px;color:var(--coral-500);"><strong>Too technical</strong> — no user-facing trigger phrases</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-500);">✅ Good Descriptions</h3>
+      <div style="background:var(--blue-100);border-left:3px solid var(--blue-500);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+        <code style="background:transparent;font-size:.78rem;">"Analyzes Figma design files and generates developer handoff documentation. Use when user uploads .fig files, asks for 'design specs', 'component documentation', or 'design-to-code handoff'."</code>
+      </div>
+      <div style="background:var(--blue-100);border-left:3px solid var(--blue-500);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+        <code style="background:transparent;font-size:.78rem;">"Manages Linear project workflows including sprint planning, task creation, and status tracking. Use when user mentions 'sprint', 'Linear tasks', 'project planning', or asks to 'create tickets'."</code>
+      </div>
+      <div class="hl" style="margin-top:12px;">
+        <p><strong>Pattern:</strong> [What it does] + "Use when user says..." + [specific trigger phrases in quotes]</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — Writing Instructions ═══ -->
+<div class="slide bg-w" data-slide="5">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Building</span>
+  <h2>Writing Effective Skill Instructions</h2>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <h3>Recommended Structure</h3>
+      <div class="codeblock"><span style="color:var(--blue-250);">---</span>
+<span style="color:var(--magenta-250);">name:</span> your-skill-name
+<span style="color:var(--magenta-250);">description:</span> [What + When + Triggers]
+<span style="color:var(--blue-250);">---</span>
+
+<span style="color:var(--blue-250);"># Your Skill Name</span>
+
+<span style="color:var(--purple-250);">## Instructions</span>
+<span style="color:var(--magenta-250);">### Step 1: [First Major Step]</span>
+Clear explanation of what happens.
+Run `python scripts/validate.py --input {file}`
+
+<span style="color:var(--magenta-250);">### Step 2: [Second Step]</span>
+If validation fails, common issues include:
+- Missing required fields
+- Invalid date formats (use YYYY-MM-DD)
+
+<span style="color:var(--purple-250);">## Examples</span>
+User says: "Set up a new marketing campaign"
+Actions: 1. Fetch existing campaigns...
+
+<span style="color:var(--purple-250);">## Troubleshooting</span>
+Error: [Common error message]
+Cause: [Why it happens]
+Solution: [How to fix]</div>
+    </div>
+    <div>
+      <h3>Best Practices from Anthropic</h3>
+      <div class="card" style="margin-bottom:10px;border-left:3px solid var(--blue-500);">
+        <h3 style="font-size:.9rem;">Be Specific & Actionable</h3>
+        <p style="font-size:.82rem;">✅ <code>Run python scripts/validate.py --input {file}</code><br>❌ "Validate the data before proceeding"</p>
+      </div>
+      <div class="card" style="margin-bottom:10px;border-left:3px solid var(--purple-500);">
+        <h3 style="font-size:.9rem;">Use Progressive Disclosure</h3>
+        <p style="font-size:.82rem;">Keep SKILL.md focused on core instructions. Move detailed docs to <code>references/</code> and link to them.</p>
+      </div>
+      <div class="card" style="margin-bottom:10px;border-left:3px solid var(--magenta-500);">
+        <h3 style="font-size:.9rem;">Include Error Handling</h3>
+        <p style="font-size:.82rem;">Tell Claude what to do when things go wrong. "If MCP connection fails: 1. Check Settings > Extensions 2. Verify API key..."</p>
+      </div>
+      <div class="card" style="margin-bottom:10px;border-left:3px solid var(--coral-500);">
+        <h3 style="font-size:.9rem;">Reference Bundled Resources</h3>
+        <p style="font-size:.82rem;"><code>Before writing queries, consult references/api-patterns.md for rate limiting and pagination patterns.</code></p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--gold-300);">
+        <h3 style="font-size:.9rem;">Put Critical Instructions First</h3>
+        <p style="font-size:.82rem;">Use <code>## Important</code> or <code>## Critical</code> headers. Repeat key points if needed. Claude reads top-down.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — Three Use Case Categories ═══ -->
+<div class="slide bg-purple" data-slide="6">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Patterns</span>
+  <h2>Three Categories of Skills</h2>
+  <p class="sub">Anthropic has observed three common patterns across all skills built so far.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3 style="color:var(--blue-250);">Document & Asset Creation</h3>
+      <p>Creating consistent, high-quality output — documents, presentations, apps, designs, code.</p>
+      <ul style="margin-top:10px;">
+        <li>Embedded style guides & brand standards</li>
+        <li>Template structures for consistent output</li>
+        <li>Quality checklists before finalizing</li>
+        <li>No external tools required</li>
+      </ul>
+      <p style="margin-top:10px;font-size:.78rem;color:var(--blue-250);"><strong>Atlas examples:</strong> atlas-presentations, atlas-docs, atlas-email, atlas-social</p>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3 style="color:var(--purple-250);">Workflow Automation</h3>
+      <p>Multi-step processes with consistent methodology — coordination across tools.</p>
+      <ul style="margin-top:10px;">
+        <li>Step-by-step workflow with validation gates</li>
+        <li>Templates for common structures</li>
+        <li>Built-in review & improvement loops</li>
+        <li>Iterative refinement</li>
+      </ul>
+      <p style="margin-top:10px;font-size:.78rem;color:var(--purple-250);"><strong>Atlas examples:</strong> skill-creator, schedule, atlas-proposal</p>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3 style="color:var(--magenta-250);">MCP Enhancement</h3>
+      <p>Workflow guidance layered on top of MCP tool access. The "recipes" for your "kitchen."</p>
+      <ul style="margin-top:10px;">
+        <li>Coordinates multiple MCP calls in sequence</li>
+        <li>Embeds domain expertise</li>
+        <li>Provides context users would otherwise specify</li>
+        <li>Error handling for MCP issues</li>
+      </ul>
+      <p style="margin-top:10px;font-size:.78rem;color:var(--magenta-250);"><strong>Analogy:</strong> MCP = kitchen tools. Skills = recipes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — Atlas Skills Library ═══ -->
+<div class="slide bg-navy" data-slide="7">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <h2>Our Atlas Skills Library — 20+ Skills Built for You</h2>
+  <p class="sub">These are already installed. They activate automatically when Claude detects a matching task.</p>
+  <div class="cols-3" style="margin-top:8px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <h3 style="color:var(--blue-250);font-size:.95rem;">Brand & Content</h3>
+      <ul>
+        <li><strong>atlas-brand-guidelines</strong> — voice, colors, logos, tone</li>
+        <li><strong>atlas-social</strong> — LinkedIn, Twitter/X</li>
+        <li><strong>atlas-email</strong> — cold outbound, sequences</li>
+        <li><strong>atlas-dm</strong> — LinkedIn DMs</li>
+        <li><strong>atlas-blog</strong> — blog posts, articles</li>
+        <li><strong>atlas-copy</strong> — general copywriting</li>
+        <li><strong>atlas-ads</strong> — ad copy</li>
+      </ul>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <h3 style="color:var(--purple-250);font-size:.95rem;">Sales & GTM</h3>
+      <ul>
+        <li><strong>atlas-intro</strong> — intro decks</li>
+        <li><strong>atlas-demo</strong> — demo scripts, prep</li>
+        <li><strong>atlas-phone</strong> — cold call scripts</li>
+        <li><strong>atlas-pricing</strong> — pricing one-pagers</li>
+        <li><strong>atlas-proposal</strong> — proposals, RFPs</li>
+        <li><strong>atlas-country</strong> — country profiles</li>
+        <li><strong>atlas-internal-messaging</strong> — Slack/Teams</li>
+      </ul>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <h3 style="color:var(--magenta-250);font-size:.95rem;">Documents & Deliverables</h3>
+      <ul>
+        <li><strong>atlas-presentations</strong> — PPT, 40+ layouts</li>
+        <li><strong>atlas-reports</strong> — client & market reports</li>
+        <li><strong>atlas-docs</strong> — one-pagers, white papers</li>
+        <li><strong>atlas-internal</strong> — training, knowledge base</li>
+        <li><strong>docx / xlsx / pdf / pptx</strong> — format tools</li>
+        <li><strong>skill-creator</strong> — build new skills</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hl dk" style="margin-top:12px;">
+    <p><strong>How they combine:</strong> Ask Claude "write a cold email about hiring in Germany" → it auto-loads <strong>atlas-email</strong> + <strong>atlas-brand-guidelines</strong> + <strong>atlas-country</strong>. No manual activation needed.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — Building Your First Skill ═══ -->
+<div class="slide bg-w" data-slide="8">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-m">Hands-On</span>
+  <h2>Build Your First Skill in 15 Minutes</h2>
+  <p class="sub" style="color:var(--gray-900);">Follow these three steps. You can also ask the <strong>skill-creator</strong> skill to scaffold it for you.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card" style="border-top:4px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3>Define 2-3 Use Cases</h3>
+      <p>Before writing anything, answer:</p>
+      <ul>
+        <li>What does a user want to accomplish?</li>
+        <li>What multi-step workflow is needed?</li>
+        <li>What domain knowledge should be embedded?</li>
+        <li>What phrases would a user actually say?</li>
+      </ul>
+      <div class="hl" style="margin-top:10px;">
+        <p style="font-size:.82rem;"><strong>Example:</strong> "Write a LinkedIn post about hiring in Germany, using Atlas brand voice, targeting HR directors."</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3>Write SKILL.md</h3>
+      <p>Structure your instructions clearly:</p>
+      <ol>
+        <li><strong>Frontmatter</strong> — name + description with trigger phrases</li>
+        <li><strong>Role</strong> — who Claude acts as</li>
+        <li><strong>Rules</strong> — do this, never do that</li>
+        <li><strong>Templates</strong> — output structure</li>
+        <li><strong>Examples</strong> — 2-3 before/after samples</li>
+        <li><strong>Troubleshooting</strong> — common errors & fixes</li>
+      </ol>
+      <p style="margin-top:10px;font-size:.82rem;color:var(--purple-500);"><strong>Pro tip:</strong> Include before/after examples. This dramatically improves results.</p>
+    </div>
+    <div class="card" style="border-top:4px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3>Save, Test, Iterate</h3>
+      <p><strong>Save:</strong></p>
+      <ul>
+        <li>Claude.ai: Settings > Skills > Upload ZIP</li>
+        <li>Claude Code: <code>.claude/skills/your-skill/</code></li>
+      </ul>
+      <p style="margin-top:8px;"><strong>Test:</strong></p>
+      <ul>
+        <li>Ask Claude "when would you use the [skill name] skill?" — it quotes the description back</li>
+        <li>Run 10-20 test queries that should trigger it</li>
+        <li>Verify it <em>doesn't</em> trigger on unrelated topics</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>Iterate:</strong> Skills are living documents. Update based on feedback.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — Real Example: Atlas Email ═══ -->
+<div class="slide bg-blue" data-slide="9">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Live Example</span>
+  <h2>Anatomy of a Real Atlas Skill</h2>
+  <p class="sub">Let's look at how <strong>atlas-email</strong> is structured — a Category 1 (Document Creation) skill.</p>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <div class="codeblock" style="font-size:.72rem;"><span style="color:var(--blue-250);">---</span>
+<span style="color:var(--magenta-250);">name:</span> atlas-email
+<span style="color:var(--magenta-250);">description:</span> >
+  Atlas HXM email skill for outbound sales
+  and marketing. Use when user asks to write
+  cold emails, follow-ups, nurture sequences,
+  drip campaigns, or email copy for Atlas.
+  Triggers: "write an email", "cold outreach",
+  "follow-up email", "email sequence",
+  "nurture campaign".
+<span style="color:var(--blue-250);">---</span>
+
+<span style="color:var(--blue-250);"># Atlas Email Skill</span>
+
+<span style="color:var(--purple-250);">## Role</span>
+You are an Atlas HXM email specialist...
+
+<span style="color:var(--purple-250);">## Voice & Tone Rules</span>
+- Authoritative, inclusive, measured
+- Lead with insight, not "We at Atlas..."
+- Subject lines: 6 words max, no clickbait
+- Never use: synergy, leverage, game-changer
+
+<span style="color:var(--purple-250);">## Email Templates</span>
+### Cold Outreach (3-email sequence)
+Email 1: [Hook with specific insight]...
+Email 2: [Value proof + social proof]...
+Email 3: [Breakup + resource offer]...</div>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-100);">Why This Works</h3>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p><strong style="color:var(--blue-250);">Description includes trigger phrases</strong> — Claude knows exactly when to load it. "cold outreach", "email sequence", etc.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p><strong style="color:var(--purple-250);">Clear role definition</strong> — Claude acts as an Atlas email specialist, not a generic writer.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p><strong style="color:var(--magenta-250);">Specific rules with negatives</strong> — "Never use synergy" is more actionable than "use professional language."</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p><strong style="color:var(--coral-300);">Embedded templates</strong> — Claude doesn't have to guess the structure. The 3-email sequence pattern is built in.</p>
+      </div>
+      <div class="card-dk">
+        <p><strong style="color:var(--gold-300);">Works with other skills</strong> — Combine with atlas-brand-guidelines for consistent voice, atlas-country for compliance specifics.</p>
+      </div>
+      <div class="hl dk" style="margin-top:12px;">
+        <p><strong>Result:</strong> Any team member can say "write a cold email about EOR in Germany" and get consistent, on-brand output — every time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — Testing ═══ -->
+<div class="slide bg-light" data-slide="10">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Testing</span>
+  <h2>Testing Your Skills — Three Areas</h2>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card" style="border-top:4px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3>Triggering Tests</h3>
+      <p><strong>Does it load at the right time?</strong></p>
+      <ul style="margin-top:8px;">
+        <li>✅ Triggers on obvious tasks</li>
+        <li>✅ Triggers on paraphrased requests</li>
+        <li>❌ Doesn't trigger on unrelated topics</li>
+      </ul>
+      <div class="hl" style="margin-top:10px;">
+        <p style="font-size:.78rem;"><strong>Debug tip:</strong> Ask Claude "When would you use the [skill name] skill?" — it quotes the description back. Adjust what's missing.</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3>Functional Tests</h3>
+      <p><strong>Does it produce correct output?</strong></p>
+      <ul style="margin-top:8px;">
+        <li>Valid outputs generated</li>
+        <li>All API/MCP calls succeed</li>
+        <li>Error handling works</li>
+        <li>Edge cases covered</li>
+      </ul>
+      <div class="hl p" style="margin-top:10px;">
+        <p style="font-size:.78rem;"><strong>Method:</strong> Run the same request 3-5 times. Compare outputs for structural consistency and quality.</p>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3>Performance Comparison</h3>
+      <p><strong>Is it actually better than no skill?</strong></p>
+      <table style="margin-top:8px;">
+        <tr><th></th><th>Without</th><th>With</th></tr>
+        <tr><td>Messages</td><td>15</td><td>2</td></tr>
+        <tr><td>Failed calls</td><td>3</td><td>0</td></tr>
+        <tr><td>Tokens</td><td>12,000</td><td>6,000</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12 — Troubleshooting ═══ -->
+<div class="slide bg-navy" data-slide="11">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Troubleshooting</span>
+  <h2>Common Issues & Fixes</h2>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--coral-500);">
+        <h3 style="color:var(--coral-300);font-size:.92rem;">Skill Won't Upload</h3>
+        <p><strong>Error:</strong> "Could not find SKILL.md"</p>
+        <p><strong>Fix:</strong> Rename to exactly <code>SKILL.md</code> (case-sensitive). Verify with <code>ls -la</code>.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--gold-300);">
+        <h3 style="color:var(--gold-300);font-size:.92rem;">Skill Doesn't Trigger</h3>
+        <p><strong>Symptom:</strong> Skill never loads automatically</p>
+        <p><strong>Fix:</strong> Revise description — add specific trigger phrases users would actually say. Ask Claude "when would you use this skill?" to debug.</p>
+      </div>
+      <div class="card-dk" style="border-left:3px solid var(--blue-500);">
+        <h3 style="color:var(--blue-250);font-size:.92rem;">Skill Triggers Too Often</h3>
+        <p><strong>Fix:</strong> Add negative triggers: <code>"Do NOT use for simple data exploration (use data-viz skill instead)."</code> Be more specific about scope.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--purple-500);">
+        <h3 style="color:var(--purple-250);font-size:.92rem;">Instructions Not Followed</h3>
+        <p><strong>Common causes:</strong></p>
+        <ul>
+          <li>Instructions too verbose → trim, use bullet points</li>
+          <li>Critical rules buried → put them at the top</li>
+          <li>Ambiguous language → be explicit</li>
+        </ul>
+        <p style="margin-top:6px;font-size:.82rem;">❌ "Make sure to validate things properly"<br>✅ "CRITICAL: Before calling create_project, verify: name is non-empty, at least one member assigned, start date not in past."</p>
+      </div>
+      <div class="card-dk" style="border-left:3px solid var(--magenta-500);">
+        <h3 style="color:var(--magenta-250);font-size:.92rem;">Large Context / Slow Response</h3>
+        <p><strong>Causes:</strong> Skill content too large, too many skills enabled</p>
+        <p><strong>Fix:</strong></p>
+        <ul>
+          <li>Keep SKILL.md under 5,000 words</li>
+          <li>Move detailed docs to <code>references/</code></li>
+          <li>Keep 20-50 skills max enabled at once</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13 — Distribution ═══ -->
+<div class="slide bg-w" data-slide="12">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Sharing</span>
+  <h2>Distributing & Sharing Skills</h2>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3>How Users Install Skills</h3>
+      <ol>
+        <li><strong>Download</strong> the skill folder</li>
+        <li><strong>Zip</strong> the folder (if needed)</li>
+        <li><strong>Upload</strong> to Claude.ai via Settings > Capabilities > Skills</li>
+        <li>Or place in <strong>Claude Code</strong> skills directory</li>
+      </ol>
+      <h3 style="margin-top:16px;">Organization-Level Deployment</h3>
+      <ul>
+        <li>Admins can deploy skills <strong>workspace-wide</strong></li>
+        <li>Automatic updates across all users</li>
+        <li>Centralized management</li>
+      </ul>
+      <div class="hl" style="margin-top:12px;">
+        <p><strong>At Atlas:</strong> We've bundled all 20+ skills into a plugin ZIP you can upload in one step. Ask the GTM AI team for the latest version.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Positioning Your Skill</h3>
+      <p style="margin-bottom:10px;">How you describe your skill determines whether people use it.</p>
+      <div class="card" style="margin-bottom:8px;border-left:3px solid var(--blue-500);">
+        <p style="font-size:.82rem;">✅ <strong>Focus on outcomes:</strong> "Set up complete project workspaces in seconds — instead of 30 minutes of manual setup."</p>
+      </div>
+      <div class="card" style="margin-bottom:8px;border-left:3px solid var(--coral-500);">
+        <p style="font-size:.82rem;">❌ <strong>Not features:</strong> "A folder containing YAML frontmatter and Markdown instructions that calls our MCP server tools."</p>
+      </div>
+      <h3 style="margin-top:14px;">Skills via API</h3>
+      <table>
+        <tr><th>Use Case</th><th>Best Surface</th></tr>
+        <tr><td>End users interacting directly</td><td>Claude.ai / Code</td></tr>
+        <tr><td>Manual testing & iteration</td><td>Claude.ai / Code</td></tr>
+        <tr><td>Applications using skills programmatically</td><td>API</td></tr>
+        <tr><td>Production deployments at scale</td><td>API</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14 — Advanced Patterns ═══ -->
+<div class="slide bg-gp" data-slide="13">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Advanced</span>
+  <h2>Five Skill Design Patterns</h2>
+  <p class="sub">Patterns from early adopters and Anthropic's internal teams.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:8px;">
+    <div class="card-dk">
+      <h3 style="color:var(--blue-250);font-size:.88rem;">1. Sequential Workflow</h3>
+      <p style="font-size:.78rem;">Multi-step processes in specific order. Explicit step ordering, dependencies between steps, validation at each stage.</p>
+      <p style="font-size:.72rem;margin-top:6px;color:var(--blue-250);">Step 1: Create Account → Step 2: Setup Payment → Step 3: Create Subscription</p>
+    </div>
+    <div class="card-dk">
+      <h3 style="color:var(--purple-250);font-size:.88rem;">2. Multi-MCP Coordination</h3>
+      <p style="font-size:.78rem;">Workflows spanning multiple services. Clear phase separation, data passing between MCPs, validation before next phase.</p>
+      <p style="font-size:.72rem;margin-top:6px;color:var(--purple-250);">Figma MCP → Drive MCP → Linear MCP → Slack MCP</p>
+    </div>
+    <div class="card-dk">
+      <h3 style="color:var(--magenta-250);font-size:.88rem;">3. Iterative Refinement</h3>
+      <p style="font-size:.78rem;">Output quality improves with iteration. Draft → Quality Check → Refine → Re-validate → Finalize.</p>
+      <p style="font-size:.72rem;margin-top:6px;color:var(--magenta-250);">Explicit quality criteria + validation scripts + know when to stop</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+    <div class="card-dk">
+      <h3 style="color:var(--coral-300);font-size:.88rem;">4. Context-Aware Tool Selection</h3>
+      <p style="font-size:.78rem;">Same outcome, different tools depending on context. Decision tree based on file type, size, or purpose. Fallback options. Transparency about choices.</p>
+      <p style="font-size:.72rem;margin-top:6px;color:var(--coral-300);">Large files → cloud storage | Collaborative docs → Notion | Code → GitHub</p>
+    </div>
+    <div class="card-dk">
+      <h3 style="color:var(--gold-300);font-size:.88rem;">5. Domain-Specific Intelligence</h3>
+      <p style="font-size:.78rem;">Specialized knowledge beyond tool access. Compliance checks before action, comprehensive audit trails, governance and documentation.</p>
+      <p style="font-size:.72rem;margin-top:6px;color:var(--gold-300);">Payment processing → sanctions check → jurisdiction verification → risk assessment</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 15 — Skill Creator ═══ -->
+<div class="slide bg-light" data-slide="14">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-m">Shortcut</span>
+  <h2>The skill-creator Skill — Your Fast Track</h2>
+  <p class="sub" style="color:var(--gray-900);">Don't want to start from scratch? Use the built-in skill-creator to scaffold everything.</p>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3>What It Does</h3>
+      <div class="card" style="margin-bottom:10px;">
+        <h3 style="font-size:.9rem;color:var(--blue-500);">Creating Skills</h3>
+        <ul>
+          <li>Generates skills from natural language descriptions</li>
+          <li>Produces properly formatted SKILL.md with frontmatter</li>
+          <li>Suggests trigger phrases and structure</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-bottom:10px;">
+        <h3 style="font-size:.9rem;color:var(--purple-500);">Reviewing Skills</h3>
+        <ul>
+          <li>Flags vague descriptions, missing triggers</li>
+          <li>Identifies over/under-triggering risks</li>
+          <li>Suggests test cases based on stated purpose</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="font-size:.9rem;color:var(--magenta-500);">Iterative Improvement</h3>
+        <ul>
+          <li>After encountering edge cases, bring them back</li>
+          <li>"Use these issues to improve how the skill handles [case]"</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3>How to Use It</h3>
+      <div class="codeblock" style="margin-top:8px;font-size:.82rem;">
+<span style="color:var(--blue-250);">// To create a new skill:</span>
+"Use the skill-creator skill to help me
+ build a skill for [your use case]"
+
+<span style="color:var(--purple-250);">// To review an existing skill:</span>
+"Review this skill and suggest improvements"
+
+<span style="color:var(--magenta-250);">// To iterate after testing:</span>
+"Use the issues identified in this chat
+ to improve how the skill handles
+ [specific edge case]"</div>
+      <div class="hl" style="margin-top:14px;">
+        <p><strong>Speed:</strong> Expect about 15-30 minutes to build and test your first working skill using skill-creator. You can iterate from there.</p>
+      </div>
+      <div class="hl p" style="margin-top:8px;">
+        <p><strong>Note:</strong> skill-creator helps you <em>design and refine</em> skills but doesn't execute automated test suites. You still need to test manually.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 16 — Pre-Upload Checklist ═══ -->
+<div class="slide bg-w" data-slide="15">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Checklist</span>
+  <h2>Quick Checklist — Before & After Upload</h2>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3>Before You Start</h3>
+      <div style="font-size:.9rem;line-height:2;">
+        <p>☐ Identified 2-3 concrete use cases</p>
+        <p>☐ Tools identified (built-in or MCP)</p>
+        <p>☐ Reviewed this guide and example skills</p>
+        <p>☐ Planned folder structure</p>
+      </div>
+      <h3 style="margin-top:16px;">During Development</h3>
+      <div style="font-size:.9rem;line-height:2;">
+        <p>☐ Folder named in kebab-case</p>
+        <p>☐ SKILL.md file exists (exact spelling)</p>
+        <p>☐ YAML frontmatter has <code>---</code> delimiters</p>
+        <p>☐ <code>name</code> field: kebab-case, no spaces/capitals</p>
+        <p>☐ <code>description</code> includes WHAT and WHEN</p>
+        <p>☐ No XML tags (<code>&lt; &gt;</code>) anywhere</p>
+        <p>☐ Instructions clear and actionable</p>
+        <p>☐ Error handling included</p>
+        <p>☐ Examples provided</p>
+        <p>☐ References clearly linked</p>
+      </div>
+    </div>
+    <div>
+      <h3>Before Upload</h3>
+      <div style="font-size:.9rem;line-height:2;">
+        <p>☐ Tested triggering on obvious tasks</p>
+        <p>☐ Tested triggering on paraphrased requests</p>
+        <p>☐ Verified doesn't trigger on unrelated topics</p>
+        <p>☐ Functional tests pass</p>
+        <p>☐ Tool integration works (if applicable)</p>
+        <p>☐ Compressed as .zip file</p>
+      </div>
+      <h3 style="margin-top:16px;">After Upload</h3>
+      <div style="font-size:.9rem;line-height:2;">
+        <p>☐ Test in real conversations</p>
+        <p>☐ Monitor for under/over-triggering</p>
+        <p>☐ Collect user feedback</p>
+        <p>☐ Iterate on description and instructions</p>
+        <p>☐ Update version in metadata</p>
+      </div>
+      <div class="hl m" style="margin-top:14px;">
+        <p><strong>Skills are living documents.</strong> Plan to iterate based on real usage. The best skills get better over time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 17 — Resources ═══ -->
+<div class="slide bg-navy" data-slide="16">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Resources</span>
+  <h2>Resources & Next Steps</h2>
+  <div class="cols-2" style="margin-top:16px;">
+    <div>
+      <h3 style="color:var(--blue-250);">Official Anthropic Resources</h3>
+      <ul>
+        <li><a href="https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/best-practices" style="color:var(--blue-250);">Skills Best Practices Guide</a></li>
+        <li><a href="https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills" style="color:var(--blue-250);">Skills Documentation</a></li>
+        <li><a href="https://docs.anthropic.com/en/api" style="color:var(--blue-250);">API Reference</a></li>
+        <li><a href="https://modelcontextprotocol.io/" style="color:var(--blue-250);">MCP Documentation</a></li>
+        <li><a href="https://github.com/anthropics/skills" style="color:var(--blue-250);">Public Skills Repository (GitHub)</a></li>
+      </ul>
+      <h3 style="color:var(--purple-250);margin-top:16px;">Blog Posts & Deep Dives</h3>
+      <ul>
+        <li>Introducing Agent Skills — Anthropic Blog</li>
+        <li>Equipping Agents for the Real World — Engineering Blog</li>
+        <li>Improving Frontend Design through Skills</li>
+        <li>Building Skills for Claude Code</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--magenta-250);">Atlas Internal</h3>
+      <ul>
+        <li><strong>Atlas Brand Skill Suite</strong> — 20+ skills on Desktop</li>
+        <li><strong>Plugin ZIP</strong> — one-step install for Claude.ai</li>
+        <li><strong>Brand Portal</strong> — brand.atlashxm.com</li>
+        <li>Contact: <strong>GTM AI & Automation team</strong> for help</li>
+      </ul>
+      <h3 style="color:var(--coral-300);margin-top:16px;">Your Action Items</h3>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p>✅ Confirm 20+ Atlas skills are installed in your project</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p>✅ Build 1 role-specific skill using <strong>skill-creator</strong></p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;">
+        <p>✅ Test it with 10 queries — check triggering & output quality</p>
+      </div>
+      <div class="card-dk">
+        <p>✅ Share it with a teammate — same skills = consistent outputs</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 18 — Closing ═══ -->
+<div class="slide bg-gb vc" data-slide="17">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:20px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <h1>Build Once. Benefit Every Time.</h1>
+    <p class="sub" style="max-width:640px;margin-top:6px;">Skills compound over time. The more you teach Claude, the better it gets at your specific workflows. Start with one skill today — you'll wonder how you worked without it.</p>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://claude.com/download" style="display:inline-block;background:var(--blue-500);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;">Download Claude Desktop</a>
+      <a href="https://github.com/anthropics/skills" style="display:inline-block;background:rgba(255,255,255,.12);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;border:1px solid rgba(255,255,255,.2);">Browse Example Skills</a>
+    </div>
+    <p style="font-size:.95rem;font-style:italic;opacity:.45;margin-top:28px;">For People, By People</p>
+    <p class="sm" style="margin-top:8px;">Up next: Part 2 — Mastering Projects & Cowork</p>
+  </div>
+</div>
+
+</div><!-- end .deck -->
+
+<!-- ── Nav ── -->
+<nav class="nav">
+  <button id="prev" onclick="go(-1)" disabled>← Prev</button>
+  <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
+    <div class="progress" id="prog"></div>
+    <span class="counter" id="cnt">1 / 18</span>
+  </div>
+  <button id="next" onclick="go(1)">Next →</button>
+</nav>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+const prog = document.getElementById('prog');
+slides.forEach((_, i) => {
+  const d = document.createElement('span');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => show(i);
+  prog.appendChild(d);
+});
+
+function show(n) {
+  slides[cur].classList.remove('active');
+  prog.children[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(n, slides.length - 1));
+  slides[cur].classList.add('active');
+  prog.children[cur].classList.add('active');
+  document.getElementById('cnt').textContent = `${cur + 1} / ${slides.length}`;
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === slides.length - 1;
+}
+
+function go(d) { show(cur + d); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') go(-1);
+});
+</script>
+</body>
+</html>

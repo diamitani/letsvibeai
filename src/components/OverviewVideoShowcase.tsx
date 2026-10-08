@@ -24,7 +24,11 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export const OverviewVideoShowcase: React.FC = () => {
+interface OverviewVideoShowcaseProps {
+  onOpenTheater?: () => void;
+}
+
+export const OverviewVideoShowcase: React.FC<OverviewVideoShowcaseProps> = ({ onOpenTheater }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [activeScene, setActiveScene] = useState<number>(0);
@@ -195,6 +199,16 @@ export async function POST(req: Request) {
             <Video className="w-3 h-3 text-[#ec4909]" />
             <span>Live Stream Video</span>
           </button>
+
+          {onOpenTheater && (
+            <button
+              onClick={onOpenTheater}
+              className="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 bg-[#2F80ED]/10 text-[#2F80ED] border border-[#2F80ED]/20 hover:bg-[#2F80ED] hover:text-white"
+            >
+              <Film className="w-3 h-3 text-[#34D399]" />
+              <span>15-Video Theater</span>
+            </button>
+          )}
         </div>
       </div>
 

@@ -1,0 +1,18 @@
+{
+  "total": 34,
+  "lines": [
+    { "at": 0.3, "say": "Most people use about ten percent of Claude." },
+    { "at": 2.9, "say": "The other ninety is architecture." },
+    { "at": 5.3, "say": "There are five layers." },
+    { "at": 6.6, "say": "The model. Context. Capabilities." },
+    { "at": 9.6, "say": "Surfaces. And orchestration." },
+    { "at": 11.6, "say": "Learn them in order." },
+    { "at": 14.2, "say": "Start every workstream in a Project." },
+    { "at": 17.2, "say": "Package repeat work as Skills." },
+    { "at": 20.2, "say": "And plan before you build." },
+    { "at": 23.3, "say": "Projects, Skills, Artifacts, Cowork, Claude Code." },
+    { "at": 26.0, "say": "Explained in plain English." },
+    { "at": 29.6, "say": "Claude Mastery, from Gency A I." },
+    { "at": 31.6, "say": "Free, at gency A I dot com, slash claude." }
+  ]
+}

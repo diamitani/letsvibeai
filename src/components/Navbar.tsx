@@ -14,8 +14,8 @@ import {
 } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library';
-  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library') => void;
+  currentView: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library' | 'theater';
+  setCurrentView: (view: 'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library' | 'theater') => void;
   activeSection: string;
   setActiveSection: (section: string) => void;
   onOpenSearch: () => void;
@@ -179,6 +179,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <Sparkles className="w-3 h-3 text-[#ec4909]" />
               Agent Hub
+            </button>
+
+            <button
+              onClick={() => {
+                setCurrentView('theater');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
+                currentView === 'theater'
+                  ? 'bg-[#101b24] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse"></span>
+              Video Theater
             </button>
 
             <button

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Claude Mastery — The GencyAI Course & Video Library</title>
+<meta name="description" content="Learn Claude the way operators use it in 2026: Projects, Skills, MCP connectors, Cowork and Claude Code. Free video library plus front-end, back-end and e-commerce build tracks from GencyAI.">
+<meta property="og:title" content="Claude Mastery by GencyAI">
+<meta property="og:description" content="The practical Claude course: architecture, best practices and three build tracks.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"GencyAI","url":"https://gencyai.com"},{"@type":"Course","name":"Claude Mastery","description":"Practical Claude training: Projects, Skills, MCP connectors, Cowork, Claude Code, plus front-end, back-end and e-commerce build tracks.","provider":{"@type":"Organization","name":"GencyAI"},"isAccessibleForFree":true,"offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","category":"Free"}],"hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT14H"}},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need to code?","acceptedAnswer":{"@type":"Answer","text":"No. The core library and Cowork lessons need no code. The build tracks teach you to direct Claude Code step by step."}},{"@type":"Question","name":"Which Claude plan do I need?","acceptedAnswer":{"@type":"Answer","text":"Pro is enough for the library. Cowork and Claude Code lessons work best on Max, Team or Enterprise."}}]}]}</script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#F5F4EF;color:#14224A;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#14224A;text-decoration:none}
+a:hover{color:#B8741A}
+*{box-sizing:border-box}
+input::placeholder{color:#8A8FA3}
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#14224A"></rect><text x="50" y="62" text-anchor="middle" font-family="sans-serif" font-size="34" font-weight="600" fill="#E9A93B">G</text></svg></template>
+
+<div style="min-height:100vh;background:#F5F4EF">
+
+<nav style="position:sticky;top:0;z-index:50;background:rgba(245,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid #E2E0D8">
+  <div style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <a href="GencyAI Claude Mastery.dc.html" style="display:flex;align-items:baseline;gap:6px">
+      <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;color:#14224A">Gency</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#14224A;border:1px solid #14224A;padding:1px 5px;border-radius:4px">AI</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:26px;font-size:14px;font-weight:600;flex-wrap:wrap;justify-content:flex-end">
+      <a href="GencyAI Claude Mastery.dc.html#library" style="color:#B8741A">Videos</a>
+      <a href="GencyAI Claude Mastery.dc.html#learn">Learn</a>
+      <a href="GencyAI Skills Library.dc.html">Skills</a>
+      <a href="https://salesgency.com" target="_blank" rel="noopener">SalesGency</a>
+      <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;padding:10px 18px;border-radius:999px">Work with GencyAI</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" style="max-width:1200px;margin:0 auto;padding:72px 24px 40px">
+  <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">
+    <span style="width:8px;height:8px;border-radius:50%;background:#E9A93B"></span>
+    <span>Claude Mastery · 100% free · no sign-up</span>
+  </div>
+  <h1 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(44px,7vw,92px);line-height:0.98;letter-spacing:-0.035em;margin:22px 0 0;max-width:15ch;text-wrap:balance">Learn to operate Claude. Then master it.</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;margin-top:32px;align-items:end">
+    <p style="font-size:19px;line-height:1.55;color:#3B4466;margin:0;max-width:52ch;text-wrap:pretty">An open video library from GencyAI. No paywall, no account. Short, practical lessons on how Claude actually works — Projects, Skills, Artifacts, Cowork and Claude Code — and how to run real work through it.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start">
+      <a href="#library" style="background:#E9A93B;color:#14224A;font-weight:700;padding:16px 26px;border-radius:999px;font-size:15px">Start watching</a>
+      <a href="#learn" style="border:1.5px solid #14224A;color:#14224A;font-weight:700;padding:15px 26px;border-radius:999px;font-size:15px">Learn the core concepts</a>
+    </div>
+  </div>
+</header>
+
+<section id="library" style="max-width:1200px;margin:0 auto;padding:16px 24px 88px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px;align-items:start">
+    <div style="background:#0E1834;border-radius:20px;overflow:hidden">
+      <div style="position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#13204A 0 14px,#101B3E 14px 28px);display:flex;align-items:center;justify-content:center">
+        <sc-if value="{{ current.isYt }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ current.embed }}" title="{{ current.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        </sc-if>
+        <sc-if value="{{ current.isMp4 }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ current.src }}" title="{{ current.title }}" allowfullscreen="allowfullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;background:#0E1834"></iframe>
+        </sc-if>
+        <sc-if value="{{ current.isEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:24px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#E9A93B;text-transform:uppercase">Lesson {{ current.num }} · recording now</div>
+            <div style="font-family:'Outfit',sans-serif;font-size:clamp(22px,2.6vw,30px);font-weight:600;color:#F5F4EF;max-width:22ch;line-height:1.15">This video drops soon. Get it the day it's live.</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+              <a href="#subscribe" style="background:#E9A93B;color:#14224A;font-weight:700;padding:12px 20px;border-radius:999px;font-size:14px">Notify me</a>
+              <button onClick="{{ playAvailable }}" style="border:1.5px solid #F5F4EF;background:transparent;color:#F5F4EF;cursor:pointer;font-family:inherit;font-weight:700;padding:11px 20px;border-radius:999px;font-size:14px">Watch an available lesson</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="padding:26px 28px 30px;color:#F5F4EF">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#AEB6D3;letter-spacing:0.06em">LESSON {{ current.num }} · {{ current.dur }}</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.02em;margin:10px 0 10px">{{ current.title }}</h2>
+        <p style="margin:0;color:#C9CFE3;font-size:16px;line-height:1.6;max-width:60ch;text-wrap:pretty">{{ current.desc }}</p>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 14px 12px">
+        <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:18px">The core library</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">8 lessons · 1h 28m · free</div>
+      </div>
+      <sc-for list="{{ lessons }}" as="l" hint-placeholder-count="8">
+        <button onClick="{{ l.select }}" style="width:100%;display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;text-align:left;border:0;cursor:pointer;padding:13px 14px;border-radius:12px;font-family:inherit;color:#14224A;background:{{ l.bg }}">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:{{ l.numColor }}">{{ l.num }}</span>
+          <span style="font-weight:600;font-size:15px;line-height:1.35">{{ l.title }}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">{{ l.meta }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="stack" style="background:#14224A;color:#F5F4EF">
+  <div style="max-width:1200px;margin:0 auto;padding:96px 24px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#E9A93B">The architecture</div>
+        <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 20px;text-wrap:balance">Five layers. Learn them in order.</h2>
+        <p style="font-size:17px;line-height:1.6;color:#C9CFE3;margin:0;max-width:44ch;text-wrap:pretty">Most people only use the top layer. The leverage lives underneath — context you set once, capabilities you package, and orchestration that runs without you.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">05</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Orchestration</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Subagents, hooks, plugins and scheduled tasks — work that runs in parallel or on a timer.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">04</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Surfaces</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Chat to think, Cowork to delegate multi-step work on your files, Claude Code to build.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">03</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Capabilities</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Skills (SKILL.md) package your know-how. MCP connectors reach your real tools.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;background:#1C2D5E">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">02</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Context</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Projects, CLAUDE.md, reference files and memory — say it once, reuse it forever.</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 22px;border-radius:14px;border:1px solid #33457A">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#E9A93B">01</span>
+          <div><div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px">Model</div><div style="color:#C9CFE3;font-size:15px;margin-top:4px;line-height:1.5">Claude itself — via the app or the API. Pick the right model for the job and the budget.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:88px">
+      <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(28px,3.4vw,40px);letter-spacing:-0.025em;margin:0">Eight habits of people who get real output.</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#AEB6D3">Best practices · 2026</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1px;background:#33457A;border:1px solid #33457A;border-radius:16px;overflow:hidden">
+        <sc-for list="{{ practices }}" as="p" hint-placeholder-count="8">
+          <div style="background:#14224A;padding:26px 24px 28px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#E9A93B">{{ p.n }}</div>
+            <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:19px;margin:12px 0 8px">{{ p.t }}</div>
+            <div style="color:#C9CFE3;font-size:15px;line-height:1.55;text-wrap:pretty">{{ p.d }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="learn" style="max-width:1200px;margin:0 auto;padding:96px 24px">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">Core concepts</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 36px;max-width:18ch;text-wrap:balance">Five things to understand before anything else.</h2>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+    <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="3">
+      <button onClick="{{ t.select }}" style="border:1.5px solid #14224A;cursor:pointer;padding:11px 20px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;background:{{ t.bg }};color:{{ t.fg }}">{{ t.name }}</button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;background:#FFFFFF;border:1px solid #E2E0D8;border-radius:20px;padding:clamp(24px,4vw,44px)">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078">{{ track.meta }}</div>
+      <h3 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;margin:10px 0 14px">{{ track.name }}</h3>
+      <p style="font-size:17px;line-height:1.6;color:#3B4466;margin:0 0 22px;max-width:40ch;text-wrap:pretty">{{ track.desc }}</p>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5A6078;margin-bottom:6px">USE IT WHEN</div>
+      <div style="font-weight:700;font-size:16px">{{ track.ship }}</div>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ track.modules }}" as="m" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid #E2E0D8">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#B8741A">{{ m.n }}</span>
+          <span style="font-size:16px;font-weight:600;line-height:1.4">{{ m.t }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="work" style="max-width:1200px;margin:0 auto;padding:0 24px 96px">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#5A6078">Work with us</div>
+  <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(34px,4.5vw,54px);line-height:1.02;letter-spacing:-0.03em;margin:16px 0 14px;max-width:20ch;text-wrap:balance">Rather have it built for you?</h2>
+  <p style="font-size:17px;line-height:1.6;color:#3B4466;margin:0 0 36px;max-width:56ch">The lessons stay free. When you want a team to design, build and deploy it with you, that's what our consulting practices do.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px">
+    <a href="https://gencyai.com" target="_blank" rel="noopener" style="background:#14224A;color:#F5F4EF;border-radius:22px;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:18px;min-height:340px">
+      <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em">Gency</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;border:1px solid #F5F4EF;padding:1px 5px;border-radius:4px">AI</span></div>
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:28px;line-height:1.15;max-width:20ch">AI systems that people actually use.</div>
+      <p style="margin:0;color:#C9CFE3;font-size:16px;line-height:1.6;flex:1">Claude rollouts, custom Skills, agents and automations — built with audit trails and deployed to production, not left as a prototype.</p>
+      <span style="align-self:flex-start;background:#E9A93B;color:#14224A;font-weight:700;padding:13px 22px;border-radius:999px;font-size:15px">Book an AI consult →</span>
+    </a>
+    <a href="https://salesgency.com" target="_blank" rel="noopener" style="background:#FFFFFF;color:#14224A;border:1px solid #E2E0D8;border-radius:22px;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:18px;min-height:340px">
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em">SalesGency</div>
+      <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:28px;line-height:1.15;max-width:20ch">GTM that turns into pipeline.</div>
+      <p style="margin:0;color:#3B4466;font-size:16px;line-height:1.6;flex:1">Sales strategy, outbound engines and AI-assisted inbound — designed by operators who've carried enterprise quota.</p>
+      <span style="align-self:flex-start;background:#14224A;color:#F5F4EF;font-weight:700;padding:13px 22px;border-radius:999px;font-size:15px">Talk to SalesGency →</span>
+    </a>
+  </div>
+</section>
+
+<section style="max-width:1200px;margin:0 auto;padding:0 24px 96px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px">
+    <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(30px,3.6vw,44px);letter-spacing:-0.025em;margin:0">Questions</h2>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+        <div style="border-top:1px solid #D5D2C7">
+          <button onClick="{{ f.toggle }}" style="width:100%;display:flex;justify-content:space-between;gap:16px;background:transparent;border:0;cursor:pointer;padding:22px 0;font-family:'Outfit',sans-serif;font-weight:600;font-size:19px;color:#14224A;text-align:left">
+            <span>{{ f.q }}</span><span style="font-family:'IBM Plex Mono',monospace">{{ f.sign }}</span>
+          </button>
+          <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><p style="margin:0 0 22px;font-size:16px;line-height:1.6;color:#3B4466;max-width:60ch">{{ f.a }}</p></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="subscribe" style="padding:0 24px 24px">
+  <div style="max-width:1200px;margin:0 auto;background:#E9A93B;border-radius:28px;padding:clamp(36px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:end">
+    <div>
+      <h2 style="font-family:'Outfit',sans-serif;font-weight:600;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-0.035em;margin:0;color:#14224A;text-wrap:balance">Want more free resources?</h2>
+      <p style="font-size:17px;line-height:1.55;color:#14224A;margin:18px 0 0;max-width:44ch">New lessons, Skill and CLAUDE.md templates, and one email a month when Claude ships something worth knowing. Optional — everything above stays open.</p>
+    </div>
+    <div>
+      <sc-if value="{{ notSubscribed }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ subscribe }}" style="display:flex;gap:8px;flex-wrap:wrap;background:#F5F4EF;border-radius:999px;padding:6px">
+          <input type="email" required="required" value="{{ email }}" onChange="{{ setEmail }}" placeholder="you@company.com" aria-label="Email address" style="flex:1;min-width:180px;border:0;background:transparent;padding:14px 18px;font-family:inherit;font-size:16px;color:#14224A;outline:none">
+          <button type="submit" style="border:0;cursor:pointer;background:#14224A;color:#F5F4EF;font-family:inherit;font-weight:700;font-size:15px;padding:14px 24px;border-radius:999px">{{ subLabel }}</button>
+        </form>
+        <div style="font-size:13px;color:#14224A;margin-top:12px;padding-left:18px">No spam. Unsubscribe in one click.</div>
+      </sc-if>
+      <sc-if value="{{ subscribed }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#14224A;color:#F5F4EF;border-radius:20px;padding:26px 28px">
+          <div style="font-family:'Outfit',sans-serif;font-weight:600;font-size:24px">You're in.</div>
+          <p style="margin:8px 0 16px;color:#C9CFE3;font-size:15px;line-height:1.5">You'll get new lessons and templates as they drop. Need help sooner?</p>
+          <a href="https://gencyai.com" target="_blank" rel="noopener" style="color:#E9A93B;font-weight:700">Talk to GencyAI →</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer style="max-width:1200px;margin:0 auto;padding:40px 24px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:14px;color:#5A6078">
+  <div style="display:flex;align-items:baseline;gap:6px"><span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:20px;color:#14224A">Gency</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#14224A;border:1px solid #14224A;padding:0 4px;border-radius:3px">AI</span></div>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+    <a href="https://gencyai.com" target="_blank" rel="noopener" style="font-weight:600">gencyai.com</a>
+    <a href="https://salesgency.com" target="_blank" rel="noopener" style="font-weight:600">salesgency.com</a>
+    <span>© 2026 GencyAI. Independent training — not affiliated with Anthropic.</span>
+  </div>
+</footer>
+
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;video1&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video2&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video3&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video4&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video5&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video6&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video7&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://www.youtube.com/watch?v=gv0WHhKelSE&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;},&quot;video8&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Lesson videos (YouTube URL or .mp4)&quot;}}">
+// Paste a YouTube URL or MP4 path per lesson (or set via Tweaks: video1…video8).
+const DEFAULT_VIDEOS = ["", "", "", "", "", "", "https://www.youtube.com/watch?v=gv0WHhKelSE", ""];
+function ytId(u) { if (!u) return ""; const m = u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : ""; }
+const LESSONS = [
+  ["Setup: the 2026 Claude stack", "6:40", "Desktop app, plans, and the five-layer model you'll use for the rest of the course."],
+  ["Projects & CLAUDE.md memory", "9:12", "Set context once. Instructions, reference files and memory that make every chat start smart."],
+  ["Prompts that survive production", "11:05", "Role, goal, constraints, examples, output format. Plus how to iterate instead of restarting."],
+  ["Skills: package your expertise", "12:30", "Write a SKILL.md, use progressive disclosure, test triggers, and share skills with a team."],
+  ["Connectors & MCP", "10:18", "Wire Claude into Drive, Slack, calendars and your own APIs — with least-privilege access."],
+  ["Cowork: delegate real work", "13:44", "Hand Claude a folder and a goal. Multi-step tasks, scheduled runs, and reviewing the output."],
+  ["Claude Code: plan, build, ship", "15:20", "Plan mode, subagents, hooks and tests. Go from spec to a deployed app on Vercel."],
+  ["Governance for teams", "8:55", "Data rules, admin controls, shared skill libraries and a rollout plan that sticks."]
+];
+const PRACTICES = [
+  ["Start in a Project", "Never work in a bare chat. Give every workstream its own instructions and files."],
+  ["Write context once", "A tight CLAUDE.md beats re-explaining yourself in every prompt."],
+  ["Plan before you build", "Ask for a plan, correct it, then execute. Cheaper than fixing the wrong build."],
+  ["Package repeat work", "Done it three times? Make it a Skill so it's done right every time after."],
+  ["Connect, don't paste", "Use MCP connectors for live data. Grant the least access that works."],
+  ["Keep context clean", "Clear between tasks. Hand research to subagents so the main thread stays sharp."],
+  ["Verify automatically", "Tests, hooks and checklists catch what a quick read misses."],
+  ["Review before you ship", "Claude drafts. You own accuracy, tone and anything confidential."]
+];
+const TRACKS = [
+  { name: "Projects", meta: "CONCEPT 01 · CONTEXT", desc: "A workspace with its own instructions, reference files and memory. Every chat inside it starts already knowing who you are and what you're working on.", ship: "Any ongoing workstream — a client, a product, a campaign.", modules: ["Create a Project and write its instructions", "Add reference files: briefs, examples, style guides", "How project memory works and how to steer it", "One Project per workstream, not per task", "Share Projects with your team"] },
+  { name: "Skills", meta: "CONCEPT 02 · CAPABILITIES", desc: "A SKILL.md file that teaches Claude how to do one job your way. Claude loads it automatically when a request matches — no prompt needed.", ship: "You've explained the same process three times.", modules: ["Anatomy of a SKILL.md: name, description, steps", "Write a description that triggers reliably", "Progressive disclosure: keep the core file short", "Test, version and share skills", "Browse free skills in the GencyAI library"] },
+  { name: "Artifacts", meta: "CONCEPT 03 · OUTPUT", desc: "Standalone things Claude makes next to the chat — documents, code, diagrams, interactive tools and small apps you can use, edit and share.", ship: "You want a usable thing, not a wall of text.", modules: ["What becomes an Artifact and why", "Iterate on an Artifact without starting over", "Interactive tools: calculators, dashboards, forms", "Publish and share an Artifact", "When to move from Artifact to a real app"] },
+  { name: "Cowork", meta: "CONCEPT 04 · DELEGATION", desc: "Claude working directly in a folder on your computer, across many steps, with your connected tools. You hand over a goal and come back to finished files.", ship: "The task has several steps and ends in files.", modules: ["Pick a working folder and set global instructions", "Connectors: calendar, docs, Slack and more", "Write a good delegation brief", "Scheduled tasks that run on their own", "Review, approve and keep a human in the loop"] },
+  { name: "Claude Code", meta: "CONCEPT 05 · BUILD", desc: "Claude in your terminal and editor, working across a whole codebase. It plans, edits files, runs commands and tests — you review and approve.", ship: "You're building or changing software.", modules: ["Install the CLI and open a repo", "CLAUDE.md: project rules Claude reads first", "Plan mode before any code changes", "Subagents, hooks and MCP servers", "Commit, open a PR and deploy"] }
+];
+const FAQS = [
+  ["Is it really free?", "Yes. Every lesson and skill is open — no account, no paywall, no trial. The email list is optional and only sends new resources."],
+  ["Do I need to code?", "No. The core library and Cowork lessons need no code. The Claude Code lessons walk through every step, with every prompt included."],
+  ["Which Claude plan do I need?", "Pro is enough for the library. Cowork and Claude Code lessons work best on Max, Team or Enterprise."],
+  ["Can you build this for us?", "Yes. GencyAI builds Claude rollouts, Skills and agents; SalesGency builds GTM and sales systems. Links are in the Work with us section."]
+];
+
+class Component extends DCLogic {
+  state = { lesson: Math.max(0, DEFAULT_VIDEOS.findIndex(Boolean)), track: 0, faq: 0, email: "", subStatus: "idle", subscribed: false };
+
+  componentDidMount() {
+    try { if (localStorage.getItem("gency_subscribed") === "1") this.setState({ subscribed: true }); } catch (e) {}
+  }
+
+  subscribe = async (e) => {
+    e.preventDefault();
+    this.setState({ subStatus: "loading" });
+    try { await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: this.state.email, source: "claude-mastery" }) }); } catch (err) {}
+    try { localStorage.setItem("gency_subscribed", "1"); } catch (e2) {}
+    this.setState({ subStatus: "done", subscribed: true });
+  };
+
+  renderVals() {
+    const { lesson, track, faq, subscribed } = this.state;
+    const srcs = LESSONS.map((l, i) => (this.props["video" + (i + 1)] ?? DEFAULT_VIDEOS[i] ?? "").trim());
+    const lessons = LESSONS.map(([title, dur, desc], i) => {
+      const active = i === lesson;
+      return {
+        num: String(i + 1).padStart(2, "0"), title, dur, desc,
+        src: srcs[i], meta: srcs[i] ? dur : "SOON",
+        bg: active ? "#F0EDE3" : "transparent",
+        numColor: active ? "#B8741A" : "#8A8FA3",
+        select: () => this.setState({ lesson: i })
+      };
+    });
+    const cur = lessons[lesson];
+    const yt = ytId(cur.src);
+    const current = { ...cur, isYt: !!yt, embed: yt ? "https://www.youtube-nocookie.com/embed/" + yt + "?rel=0&modestbranding=1" : "", isMp4: !!cur.src && !yt, isEmpty: !cur.src };
+    const firstAvail = srcs.findIndex(Boolean);
+    return {
+      lessons, current,
+      playAvailable: () => { if (firstAvail >= 0) this.setState({ lesson: firstAvail }); },
+      practices: PRACTICES.map(([t, d], i) => ({ n: String(i + 1).padStart(2, "0"), t, d })),
+      tracks: TRACKS.map((t, i) => ({ name: t.name, bg: i === track ? "#14224A" : "transparent", fg: i === track ? "#F5F4EF" : "#14224A", select: () => this.setState({ track: i }) })),
+      track: { ...TRACKS[track], modules: TRACKS[track].modules.map((t, i) => ({ n: String(i + 1).padStart(2, "0"), t })) },
+      faqs: FAQS.map(([q, a], i) => ({ q, a, open: i === faq, sign: i === faq ? "−" : "+", toggle: () => this.setState({ faq: i === faq ? -1 : i }) })),
+      email: this.state.email,
+      setEmail: e => this.setState({ email: e.target.value }),
+      subscribe: this.subscribe,
+      subLabel: this.state.subStatus === "loading" ? "Sending…" : "Send me more",
+      subscribed, notSubscribed: !subscribed
+    };
+  }
+}
+</script>
+</body>
+</html>

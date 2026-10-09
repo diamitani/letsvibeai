@@ -24,3 +24,6 @@ dist-ssr/
 Thumbs.db
 .vercel
 .env*
+
+# Raw video generation assets (large binaries in project root)
+/videos/

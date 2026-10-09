@@ -34,6 +34,39 @@ export interface CourseModule {
   };
   exercise: string;
   quiz: QuizQuestion[];
+  videoUrl?: string;
+  youtubeId?: string;
+  duration?: string;
+  chapters?: Array<{ time: string; title: string }>;
+}
+
+export interface YouTubeRostrItem {
+  id: string;
+  title: string;
+  creator: string;
+  creatorUrl?: string;
+  youtubeId: string;
+  category: 'Harness Setup' | 'Fullstack Vibe Coding' | 'Agent Workflows & MCP' | 'Prompt Architecture & PAL' | 'Database & Auth' | 'Deployment & Scale';
+  duration: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
+  summary: string;
+  takeaways: string[];
+  tags: string[];
+  featured?: boolean;
+  publishedDate?: string;
+}
+
+export interface DailyBriefVideo {
+  id: string;
+  date: string;
+  title: string;
+  videoUrl: string;
+  youtubeId?: string;
+  duration: string;
+  summary: string;
+  highlights: string[];
+  status: 'live' | 'archived';
+  keyTool?: string;
 }
 
 export interface ArchitectureBlock {

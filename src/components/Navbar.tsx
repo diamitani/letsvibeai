@@ -98,87 +98,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </button>
 
-          {/* Desktop Navigation Menu Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#f7f4f2] p-1.5 rounded-full border border-[#4a4d4f]/10">
-            <button
-              onClick={() => handleNavClick('hero')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'hero'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              Home
-            </button>
-
-            <button
-              onClick={() => handleNavClick('about-mentor')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'about-mentor'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              About
-            </button>
-
-            <button
-              onClick={() => handleNavClick('courses')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'courses'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              Courses
-            </button>
-
-            <button
-              onClick={() => handleNavClick('curriculum')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'curriculum'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              Curriculum (10)
-            </button>
-
-            <button
-              onClick={() => handleNavClick('how-it-works')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'how-it-works'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              How It Works
-            </button>
-
-            <button
-              onClick={() => handleNavClick('sandboxes')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'sandboxes'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
-              }`}
-            >
-              Sandbox
-            </button>
-
+          {/* Desktop Navigation Menu Links: 3 Primary Pillars */}
+          <nav className="hidden lg:flex items-center gap-1.5 bg-[#f7f4f2] p-1.5 rounded-full border border-[#4a4d4f]/10">
             <button
               onClick={() => {
-                setCurrentView('agent-platform');
+                setCurrentView('saas');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
-                currentView === 'agent-platform'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                currentView === 'saas'
+                  ? 'bg-[#071B3A] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#071B3A] hover:bg-white/80'
               }`}
             >
-              <Sparkles className="w-3 h-3 text-[#ec4909]" />
-              Agent Hub
+              Home / Intro
             </button>
 
             <button
@@ -186,29 +119,33 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setCurrentView('theater');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1 ${
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 currentView === 'theater'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+                  ? 'bg-[#071B3A] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#071B3A] hover:bg-white/80'
               }`}
             >
-              <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse"></span>
-              Video Theater
+              <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse" />
+              <span>Courses (10 Free Modules)</span>
             </button>
 
             <button
-              onClick={() => handleNavClick('pricing')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                currentView === 'saas' && activeSection === 'pricing'
-                  ? 'bg-[#101b24] text-white shadow-xs'
-                  : 'text-[#4a4d4f] hover:text-[#101b24] hover:bg-white/80'
+              onClick={() => {
+                setCurrentView('directory');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                currentView === 'directory' || currentView === 'marketplace' || currentView === 'agent-platform'
+                  ? 'bg-[#071B3A] text-white shadow-xs'
+                  : 'text-[#4a4d4f] hover:text-[#071B3A] hover:bg-white/80'
               }`}
             >
-              Pricing
+              <Sparkles className="w-3.5 h-3.5 text-[#2F80ED]" />
+              <span>Directory & Hub</span>
             </button>
           </nav>
 
-          {/* Action Buttons: Search, AI Coach, and Primary Openclass CTA */}
+          {/* Action Buttons: Search, AI Coach, and Primary Start Course CTA */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Command Palette Trigger */}
             <button
@@ -244,12 +181,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
-            {/* Primary Action Button (OpenClass Signature Orange Pill with White Circle Arrow) */}
+            {/* Primary Action Button: Start Free Course */}
             <button
-              onClick={() => handleNavClick('pricing')}
+              onClick={() => {
+                setCurrentView('theater');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#ec4909] hover:bg-[#d43f05] active:scale-98 text-white font-semibold text-xs sm:text-sm transition-all shadow-md shadow-[#ec4909]/25 flex items-center gap-2 cursor-pointer group"
             >
-              <span>Browse Courses</span>
+              <span>Start Free Course</span>
               <div className="w-5 h-5 rounded-full bg-white text-[#ec4909] flex items-center justify-center transition-transform group-hover:translate-x-0.5">
                 <ArrowRight className="w-3 h-3" />
               </div>

@@ -151,6 +151,8 @@ export const COURSE_MODULES: CourseModule[] = [
     id: 1,
     title: 'What is Vibe Coding?',
     slug: 'what-is-vibe-coding',
+    videoUrl: '/videos/mastered/01-what-is-vibe-coding-master.mp4',
+    duration: '15:20',
     tagline: 'From Idea to Software in Plain English',
     takeaway: 'Explain vibe coding and its two governing principles: Direction beats Guessing & Architecture First.',
     deliverable: 'Your app idea distilled into a crystal-clear one-paragraph specification.',
@@ -237,6 +239,8 @@ and a software architect would need answered. Ask them one at a time.`,
     id: 2,
     title: 'AI Fundamentals: ML, LLMs, Tokens & GPUs',
     slug: 'ai-fundamentals',
+    videoUrl: '/videos/mastered/02-ai-fundamentals-master.mp4',
+    duration: '16:45',
     tagline: 'Under the Hood of Machine Intelligence',
     takeaway: 'Explain how models predict tokens, manage context windows, and calculate monthly token budgets.',
     deliverable: 'A precise monthly token and cost budget for your target application.',
@@ -320,6 +324,8 @@ Target user activity: [number of daily active users] performing [core action, e.
     id: 3,
     title: 'The AI Landscape: Model Providers & Platforms',
     slug: 'ai-landscape',
+    videoUrl: '/videos/mastered/03-the-ai-landscape-master.mp4',
+    duration: '14:30',
     tagline: 'Choosing the Right Brain for Every Task',
     takeaway: 'Navigate OpenAI, Anthropic, Google, open-source models, and AI gateways.',
     deliverable: 'Your Model Provider Shortlist with primary and fallback models.',
@@ -394,6 +400,8 @@ Recommend the primary model and fallback model for each feature, factoring in la
     id: 4,
     title: 'Web App Architecture: The 11 Building Blocks',
     slug: 'web-app-architecture',
+    videoUrl: '/videos/mastered/04-web-app-architecture-master.mp4',
+    duration: '18:15',
     tagline: 'The Master Blueprint of Production Software',
     takeaway: 'Map all 11 building blocks to tools and trace a user click from browser to database and AI model.',
     deliverable: 'Your complete System Architecture Map with request flow diagrams.',
@@ -481,6 +489,8 @@ Recommend the primary model and fallback model for each feature, factoring in la
     id: 5,
     title: 'The Toolbox: Coding Harnesses, Cloud & Hosting',
     slug: 'the-toolbox',
+    videoUrl: '/videos/mastered/05-the-toolbox-master.mp4',
+    duration: '15:10',
     tagline: 'Equipping Your High-Velocity AI Stack',
     takeaway: 'Pick and configure your IDE, coding harness (Cursor, Antigravity, Claude Code), and cloud hosts.',
     deliverable: 'Your Tech Stack Key Sheet with all environment keys and provider choices.',
@@ -563,6 +573,8 @@ Include:
     id: 6,
     title: 'Talking to AI: Prompting, Chains & Context Engineering',
     slug: 'talking-to-ai',
+    videoUrl: '/videos/mastered/06-talking-to-ai-master.mp4',
+    duration: '17:20',
     tagline: 'Mastering the Art of Precision Technical Prompts',
     takeaway: 'Write production-grade system prompts, multi-step prompt chains, and curated context packs.',
     deliverable: 'A complete /context pack for your application.',
@@ -644,6 +656,8 @@ Include:
     id: 7,
     title: 'Agents: Harness, Skills, Tools, Loops, Goals & Graphs',
     slug: 'agents',
+    videoUrl: '/videos/mastered/07-agents-master.mp4',
+    duration: '19:40',
     tagline: 'Orchestrating Autonomous AI Teammates',
     takeaway: 'Design and deploy AI agents with custom skills, tool schemas, reflection loops, and safety guardrails.',
     deliverable: 'A working /agent folder with AGENTS.md, skills, and tool definitions.',
@@ -732,6 +746,8 @@ Design an autonomous agent named "[AgentName]" that performs: [core task].
     id: 8,
     title: 'The Document Stack: 11 Planning Docs Written with AI',
     slug: 'document-stack',
+    videoUrl: '/videos/mastered/08-the-document-stack-master.mp4',
+    duration: '16:05',
     tagline: 'The Professional Artifact Catalog Before Code',
     takeaway: 'Generate the complete 11-document specification stack with AI in a single afternoon.',
     deliverable: 'A complete /docs folder with all 11 planning artifacts.',
@@ -813,6 +829,8 @@ Once approved, we will proceed sequentially through all 11 documents.`,
     id: 9,
     title: 'The Build Process: Front End to Back End to Agent Review',
     slug: 'build-process',
+    videoUrl: '/videos/mastered/09-the-build-process-master.mp4',
+    duration: '21:30',
     tagline: 'Building Page-by-Page with Precision',
     takeaway: 'Execute the build in correct order: Scaffolding -> UI -> Database -> Auth -> Stripe -> Agents.',
     deliverable: 'Your complete V1 web app running and functional on localhost.',
@@ -897,6 +915,8 @@ Build [Feature/Page Name]:
     id: 10,
     title: 'Ship It: Versioning, Deployment, Hosting & Launch',
     slug: 'ship-it',
+    videoUrl: '/videos/mastered/10-ship-it-master.mp4',
+    duration: '14:50',
     tagline: 'Going Live to the World with Confidence',
     takeaway: 'Deploy to Vercel/Cloudflare, configure custom domains, verify pre-launch checklists, and launch.',
     deliverable: 'A live production HTTPS URL passing all pre-launch verification checks.',
@@ -974,6 +994,69 @@ Output a pass/fail table and list any blockers.`,
         ],
         correctIndex: 0,
         explanation: 'Preview deployments give builders and stakeholders an exact live sandbox to test changes before merging to production.'
+      }
+    ]
+  },
+  {
+    id: 11,
+    title: 'Capstone Project: Build and Demo a Revenue-Ready App',
+    slug: 'capstone-project',
+    videoUrl: '/videos/mastered/11-capstone-master.mp4',
+    duration: '14:20',
+    tagline: 'Ship a Live Production App Passing the 100-Point Rubric',
+    takeaway: 'Combine auth, database, Stripe payments, and an AI agent into one live app with a 5-minute video demo.',
+    deliverable: 'A live production HTTPS URL passing the pre-launch checklist with five-minute walkthrough demo.',
+    estimatedHours: '3.5 hrs',
+    icon: 'Award',
+    analogy: {
+      title: "The Director's Premiere",
+      description: "You've directed the script, the crew, and the edit. Now your film premieres on the big screen."
+    },
+    lessons: [
+      {
+        id: '11.1',
+        title: 'The 6 Required Capstone Deliverables',
+        summary: 'Context pack, 11 docs, architecture diagram, agent folder, git repo, and production URL.',
+        content: 'Your capstone must prove fullstack competence: planning documents, secure database RLS, Stripe webhook verification, and agent tooling.'
+      },
+      {
+        id: '11.2',
+        title: 'The 100-Point Evaluation Rubric',
+        summary: 'Works end-to-end (30), Sound architecture (25), Complete docs (20), UX & Design (15), Demo clarity (10).',
+        content: 'Passing the rubric earns the official LetsVibeAI Certified Builder credential.'
+      },
+      {
+        id: '11.3',
+        title: 'Recording the 5-Minute Pitch Demo',
+        summary: 'Problem statement, target persona, live application walkthrough, architecture review, and next milestones.',
+        content: 'Record a crisp screen walkthrough demonstrating sign-in, database read/write, payment checkout, and an autonomous agent task.'
+      }
+    ],
+    copyPrompt: {
+      title: 'Capstone Submission & Final Evaluation',
+      prompt: `Evaluate my web app repository against the LetsVibeAI Capstone Rubric (100 points).
+Review:
+1. Does the app work end-to-end without console errors? (30 pts)
+2. Is Postgres RLS enforced on all user tables? (25 pts)
+3. Are the planning documents in /docs complete? (20 pts)
+4. Does the UI follow high-taste design standards? (15 pts)
+5. Is the demo script clear and concise? (10 pts)
+Output the scored scorecard and credential recommendation.`,
+      targetDoc: '/capstone/evaluation.md'
+    },
+    exercise: 'Deploy your final capstone web app to Vercel, record a 5-minute video demo, and verify that your Stripe webhook is live.',
+    quiz: [
+      {
+        id: 'q11-1',
+        question: 'What is the required threshold to pass the LetsVibeAI Capstone Certification?',
+        options: [
+          'Scoring 85 or higher on the 100-point rubric with a verified live URL',
+          'Writing 50,000 lines of manual code',
+          'Spending $500 on model tokens',
+          'Deploying to three cloud providers simultaneously'
+        ],
+        correctIndex: 0,
+        explanation: 'Scoring 85+ across functionality, architecture, documentation, design, and demo earns certification.'
       }
     ]
   }

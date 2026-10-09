@@ -27,3 +27,5 @@ Thumbs.db
 
 # Raw video generation assets (large binaries in project root)
 /videos/
+public/videos/mastered/*.mp4
+public/videos/daily/*.mp4

@@ -8,7 +8,7 @@ import { Button, Icon } from './ui';
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link to="/" className={`logo${light ? ' logo--light' : ''}`} aria-label="LetsVibeAI home">
-      <img src={light ? '/logo-monochrome-light.svg' : '/logo-standalone-mark.svg'} alt="" width={34} height={34} />
+      <img src="/logo-monochrome-light.svg" alt="" width={38} height={38} />
       <span>LetsVibe<span className="logo__ai">AI</span></span>
     </Link>
   );

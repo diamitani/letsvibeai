@@ -31,7 +31,7 @@ export const nav = [
   { label: 'Blog', href: '/blog' },
 ];
 
-export const primaryCta = { label: 'Start Free', href: '/courses/vibe-coding' };
+export const primaryCta = { label: 'Start Free', href: '/courses/claude-mastery' };
 export const meetingCta = { label: 'Book a Build Call', href: '/contact' };
 
 // "Ways to learn" — paid offers. Edit prices any time.
@@ -91,7 +91,7 @@ export const guides = [
     name: 'Pat Diamitani',
     role: 'Founder & Lead Instructor',
     bio: 'Learned AI from YouTube. Now leads GTM AI & automation at a 500+ person company and has built 150+ custom GPTs.',
-    image: '', // add /images/guide-pat.jpg and set the path here
+    image: '/images/pat.png',
     initials: 'PD',
     links: [
       { kind: 'linkedin', href: 'https://www.linkedin.com/in/diamitani', label: 'Pat on LinkedIn' },
@@ -141,13 +141,20 @@ export const builds = [
   },
   {
     image: '/images/build-assistant.jpg',
-    tag: 'Vibe Coding · Module 7',
-    title: 'An AI agent with skills & tools',
-    body: 'Give an agent instructions, tools and memory, then wire it into a real product.',
-    tools: ['Agent harness', 'Vercel AI SDK'],
+    tag: 'Claude Mastery · Lesson 2',
+    title: 'A CLAUDE.md that remembers for you',
+    body: 'Write your stack, rules and checks once — and every agent session starts informed.',
+    tools: ['Claude Code', 'Markdown'],
   },
   {
     image: '/images/build-monitor.jpg',
+    tag: 'Claude Mastery · Lesson 7',
+    title: 'A team of agents: plan, build, ship',
+    body: 'Delegate to a researcher, a builder and a reviewer — then verify with tests before you ship.',
+    tools: ['Subagents', 'Git'],
+  },
+  {
+    image: '/images/build-portfolio.jpg',
     tag: 'Project Labs · Lab 2',
     title: 'An e-commerce store',
     body: 'Catalog, cart, checkout and sign-in — built and deployed with hosted AI builders.',
@@ -207,13 +214,13 @@ export const plans = [
     featured: false,
     badge: '',
     features: [
-      'All 4 courses and every lesson',
+      'All 5 courses and every lesson',
       'Knowledge checks with instant feedback',
       'The full Toolkit: 11 blocks, 11 docs, prompt library',
       'Progress saved in your browser',
     ],
     cta: 'Start Learning',
-    href: '/courses/vibe-coding',
+    href: '/courses/claude-mastery',
   },
   {
     name: 'Live Cohort',
@@ -248,4 +255,16 @@ export const plans = [
     cta: 'Talk to Us',
     href: '/contact?topic=Teams%20%26%20Programs',
   },
+];
+
+// "8 Core Practices" — each links to the lesson that teaches it
+export const practices = [
+  { n: '01', title: 'Start in a project', body: 'Never work in a bare chat. Give every workstream its own rules and tracked files.', to: 'setup-pick-harness' },
+  { n: '02', title: 'Write context once', body: 'A tight rules file in the repo beats re-explaining your stack in every prompt.', to: 'context-files' },
+  { n: '03', title: 'Plan before you build', body: 'Ask for a plan, correct it, then execute. Planning is far cheaper than fixing bad code.', to: 'prompts-production' },
+  { n: '04', title: 'Package repeat work', body: 'Done a process three times? Turn it into a skill so it runs the same way every time.', to: 'skills-package-expertise' },
+  { n: '05', title: "Connect, don't paste", body: 'Use MCP for live data and grant the least access that works.', to: 'connectors-mcp' },
+  { n: '06', title: 'Keep context clean', body: 'Reset between tasks and hand research to subagents so your main thread stays sharp.', to: 'agents-subagents' },
+  { n: '07', title: 'Verify automatically', body: 'Tests, hooks and checks catch mistakes before they reach production.', to: 'commands-workflows' },
+  { n: '08', title: 'Review before you ship', body: 'The agent drafts. You own accuracy, tone, security and customer data.', to: 'governance-teams' },
 ];

@@ -13,7 +13,7 @@ export function Blog() {
       <section className="page-hero page-hero--plain">
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">LiveBuildAI briefings & guides</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">The LetsVibeAI Blog</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1">The LetsVibeAI <em>Blog</em></h1></Reveal>
           <Reveal delay={200}><p>What's moving in AI, what it means for builders, and the tools worth your time — in plain English.</p></Reveal>
         </div>
       </section>
@@ -62,7 +62,7 @@ export function BlogPost() {
           <div style={{ marginTop: 48 }}><Button href="/courses" variant="navy">Turn This Into Skills — Start a Course</Button></div>
         </div>
       </section>
-      <section className="section section--mist">
+      <section className="section section--cream">
         <div className="container">
           <h2 className="h3" style={{ marginBottom: 32 }}>More from the blog</h2>
           <div className="grid-3">

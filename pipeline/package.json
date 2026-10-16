@@ -1,0 +1,19 @@
+{
+  "name": "lvai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@fontsource/sora": "^5.3.0",
+    "gsap": "^3.15.0",
+    "lucide-static": "^1.57.0"
+  }
+}

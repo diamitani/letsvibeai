@@ -28,7 +28,7 @@ const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href);
 export function Button({
   href, children, variant = 'primary', size, arrow = true, className = '', onClick, type, disabled,
 }: {
-  href?: string; children: ReactNode; variant?: 'primary' | 'navy' | 'outline' | 'ghost-light';
+  href?: string; children: ReactNode; variant?: 'primary' | 'navy' | 'outline' | 'ghost' | 'ghost-light';
   size?: 'sm'; arrow?: boolean; className?: string; onClick?: () => void; type?: 'button' | 'submit'; disabled?: boolean;
 }) {
   const cls = `btn btn--${variant}${size ? ` btn--${size}` : ''} ${className}`.trim();

@@ -55,7 +55,7 @@ export function OffersSection() {
       <div className="container">
         <Reveal className="offers-head">
           <div>
-            <h2 className="h2" id="offers-title">Ways to Learn Faster</h2>
+            <h2 className="h2" id="offers-title">Ways to Learn <em>Faster</em></h2>
             <p className="lead">Every course is free. When you want a guide in the room, these are the fastest ways to go from idea to shipped.</p>
           </div>
           <Countdown />
@@ -117,7 +117,7 @@ export function GlassFeatures() {
       <div className="glass-section__bg" aria-hidden="true"><img src="/images/features-bg.jpg" alt="" loading="lazy" /></div>
       <div className="container">
         <Reveal className="glass-panel">
-          <h2 className="h2" id="glass-title">Practical AI, Made for Real Life</h2>
+          <h2 className="h2" id="glass-title">Practical AI, Made for <em>Real Life</em></h2>
           {features.map((f) => (
             <div className="glass-item" key={f.title}>
               <span className="icon-tile"><Icon name={f.icon} /></span>
@@ -133,9 +133,9 @@ export function GlassFeatures() {
 /* ── Bento (Lexio "Designed for Real English Communication") ── */
 export function BentoSection() {
   return (
-    <section className="section section--mist" aria-labelledby="bento-title">
+    <section className="section section--cream" aria-labelledby="bento-title">
       <div className="container">
-        <SectionHead title={<span id="bento-title">Designed for Real-World Builders</span>} text="Real tools, real projects and a real community — so AI stops feeling like magic and starts feeling like a skill." />
+        <SectionHead title={<span id="bento-title">Designed for <em>Real-World</em> Builders</span>} text="Real tools, real projects and a real community — so AI stops feeling like magic and starts feeling like a skill." />
         <div className="bento">
           <Reveal className="bento__photo">
             <img src="/images/event-build-night.jpg" alt="Learners building with laptops at a LetsVibeAI Build Night in Chicago" loading="lazy" />
@@ -183,7 +183,7 @@ export function GuidesSection({ background = 'sky' }: { background?: 'sky' | 'mi
   return (
     <section className={`section section--${background}`} aria-labelledby="guides-title">
       <div className="container">
-        <SectionHead center title={<span id="guides-title">Meet Your Guides</span>} />
+        <SectionHead center title={<span id="guides-title">Meet Your <em>Guides</em></span>} />
         <div className="grid-3">
           {guides.map((g, i) => (
             <Reveal key={g.name} delay={i * 120} className="guide-card">
@@ -229,10 +229,10 @@ export function BuildsCarousel() {
   }, [index, max, perView]);
 
   return (
-    <section className="section section--mist" aria-labelledby="builds-title" aria-roledescription="carousel">
+    <section className="section section--cream" aria-labelledby="builds-title" aria-roledescription="carousel">
       <div className="container">
         <SectionHead
-          title={<span id="builds-title">Don't Just Learn It —<br />See What You'll Ship</span>}
+          title={<span id="builds-title">Don't Just Learn It —<br />See What <em>You'll Ship</em></span>}
           aside={
             <div style={{ display: 'flex', gap: 16 }}>
               <button className="btn-circle" onClick={() => go(-1)} disabled={index === 0} aria-label="Previous project"><ArrowLeft /></button>
@@ -261,13 +261,13 @@ export function BuildsCarousel() {
 }
 
 /* ── FAQ (Lexio accordion) ─────────────────────────────── */
-export function FaqSection({ items = faqs, title = 'Frequently Asked Questions' }: { items?: { q: string; a: string }[]; title?: string }) {
+export function FaqSection({ items = faqs, title = 'Frequently Asked <em>Questions</em>' }: { items?: { q: string; a: string }[]; title?: string }) {
   const [open, setOpen] = useState(0);
   return (
     <section className="section section--white" aria-labelledby="faq-title">
       <div className="container faq">
         <Reveal className="faq__aside">
-          <h2 className="h2" id="faq-title">{title}</h2>
+          <h2 className="h2" id="faq-title" dangerouslySetInnerHTML={{ __html: title }} />
           <div className="faq__help">
             <IconStack />
             <p className="h5">Got questions? Let's get you building with confidence.</p>
@@ -316,10 +316,10 @@ export function ContactSection() {
   }
 
   return (
-    <section className="section section--mist" id="contact" aria-labelledby="contact-title">
+    <section className="section section--cream" id="contact" aria-labelledby="contact-title">
       <div className="container contact">
         <Reveal className="contact__form">
-          <h2 className="h3" id="contact-title">Contact us today!</h2>
+          <h2 className="h3" id="contact-title">Contact us <em>today!</em></h2>
           <form onSubmit={onSubmit}>
             <div className="field"><label htmlFor="c-name">Your Name</label><input className="input" id="c-name" name="name" required placeholder="Enter your name" autoComplete="name" /></div>
             <div className="field"><label htmlFor="c-email">Email Address</label><input className="input" id="c-email" name="email" type="email" required placeholder="Enter your email address" autoComplete="email" /></div>
@@ -341,7 +341,7 @@ export function ContactSection() {
           </form>
         </Reveal>
         <Reveal className="contact__side" delay={150}>
-          <h2 className="h2">Let's Start Your AI Building Journey</h2>
+          <h2 className="h2">Let's Start Your <em>AI Building</em> Journey</h2>
           <div className="contact__img">
             <img src="/images/contact.jpg" alt="Friends learning together on laptops" loading="lazy" />
             <div className="contact__pill"><span>Learn AI. Build with AI. Grow with AI.</span><img src="/logo-monochrome-light.svg" alt="" /></div>

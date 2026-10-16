@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LetsVibeAI Lesson</title>
+<link rel="stylesheet" href="style.css">
+<script src="../node_modules/gsap/dist/gsap.min.js"></script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <div id="vmark"></div>
+  <div id="scenes"></div>
+  <div id="vignette"></div>
+  <div id="chrome">
+    <div id="lockup"></div>
+    <div id="pills"></div>
+    <div id="progress"></div>
+  </div>
+  <div id="captions"><div id="capbox"></div></div>
+  <div id="flash"></div>
+</div>
+<script>
+  // load lesson data then engine
+  const q = new URLSearchParams(location.search);
+  const slug = q.get('lesson');
+  const s = document.createElement('script');
+  s.src = '../build/' + slug + '/data.js';
+  s.onload = () => { const e = document.createElement('script'); e.src = 'engine.js?v=' + Date.now(); document.body.appendChild(e); };
+  document.body.appendChild(s);
+</script>
+</body>
+</html>

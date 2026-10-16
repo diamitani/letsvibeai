@@ -15,11 +15,11 @@ export function Courses() {
         <div className="page-hero__media" aria-hidden="true"><img src="/images/course-project-labs.jpg" alt="" /></div>
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">Free · Self-paced · Beginner friendly</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">Our AI Courses</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1">Our <em>AI Courses</em></h1></Reveal>
           <Reveal delay={200}><p>Pick a path, build something real in every lesson and go at your own pace. No credit card, no code background.</p></Reveal>
         </div>
       </section>
-      <section className="section section--mist">
+      <section className="section section--cream">
         <div className="container">
           <div className="grid-2">
             {courses.map((c, i) => <Reveal key={c.slug} delay={(i % 2) * 120}><CourseCard course={c} /></Reveal>)}
@@ -51,10 +51,10 @@ export function CourseDetail() {
   return (
     <>
       <section className="page-hero">
-        <div className="page-hero__media" aria-hidden="true"><img src={course.image} alt="" /></div>
+        <div className="page-hero__media" aria-hidden="true"><img src={course.heroImage || course.image} alt="" /></div>
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">{course.level} · {lessons.length} {course.unit}s · {course.duration}</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">{course.heroTitle}</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1" dangerouslySetInnerHTML={{ __html: course.heroTitle }} /></Reveal>
           <Reveal delay={200}><p>{course.summary}</p></Reveal>
           <Reveal delay={300} className="hero__actions" style={{ justifyContent: 'center', marginTop: 32 }}>
             <Button href={`/courses/${course.slug}/${nextUp.slug}`}>{started ? `Continue: ${course.unit} ${lessons.indexOf(nextUp) + 1}` : `Start ${course.unit} 1`}</Button>
@@ -103,7 +103,7 @@ export function CourseDetail() {
               <div className="grid-2">
                 {CAPSTONE_DELIVERABLES.map((d) => (
                   <div className="block-card" key={d.id}>
-                    <div className="block-card__top"><span className="chip">{d.moduleRef}</span><strong style={{ color: 'var(--blue-strong)' }}>{d.points} pts</strong></div>
+                    <div className="block-card__top"><span className="chip">{d.moduleRef}</span><strong style={{ color: 'var(--accent-strong)' }}>{d.points} pts</strong></div>
                     <h3 className="h5">{d.title}</h3>
                     <p>{d.description}</p>
                   </div>

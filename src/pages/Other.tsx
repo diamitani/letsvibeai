@@ -10,7 +10,7 @@ export function Contact() {
       <section className="page-hero page-hero--plain">
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">We reply within two business days</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">Let's Build Something Together</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1">Let's Build Something <em>Together</em></h1></Reveal>
           <Reveal delay={200}><p>Questions about a course, coaching, a cohort or training your team? Send us a note.</p></Reveal>
           <Reveal delay={300} className="hero__actions" style={{ justifyContent: 'center', marginTop: 28 }}>
             <Button href={`mailto:${site.email}`} variant="ghost-light">{site.email}</Button>
@@ -30,11 +30,11 @@ export function Pricing() {
       <section className="page-hero page-hero--plain">
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">Simple, honest pricing</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">Learn Free. Add a Guide When You're Ready.</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1">Learn Free. Add a <em>Guide</em> When You're Ready.</h1></Reveal>
           <Reveal delay={200}><p>Every course and lesson is free. Pay only for live, human help.</p></Reveal>
         </div>
       </section>
-      <section className="section section--mist">
+      <section className="section section--cream">
         <div className="container">
           <div className="grid-3" style={{ alignItems: 'stretch' }}>
             {plans.map((p, i) => (
@@ -63,7 +63,7 @@ export function NotFound() {
     <section className="page-hero page-hero--plain" style={{ minHeight: '80vh' }}>
       <div className="container page-hero__inner">
         <p className="eyebrow">404</p>
-        <h1 className="h1">This page took a wrong turn.</h1>
+        <h1 className="h1">This page took a <em>wrong turn.</em></h1>
         <p>The page you're looking for doesn't exist or has moved.</p>
         <div className="hero__actions" style={{ justifyContent: 'center', marginTop: 28 }}>
           <Button href="/" variant="ghost-light">Back Home</Button>

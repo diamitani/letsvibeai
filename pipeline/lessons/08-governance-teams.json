@@ -1,0 +1,48 @@
+{
+  "slug": "08-governance-teams", "course": "Claude Mastery", "lesson": 8,
+  "title": "Governance for teams", "voice": "af_heart",
+  "next": {"lesson": 9, "title": "Masterclass: One Must Act"},
+  "scenes": [
+    {"type": "title", "chapter": "Welcome", "kicker": "Teams", "min": 7,
+     "headline": "Governance for <em>teams</em>",
+     "sub": "Make it safe. Then make it stick.",
+     "lines": ["Lesson eight. Governance.", "Your instructor is Patrick Diamitani.", "How to roll agents out to a team, safely."]},
+    {"type": "compare", "chapter": "Two rulebooks",
+     "eyebrow": "Two sets of rules", "headline": "Rules for agents. <em>Rules for people.</em>",
+     "lines": ["Governance needs two sets of rules.", "Rules for the agents, written in their context files.", "And rules for the people, written down where everyone can see them."],
+     "left": {"title": "For the agents", "icon": "bot", "tag": "In context files", "tone": "good", "cue": 1,
+              "items": ["CLAUDE.md and agent files", "Allowed tools and folders", "Checks before \"done\""]},
+     "right": {"title": "For the people", "icon": "users", "tag": "In the playbook", "tone": "good", "cue": 2,
+               "items": ["What data is off-limits", "Who approves new tools", "How work gets reviewed"]}},
+    {"type": "cards", "chapter": "Data",
+     "eyebrow": "Start with data", "headline": "Decide <em>what goes where.</em>",
+     "lines": ["Start with data.", "Decide what never goes in a prompt.", "Which tools the agents may connect to.", "And who approves anything new."],
+     "cards": [
+       {"t": "Never in a prompt", "d": "Secrets, keys, and restricted data", "icon": "lock", "cue": 1},
+       {"t": "Approved tools", "d": "Which connectors are allowed", "icon": "plug", "cue": 2},
+       {"t": "Who approves", "d": "One owner for anything new", "icon": "user-check", "cue": 3}]},
+    {"type": "code", "chapter": "Permissions",
+     "eyebrow": "Permissions", "headline": "Ask before <em>writing.</em>", "path": ".claude/settings.json", "notesY": 420,
+     "lines": ["Then permissions.", "Allow list the safe commands, so it can move fast on the boring stuff.", "Deny anything sensitive, like your secrets file.", "Everything else, the agent asks first. And keep a log of what it changed."],
+     "code": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Bash(npm run test:*)\",\n      \"Bash(git diff:*)\"\n    ],\n    \"deny\": [\n      \"Read(./.env)\"\n    ]\n  }\n}",
+     "highlights": [
+       {"from": 3, "to": 6, "label": "Allow", "note": "Safe commands run fast", "icon": "circle-check", "cue": 1},
+       {"from": 7, "to": 9, "label": "Deny", "note": "Secrets stay off-limits", "icon": "ban", "cue": 2},
+       {"from": 2, "to": 10, "label": "Ask", "note": "Everything else asks first", "icon": "hand", "cue": 3}]},
+    {"type": "steps", "chapter": "Rollout",
+     "eyebrow": "Rollout", "headline": "Start small. <em>Share everything.</em>",
+     "lines": ["Finally, roll out in steps.", "Pilot with one team for thirty days.", "Share a skills library in git.", "Review it every month, and keep what works."],
+     "steps": [
+       {"t": "Pilot", "icon": "flag", "d": "One team, thirty days", "cue": 1},
+       {"t": "Share", "icon": "library", "d": "A skills library in git", "cue": 2},
+       {"t": "Review", "icon": "calendar-check", "d": "Monthly — keep what works", "cue": 3}]},
+    {"type": "recap", "chapter": "Recap", "eyebrow": "Lesson 08 recap", "headline": "What you <em>just learned.</em>",
+     "lines": ["Quick recap.", "Two rulebooks, least access, ask-before-write, and a small pilot.",
+               "Your mission: write a one page AI playbook for your team, and pick the pilot group."],
+     "takeaways": [{"t": "Rules for agents and for people", "cue": 1}, {"t": "Allow the safe, deny the sensitive", "cue": 1.4}, {"t": "Pilot → share → review monthly", "cue": 1.75}],
+     "mission": {"t": "Write a one-page AI playbook for your team — and pick the pilot group.", "icon": "target", "cue": 2}},
+    {"type": "next", "chapter": "Up next", "tail": 1.4,
+     "lines": ["That's the core course.", "Next, two masterclasses. First up, One Must Act.",
+               {"say": "Learn, build, ship, with Lets Vibe A.I.", "cap": "Learn. Build. Ship. — with LetsVibeAI."}]}
+  ]
+}

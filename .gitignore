@@ -24,3 +24,9 @@ dist-ssr/
 Thumbs.db
 .vercel
 .env*
+
+# Course video pipeline output
+pipeline/build/
+pipeline/out/
+pipeline/models/
+pipeline/node_modules/

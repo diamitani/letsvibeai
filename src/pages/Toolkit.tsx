@@ -34,7 +34,7 @@ export function Toolkit() {
       <section className="page-hero page-hero--plain">
         <div className="container page-hero__inner">
           <Reveal><p className="eyebrow">Free resources</p></Reveal>
-          <Reveal delay={100}><h1 className="h1">The Builder Toolkit</h1></Reveal>
+          <Reveal delay={100}><h1 className="h1">The Builder <em>Toolkit</em></h1></Reveal>
           <Reveal delay={200}><p>The maps, templates and prompts we use to plan and ship every app. Copy them, download them and make them yours.</p></Reveal>
         </div>
       </section>
@@ -54,7 +54,7 @@ export function Toolkit() {
             {active === 'blocks' && (
               <>
                 <SectionHead title="Every App Has an Architecture" text="Pick one tool for each block, connect them in the right order, and you have a foundation that scales." />
-                <Reveal className="detail-figure" style={{ aspectRatio: 'auto', background: 'var(--mist)' }}>
+                <Reveal className="detail-figure" style={{ aspectRatio: 'auto', background: 'var(--cream)' }}>
                   <img src="/images/architecture.png" alt="Diagram of the 11 web app building blocks and how they connect" style={{ objectFit: 'contain' }} />
                 </Reveal>
                 <div className="grid-3">

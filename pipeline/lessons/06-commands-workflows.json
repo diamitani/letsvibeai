@@ -1,0 +1,50 @@
+{
+  "slug": "06-commands-workflows", "course": "Claude Mastery", "lesson": 6,
+  "title": "Commands, prompts & workflows", "voice": "af_heart",
+  "next": {"lesson": 7, "title": "Agents & subagents: plan, build, ship"},
+  "scenes": [
+    {"type": "title", "chapter": "Welcome", "kicker": "Power features", "min": 7,
+     "headline": "Commands &amp; <em>workflows</em>",
+     "sub": "Your best prompts, one keystroke away.",
+     "lines": ["Lesson six. Commands.", "Your instructor is Patrick Diamitani.", "This is how you stop typing the same prompt every day."]},
+    {"type": "terminal", "chapter": "The rule",
+     "eyebrow": "The rule", "headline": "Same prompt again? <em>Make it a command.</em>",
+     "sub": "Type a slash and a word.", "window": "~/my-app — claude",
+     "lines": ["If you keep pasting the same prompt, it's time for a command.", "Type a slash and a word, and the whole prompt runs.", "Add a word after it, to point it at what matters today."],
+     "commands": [
+       {"cmd": "/review", "cue": 1.2, "out": "● Running review.md — reading git diff --staged…", "ok": true},
+       {"cmd": "/review security", "cue": 2.3, "out": "● Focus: security · 2 bugs, 3 style notes"}],
+     "callout": {"t": "One file. One word. Same result every time.", "icon": "zap", "label": "Slash command", "cue": 1}},
+    {"type": "code", "chapter": "Anatomy",
+     "eyebrow": "Anatomy", "headline": "Three parts. <em>Six lines.</em>", "path": ".claude/commands/review.md", "notesY": 420,
+     "lines": ["Here's a review command.", "Frontmatter at the top describes it.", "A slot catches whatever you type after the command.", "And the body is just the prompt."],
+     "code": "---\ndescription: Review staged changes\nargument-hint: [focus area]\n---\nReview `git diff --staged`.\nFocus on: $ARGUMENTS\nList bugs first, then style nits.",
+     "highlights": [
+       {"from": 1, "to": 4, "label": "Frontmatter", "note": "Frontmatter — what it is", "icon": "tag", "cue": 1},
+       {"from": 6, "to": 6, "label": "Arguments", "note": "Arguments — what you type after it", "icon": "text-cursor-input", "cue": 2},
+       {"from": 5, "to": 7, "label": "Body", "note": "Body — the prompt itself", "icon": "file-text", "cue": 3}]},
+    {"type": "table", "chapter": "Per harness",
+     "eyebrow": "Per harness", "headline": "Same idea. <em>Different folder.</em>",
+     "lines": ["Each harness calls them something slightly different.", "Commands, prompts, or workflows. Same idea, different folder."],
+     "rows": [
+       {"t": "Claude Code", "m": "CC", "v": ".claude/commands/", "cue": 1},
+       {"t": "Codex", "m": "Cx", "v": "~/.codex/prompts/"},
+       {"t": "Cursor", "m": "Cu", "v": ".cursor/commands/"},
+       {"t": "VS Code Copilot", "m": "VS", "v": ".github/prompts/*.prompt.md"}]},
+    {"type": "steps", "chapter": "Team habit",
+     "eyebrow": "Team habit", "headline": "Keep commands <em>in git.</em>",
+     "lines": ["Keep them in git.", "Write one file per command.", "Commit it next to the code.", "And the whole team gets it on their next pull."],
+     "steps": [
+       {"t": "Write", "icon": "pencil-line", "d": "One file per command", "cue": 1},
+       {"t": "Commit", "icon": "git-commit-horizontal", "d": "Right next to the code", "cue": 2},
+       {"t": "Share", "icon": "users", "d": "Everyone gets it on pull", "cue": 3}]},
+    {"type": "recap", "chapter": "Recap", "eyebrow": "Lesson 06 recap", "headline": "What you <em>just learned.</em>",
+     "lines": ["Quick recap.", "A command is a saved prompt, with frontmatter, arguments, and a body.",
+               "Your mission: turn the prompt you paste most often into a slash command, and commit it."],
+     "takeaways": [{"t": "Repeated prompt → slash command", "cue": 0.6}, {"t": "Frontmatter, arguments, body", "cue": 1}, {"t": "Commit it, and the team gets it", "cue": 1.6}],
+     "mission": {"t": "Turn the prompt you paste most into a slash command — and commit it.", "icon": "target", "cue": 2}},
+    {"type": "next", "chapter": "Up next", "tail": 1.4,
+     "lines": ["Your best prompts are now one keystroke away.", "Next, we split big work across specialist agents.",
+               {"say": "Learn, build, ship, with Lets Vibe A.I.", "cap": "Learn. Build. Ship. — with LetsVibeAI."}]}
+  ]
+}

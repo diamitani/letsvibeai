@@ -9,6 +9,7 @@ export interface Course {
   heroTitle: string;
   summary: string;
   image: string;
+  heroImage?: string;
   level: 'Beginner' | 'Intermediate';
   duration: string;
   unit: string; // what a lesson is called: Module, Day, Lab
@@ -23,9 +24,45 @@ export interface Course {
 
 export const courses: Course[] = [
   {
+    slug: 'claude-mastery',
+    title: 'Claude Mastery: Lead AI Agents',
+    heroTitle: 'Claude Mastery: <em>Lead</em> AI Agents',
+    summary: 'Stop prompting. Start directing. Set up your harness, write context files, package skills, connect tools and lead a team of agents.',
+    image: '/images/course-claude-mastery.jpg',
+    heroImage: '/images/features-bg.jpg',
+    level: 'Beginner',
+    duration: '~1 hour',
+    unit: 'Lesson',
+    featured: true,
+    intro: {
+      heading: 'Most People Use AI Like a Search Box. The Best Builders Direct It Like a Team.',
+      body: 'Claude Mastery is a short, hands-on course taught by Pat Diamitani. Eight core lessons and two masterclasses take you from installing your first agent harness to leading specialist agents that plan, build and ship — with a real mission at the end of every lesson.',
+    },
+    approach: [
+      'Short lessons you can finish in minutes, written from the same scripts as the course videos.',
+      'One mission per lesson, so you finish with something working.',
+      'Real files and commands: CLAUDE.md, SKILL.md, MCP config, slash commands.',
+      'Skills that transfer to every harness: Claude Code, Codex, Cursor, VS Code and more.',
+    ],
+    helpsWith: [
+      'Picking and installing your first agent harness in ten minutes.',
+      'Writing context files so you never repeat yourself.',
+      'Packaging your expertise as reusable skills.',
+      'Connecting live tools safely with MCP, then governing agents on a team.',
+    ],
+    benefits: [
+      'Agents that remember your rules and follow them.',
+      'Repeatable workflows instead of one-off prompts.',
+      'Safer automation with least-privilege access and clear review steps.',
+      'The confidence to lead agent teams at work.',
+    ],
+    whoFor: 'Founders, operators, marketers and builders who already use AI chat and want to move up to directing agents — no coding background required.',
+    closing: 'Ten short lessons. Ten hands-on missions. Start with Lesson 1 and have your first agent running today.',
+  },
+  {
     slug: 'vibe-coding',
     title: 'Vibe Coding: Idea to Shipped App',
-    heroTitle: 'Vibe Coding: Idea to Shipped App',
+    heroTitle: 'Vibe Coding: <em>Idea</em> to Shipped App',
     summary: 'The architecture-first course: learn how apps fit together, direct AI agents precisely and ship a real product.',
     image: '/images/course-foundations.jpg',
     level: 'Beginner',
@@ -61,7 +98,7 @@ export const courses: Course[] = [
   {
     slug: 'zero-to-ship',
     title: 'Build with AI: Zero to Ship',
-    heroTitle: 'Zero to Ship in 10 Days',
+    heroTitle: 'Zero to Ship in <em>10 Days</em>',
     summary: 'Ten short daily lessons: a custom GPT, two automations, an AI assistant and a live portfolio site.',
     image: '/images/course-zero-to-ship.jpg',
     level: 'Beginner',
@@ -95,13 +132,13 @@ export const courses: Course[] = [
   {
     slug: 'project-labs',
     title: 'Vibe Coding Project Labs',
-    heroTitle: 'Three Hands-On Project Labs',
+    heroTitle: 'Three Hands-On <em>Project Labs</em>',
     summary: 'Build and deploy a marketing site, an e-commerce store and a directory marketplace — portfolio-ready.',
     image: '/images/course-project-labs.jpg',
     level: 'Intermediate',
     duration: '~17 hours',
     unit: 'Lab',
-    featured: true,
+    featured: false,
     intro: {
       heading: 'Turn What You Know Into Shipped Products',
       body: 'Each lab is a complete build with steps, stretch goals and assessment criteria. You finish each one with a live URL you can show clients, employers or investors.',
@@ -128,7 +165,7 @@ export const courses: Course[] = [
   {
     slug: 'gtm-automation',
     title: 'GTM Automation Labs',
-    heroTitle: 'AI Automation for Sales & Marketing',
+    heroTitle: 'AI Automation for <em>Sales & Marketing</em>',
     summary: 'Build the email, LinkedIn and outreach automations that go-to-market teams actually use.',
     image: '/images/course-gtm-automation.jpg',
     level: 'Intermediate',

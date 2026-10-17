@@ -46,3 +46,12 @@ Vercel builds every push to `main` (`vercel.json`: Vite, output `dist`, SPA rewr
 `modules/`, `templates/`, `checklists/`, `capstone/`, `resources/` and `videos/` hold the source course materials and HyperFrames video compositions.
 
 Photos: Unsplash (free license) and LetsVibeAI Build Night (Feb 2026).
+
+
+## Claude Mastery lesson scripts
+
+`pipeline/lessons/*.json` holds the Claude Mastery video scripts (one JSON file per lesson); `pipeline/README.md` explains how they are rendered into narrated videos. To regenerate the readable lesson pages in `src/content/courses/claude-mastery/` after editing a script, run from the repo root:
+
+```bash
+python3 pipeline/to_site.py
+```

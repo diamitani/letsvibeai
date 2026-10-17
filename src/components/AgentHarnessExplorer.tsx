@@ -60,7 +60,9 @@ export const AgentHarnessExplorer: React.FC = () => {
     { title: 'Connectors & MCP', duration: '10:18', desc: 'Wire the agent into Drive, Slack, GitHub and your own APIs with least-privilege access.', videoId: '' },
     { title: 'Commands, prompts & workflows', duration: '13:44', desc: 'Turn repeat requests into slash commands and reusable prompt files.', videoId: '' },
     { title: 'Agents & subagents: plan, build, ship', duration: '15:20', desc: 'Plan first, delegate to specialist agents, verify with tests, deploy to Vercel.', videoId: 'gv0WHhKelSE' },
-    { title: 'Governance for teams', duration: '8:55', desc: 'Data rules, permissions, shared skill libraries and a rollout plan that sticks.', videoId: '' }
+    { title: 'Governance for teams', duration: '8:55', desc: 'Data rules, permissions, shared skill libraries and a rollout plan that sticks.', videoId: '' },
+    { title: 'Masterclass: One Must Act', duration: '~5 min', desc: 'A theory of goal achievement for people, teams and agents.', videoId: '' },
+    { title: 'Masterclass: Claude in October 2026', duration: '~5 min', desc: 'Chat, agentic tasks and Code, and how to put them to work.', videoId: '' }
   ];
 
   const PRACTICES = [
@@ -379,9 +381,9 @@ export const AgentHarnessExplorer: React.FC = () => {
           <div className="lg:col-span-5 space-y-2.5 max-h-[480px] overflow-y-auto pr-1">
             <div className="flex items-center justify-between pb-2 border-b border-[#4a4d4f]/10 px-1">
               <span className="text-xs font-bold font-mono uppercase text-[#101b24]">
-                Curriculum Playlist (8 Modules)
+                Curriculum Playlist (10 Lessons)
               </span>
-              <span className="text-xs text-[#ec4909] font-semibold">1h 28m Total</span>
+              <span className="text-xs text-[#ec4909] font-semibold">8 lessons + 2 masterclasses</span>
             </div>
 
             {LESSONS.map((les, idx) => {

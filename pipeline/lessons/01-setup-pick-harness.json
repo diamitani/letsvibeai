@@ -1,0 +1,322 @@
+{
+ "slug": "01-setup-pick-harness",
+ "course": "Claude Mastery",
+ "lesson": 1,
+ "title": "Pick & install your agent harness",
+ "voice": "af_heart",
+ "next": {
+  "lesson": 2,
+  "title": "Context files that remember for you"
+ },
+ "scenes": [
+  {
+   "type": "title",
+   "chapter": "Welcome",
+   "captions": true,
+   "min": 7,
+   "headline": "Pick &amp; install your <em>agent harness</em>",
+   "sub": "A working AI agent on your machine in about ten minutes.",
+   "lines": [
+    {
+     "say": "Welcome to Claude Mastery, from Lets Vibe A.I.",
+     "cap": "Welcome to Claude Mastery, from LetsVibeAI."
+    },
+    "Your instructor is Patrick Diamitani.",
+    "In this first lesson, you'll pick a harness, and get it running in about ten minutes."
+   ]
+  },
+  {
+   "type": "cameo",
+   "clip": "director",
+   "chapter": "The mindset",
+   "eyebrow": "In Pat's words",
+   "quote": "From <s>typist</s><br>to <em>director.</em>",
+   "items": [
+    {
+     "t": "Describe what the scene needs",
+     "icon": "clapperboard",
+     "at": 3.4
+    },
+    {
+     "t": "Review and steer the output",
+     "icon": "scan-eye",
+     "at": 5.8
+    },
+    {
+     "t": "Let the agent run the camera",
+     "icon": "video",
+     "at": 7.6
+    }
+   ]
+  },
+  {
+   "type": "orbit",
+   "chapter": "The big idea",
+   "eyebrow": "The big idea",
+   "headline": "A harness is the <em>app around</em> the model.",
+   "lines": [
+    "A model is the brain. A harness is everything around it.",
+    "It reads your files, runs commands, calls tools, and remembers your rules.",
+    "Claude Code, Codex, Cursor and VS Code are all harnesses."
+   ],
+   "core": {
+    "t": "MODEL",
+    "d": "the brain"
+   },
+   "ring": "HARNESS",
+   "orbit": [
+    {
+     "t": "Reads files",
+     "icon": "folder-open",
+     "cue": 1.0
+    },
+    {
+     "t": "Runs commands",
+     "icon": "square-terminal",
+     "cue": 1.25
+    },
+    {
+     "t": "Calls tools",
+     "icon": "plug",
+     "cue": 1.5
+    },
+    {
+     "t": "Remembers rules",
+     "icon": "book-open-check",
+     "cue": 1.75
+    }
+   ],
+   "chips": [
+    "Claude Code",
+    "Codex",
+    "Cursor",
+    "VS Code"
+   ],
+   "chipsCue": 2
+  },
+  {
+   "type": "layers",
+   "chapter": "Five layers",
+   "eyebrow": "Same in every harness",
+   "headline": "Five layers. <em>Every time.</em>",
+   "lines": [
+    "Under the hood, every harness has the same five layers.",
+    "The model.",
+    "Context, which is your rules and memory.",
+    "Capabilities, like skills and tool connections.",
+    "Surfaces, meaning chat, terminal or editor.",
+    "And orchestration, where agents work together."
+   ],
+   "items": [
+    {
+     "t": "Model",
+     "d": "The brain you pick",
+     "icon": "brain",
+     "cue": 1
+    },
+    {
+     "t": "Context",
+     "d": "Rules and memory",
+     "icon": "book-open-text",
+     "cue": 2
+    },
+    {
+     "t": "Capabilities",
+     "d": "Skills and tools",
+     "icon": "puzzle",
+     "cue": 3
+    },
+    {
+     "t": "Surfaces",
+     "d": "Chat, terminal, editor",
+     "icon": "monitor-smartphone",
+     "cue": 4
+    },
+    {
+     "t": "Orchestration",
+     "d": "Agents working together",
+     "icon": "network",
+     "cue": 5
+    }
+   ]
+  },
+  {
+   "type": "grid",
+   "chapter": "Pick one",
+   "eyebrow": "Pick one",
+   "headline": "Start with the one <em>you already use.</em>",
+   "lines": [
+    "Start with whatever you already use.",
+    "If you like the terminal, try Claude Code, Codex, or Hermes.",
+    "If you live in an editor, try VS Code, Cursor, or Antigravity.",
+    "Everything in this course carries over to all of them."
+   ],
+   "groups": [
+    {
+     "t": "Terminal-first",
+     "icon": "square-terminal",
+     "cue": 1,
+     "cards": [
+      {
+       "t": "Claude Code",
+       "d": "Agentic CLI",
+       "m": "CC"
+      },
+      {
+       "t": "Codex",
+       "d": "Agentic CLI",
+       "m": "Cx"
+      },
+      {
+       "t": "Hermes",
+       "d": "Open-source agent",
+       "m": "He"
+      }
+     ]
+    },
+    {
+     "t": "Editor & desktop",
+     "icon": "app-window",
+     "cue": 2,
+     "cards": [
+      {
+       "t": "VS Code",
+       "d": "Copilot agent mode",
+       "m": "VS"
+      },
+      {
+       "t": "Cursor",
+       "d": "Built-in agent",
+       "m": "Cu"
+      },
+      {
+       "t": "Antigravity",
+       "d": "Agent manager app",
+       "m": "Ag"
+      }
+     ]
+    }
+   ],
+   "banner": {
+    "t": "Skills you learn here transfer to every harness",
+    "cue": 3
+   }
+  },
+  {
+   "type": "terminal",
+   "chapter": "First run",
+   "eyebrow": "Your first session",
+   "headline": "Give it a <em>folder</em> and <em>git.</em>",
+   "sub": "Git is your undo button.",
+   "window": "~/my-first-agent \u2014 zsh",
+   "lines": [
+    "Make a fresh folder, and turn it into a git repo.",
+    "Git is your undo button. Every change the agent makes can be reviewed, and rolled back.",
+    "Then launch the harness inside that folder."
+   ],
+   "commands": [
+    {
+     "cmd": "mkdir my-first-agent && cd my-first-agent",
+     "cue": 0.05
+    },
+    {
+     "cmd": "git init",
+     "cue": 0.5,
+     "out": "Initialized empty Git repository in ~/my-first-agent/.git/"
+    },
+    {
+     "cmd": "# launch your harness here",
+     "cue": 2.0,
+     "comment": true
+    },
+    {
+     "cmd": "claude",
+     "cue": 2.35,
+     "out": "\u25cf Agent ready \u2014 working in ~/my-first-agent",
+     "ok": true
+    }
+   ],
+   "callout": {
+    "t": "Every change is reviewable and reversible.",
+    "icon": "undo-2",
+    "label": "Git = undo",
+    "cue": 1
+   }
+  },
+  {
+   "type": "steps",
+   "chapter": "Day-one prompts",
+   "eyebrow": "Try these first",
+   "headline": "Three prompts for <em>day one.</em>",
+   "lines": [
+    "Here are three prompts to try on day one.",
+    "First, ask it to explain the folder.",
+    "Then ask for a plan, and tell it not to write code yet.",
+    "Finally, ask it to do just step one, then stop."
+   ],
+   "steps": [
+    {
+     "t": "Explain",
+     "icon": "search",
+     "p": "What's in this folder?",
+     "cue": 1
+    },
+    {
+     "t": "Plan",
+     "icon": "list-checks",
+     "p": "Plan it. No code yet.",
+     "cue": 2
+    },
+    {
+     "t": "Do one step",
+     "icon": "play",
+     "p": "Do step one, then stop and show me.",
+     "cue": 3
+    }
+   ]
+  },
+  {
+   "type": "recap",
+   "chapter": "Recap",
+   "eyebrow": "Lesson 01 recap",
+   "headline": "What you <em>just learned.</em>",
+   "lines": [
+    "Quick recap.",
+    "A harness is the app around the model, and every harness shares the same five layers.",
+    "Your mission: install one harness, start a git repo, and run the three day-one prompts."
+   ],
+   "takeaways": [
+    {
+     "t": "A harness is the app around the model",
+     "cue": 1
+    },
+    {
+     "t": "Every harness shares the same five layers",
+     "cue": 1.5
+    },
+    {
+     "t": "Folder + git before your first prompt",
+     "cue": 1.85
+    }
+   ],
+   "mission": {
+    "t": "Install one harness, start a git repo, and run the three day-one prompts.",
+    "icon": "target",
+    "cue": 2
+   }
+  },
+  {
+   "type": "next",
+   "chapter": "Up next",
+   "tail": 1.4,
+   "lines": [
+    "That's your setup.",
+    "Next lesson, we write the file that makes every session start smart.",
+    {
+     "say": "Learn, build, ship, with Lets Vibe A.I.",
+     "cap": "Learn. Build. Ship. \u2014 with LetsVibeAI."
+    }
+   ]
+  }
+ ]
+}

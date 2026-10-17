@@ -29,3 +29,9 @@ Thumbs.db
 /videos/
 public/videos/mastered/*.mp4
 public/videos/daily/*.mp4
+
+# Course video pipeline output
+pipeline/build/
+pipeline/out/
+pipeline/models/
+pipeline/node_modules/

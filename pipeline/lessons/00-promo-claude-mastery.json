@@ -1,0 +1,34 @@
+{
+  "slug": "00-promo-claude-mastery", "course": "Claude Mastery", "lesson": 0, "badge": "Trailer",
+  "title": "Claude Mastery — Trailer", "voice": "af_heart",
+  "next": {"promo": true, "lesson": 1, "title": "Pick & install your agent harness"},
+  "scenes": [
+    {"type": "statement", "chapter": "The shift", "lead": 1.0,
+     "eyebrow": "LetsVibeAI presents", "headline": "Stop prompting. <em>Start directing.</em>",
+     "lines": ["Most people use AI like a search box.", "The best builders direct it, like a team."]},
+    {"type": "cameo", "clip": "describe", "chapter": "In Pat's words",
+     "eyebrow": "In Pat's words", "quote": "You describe.<br><em>Agents build.</em>",
+     "items": [
+       {"t": "Plain language, typed or spoken", "icon": "mic", "at": 1.6},
+       {"t": "Agents write the code", "icon": "bot", "at": 3.9}]},
+    {"type": "cards", "chapter": "What you'll build",
+     "eyebrow": "Claude Mastery", "headline": "Everything you need to <em>lead AI agents.</em>",
+     "lines": ["In Claude Mastery, you'll set up your harness,", "write context files that remember,", "package your expertise as skills,", "connect your real tools,", "and lead a team of agents."],
+     "cards": [
+       {"t": "Your harness", "d": "Set up in ten minutes", "icon": "square-terminal", "cue": 0},
+       {"t": "Context files", "d": "Never repeat yourself", "icon": "file-text", "cue": 1},
+       {"t": "Skills", "d": "Your know-how, packaged", "icon": "puzzle", "cue": 2},
+       {"t": "Connectors", "d": "Live data, real actions", "icon": "plug-zap", "cue": 3},
+       {"t": "Agent teams", "d": "Plan, build, ship", "icon": "network", "cue": 4}]},
+    {"type": "stats", "chapter": "The course",
+     "eyebrow": "The course", "headline": "Short lessons. <em>Real missions.</em>",
+     "lines": ["Eight core lessons, two masterclasses,", "and a hands-on mission at the end of every lesson."],
+     "stats": [
+       {"value": 8, "label": "Core lessons", "cue": 0.1},
+       {"value": 2, "label": "Masterclasses", "cue": 0.6},
+       {"value": 10, "label": "Hands-on missions", "cue": 1}]},
+    {"type": "next", "chapter": "Start here", "tail": 1.6,
+     "lines": ["Your instructor is Patrick Diamitani.", {"say": "Start with lesson one, at Lets Vibe A I dot com.", "cap": "Start with lesson one, at letsvibeai.com."},
+               {"say": "Learn, build, ship.", "cap": "Learn. Build. Ship."}]}
+  ]
+}

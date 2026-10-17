@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LetsVibeAI — Claude Code & Agent Harness Mastery Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #030A17;
+      --bg-surface: #071B3A;
+      --bg-card: rgba(11, 37, 89, 0.45);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-accent: rgba(47, 128, 237, 0.4);
+      --primary: #2F80ED;
+      --secondary: #20C7D9;
+      --accent: #34D399;
+      --violet: #7C5CFC;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient background */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 600px;
+      background: radial-gradient(circle at 50% -20%, rgba(47, 128, 237, 0.25) 0%, rgba(32, 199, 217, 0.1) 40%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Navigation */
+    header.hub-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(3, 10, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #FFF;
+    }
+
+    .brand-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 40%, #20C7D9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .badge-pill {
+      background: rgba(47, 128, 237, 0.15);
+      border: 1px solid var(--border-accent);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    /* Main Grid Layout */
+    .hub-layout {
+      position: relative;
+      z-index: 1;
+      max-width: 1720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 36px 48px 80px 48px;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 36px;
+      flex: 1;
+    }
+
+    /* Sidebar / Video Playlist */
+    .playlist-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .sidebar-heading {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .filter-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #FFF;
+    }
+
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: calc(100vh - 360px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .video-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .video-item:hover {
+      background: rgba(47, 128, 237, 0.15);
+      border-color: rgba(47, 128, 237, 0.3);
+    }
+
+    .video-item.active {
+      background: rgba(47, 128, 237, 0.25);
+      border-color: var(--secondary);
+      box-shadow: 0 4px 16px rgba(47, 128, 237, 0.2);
+    }
+
+    .video-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--secondary);
+      background: rgba(0,0,0,0.4);
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .video-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .video-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #FFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .video-duration {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Video Player & Stage Area */
+    .stage-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .player-frame-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .player-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Video Details Bar */
+    .video-details-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .details-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFF;
+      margin-bottom: 8px;
+    }
+
+    .details-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 900px;
+    }
+
+    .action-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #030A17;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: #FFF;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--secondary);
+    }
+
+    /* Upload Guides Grid */
+    .guides-section {
+      margin-top: 32px;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .guide-card {
+      background: rgba(11, 37, 89, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .guide-card:hover {
+      background: rgba(47, 128, 237, 0.15);
+      border-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .guide-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .guide-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #FFF;
+    }
+
+    .guide-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <!-- Header -->
+  <header class="hub-header">
+    <a href="#" class="brand-lockup">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 36px; height: 36px;">
+        <path d="M8 8L24 40L40 8H31L24 24L17 8H8Z" fill="#20C7D9"/>
+        <path d="M24 24L31 8H24L20 16L24 24Z" fill="#34D399"/>
+        <circle cx="24" cy="40" r="3" fill="#2F80ED"/>
+      </svg>
+      <span class="brand-title">LETSVIBEAI</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="badge-pill">⚡ CLAUDE CODE & HARNESS MASTERY</div>
+      <a href="/index.html" class="action-btn btn-secondary">← Back to Course App</a>
+    </div>
+  </header>
+
+  <!-- Hub Main Container -->
+  <main class="hub-layout">
+    <!-- Playlist Sidebar -->
+    <aside class="playlist-sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-heading">
+          <span>Course Compositions</span>
+          <span style="font-size: 13px; color: var(--secondary); font-family: 'JetBrains Mono', monospace;">15 Videos</span>
+        </div>
+
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterList('all')">All</button>
+          <button class="filter-btn" onclick="filterList('core')">8 Lessons</button>
+          <button class="filter-btn" onclick="filterList('deepdive')">Deep Dives</button>
+          <button class="filter-btn" onclick="filterList('modules')">Modules</button>
+        </div>
+
+        <div class="video-list" id="video-list-container">
+          <!-- Dynamic video items inserted here -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Stage & Video Player Area -->
+    <section class="stage-container">
+      <div class="player-frame-wrapper">
+        <iframe id="active-player-frame" class="player-iframe" src="../../videos/lesson-01-harness-setup/index.html" allow="autoplay; fullscreen"></iframe>
+      </div>
+
+      <div class="video-details-card">
+        <div class="details-header">
+          <div>
+            <div id="active-category-badge" class="guide-badge" style="margin-bottom: 8px;">LESSON 01 · FOUNDATIONS</div>
+            <h1 id="active-video-title" class="details-title">Setup: Pick and Install a Harness</h1>
+            <p id="active-video-desc" class="details-desc">
+              Understand what an agent harness is, how the 5 layers of AI engineering map onto each harness, and how to install your first toolchain.
+            </p>
+          </div>
+          <div class="action-links">
+            <a id="download-mp4-link" href="../../videos/lesson-01-harness-setup/lesson-01-harness-setup.mp4" target="_blank" class="action-btn btn-primary">
+              🎬 Watch / Download MP4
+            </a>
+            <a id="open-standalone-link" href="../../videos/lesson-01-harness-setup/index.html" target="_blank" class="action-btn btn-secondary">
+              ↗ HTML Studio Mode
+            </a>
+          </div>
+        </div>
+
+        <!-- Master Document & Upload Guides Grid -->
+        <div class="guides-section">
+          <div class="section-title">
+            <span>📚 Course Master Documents & Upload Guides</span>
+          </div>
+          <div class="guides-grid">
+            <a href="./uploads/Atlas_Artifacts_Training.html" target="_blank" class="guide-card">
+              <span class="guide-badge">Guide 01</span>
+              <div class="guide-title">Mastering Claude Artifacts</div>
+              <div class="guide-sub">Live React components, SVG diagrams, and micro-applications.</div>
+            </a>
+            <a href="./uploads/Atlas_Projects_Cowork_Training.html" target="_blank" class="guide-card">
+              <span class="guide-badge">Guide 02</span>
+              <div class="guide-title">Projects & Cowork Training</div>
+              <div class="guide-sub">200k token project knowledge and autonomous execution loops.</div>
+            </a>
+            <a href="./uploads/Atlas_Skills_Training.html" target="_blank" class="guide-card">
+              <span class="guide-badge">Guide 03</span>
+              <div class="guide-title">Claude Skills Master Catalog</div>
+              <div class="guide-sub">60+ curated skills across 5 domains for instant activation.</div>
+            </a>
+            <a href="./uploads/Claude-Center-of-Excellence.html" target="_blank" class="guide-card">
+              <span class="guide-badge">Guide 04</span>
+              <div class="guide-title">Claude Center of Excellence</div>
+              <div class="guide-sub">Enterprise governance, SOC2 compliance, and tiered training tracks.</div>
+            </a>
+            <a href="./uploads/atlas-brand-skill-suite-launch.html" target="_blank" class="guide-card">
+              <span class="guide-badge">Guide 05</span>
+              <div class="guide-title">Atlas Skill Suite Launch</div>
+              <div class="guide-sub">Monarch Video, Prospect Engine, Music Catalogue, Site Empire OS.</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const VIDEOS = [
+      {
+        id: 'lesson-01',
+        type: 'core',
+        num: '01',
+        title: 'Setup: Pick and Install a Harness',
+        category: 'LESSON 01 · SETUP',
+        duration: '6:40',
+        path: '../../videos/lesson-01-harness-setup/index.html',
+        desc: 'What an agent harness is, how the 5 layers map onto each harness, and how to install your first.'
+      },
+      {
+        id: 'lesson-02',
+        type: 'core',
+        num: '02',
+        title: 'Context Files That Remember For You',
+        category: 'LESSON 02 · CONTEXT',
+        duration: '9:12',
+        path: '../../videos/lesson-02-context-memory/index.html',
+        desc: 'Write project rules once (CLAUDE.md, AGENTS.md, rules folders) so every session starts informed.'
+      },
+      {
+        id: 'lesson-03',
+        type: 'core',
+        num: '03',
+        title: 'Prompts That Survive Production',
+        category: 'LESSON 03 · PAL PROMPTS',
+        duration: '11:05',
+        path: '../../videos/lesson-03-prompts-pal/index.html',
+        desc: 'Role, Goal, Constraints, Examples, Output format. Parse, scan ambiguities, and iterate.'
+      },
+      {
+        id: 'lesson-04',
+        type: 'core',
+        num: '04',
+        title: 'Skills: Package Your Expertise',
+        category: 'LESSON 04 · SKILLS',
+        duration: '12:30',
+        path: '../../videos/lesson-04-skills-packaging/index.html',
+        desc: 'Write SKILL.md bundles, progressive disclosure, auto-trigger descriptions, and portable tools.'
+      },
+      {
+        id: 'lesson-05',
+        type: 'core',
+        num: '05',
+        title: 'Connectors & Model Context Protocol',
+        category: 'LESSON 05 · MCP',
+        duration: '10:18',
+        path: '../../videos/lesson-05-connectors-mcp/index.html',
+        desc: 'Wire your agent to databases, Drive, Slack, GitHub, and custom APIs with least-privilege security.'
+      },
+      {
+        id: 'lesson-06',
+        type: 'core',
+        num: '06',
+        title: 'Commands, Prompts & Workflows',
+        category: 'LESSON 06 · WORKFLOWS',
+        duration: '13:44',
+        path: '../../videos/lesson-06-commands-workflows/index.html',
+        desc: 'Turn repeat tasks into slash commands and reusable Markdown prompt workflows.'
+      },
+      {
+        id: 'lesson-07',
+        type: 'core',
+        num: '07',
+        title: 'Agents & Subagents: Plan, Build, Ship',
+        category: 'LESSON 07 · MULTI-AGENT',
+        duration: '15:20',
+        path: '../../videos/lesson-07-agents-subagents/index.html',
+        desc: 'Plan first, delegate to specialist subagents in clean contexts, verify with tests, and ship.'
+      },
+      {
+        id: 'lesson-08',
+        type: 'core',
+        num: '08',
+        title: 'Governance for Teams & Enterprise',
+        category: 'LESSON 08 · GOVERNANCE',
+        duration: '8:55',
+        path: '../../videos/lesson-08-team-governance/index.html',
+        desc: 'Rules for agents vs rules for humans, security boundaries, shared skill libraries, and audits.'
+      },
+      {
+        id: 'deepdive-artifacts',
+        type: 'deepdive',
+        num: 'DD1',
+        title: 'Deep Dive: Mastering Claude Artifacts',
+        category: 'DEEP DIVE · ARTIFACTS',
+        duration: '10:45',
+        path: '../../videos/deepdive-claude-artifacts/index.html',
+        desc: 'Interactive React components, vector SVGs, and live micro-applications inside Claude.'
+      },
+      {
+        id: 'deepdive-cowork',
+        type: 'deepdive',
+        num: 'DD2',
+        title: 'Deep Dive: Claude Projects & Cowork',
+        category: 'DEEP DIVE · PROJECTS',
+        duration: '12:15',
+        path: '../../videos/deepdive-claude-projects-cowork/index.html',
+        desc: '200k token project knowledge base, persistent context, and autonomous terminal execution loops.'
+      },
+      {
+        id: 'deepdive-skills',
+        type: 'deepdive',
+        num: 'DD3',
+        title: 'Deep Dive: Master Skills Catalog',
+        category: 'DEEP DIVE · SKILLS CATALOG',
+        duration: '14:20',
+        path: '../../videos/deepdive-skills-catalog/index.html',
+        desc: '60+ production skills across 5 domains with automated trigger matching.'
+      },
+      {
+        id: 'deepdive-coe',
+        type: 'deepdive',
+        num: 'DD4',
+        title: 'Deep Dive: Claude Center of Excellence',
+        category: 'DEEP DIVE · COE',
+        duration: '11:30',
+        path: '../../videos/deepdive-enterprise-coe/index.html',
+        desc: 'Enterprise rollout architecture, SOC2 compliance, and tiered training tracks.'
+      },
+      {
+        id: 'deepdive-suite',
+        type: 'deepdive',
+        num: 'DD5',
+        title: 'Deep Dive: Atlas Brand AI Skill Suite',
+        category: 'DEEP DIVE · SKILL SUITE',
+        duration: '16:00',
+        path: '../../videos/deepdive-skill-suite-launch/index.html',
+        desc: 'Monarch Video, Prospect Automation Engine, Master Music Catalogue, and Site Empire OS.'
+      },
+      {
+        id: 'module-1',
+        type: 'modules',
+        num: 'M01',
+        title: 'Module 1: Vibe Coding Principles',
+        category: 'MODULE 1 · PRINCIPLES',
+        duration: '8:30',
+        path: '../../videos/module-1-principles/index.html',
+        desc: 'From idea to software in plain language. Direction beats guessing, and the 5-step method.'
+      },
+      {
+        id: 'module-7-8',
+        type: 'modules',
+        num: 'M07',
+        title: 'Module 7 & 8: Agents & Document Stack',
+        category: 'MODULES 7-8 · AGENTS & DOCS',
+        duration: '9:40',
+        path: '../../videos/module-7-8-agents-docs/index.html',
+        desc: 'Folder structure anatomy, MCP connectivity standard, and the 7-document production stack.'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let activeVideoIndex = 0;
+
+    const listContainer = document.getElementById('video-list-container');
+    const playerFrame = document.getElementById('active-player-frame');
+    const categoryBadge = document.getElementById('active-category-badge');
+    const videoTitle = document.getElementById('active-video-title');
+    const videoDesc = document.getElementById('active-video-desc');
+    const openLink = document.getElementById('open-standalone-link');
+
+    function renderList() {
+      listContainer.innerHTML = '';
+      const filtered = VIDEOS.filter(v => currentFilter === 'all' || v.type === currentFilter);
+
+      filtered.forEach((video, index) => {
+        const item = document.createElement('div');
+        const isActive = VIDEOS[activeVideoIndex].id === video.id;
+        item.className = `video-item ${isActive ? 'active' : ''}`;
+        item.onclick = () => selectVideo(VIDEOS.findIndex(v => v.id === video.id));
+
+        item.innerHTML = `
+          <div class="video-num">${video.num}</div>
+          <div class="video-meta">
+            <div class="video-title">${video.title}</div>
+            <div class="video-duration">${video.duration} · ${video.type.toUpperCase()}</div>
+          </div>
+        `;
+        listContainer.appendChild(item);
+      });
+    }
+
+    function selectVideo(globalIndex) {
+      activeVideoIndex = globalIndex;
+      const video = VIDEOS[globalIndex];
+      playerFrame.src = video.path;
+      categoryBadge.textContent = video.category;
+      videoTitle.textContent = video.title;
+      videoDesc.textContent = video.desc;
+      openLink.href = video.path;
+      const folderName = video.path.split('/')[2];
+      const mp4Link = document.getElementById('download-mp4-link');
+      if (mp4Link) {
+        mp4Link.href = `../../videos/${folderName}/${folderName}.mp4`;
+      }
+      renderList();
+    }
+
+    function filterList(type) {
+      currentFilter = type;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(type) || (type === 'all' && btn.textContent === 'All'));
+      });
+      renderList();
+    }
+
+    // Initialize list
+    renderList();
+  </script>
+</body>
+</html>

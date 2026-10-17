@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI — Deep Dive: Mastering Claude Projects & Cowork</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #071B3A;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #projects-cowork-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 50% 20%, #1A184A 0%, #071B3A 60%, #030814 100%);
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(124, 92, 252, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(124, 92, 252, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-magenta { width: 700px; height: 700px; background: rgba(186, 51, 202, 0.2); top: -100px; left: 200px; }
+    .glow-blue { width: 650px; height: 650px; background: rgba(47, 128, 237, 0.2); bottom: -100px; right: 200px; }
+
+    /* Top Brand Bar */
+    .top-brand {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 14px; }
+    .brand-logo-svg { width: 44px; height: 44px; }
+    .brand-name { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; }
+    .brand-name span { color: #AB93F1; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(124, 92, 252, 0.15);
+      border: 1px solid rgba(124, 92, 252, 0.4);
+      border-radius: 9999px;
+      color: #AB93F1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Subtitle & Narration Bar */
+    .caption-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      right: 120px;
+      background: rgba(7, 27, 58, 0.85);
+      border: 1px solid rgba(124, 92, 252, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 16px 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 60;
+    }
+    .caption-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #BA33CA;
+      box-shadow: 0 0 12px #BA33CA;
+      flex-shrink: 0;
+    }
+    .caption-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F4F7FB;
+      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Typography & Gradients */
+    .hero-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 110px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(186, 51, 202, 0.3);
+      margin-bottom: -15px;
+    }
+    .main-title {
+      font-size: 68px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+    .main-sub {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+    .gradient-text-purple {
+      background: linear-gradient(135deg, #DD98E5 0%, #BA33CA 50%, #5827E3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* 2 Column Cards */
+    .cards-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      width: 100%;
+      max-width: 1300px;
+    }
+    .feature-card {
+      padding: 36px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(186, 51, 202, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div id="projects-cowork-root" data-composition-id="projects-cowork-root" data-duration="25" data-width="1920" data-height="1080">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-magenta"></div>
+    <div class="ambient-glow glow-blue"></div>
+
+    <!-- Top Navigation Branding -->
+    <div class="top-brand">
+      <div class="brand-lockup">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none">
+          <path d="M50 15L85 80H70L50 42L30 80H15L50 15Z" fill="url(#brand-grad-pc)"/>
+          <circle cx="50" cy="62" r="9" fill="#BA33CA"/>
+          <defs>
+            <linearGradient id="brand-grad-pc" x1="15" y1="15" x2="85" y2="80" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#BA33CA"/>
+              <stop offset="0.5" stop-color="#5827E3"/>
+              <stop offset="1" stop-color="#2F80ED"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-name">LetsVibe<span>AI</span></span>
+      </div>
+      <div class="badge-pill">Deep Dive · Projects & Cowork</div>
+      <div class="course-badge">vibe-coding-course / master-files</div>
+    </div>
+
+    <!-- Scene 1: Title (0s - 4s) -->
+    <div id="s1" class="clip">
+      <div id="s1-badge" class="badge-pill" style="margin-bottom: 24px;">Workspace Mastery</div>
+      <div id="s1-num" class="hero-number">DEEP DIVE</div>
+      <h1 id="s1-title" class="main-title">Mastering Claude <span class="gradient-text-purple">Projects & Cowork</span></h1>
+      <p id="s1-sub" class="main-sub">Your workspace, your rules. Combine deep project memory with autonomous multi-step execution.</p>
+    </div>
+
+    <!-- Scene 2: The Two Pillars (4s - 8s) -->
+    <div id="s2" class="clip">
+      <div id="s2-badge" class="badge-pill" style="margin-bottom: 20px;">Architecture</div>
+      <h2 id="s2-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Two Engines for <span class="gradient-text-purple">10x Leverage</span></h2>
+      <div id="s2-grid" class="cards-2col">
+        <div class="feature-card">
+          <div style="font-size: 26px; font-weight: 800; color: #DD98E5;">1. Claude Projects</div>
+          <div style="color: #CBD5E1; font-size: 17px; line-height: 1.6;">
+            Persistent repository knowledge base, custom system instructions, and file attachments up to 200k tokens per project.
+          </div>
+        </div>
+        <div class="feature-card">
+          <div style="font-size: 26px; font-weight: 800; color: #20C7D9;">2. Claude Cowork</div>
+          <div style="color: #CBD5E1; font-size: 17px; line-height: 1.6;">
+            Autonomous execution loop that executes terminal commands, runs multi-file refactors, and reports back at critical milestones.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: Projects Setup (8s - 13s) -->
+    <div id="s3" class="clip">
+      <div id="s3-badge" class="badge-pill" style="margin-bottom: 20px;">Project Memory</div>
+      <h2 id="s3-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">Setting Up <span class="gradient-text-purple">Project Memory</span></h2>
+      <div id="s3-box" style="width: 100%; max-width: 1200px; padding: 36px; background: rgba(255,255,255,0.04); border-radius: 18px; border: 1px solid rgba(186,51,202,0.3);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 18px;">
+          <div><strong style="color:#DD98E5;">• Custom Instructions:</strong> Define persona, code standards, and hard constraints.</div>
+          <div><strong style="color:#20C7D9;">• Knowledge Base:</strong> Upload schemas, API specifications, and design tokens.</div>
+          <div><strong style="color:#34D399;">• Scoped Context:</strong> Claude retrieves the right files without context overload.</div>
+          <div><strong style="color:#38BDF8;">• Team Sharing:</strong> Invite members with role-gated access tiers.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Cowork Operational Engine (13s - 17s) -->
+    <div id="s4" class="clip">
+      <div id="s4-badge" class="badge-pill" style="margin-bottom: 20px;">Autonomous Loop</div>
+      <h2 id="s4-title" class="main-title" style="font-size: 52px; margin-bottom: 28px;">How Claude Cowork <span class="gradient-text-purple">Executes</span></h2>
+      <div id="s4-flow" style="display: flex; gap: 20px; width: 100%; max-width: 1400px;">
+        <div style="flex: 1; padding: 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(186,51,202,0.3); border-radius: 16px; text-align: center;">
+          <div style="font-size: 22px; font-weight: 800; color: #DD98E5; margin-bottom: 6px;">1. Task Ingest</div>
+          <div style="color: #94A3B8; font-size: 14px;">Parses goal and builds execution plan.</div>
+        </div>
+        <div style="flex: 1; padding: 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(47,128,237,0.3); border-radius: 16px; text-align: center;">
+          <div style="font-size: 22px; font-weight: 800; color: #2F80ED; margin-bottom: 6px;">2. Multi-Step Loop</div>
+          <div style="color: #94A3B8; font-size: 14px;">Runs terminal commands & edits files.</div>
+        </div>
+        <div style="flex: 1; padding: 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(32,199,217,0.3); border-radius: 16px; text-align: center;">
+          <div style="font-size: 22px; font-weight: 800; color: #20C7D9; margin-bottom: 6px;">3. Error Recovery</div>
+          <div style="color: #94A3B8; font-size: 14px;">Self-corrects failed tests in real-time.</div>
+        </div>
+        <div style="flex: 1; padding: 28px; background: rgba(255,255,255,0.04); border: 1px solid rgba(52,211,153,0.3); border-radius: 16px; text-align: center;">
+          <div style="font-size: 22px; font-weight: 800; color: #34D399; margin-bottom: 6px;">4. Verified Done</div>
+          <div style="color: #94A3B8; font-size: 14px;">Delivers summary diff for review.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 5: Wrap-up (17s - 25s) -->
+    <div id="s5" class="clip">
+      <div id="s5-badge" class="badge-pill" style="margin-bottom: 20px;">Mastery</div>
+      <h2 id="s5-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Ground in Knowledge. <span class="gradient-text-purple">Execute in Cowork.</span></h2>
+      <div id="s5-box" style="width: 100%; max-width: 1100px; padding: 36px; text-align: center; background: rgba(255,255,255,0.04); border-radius: 20px; border: 1px solid rgba(186,51,202,0.3);">
+        <div style="font-size: 28px; font-weight: 800; color: #DD98E5; margin-bottom: 12px;">Next Up: Mastering Claude Artifacts</div>
+        <div style="font-size: 18px; color: #94A3B8;">Build and preview live React, SVG, and HTML web applications in real time.</div>
+      </div>
+    </div>
+
+    <!-- Dynamic Subtitle Bar -->
+    <div class="caption-bar">
+      <div class="caption-dot"></div>
+      <div id="caption-live" class="caption-text">Deep Dive: Mastering Claude Projects & Cowork — persistent memory and autonomous workflows.</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+        const captionEl = document.getElementById("caption-live");
+
+        function setCaption(text) {
+          if (captionEl) captionEl.textContent = text;
+        }
+
+        // Scene 1: 0s - 4s
+        tl.call(() => setCaption("Deep Dive: Mastering Claude Projects & Cowork — persistent memory and autonomous workflows."), null, 0.1);
+        tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+        tl.fromTo("#s1-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.2);
+        tl.fromTo("#s1-num", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.4);
+        tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.6);
+        tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
+        tl.to("#s1", { opacity: 0, y: -20, duration: 0.4 }, 3.6);
+
+        // Scene 2: 4s - 8s
+        tl.call(() => setCaption("Combine Projects for persistent repository knowledge with Cowork for autonomous execution."), null, 4.0);
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
+        tl.fromTo("#s2-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 4.2);
+        tl.fromTo("#s2-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.4);
+        tl.fromTo(".feature-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.5, ease: "power3.out" }, 4.7);
+        tl.to("#s2", { opacity: 0, y: -20, duration: 0.4 }, 7.6);
+
+        // Scene 3: 8s - 13s
+        tl.call(() => setCaption("Projects store your custom instructions, architecture schemas, and domain references permanently."), null, 8.0);
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.0);
+        tl.fromTo("#s3-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 8.2);
+        tl.fromTo("#s3-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.4);
+        tl.fromTo("#s3-box", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 8.7);
+        tl.to("#s3", { opacity: 0, y: -20, duration: 0.4 }, 12.6);
+
+        // Scene 4: 13s - 17s
+        tl.call(() => setCaption("Claude Cowork executes multi-step plans in your terminal, self-correcting errors along the way."), null, 13.0);
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 13.0);
+        tl.fromTo("#s4-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 13.2);
+        tl.fromTo("#s4-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 13.4);
+        tl.fromTo("#s4-flow > div", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "back.out(1.2)" }, 13.7);
+        tl.to("#s4", { opacity: 0, y: -20, duration: 0.4 }, 16.6);
+
+        // Scene 5: 17s - 25s
+        tl.call(() => setCaption("Next up: Mastering Claude Artifacts — building interactive web applications in real time."), null, 17.0);
+        tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.0);
+        tl.fromTo("#s5-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 17.2);
+        tl.fromTo("#s5-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 17.4);
+        tl.fromTo("#s5-box", { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.3)" }, 17.7);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["projects-cowork-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

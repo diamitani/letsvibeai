@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Artifacts — Atlas HXM Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue-100:#DAE6FE;--blue-250:#82ACFC;--blue-500:#0559FA;--blue-900:#06195E;
+    --purple-100:#E6DFFB;--purple-250:#AB93F1;--purple-500:#5827E3;--purple-900:#1E046A;
+    --magenta-100:#F5E0F7;--magenta-250:#DD98E5;--magenta-500:#BA33CA;--magenta-900:#48114F;
+    --coral-100:#FFC6C5;--coral-300:#FF8F77;--coral-500:#FF595A;
+    --gold-300:#F6B942;--gold-500:#FF782C;
+    --gray-50:#F8F8F8;--gray-300:#E9E9E9;--gray-900:#160629;--white:#FFFFFF;
+    --pad-x:72px;--pad-y:52px;
+  }
+  body { font-family:'Poppins','Gelion',sans-serif; font-variant-ligatures:none; background:var(--gray-900); color:var(--gray-900); overflow:hidden; height:100vh; width:100vw; }
+  .deck { position:relative; width:100vw; height:100vh; }
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-y) var(--pad-x); padding-bottom:68px; opacity:0; pointer-events:none; transition:opacity .4s ease; overflow-y:auto; overflow-x:hidden; }
+  .slide.active { opacity:1; pointer-events:auto; }
+  .slide.vc { justify-content:center; }
+  .bg-w { background:var(--white); } .bg-navy { background:var(--gray-900); color:var(--white); }
+  .bg-blue { background:var(--blue-900); color:var(--white); } .bg-purple { background:var(--purple-900); color:var(--white); }
+  .bg-magenta { background:var(--magenta-900); color:var(--white); }
+  .bg-gb { background:linear-gradient(135deg,var(--blue-900),var(--purple-900)); color:var(--white); }
+  .bg-gp { background:linear-gradient(135deg,var(--purple-900),var(--magenta-900)); color:var(--white); }
+  .bg-gm { background:linear-gradient(135deg,var(--magenta-900),var(--blue-900)); color:var(--white); }
+  .bg-light { background:var(--gray-50); }
+  h1 { font-size:clamp(1.6rem,3.5vw,2.6rem); font-weight:700; line-height:1.15; margin-bottom:12px; }
+  h2 { font-size:clamp(1.2rem,2.6vw,1.9rem); font-weight:700; line-height:1.2; margin-bottom:10px; }
+  h3 { font-size:clamp(.95rem,1.6vw,1.2rem); font-weight:600; line-height:1.3; margin-bottom:8px; }
+  p, li { font-size:clamp(.8rem,1.15vw,.98rem); line-height:1.55; }
+  .sub { font-size:clamp(.88rem,1.3vw,1.1rem); opacity:.8; margin-bottom:16px; }
+  .sm { font-size:.78rem; opacity:.65; }
+  code { background:rgba(0,0,0,.06); padding:2px 6px; border-radius:4px; font-size:.88em; }
+  .bg-navy code,.bg-blue code,.bg-purple code,.bg-gb code,.bg-gp code,.bg-gm code { background:rgba(255,255,255,.12); }
+  .tag { display:inline-block; padding:3px 14px; border-radius:20px; font-size:.75rem; font-weight:600; margin-bottom:10px; }
+  .tag-b { background:var(--blue-500); color:white; } .tag-p { background:var(--purple-500); color:white; }
+  .tag-m { background:var(--magenta-500); color:white; } .tag-g { background:rgba(255,255,255,.12); color:white; }
+  .tag-c { background:var(--coral-500); color:white; } .tag-gd { background:var(--gold-300); color:var(--gray-900); }
+  .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .cols-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .cols-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; }
+  .card { background:var(--white); border-radius:10px; padding:20px; box-shadow:0 2px 10px rgba(22,6,41,.06); }
+  .card-dk { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:20px; }
+  .card h3,.card p { color:var(--gray-900); }
+  ul { list-style:none; padding:0; } ul li { padding:3px 0 3px 20px; position:relative; }
+  ul li::before { content:''; position:absolute; left:0; top:10px; width:7px; height:7px; border-radius:50%; background:var(--blue-500); }
+  .bg-navy ul li::before,.bg-blue ul li::before,.bg-purple ul li::before,.bg-gb ul li::before,.bg-gp ul li::before,.bg-gm ul li::before { background:var(--blue-250); }
+  ol { padding-left:22px; } ol li { padding:3px 0; } ol li::before { display:none; } ol li::marker { color:var(--blue-500); font-weight:700; }
+  .num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--blue-500); color:white; font-weight:700; font-size:.9rem; margin-bottom:8px; }
+  .num.p { background:var(--purple-500); } .num.m { background:var(--magenta-500); } .num.c { background:var(--coral-500); } .num.gd { background:var(--gold-300); color:var(--gray-900); }
+  .accent { width:50px; height:3px; border-radius:2px; margin-bottom:14px; }
+  .accent-b { background:var(--blue-500); } .accent-p { background:var(--purple-500); } .accent-m { background:var(--magenta-500); }
+  .hl { border-left:3px solid var(--blue-500); background:var(--blue-100); padding:14px 18px; border-radius:0 8px 8px 0; margin:10px 0; }
+  .hl.p { border-left-color:var(--purple-500); background:var(--purple-100); }
+  .hl.m { border-left-color:var(--magenta-500); background:var(--magenta-100); }
+  .hl.dk { border-left-color:var(--blue-250); background:rgba(255,255,255,.06); }
+  .codeblock { background:var(--gray-900); color:var(--gray-50); border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.78rem; line-height:1.6; overflow-x:auto; white-space:pre-wrap; }
+  table { width:100%; border-collapse:collapse; font-size:clamp(.72rem,1vw,.88rem); margin-top:6px; }
+  th { text-align:left; padding:8px 12px; font-weight:600; border-bottom:2px solid var(--blue-500); }
+  td { padding:7px 12px; border-bottom:1px solid var(--gray-300); vertical-align:top; }
+  .bg-navy th,.bg-blue th,.bg-purple th { border-bottom-color:var(--blue-250); } .bg-navy td,.bg-blue td,.bg-purple td { border-bottom-color:rgba(255,255,255,.1); }
+  .ct { width:100%; } .ct th { background:var(--blue-500); color:white; padding:10px 14px; }
+  .ct th:first-child { border-radius:6px 0 0 0; } .ct th:last-child { border-radius:0 6px 0 0; }
+  .ct tr:nth-child(even) td { background:var(--blue-100); }
+  .tagline { position:absolute; top:18px; left:24px; font-size:.68rem; opacity:.55; z-index:10; }
+  .dots { display:flex; gap:6px; margin-bottom:12px; }
+  .dots span { width:12px; height:12px; border-radius:50%; }
+  .dots .d1 { background:var(--blue-500); } .dots .d2 { background:var(--purple-500); } .dots .d3 { background:var(--magenta-500); }
+  .icon { font-size:1.8rem; margin-bottom:8px; display:block; }
+  .nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:8px 20px; background:rgba(22,6,41,.94); backdrop-filter:blur(8px); z-index:100; color:white; gap:10px; }
+  .nav button { background:var(--blue-500); color:white; border:none; padding:7px 20px; border-radius:8px; font-family:inherit; font-size:.82rem; font-weight:600; cursor:pointer; }
+  .nav button:hover { background:var(--purple-500); } .nav button:disabled { opacity:.3; cursor:default; background:var(--blue-500); }
+  .progress { display:flex; gap:4px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .progress .dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .3s; cursor:pointer; }
+  .progress .dot.active { background:var(--blue-500); transform:scale(1.4); } .progress .dot:hover { background:var(--blue-250); }
+  .counter { font-size:.76rem; opacity:.6; min-width:55px; text-align:center; }
+  @media (max-width:1100px) { :root { --pad-x:44px; --pad-y:40px; } .cols-4 { grid-template-columns:1fr 1fr; } }
+  @media (max-width:768px) { :root { --pad-x:18px; --pad-y:24px; } .cols-2,.cols-3,.cols-4 { grid-template-columns:1fr; gap:14px; } .card,.card-dk { padding:16px; } }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ═══ SLIDE 1 — Title ═══ -->
+<div class="slide bg-gb vc active" data-slide="0">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:18px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <span class="tag tag-g">Atlas HXM Training Series &mdash; Part 3</span>
+    <h1 style="font-size:clamp(2rem,4.5vw,3.2rem);margin-top:8px;">Mastering Artifacts</h1>
+    <p class="sub" style="max-width:600px;margin-top:6px;">Turn Claude's outputs into shareable, interactive, and reusable content your team can actually use.</p>
+    <p style="font-size:.85rem;opacity:.5;margin-top:24px;">Use Arrow Keys or Spacebar to navigate</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 — What Are Artifacts ═══ -->
+<div class="slide bg-w" data-slide="1">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Core Concept</span>
+  <h2>What Is an Artifact?</h2>
+  <p class="sub" style="color:var(--gray-900);">An artifact is a standalone piece of content Claude creates in a dedicated panel &mdash; separate from the chat.</p>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <div class="accent accent-b"></div>
+      <h3>Chat Response</h3>
+      <ul>
+        <li>Inline text in the conversation</li>
+        <li>Disappears as you scroll up</li>
+        <li>Hard to extract or share</li>
+        <li>Best for quick answers, Q&A, and brainstorming</li>
+      </ul>
+      <div class="hl" style="margin-top:14px;">
+        <p><strong>Think of it as:</strong> A conversation that stays in the chat window.</p>
+      </div>
+    </div>
+    <div>
+      <div class="accent accent-p"></div>
+      <h3>Artifact</h3>
+      <ul>
+        <li>Opens in a <strong>side panel</strong> you can expand, copy, or download</li>
+        <li>Persists across the conversation</li>
+        <li>Copyable, shareable, publishable</li>
+        <li>Best for documents, code, visuals, and tools</li>
+      </ul>
+      <div class="hl p" style="margin-top:14px;">
+        <p><strong>Think of it as:</strong> A deliverable &mdash; a file Claude hands to you.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — Types of Artifacts ═══ -->
+<div class="slide bg-navy" data-slide="2">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Reference</span>
+  <h2>The 7 Artifact Types</h2>
+  <p class="sub">Claude can produce different artifact formats depending on what you ask for.</p>
+  <div class="cols-4" style="margin-top:8px;">
+    <div class="card-dk">
+      <span class="icon">&#128196;</span>
+      <h3 style="color:var(--blue-250);">Documents</h3>
+      <p>Markdown text &mdash; briefs, plans, SOPs, emails. The most common type.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128187;</span>
+      <h3 style="color:var(--blue-250);">Code</h3>
+      <p>Python, JavaScript, SQL, HTML, etc. Syntax highlighted and copyable.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#127912;</span>
+      <h3 style="color:var(--purple-250);">HTML / Apps</h3>
+      <p>Interactive HTML pages, calculators, dashboards. Renders live in the panel.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128202;</span>
+      <h3 style="color:var(--purple-250);">Mermaid Diagrams</h3>
+      <p>Flowcharts, org charts, sequence diagrams, timelines. Auto-rendered.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128444;</span>
+      <h3 style="color:var(--magenta-250);">SVG Graphics</h3>
+      <p>Vector illustrations, icons, logos, infographics. Scalable and clean.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128203;</span>
+      <h3 style="color:var(--magenta-250);">Spreadsheets</h3>
+      <p>CSV data and tables. Download and open in Excel or Google Sheets.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#9889;</span>
+      <h3 style="color:var(--coral-300);">React Components</h3>
+      <p>Interactive UI components with state, styling, and logic. Full apps in a panel.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128161;</span>
+      <h3 style="color:var(--coral-300);">Pro Tip</h3>
+      <p>You don't need to specify the type &mdash; Claude picks the best format based on your request.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — When Claude Creates Artifacts ═══ -->
+<div class="slide bg-light" data-slide="3">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Decision Logic</span>
+  <h2>When Does Claude Create an Artifact?</h2>
+  <p class="sub" style="color:var(--gray-900);">Claude decides automatically, but you can influence it.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <h3 style="color:var(--blue-500);">Claude WILL create an artifact when:</h3>
+      <ul>
+        <li>The content is <strong>substantial</strong> (15+ lines of code, full documents)</li>
+        <li>The content is likely to be <strong>reused, edited, or shared</strong></li>
+        <li>You ask for a <strong>specific deliverable</strong> (report, template, script)</li>
+        <li>The output is a <strong>visual</strong> (chart, diagram, interactive page)</li>
+        <li>The content stands on its own &mdash; it doesn't need the chat to make sense</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--purple-500);">Claude will NOT create an artifact when:</h3>
+      <ul>
+        <li>The answer is short or conversational</li>
+        <li>You're asking a question, not requesting a deliverable</li>
+        <li>The output is a quick code snippet (under ~10 lines)</li>
+        <li>The content only makes sense within the conversation context</li>
+      </ul>
+      <div class="hl p" style="margin-top:14px;">
+        <p><strong>Override:</strong> Say <code>"create this as an artifact"</code> or <code>"put this in an artifact"</code> to force it. Say <code>"respond in chat"</code> to prevent one.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — Artifact Panel Tour ═══ -->
+<div class="slide bg-w" data-slide="4">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Interface</span>
+  <h2>The Artifact Panel</h2>
+  <p class="sub" style="color:var(--gray-900);">The side panel is your workspace for viewing, editing, and sharing artifacts.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3>Preview</h3>
+      <p>HTML, React, and SVG artifacts render <strong>live</strong>. Code and documents show formatted preview with syntax highlighting.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3>Actions</h3>
+      <ul>
+        <li><strong>Copy</strong> &mdash; grab the raw content</li>
+        <li><strong>Download</strong> &mdash; save as a file</li>
+        <li><strong>Publish</strong> &mdash; get a shareable URL</li>
+        <li><strong>Expand</strong> &mdash; full-screen view</li>
+        <li><strong>Remix</strong> &mdash; fork someone else's artifact</li>
+      </ul>
+    </div>
+    <div class="card" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3>Version History</h3>
+      <p>Every time you ask Claude to update an artifact, it creates a <strong>new version</strong>. Use the version arrows to step through past iterations.</p>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:16px;">
+    <p><strong>Keyboard shortcut:</strong> Click the artifact title in chat to jump to it. Click again to collapse.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — Prompting for Artifacts ═══ -->
+<div class="slide bg-purple" data-slide="5">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Technique</span>
+  <h2>How to Prompt for Great Artifacts</h2>
+  <p class="sub">The better your prompt, the closer the first version is to what you need.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <h3 style="color:var(--purple-250);">The Formula</h3>
+      <div class="card-dk" style="margin-top:8px;">
+        <p style="font-size:.95rem;line-height:1.8;"><strong style="color:var(--purple-250);">Format</strong> + <strong style="color:var(--blue-250);">Content</strong> + <strong style="color:var(--magenta-250);">Constraints</strong></p>
+        <p style="margin-top:8px;opacity:.8;font-size:.88rem;">"Create a <strong style="color:var(--purple-250);">[format]</strong> that covers <strong style="color:var(--blue-250);">[content/topic]</strong> and must <strong style="color:var(--magenta-250);">[constraints]</strong>."</p>
+      </div>
+      <div style="margin-top:14px;">
+        <h3 style="color:var(--purple-250);">Weak Prompt</h3>
+        <div class="card-dk" style="margin-top:4px;">
+          <p style="opacity:.7;font-size:.88rem;">"Write me an email about our EOR services"</p>
+        </div>
+      </div>
+      <div style="margin-top:10px;">
+        <h3 style="color:var(--blue-250);">Strong Prompt</h3>
+        <div class="card-dk" style="margin-top:4px;">
+          <p style="font-size:.88rem;">"Create a <strong>cold outreach email</strong> artifact targeting <strong>VP of People at Series B startups</strong> expanding into EMEA. Highlight <strong>Atlas's 100% direct EOR model</strong>, keep it under 150 words, and include a <strong>clear CTA for a demo call</strong>."</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-250);">Trigger Phrases by Type</h3>
+      <div class="card-dk" style="margin-top:8px;">
+        <table>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>Document</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Write a...", "Draft a...", "Create a template for..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>Code</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Write a script that...", "Build a function..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>HTML App</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Build an interactive...", "Create a calculator..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>Diagram</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Draw a flowchart...", "Map out the process..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>SVG</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Design an icon...", "Create a visual..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>Spreadsheet</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Create a CSV...", "Build a data table..."</td></tr>
+          <tr><td style="border-bottom-color:rgba(255,255,255,.1);"><strong>React</strong></td><td style="border-bottom-color:rgba(255,255,255,.1);">"Build a React component...", "Create a dashboard..."</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — Iterating on Artifacts ═══ -->
+<div class="slide bg-w" data-slide="6">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Workflow</span>
+  <h2>Iterating: Edit, Refine, Perfect</h2>
+  <p class="sub" style="color:var(--gray-900);">You rarely get the perfect artifact on the first try. That's by design.</p>
+  <div class="cols-3" style="margin-top:10px;">
+    <div class="card" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3>Ask for Changes</h3>
+      <p>Simply describe what to change in chat. Claude updates the artifact in place and creates a new version.</p>
+      <div style="background:var(--gray-50);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.82rem;">
+        <em>"Make the tone more casual"</em><br>
+        <em>"Add a section on compliance"</em><br>
+        <em>"Change the CTA to a meeting link"</em>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3>Select & Edit</h3>
+      <p>Highlight specific text in the artifact and tell Claude what to do with the selection. Precise edits without rewriting.</p>
+      <div style="background:var(--gray-50);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.82rem;">
+        <em>"Replace the highlighted paragraph with a stronger value prop"</em>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3>Version Control</h3>
+      <p>Use the <strong>&lt; &gt; arrows</strong> at the top of the artifact panel to browse previous versions. You can always go back.</p>
+      <div style="background:var(--gray-50);border-radius:6px;padding:10px 14px;margin-top:10px;font-size:.82rem;">
+        <em>"Go back to version 2 and add the compliance section from version 4"</em>
+      </div>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:14px;">
+    <p><strong>Pro Tip:</strong> Keep iterating in the same conversation. Claude remembers all previous versions and your feedback, so each version gets smarter.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — Publishing & Sharing ═══ -->
+<div class="slide bg-blue" data-slide="7">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Sharing</span>
+  <h2>Publishing & Sharing Artifacts</h2>
+  <p class="sub">Artifacts aren't stuck in your chat &mdash; they can go anywhere.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div class="card-dk">
+        <div class="num">1</div>
+        <h3 style="color:var(--blue-250);">Copy / Download</h3>
+        <p>Click <strong>Copy</strong> to grab raw content, or <strong>Download</strong> to save as a file (.html, .py, .md, .csv, etc.). Paste directly into emails, docs, CRM fields.</p>
+      </div>
+      <div class="card-dk" style="margin-top:14px;">
+        <div class="num p">2</div>
+        <h3 style="color:var(--purple-250);">Publish</h3>
+        <p>Click <strong>Publish</strong> to generate a <strong>shareable URL</strong>. Anyone with the link can view the artifact &mdash; no Claude account needed. Great for sharing interactive dashboards and tools.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card-dk">
+        <div class="num m">3</div>
+        <h3 style="color:var(--magenta-250);">Remix</h3>
+        <p>When someone views your published artifact, they can click <strong>Remix</strong> to fork it into their own Claude conversation and modify it. Team-wide templates start here.</p>
+      </div>
+      <div class="card-dk" style="margin-top:14px;">
+        <div class="num c">4</div>
+        <h3 style="color:var(--coral-300);">Embed & Integrate</h3>
+        <p>Download HTML artifacts and host them on internal tools, wikis, or Notion. Interactive calculators and dashboards work as standalone pages.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hl dk" style="margin-top:14px;">
+    <p><strong>Security note:</strong> Published artifacts are accessible via link. Do not publish artifacts containing sensitive data, PII, or confidential business information.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — Atlas Use Cases: Sales ═══ -->
+<div class="slide bg-light" data-slide="8">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Sales Team</span>
+  <h2>Artifact Use Cases: Sales</h2>
+  <p class="sub" style="color:var(--gray-900);">Real examples your sales team can start using today.</p>
+  <div class="cols-3" style="margin-top:8px;">
+    <div class="card" style="border-left:3px solid var(--blue-500);">
+      <h3>Cold Email Sequences</h3>
+      <p>Generate a 3-5 email sequence artifact targeting a specific ICP. Iterate on tone, length, and CTA. Download and load into Outreach/Salesloft.</p>
+      <p class="sm" style="margin-top:8px;">Prompt: "Create a 4-email outbound sequence for VP HR at mid-market companies expanding into APAC"</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--purple-500);">
+      <h3>Call Prep Briefs</h3>
+      <p>Before a meeting, ask Claude to create a structured 1-pager with company intel, key contacts, talking points, and objection responses.</p>
+      <p class="sm" style="margin-top:8px;">Prompt: "Create a call prep brief for my meeting with [Company]. They're Series C, 400 employees, expanding into Germany"</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--magenta-500);">
+      <h3>Competitive Battle Cards</h3>
+      <p>Generate comparison artifacts: Atlas vs. Deel, Remote, or Rippling. Feature grids, talk tracks, and objection responses in one artifact.</p>
+      <p class="sm" style="margin-top:8px;">Prompt: "Build a battle card comparing Atlas HXM vs Deel. Include pricing model, coverage, and key differentiators"</p>
+    </div>
+  </div>
+  <div class="cols-3" style="margin-top:14px;">
+    <div class="card" style="border-left:3px solid var(--coral-500);">
+      <h3>Proposal Templates</h3>
+      <p>Draft customer-facing proposals as document artifacts. Include scope, pricing frameworks, and Atlas value props. Publish and share with AEs.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gold-300);">
+      <h3>ROI Calculators</h3>
+      <p>Build interactive HTML artifacts that calculate cost savings of Atlas EOR vs. entity setup. Share the published link with prospects.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--blue-500);">
+      <h3>LinkedIn Messages</h3>
+      <p>Generate personalized connection requests and InMail sequences. Create variants for different personas. Copy and paste into Sales Navigator.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — Atlas Use Cases: Marketing ═══ -->
+<div class="slide bg-navy" data-slide="9">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-m">Marketing Team</span>
+  <h2>Artifact Use Cases: Marketing</h2>
+  <p class="sub">Content at the speed your campaigns demand.</p>
+  <div class="cols-3" style="margin-top:8px;">
+    <div class="card-dk">
+      <span class="icon">&#9997;</span>
+      <h3 style="color:var(--magenta-250);">Campaign Briefs</h3>
+      <p>Document artifacts with target audience, channels, messaging pillars, CTAs, and timelines. Iterate until the brief is locked.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128231;</span>
+      <h3 style="color:var(--magenta-250);">Email Nurture Sequences</h3>
+      <p>Full email series &mdash; subject lines, body copy, CTAs. Create variants for A/B testing. Download and upload to HubSpot.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128240;</span>
+      <h3 style="color:var(--blue-250);">Blog & SEO Content</h3>
+      <p>Long-form articles as artifacts. Ask for SEO-optimized structure, meta descriptions, and internal linking suggestions.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128247;</span>
+      <h3 style="color:var(--blue-250);">Social Copy Kits</h3>
+      <p>LinkedIn, X, and paid ad copy &mdash; all in one artifact. Include character counts and hashtag suggestions.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128200;</span>
+      <h3 style="color:var(--purple-250);">Landing Page Wireframes</h3>
+      <p>HTML artifact that renders a working landing page mockup. Share with design or use as a spec.</p>
+    </div>
+    <div class="card-dk">
+      <span class="icon">&#128736;</span>
+      <h3 style="color:var(--purple-250);">Process Diagrams</h3>
+      <p>Mermaid diagrams showing customer journey, lead flow, or campaign logic. Publish and embed in Confluence or Notion.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — Atlas Use Cases: RevOps ═══ -->
+<div class="slide bg-w" data-slide="10">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">RevOps & Enablement</span>
+  <h2>Artifact Use Cases: RevOps</h2>
+  <p class="sub" style="color:var(--gray-900);">Operational outputs that save hours every week.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div class="card" style="border-top:3px solid var(--purple-500);margin-bottom:14px;">
+        <h3>Pipeline Dashboards</h3>
+        <p>Paste raw CRM export data into Claude and ask for an <strong>interactive HTML dashboard</strong>. Get charts, filters, and summary metrics. Publish and bookmark for weekly reviews.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--blue-500);margin-bottom:14px;">
+        <h3>Territory Maps</h3>
+        <p>Create SVG or HTML artifacts visualizing account assignments, rep coverage, and whitespace by region.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--coral-500);">
+        <h3>Data Cleanup Scripts</h3>
+        <p>Generate Python or JavaScript code artifacts that clean, dedupe, or transform CRM data. Download and run locally or in Google Sheets.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-top:3px solid var(--magenta-500);margin-bottom:14px;">
+        <h3>Meeting Note Templates</h3>
+        <p>Structured document artifacts for call summaries &mdash; with fields for attendees, action items, next steps, and CRM update format.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--gold-300);margin-bottom:14px;">
+        <h3>Enablement Scorecards</h3>
+        <p>Interactive HTML artifacts that score reps on key metrics. Paste in data and get a formatted, shareable scorecard.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--purple-500);">
+        <h3>Process Flowcharts</h3>
+        <p>Mermaid diagrams for lead routing, handoff workflows, or escalation paths. Update them by asking Claude &mdash; no Visio needed.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12 — Artifacts + Skills ═══ -->
+<div class="slide bg-gp" data-slide="11">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Power Move</span>
+  <h2>Artifacts + Skills = Superpower</h2>
+  <p class="sub">Skills can instruct Claude to <strong>always</strong> produce an artifact as output.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <h3 style="color:var(--purple-250);">How It Works</h3>
+      <p>In your skill's instructions, tell Claude the output format should be an artifact. This guarantees consistent, shareable output every time someone triggers the skill.</p>
+      <div class="codeblock" style="margin-top:12px;">## Output Format
+Always produce the result as a **Markdown artifact**.
+
+Structure:
+1. Executive summary (3 sentences)
+2. Key findings (bulleted)
+3. Recommendations (numbered)
+4. Next steps
+
+Title the artifact: "[Company] — Research Brief"</div>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-250);">Atlas Examples</h3>
+      <div class="card-dk" style="margin-top:8px;">
+        <p><strong style="color:var(--blue-250);">atlas-call-prep</strong> &rarr; Always outputs a document artifact with a structured call prep brief.</p>
+      </div>
+      <div class="card-dk" style="margin-top:10px;">
+        <p><strong style="color:var(--purple-250);">atlas-battle-card</strong> &rarr; Always outputs a comparison table artifact with talk tracks.</p>
+      </div>
+      <div class="card-dk" style="margin-top:10px;">
+        <p><strong style="color:var(--magenta-250);">atlas-email</strong> &rarr; Always outputs email copy as an artifact with subject line, body, and CTA clearly formatted.</p>
+      </div>
+      <div class="card-dk" style="margin-top:10px;">
+        <p><strong style="color:var(--coral-300);">atlas-roi-calc</strong> &rarr; Could output an interactive HTML calculator artifact.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13 — Artifacts + Projects ═══ -->
+<div class="slide bg-light" data-slide="12">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Integration</span>
+  <h2>Artifacts + Projects</h2>
+  <p class="sub" style="color:var(--gray-900);">Projects provide context. Artifacts provide output. Together: high-quality, on-brand deliverables.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div class="accent accent-b"></div>
+      <h3>The Workflow</h3>
+      <ol>
+        <li><strong>Set up a Project</strong> with brand guidelines, tone docs, and templates in the knowledge base</li>
+        <li><strong>Add instructions</strong> that define output expectations (format, length, tone, audience)</li>
+        <li><strong>Install skills</strong> that trigger specific artifact types</li>
+        <li><strong>Ask Claude</strong> to produce deliverables &mdash; every artifact inherits the project's context</li>
+      </ol>
+      <div class="hl" style="margin-top:14px;">
+        <p><strong>Result:</strong> A marketing project produces on-brand content artifacts. A sales project produces outreach artifacts with the right value props. No re-prompting needed.</p>
+      </div>
+    </div>
+    <div>
+      <div class="accent accent-p"></div>
+      <h3>Example: "Atlas Marketing" Project</h3>
+      <div class="card" style="margin-top:4px;">
+        <p style="font-size:.85rem;"><strong>Knowledge:</strong> Brand guidelines PDF, tone of voice doc, ICP profiles, competitor positioning</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>Instructions:</strong> "Always write in Atlas's brand voice. Target enterprise HR leaders. Use data points from uploaded collateral."</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>Skills:</strong> atlas-email, atlas-social, atlas-blog, atlas-campaign-brief</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>Output:</strong> Every artifact from this project is on-brand, on-target, and ready to use.</p>
+      </div>
+      <div class="card" style="margin-top:10px;border-left:3px solid var(--purple-500);">
+        <p style="font-size:.85rem;"><strong>Example: "Atlas Sales" Project</strong></p>
+        <p style="font-size:.85rem;margin-top:4px;"><strong>Knowledge:</strong> Pricing, objection responses, case studies, competitive intel</p>
+        <p style="font-size:.85rem;margin-top:4px;"><strong>Output:</strong> Battle cards, call preps, email sequences &mdash; all with the right context baked in.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14 — Live Demo: Build an Artifact ═══ -->
+<div class="slide bg-navy" data-slide="13">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Live Demo</span>
+  <h2>Try It: Build Your First Artifact</h2>
+  <p class="sub">Follow along in Claude. Pick one and go.</p>
+  <div class="cols-3" style="margin-top:10px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3 style="color:var(--blue-250);">Sales: Battle Card</h3>
+      <div class="codeblock" style="margin-top:8px;font-size:.72rem;">Create a competitive battle card
+artifact comparing Atlas HXM vs Deel.
+
+Include:
+- Company overview (both)
+- Key differentiators (Atlas wins)
+- Feature comparison table
+- Common objections + responses
+- Talk track for sales calls
+
+Format as a clean document I can
+share with the whole sales team.</div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3 style="color:var(--purple-250);">Marketing: Landing Page</h3>
+      <div class="codeblock" style="margin-top:8px;font-size:.72rem;">Build an interactive HTML artifact
+that mockups a landing page for
+Atlas HXM's EOR service.
+
+Include:
+- Hero with headline + CTA
+- 3 benefit cards
+- Social proof section
+- FAQ accordion
+- Footer with contact form
+
+Use these brand colors:
+Navy #160629, Blue #0559FA,
+Purple #5827E3</div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3 style="color:var(--magenta-250);">RevOps: Process Flow</h3>
+      <div class="codeblock" style="margin-top:8px;font-size:.72rem;">Create a Mermaid diagram artifact
+showing Atlas's lead routing flow:
+
+1. New lead enters from website
+2. Lead scored (High/Med/Low)
+3. High → AE assignment
+4. Med → SDR sequence
+5. Low → Nurture campaign
+6. All → CRM update
+
+Make it clean and professional.</div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:14px;font-size:.88rem;opacity:.7;">After creating one, try: "Make the tone more aggressive" or "Add a section about compliance" to practice iterating.</p>
+</div>
+
+<!-- ═══ SLIDE 15 — Common Mistakes ═══ -->
+<div class="slide bg-w" data-slide="14">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-c">Watch Out</span>
+  <h2>Common Mistakes &amp; Fixes</h2>
+  <p class="sub" style="color:var(--gray-900);">Avoid these and you'll get better artifacts every time.</p>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <table class="ct">
+        <thead><tr><th>Mistake</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Vague prompts</strong><br>"Write me an email"</td>
+            <td>Specify audience, tone, length, goal, and format</td>
+          </tr>
+          <tr>
+            <td><strong>Starting over instead of iterating</strong></td>
+            <td>Ask Claude to edit the artifact. It remembers context and versions.</td>
+          </tr>
+          <tr>
+            <td><strong>Not using Projects</strong></td>
+            <td>Set up a project with context files. Artifacts inherit the knowledge.</td>
+          </tr>
+          <tr>
+            <td><strong>Ignoring version history</strong></td>
+            <td>Browse versions to compare. Ask Claude to combine the best parts.</td>
+          </tr>
+          <tr>
+            <td><strong>Publishing sensitive data</strong></td>
+            <td>Never publish artifacts with PII, pricing, or internal metrics.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table class="ct">
+        <thead><tr><th>Mistake</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Not specifying format</strong><br>Claude picks one for you</td>
+            <td>Say "as an HTML page" or "as a Mermaid diagram" to control the type</td>
+          </tr>
+          <tr>
+            <td><strong>One-and-done approach</strong></td>
+            <td>Treat artifacts like drafts. Plan 2-3 rounds of iteration.</td>
+          </tr>
+          <tr>
+            <td><strong>Copy-pasting instead of downloading</strong></td>
+            <td>Use Download for code/CSV. Use Copy for text. Use Publish for sharing.</td>
+          </tr>
+          <tr>
+            <td><strong>Not connecting to Skills</strong></td>
+            <td>Add output format instructions to your skills for consistent artifacts.</td>
+          </tr>
+          <tr>
+            <td><strong>Forgetting the audience</strong></td>
+            <td>Tell Claude who the artifact is for. "This is for our VP of Sales to present."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 16 — Best Practices ═══ -->
+<div class="slide bg-purple" data-slide="15">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-g">Best Practices</span>
+  <h2>10 Artifact Best Practices</h2>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div class="card-dk"><p><strong style="color:var(--blue-250);">1. Be specific about format.</strong> "Create an HTML artifact" beats "make me something." Claude picks better when you're explicit.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--blue-250);">2. Front-load constraints.</strong> Put length, tone, and audience at the start of your prompt. Claude reads top-down.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--purple-250);">3. Iterate, don't restart.</strong> Asking for changes is faster and smarter than starting a new conversation.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--purple-250);">4. Use Projects for context.</strong> Upload brand docs, templates, and examples. Claude uses them to shape every artifact.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--magenta-250);">5. Combine artifact types.</strong> Ask for a document AND a diagram in the same conversation. Claude creates multiple artifacts.</p></div>
+    </div>
+    <div>
+      <div class="card-dk"><p><strong style="color:var(--magenta-250);">6. Use version history.</strong> Browse past versions. Ask Claude to merge the best parts. Never lose good work.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--coral-300);">7. Publish team tools.</strong> Build calculators, templates, and dashboards as HTML artifacts. Publish them for the whole team.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--coral-300);">8. Add output rules to skills.</strong> Define artifact format in your skill instructions. Every trigger = consistent deliverable.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--gold-300);">9. Review before sharing.</strong> Always read artifacts before publishing or sending. Claude is fast but not infallible.</p></div>
+      <div class="card-dk" style="margin-top:10px;"><p><strong style="color:var(--gold-300);">10. Name your artifacts.</strong> Ask Claude to title them clearly. "Q1 EMEA Campaign Brief" is better than "Untitled".</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 17 — Quick Reference Cheat Sheet ═══ -->
+<div class="slide bg-light" data-slide="16">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Cheat Sheet</span>
+  <h2>Artifact Quick Reference</h2>
+  <p class="sub" style="color:var(--gray-900);">Bookmark this slide. Come back when you need a reminder.</p>
+  <div class="cols-2" style="margin-top:6px;">
+    <div>
+      <table class="ct" style="font-size:.8rem;">
+        <thead><tr><th>I Want To...</th><th>Say This</th></tr></thead>
+        <tbody>
+          <tr><td>Force an artifact</td><td>"Create this as an artifact"</td></tr>
+          <tr><td>Prevent an artifact</td><td>"Respond in chat, no artifact"</td></tr>
+          <tr><td>Choose the type</td><td>"As an HTML page / Mermaid diagram / CSV"</td></tr>
+          <tr><td>Edit part of it</td><td>"Change the second paragraph to..."</td></tr>
+          <tr><td>Start fresh</td><td>"Create a new artifact" (not edit the existing one)</td></tr>
+          <tr><td>Combine versions</td><td>"Take section 1 from v2 and section 3 from v4"</td></tr>
+          <tr><td>Make it interactive</td><td>"Build this as an interactive HTML page"</td></tr>
+          <tr><td>Get a diagram</td><td>"Draw a Mermaid flowchart showing..."</td></tr>
+          <tr><td>Get data out</td><td>"Export this as a CSV artifact"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Output Types at a Glance</h3>
+      <table class="ct" style="font-size:.8rem;margin-top:4px;">
+        <thead><tr><th>Type</th><th>Best For</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Document</td><td>Briefs, emails, SOPs</td><td>Copy / Download</td></tr>
+          <tr><td>Code</td><td>Scripts, automation</td><td>Copy / Download</td></tr>
+          <tr><td>HTML</td><td>Dashboards, tools</td><td>Publish / Embed</td></tr>
+          <tr><td>Mermaid</td><td>Flowcharts, maps</td><td>Download SVG</td></tr>
+          <tr><td>SVG</td><td>Graphics, icons</td><td>Download / Embed</td></tr>
+          <tr><td>CSV</td><td>Data, exports</td><td>Download to Excel</td></tr>
+          <tr><td>React</td><td>Complex apps</td><td>Publish / Embed</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 18 — Closing ═══ -->
+<div class="slide bg-gm vc" data-slide="17">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:20px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <h1>Stop Describing. Start Delivering.</h1>
+    <p class="sub" style="max-width:640px;margin-top:6px;">Artifacts turn Claude from a conversational tool into a content engine. Every email, dashboard, diagram, and template your team needs &mdash; created in seconds, iterated in minutes, shared in one click.</p>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://claude.ai" style="display:inline-block;background:var(--magenta-500);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;">Open Claude</a>
+      <a href="https://support.anthropic.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them" style="display:inline-block;background:rgba(255,255,255,.12);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;border:1px solid rgba(255,255,255,.2);">Artifacts Help Center</a>
+    </div>
+    <p style="font-size:.95rem;font-style:italic;opacity:.45;margin-top:28px;">For People, By People</p>
+    <p class="sm" style="margin-top:8px;">Series: Part 1 — Skills &#10003; &nbsp;|&nbsp; Part 2 — Projects & Cowork &#10003; &nbsp;|&nbsp; <strong>Part 3 — Artifacts &#10003;</strong></p>
+  </div>
+</div>
+
+</div>
+
+<nav class="nav">
+  <button id="prev" onclick="go(-1)" disabled>&larr; Prev</button>
+  <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
+    <div class="progress" id="prog"></div>
+    <span class="counter" id="cnt">1 / 18</span>
+  </div>
+  <button id="next" onclick="go(1)">Next &rarr;</button>
+</nav>
+<script>
+const slides=document.querySelectorAll('.slide');let cur=0;const prog=document.getElementById('prog');
+slides.forEach((_,i)=>{const d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=()=>show(i);prog.appendChild(d);});
+function show(n){slides[cur].classList.remove('active');prog.children[cur].classList.remove('active');cur=Math.max(0,Math.min(n,slides.length-1));slides[cur].classList.add('active');prog.children[cur].classList.add('active');document.getElementById('cnt').textContent=`${cur+1} / ${slides.length}`;document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1;}
+function go(d){show(cur+d);}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}if(e.key==='ArrowLeft')go(-1);});
+</script>
+</body>
+</html>

@@ -1,7 +1,8 @@
-# LetsVibeAI Design System v2.1
+# LetsVibeAI Design System v2.0
 
-**Look:** the warm cream + coral style of the original LetsVibeAI site — Hanken Grotesk with DM Serif italic accent words, white rounded cards, a dark-tile logo — on the **Lexio** template layout (floating pill nav, tinted offer cards, image + panel course cards, glass feature panel, bento grid, accordion FAQ, contact split).
-**Brand marks:** Gateway V (see `letsvibeai-brand-guidelines.md`). The previous blue/Sora skin (v2.0) and the older Tailwind system were removed — do not reintroduce Tailwind or hard-coded colors.
+**Brand:** Gateway V (see `letsvibeai-brand-guidelines.md`) · **Layout language:** modeled on the Lexio Framer template (floating pill nav, photo hero, tinted offer cards, image + panel course cards, glass feature panel, bento grid, accordion FAQ, contact split).
+
+The previous design system (Tailwind theme, `src/index.css`, all old components) was removed in this version. Do not reintroduce Tailwind or hard-coded colors — use the tokens.
 
 ## Files
 
@@ -11,7 +12,7 @@
 | `src/styles/site.css` | All components and section patterns, built only from tokens |
 | `src/content/site.ts` | Marketing copy, offers, prices, FAQs, guides, plans |
 | `src/content/courses.ts` | Course catalog (title, summary, image, course-page copy) |
-| `src/content/courses/<slug>/*.md` | Lesson text — one file per lesson, ordered by number prefix. `claude-mastery/` is generated from `pipeline/lessons/*.json` |
+| `src/content/courses/<slug>/*.md` | Lesson text — one file per lesson, ordered by number prefix |
 | `src/content/blog/*.md` | Blog posts with frontmatter (title, date, type, description) |
 | `src/data/courseData.ts` | Module quizzes, deliverables, 11 building blocks, 11 doc templates, capstone rubric |
 
@@ -19,21 +20,23 @@
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--ink` / `--navy` | #101B24 | Headings, dark panels (video card, code, featured plan) |
-| `--accent` | #EC4909 | Coral: large type, icons, italic highlight words |
-| `--accent-strong` | #D63F04 | Buttons and small coral text (white text passes AA, 4.6:1) |
-| `--accent-deep` | #B93503 | Button hover |
-| `--cream` | #F7F4F2 | Page and alternate section background |
-| `--peach` | #FBE1CE | Tinted cards, offers, guides band, footer, form panel |
-| `--sage` | #C4DAC8 | CTA strip, feature card |
-| `--periwinkle` | #E1E3F6 | Quote card, icon tiles |
-| `--gold` | #FCD554 | Stars, small highlights |
-| `--text` / `--text-muted` | #2B3036 / #4A4D4F | Body / secondary copy (AA on white, cream and peach) |
+| `--navy` | #071B3A | Dark surfaces, hero overlays, featured plan |
+| `--ink` | #10213F | Headings |
+| `--blue-strong` | #1F6FDB | Primary buttons, badges (white text passes AA 4.8:1) |
+| `--blue` | #2F80ED | Icons, focus rings, highlights |
+| `--green` / `--success` | #34D399 / #0F8A5F | Progress, completion |
+| `--violet` | #7C5CFC | Discovery accents |
+| `--cyan` | #20C7D9 | Energy accents |
+| `--mist` | #F4F7FB | Alternate section background (Lexio cream) |
+| `--sky-50` | #E8F1FD | Tinted cards, guides band, footer (Lexio peach) |
+| `--green-50` | #DCF6EC | CTA strip, feature card (Lexio sage) |
+| `--violet-50` | #ECE8FF | Quote card (Lexio lavender) |
+| `--text` / `--text-muted` | #2C3A55 / #4A5878 | Body / secondary copy (AA on white and tints) |
 
-**Type:** Hanken Grotesk for everything, DM Serif Text *italic* for accent words (wrap them in `<em>` inside any `h-hero`, `h1`–`h4`), JetBrains Mono for code. Scale: hero 84 · h1 68 · h2 56 · h3 32 · h4 24 · h5 20 · body 16.
+**Type:** Sora (brand font) for everything, JetBrains Mono for code. Headings 600 weight, −0.04em tracking. Scale: hero 76 · h1 64 · h2 52 · h3 30 · h4 22 · h5 18 · body 15.5.
 **Space:** 4px base (`--s-1` … `--s-9`), sections `--section-y` (64–104px), container 1320px.
-**Radius:** 8 / 14 / 20 / 32 / pill. Cards use 20; the hero showcase uses 32.
-**Motion:** `--ease` cubic-bezier(.22,1,.36,1); scroll reveal = fade + 28px lift + blur, 800ms. Disabled under `prefers-reduced-motion`.
+**Radius:** 8 / 12 / 16 / 24 / pill. Cards use 16.
+**Motion:** `--ease` cubic-bezier(.22,1,.36,1); scroll reveal = fade + 28px lift + blur, 800ms. Everything is disabled under `prefers-reduced-motion`.
 
 ## Components
 
@@ -41,15 +44,13 @@
 | --- | --- | --- |
 | Button | `.btn` · `Button` in `components/ui.tsx` | primary, navy, outline, ghost-light · sm · hover arrow nudge, active scale, disabled |
 | Circle button | `.btn-circle` | default, soft, disabled |
-| Badge / chip | `.badge`, `.chip` | coral, soft, green |
+| Badge / chip | `.badge`, `.chip` | blue, soft, green |
 | Nav | `.nav` · `Layout.tsx` | floating pill; solid on scroll; mobile drawer under 860px |
-| Home hero + showcase | `.home-hero`, `.showcase`, `.video-card`, `.code-card` | centered headline, trailer player, copyable code |
-| Page hero | `.page-hero` | photo, plain gradient |
-| Practices grid | `.practices`, `.practice` | 8 rule cards linking to lessons |
+| Hero / page hero | `.hero`, `.page-hero` | photo, plain gradient |
 | Offer card | `.offer-card` | numbered, badge, line illustration, price + arrow |
 | Countdown | `.countdown` | hides itself after `site.offerDeadline` |
 | Course card | `.course-card` | white or mist panel; image zoom on hover |
-| Info card | `.info-card` + `.icon-tile` | peach, sage, periwinkle tiles |
+| Info card | `.info-card` + `.icon-tile` | blue, green, violet tiles |
 | Guide card | `.guide-card` | photo or monogram fallback |
 | Build card + carousel | `.build-card`, `.carousel` | arrow controls, responsive per-view |
 | FAQ | `.faq-item` | open/closed, animated height, aria-expanded |
@@ -77,7 +78,7 @@
 ## Rules
 
 1. Use tokens, never raw hex values, in components.
-2. Body text stays `--text` or `--text-muted`; never put white text on `--accent` (fails contrast) — use `--accent-strong`.
+2. Body text stays `--text` or `--text-muted`; never put white text on `--blue` (fails contrast) — use `--blue-strong`.
 3. Every interactive element keeps a visible `:focus-visible` ring.
 4. New pages are composed from existing sections before inventing new ones.
 5. No invented testimonials, ratings or enrollment numbers.

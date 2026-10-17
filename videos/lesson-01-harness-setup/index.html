@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <title>LetsVibeAI — Lesson 01: Setup: Pick and Install an Agent Harness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #071B3A;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      overflow: hidden;
+      width: 1920px;
+      height: 1080px;
+    }
+    #harness-setup-root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      background: radial-gradient(circle at 50% 20%, #0E2A5A 0%, #071B3A 60%, #040D1E 100%);
+      overflow: hidden;
+    }
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 120px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .clip.active { opacity: 1; pointer-events: auto; }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(47, 128, 237, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(47, 128, 237, 0.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
+      pointer-events: none;
+    }
+    .ambient-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(140px);
+      pointer-events: none;
+    }
+    .glow-blue { width: 700px; height: 700px; background: rgba(47, 128, 237, 0.22); top: -150px; left: 150px; }
+    .glow-cyan { width: 650px; height: 650px; background: rgba(32, 199, 217, 0.18); bottom: -120px; right: 150px; }
+    .glow-green { width: 500px; height: 500px; background: rgba(52, 211, 153, 0.15); top: 300px; left: 700px; }
+
+    /* Top Brand Bar */
+    .top-brand {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-logo-svg {
+      width: 44px;
+      height: 44px;
+    }
+    .brand-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #FFFFFF;
+    }
+    .brand-name span { color: #20C7D9; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(47, 128, 237, 0.15);
+      border: 1px solid rgba(47, 128, 237, 0.4);
+      border-radius: 9999px;
+      color: #20C7D9;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .course-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Subtitle & Narration Bar */
+    .caption-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 120px;
+      right: 120px;
+      background: rgba(7, 27, 58, 0.85);
+      border: 1px solid rgba(32, 199, 217, 0.3);
+      backdrop-filter: blur(16px);
+      padding: 16px 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 60;
+    }
+    .caption-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 12px #34D399;
+      flex-shrink: 0;
+    }
+    .caption-text {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F4F7FB;
+      line-height: 1.4;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Common Card Styles */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .gradient-text-blue {
+      background: linear-gradient(135deg, #20C7D9 0%, #2F80ED 50%, #7C5CFC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-text-green {
+      background: linear-gradient(135deg, #34D399 0%, #20C7D9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Scene 1: Title */
+    .hero-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 140px;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(47, 128, 237, 0.25);
+      margin-bottom: -20px;
+    }
+    .main-title {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      text-align: center;
+      line-height: 1.1;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+    .main-sub {
+      font-size: 28px;
+      color: #94A3B8;
+      text-align: center;
+      max-width: 900px;
+      line-height: 1.4;
+    }
+
+    /* Scene 2: The Big Idea */
+    .idea-box {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      max-width: 1500px;
+    }
+    .model-brain-card {
+      flex: 1;
+      text-align: center;
+      padding: 44px;
+      border: 2px solid rgba(47, 128, 237, 0.4);
+      background: rgba(47, 128, 237, 0.08);
+      border-radius: 24px;
+    }
+    .harness-card {
+      flex: 1.4;
+      padding: 44px;
+      border: 2px solid rgba(52, 211, 153, 0.4);
+      background: rgba(52, 211, 153, 0.08);
+      border-radius: 24px;
+    }
+
+    /* Scene 3: The 5 Layers */
+    .layers-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .layer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .layer-row.active {
+      background: linear-gradient(90deg, rgba(47, 128, 237, 0.25) 0%, rgba(32, 199, 217, 0.25) 100%);
+      border-color: #20C7D9;
+    }
+    .layer-idx {
+      font-family: 'JetBrains Mono', monospace;
+      color: #20C7D9;
+      font-size: 18px;
+      margin-right: 16px;
+    }
+
+    /* Scene 4: Harness Grid */
+    .harness-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 1400px;
+    }
+    .harness-item {
+      padding: 28px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .harness-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .harness-desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: #20C7D9;
+    }
+
+    /* Scene 5: Terminal Code Window */
+    .code-window {
+      width: 100%;
+      max-width: 1100px;
+      background: #040D1E;
+      border: 1px solid rgba(47, 128, 237, 0.3);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+    .code-header {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .code-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .code-body {
+      padding: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      line-height: 1.6;
+      color: #F4F7FB;
+    }
+    .code-body .cmd { color: #34D399; font-weight: 700; }
+    .code-body .comment { color: #64748B; }
+
+    /* Scene 6: Day 1 Prompts */
+    .prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      width: 100%;
+      max-width: 1400px;
+    }
+    .prompt-card {
+      padding: 32px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .prompt-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #2F80ED;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+    .prompt-title { font-size: 26px; font-weight: 800; color: #fff; }
+    .prompt-snippet {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: #20C7D9;
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="harness-setup-root" data-composition-id="harness-setup-root" data-width="1920" data-height="1080" data-duration="25">
+    <div class="bg-grid"></div>
+    <div class="ambient-glow glow-blue"></div>
+    <div class="ambient-glow glow-cyan"></div>
+    <div class="ambient-glow glow-green"></div>
+
+    <!-- Top Navigation Branding -->
+    <div class="top-brand">
+      <div class="brand-lockup">
+        <svg class="brand-logo-svg" viewBox="0 0 100 100" fill="none">
+          <path d="M50 15L85 80H70L50 42L30 80H15L50 15Z" fill="url(#brand-grad-1)"/>
+          <circle cx="50" cy="62" r="9" fill="#20C7D9"/>
+          <defs>
+            <linearGradient id="brand-grad-1" x1="15" y1="15" x2="85" y2="80" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2F80ED"/>
+              <stop offset="0.5" stop-color="#20C7D9"/>
+              <stop offset="1" stop-color="#34D399"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand-name">LetsVibe<span>AI</span></span>
+      </div>
+      <div class="badge-pill">Lesson 01 · Agent Harness Mastery</div>
+      <div class="course-badge">vibe-coding-course / module-01</div>
+    </div>
+
+    <!-- Scene 1: Intro (0s - 4s) -->
+    <div id="s1" class="clip">
+      <div id="s1-badge" class="badge-pill" style="margin-bottom: 24px;">Setup & Fundamentals</div>
+      <div id="s1-num" class="hero-number">01</div>
+      <h1 id="s1-title" class="main-title">Setup: Pick & Install a <span class="gradient-text-blue">Harness</span></h1>
+      <p id="s1-sub" class="main-sub">Get a production-grade AI agent up and running on your machine in under ten minutes.</p>
+    </div>
+
+    <!-- Scene 2: The Big Idea (4s - 8s) -->
+    <div id="s2" class="clip">
+      <div id="s2-badge" class="badge-pill" style="margin-bottom: 24px;">The Core Concept</div>
+      <h2 id="s2-title" class="main-title" style="font-size: 58px; margin-bottom: 36px;">A Harness is the <span class="gradient-text-green">App Around the Model</span></h2>
+      <div id="s2-cards" class="idea-box">
+        <div class="model-brain-card">
+          <div style="font-family: 'JetBrains Mono', monospace; color: #20C7D9; font-size: 16px; margin-bottom: 8px;">THE BRAIN</div>
+          <div style="font-size: 38px; font-weight: 900; margin-bottom: 12px;">The Model</div>
+          <div style="color: #94A3B8; font-size: 20px;">Claude 3.7 Sonnet, GPT-4o, Gemini 2.0 Flash</div>
+        </div>
+        <div style="font-size: 40px; color: #20C7D9; font-weight: 900;">+</div>
+        <div class="harness-card">
+          <div style="font-family: 'JetBrains Mono', monospace; color: #34D399; font-size: 16px; margin-bottom: 8px;">THE CAPABILITIES</div>
+          <div style="font-size: 38px; font-weight: 900; margin-bottom: 12px;">The Harness</div>
+          <div style="color: #E2E8F0; font-size: 20px; line-height: 1.5;">Reads files, runs terminal commands, executes tools, calls MCP servers, and remembers your project rules.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 3: The 5 Layers (8s - 13s) -->
+    <div id="s3" class="clip">
+      <div id="s3-badge" class="badge-pill" style="margin-bottom: 20px;">Architecture</div>
+      <h2 id="s3-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">The 5 Layers of <span class="gradient-text-blue">Every Harness</span></h2>
+      <div id="s3-layers" class="layers-container">
+        <div class="layer-row active">
+          <div><span class="layer-idx">01</span><span>Model</span></div>
+          <span style="color: #94A3B8; font-size: 18px;">The reasoning brain you select</span>
+        </div>
+        <div class="layer-row">
+          <div><span class="layer-idx">02</span><span>Context</span></div>
+          <span style="color: #94A3B8; font-size: 18px;">CLAUDE.md, AGENTS.md, persistent memory rules</span>
+        </div>
+        <div class="layer-row">
+          <div><span class="layer-idx">03</span><span>Capabilities</span></div>
+          <span style="color: #94A3B8; font-size: 18px;">Skills, MCP connectors, bash, file tools</span>
+        </div>
+        <div class="layer-row">
+          <div><span class="layer-idx">04</span><span>Surfaces</span></div>
+          <span style="color: #94A3B8; font-size: 18px;">Terminal CLI, IDE extensions, desktop apps</span>
+        </div>
+        <div class="layer-row">
+          <div><span class="layer-idx">05</span><span>Orchestration</span></div>
+          <span style="color: #94A3B8; font-size: 18px;">Subagent swarms, background tasks, hooks</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 4: Harness Grid (13s - 17s) -->
+    <div id="s4" class="clip">
+      <div id="s4-badge" class="badge-pill" style="margin-bottom: 20px;">Ecosystem</div>
+      <h2 id="s4-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Choose Your Preferred <span class="gradient-text-green">Harness</span></h2>
+      <div id="s4-grid" class="harness-grid">
+        <div class="harness-item">
+          <div class="harness-name">Claude Code</div>
+          <div class="harness-desc">Terminal · npm i -g @anthropic-ai/claude-code</div>
+          <div style="color: #94A3B8; font-size: 15px;">Fastest autonomous loops, deep repo indexing.</div>
+        </div>
+        <div class="harness-item">
+          <div class="harness-name">Codex / OpenClaw</div>
+          <div class="harness-desc">Terminal · Open Source CLI</div>
+          <div style="color: #94A3B8; font-size: 15px;">AGENTS.md native, multi-model flexibility.</div>
+        </div>
+        <div class="harness-item">
+          <div class="harness-name">Hermes</div>
+          <div class="harness-desc">Terminal · Local & Lightweight</div>
+          <div style="color: #94A3B8; font-size: 15px;">Fast scratchpads, markdown memories.</div>
+        </div>
+        <div class="harness-item">
+          <div class="harness-name">Antigravity</div>
+          <div class="harness-desc">Desktop App · Full Multi-Agent Suite</div>
+          <div style="color: #94A3B8; font-size: 15px;">Visual agent manager, browser subagents.</div>
+        </div>
+        <div class="harness-item">
+          <div class="harness-name">VS Code / Copilot</div>
+          <div class="harness-desc">Editor · Agent Mode</div>
+          <div style="color: #94A3B8; font-size: 15px;">Integrated inside your existing IDE.</div>
+        </div>
+        <div class="harness-item">
+          <div class="harness-name">Cursor</div>
+          <div class="harness-desc">Editor · Built-in Agent & Rules</div>
+          <div style="color: #94A3B8; font-size: 15px;">Inline diffs, MDC rules configuration.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 5: First Run & Terminal (17s - 21s) -->
+    <div id="s5" class="clip">
+      <div id="s5-badge" class="badge-pill" style="margin-bottom: 20px;">Quickstart</div>
+      <h2 id="s5-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">First Session: <span class="gradient-text-blue">Git is Your Undo Button</span></h2>
+      <div id="s5-code" class="code-window">
+        <div class="code-header">
+          <div class="code-dot" style="background:#EF4444;"></div>
+          <div class="code-dot" style="background:#F59E0B;"></div>
+          <div class="code-dot" style="background:#10B981;"></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#94A3B8;margin-left:12px;">bash — my-first-agent</span>
+        </div>
+        <div class="code-body">
+          <div><span class="cmd">mkdir</span> my-first-agent && <span class="cmd">cd</span> my-first-agent</div>
+          <div><span class="cmd">git init</span> <span class="comment"># Essential: Review and rollback every agent edit</span></div>
+          <br>
+          <div class="comment"># Launch your harness directly in the directory</div>
+          <div><span class="cmd">claude</span> <span class="comment"># or: codex · hermes · antigravity</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scene 6: Day 1 Prompts & Wrap-up (21s - 25s) -->
+    <div id="s6" class="clip">
+      <div id="s6-badge" class="badge-pill" style="margin-bottom: 20px;">Execution Formula</div>
+      <h2 id="s6-title" class="main-title" style="font-size: 54px; margin-bottom: 30px;">Three Prompts for <span class="gradient-text-green">Day One Success</span></h2>
+      <div id="s6-prompts" class="prompts-grid">
+        <div class="prompt-card">
+          <div class="prompt-num">1</div>
+          <div class="prompt-title">Explain</div>
+          <div class="prompt-snippet">"What is in this repository? Give me an architecture breakdown."</div>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-num">2</div>
+          <div class="prompt-title">Plan First</div>
+          <div class="prompt-snippet">"Create a detailed plan for this feature. Do not write any code yet."</div>
+        </div>
+        <div class="prompt-card">
+          <div class="prompt-num">3</div>
+          <div class="prompt-title">Do One Step</div>
+          <div class="prompt-snippet">"Execute Step 1 only. Stop, verify, and show me the result."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Subtitle Bar -->
+    <div class="caption-bar">
+      <div class="caption-dot"></div>
+      <div id="caption-live" class="caption-text">Welcome to Lesson 1: Pick and install an agent harness on your machine.</div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tl = gsap.timeline({ paused: true });
+        const captionEl = document.getElementById("caption-live");
+
+        // Helper to update captions
+        function setCaption(text) {
+          if (captionEl) captionEl.textContent = text;
+        }
+
+        // Scene 1: 0.0s - 4.0s
+        tl.call(() => setCaption("Welcome to Lesson 1: Pick and install an agent harness on your machine."), null, 0.1);
+        tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.1);
+        tl.fromTo("#s1-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 0.2);
+        tl.fromTo("#s1-num", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.4);
+        tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, 0.6);
+        tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
+        tl.to("#s1", { opacity: 0, y: -20, duration: 0.4 }, 3.6);
+
+        // Scene 2: 4.0s - 8.0s
+        tl.call(() => setCaption("A harness is the application around the model — it reads files, runs commands, and remembers your rules."), null, 4.0);
+        tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.0);
+        tl.fromTo("#s2-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 4.2);
+        tl.fromTo("#s2-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 4.4);
+        tl.fromTo(".model-brain-card", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.7);
+        tl.fromTo(".harness-card", { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 4.9);
+        tl.to("#s2", { opacity: 0, y: -20, duration: 0.4 }, 7.6);
+
+        // Scene 3: 8.0s - 13.0s
+        tl.call(() => setCaption("Under the hood, every harness consists of five core layers: Model, Context, Capabilities, Surfaces, and Orchestration."), null, 8.0);
+        tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 8.0);
+        tl.fromTo("#s3-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 8.2);
+        tl.fromTo("#s3-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 8.4);
+        tl.fromTo(".layer-row", { x: -30, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: "power2.out" }, 8.7);
+        tl.to("#s3", { opacity: 0, y: -20, duration: 0.4 }, 12.6);
+
+        // Scene 4: 13.0s - 17.0s
+        tl.call(() => setCaption("Start with whatever tool you already have — Claude Code, Codex, Hermes, Antigravity, VS Code, or Cursor."), null, 13.0);
+        tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 13.0);
+        tl.fromTo("#s4-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 13.2);
+        tl.fromTo("#s4-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 13.4);
+        tl.fromTo(".harness-item", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.08, duration: 0.45, ease: "back.out(1.2)" }, 13.7);
+        tl.to("#s4", { opacity: 0, y: -20, duration: 0.4 }, 16.6);
+
+        // Scene 5: 17.0s - 21.0s
+        tl.call(() => setCaption("Initialize a git repository in your project directory first. Git serves as your universal undo button."), null, 17.0);
+        tl.fromTo("#s5", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 17.0);
+        tl.fromTo("#s5-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 17.2);
+        tl.fromTo("#s5-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 17.4);
+        tl.fromTo("#s5-code", { y: 30, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 17.7);
+        tl.to("#s5", { opacity: 0, y: -20, duration: 0.4 }, 20.6);
+
+        // Scene 6: 21.0s - 25.0s
+        tl.call(() => setCaption("Follow the three golden Day 1 prompts: Explain, Plan before code, and execute one verified step at a time."), null, 21.0);
+        tl.fromTo("#s6", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 21.0);
+        tl.fromTo("#s6-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 21.2);
+        tl.fromTo("#s6-title", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, 21.4);
+        tl.fromTo(".prompt-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.5, ease: "back.out(1.3)" }, 21.7);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["harness-setup-root"] = tl;
+      });
+    </script>
+  </div>
+</body>
+</html>

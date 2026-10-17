@@ -6,7 +6,7 @@ Live site: [letsvibeai.com](https://www.letsvibeai.com)
 
 ## What's on the site
 
-- **5 free courses / 36 lessons:** Claude Mastery: Lead AI Agents (10 lessons, taught by Pat), Vibe Coding: Idea to Shipped App (10 modules with quizzes), Build with AI: Zero to Ship (10 days), Project Labs (3), GTM Automation Labs (3)
+- **4 free courses / 26 lessons:** Vibe Coding: Idea to Shipped App (10 modules with quizzes), Build with AI: Zero to Ship (10 days), Project Labs (3), GTM Automation Labs (3)
 - **Builder Toolkit:** 11 building blocks, 11-document planning stack (copy/download), prompt library, checklists, glossary
 - **Pricing & offers:** Live Build Nights, 1:1 coaching, cohorts and team workshops
 - **Blog:** LiveBuildAI briefings and tool guides
@@ -27,21 +27,11 @@ npm run build    # production build into dist/
 | --- | --- |
 | Headlines, offers, prices, FAQs, guides, plans | `src/content/site.ts` |
 | Course titles, summaries, course-page copy | `src/content/courses.ts` |
-| A lesson | `src/content/courses/<course>/<NN-lesson>.md` (Claude Mastery lessons are generated — see below) |
+| A lesson | `src/content/courses/<course>/<NN-lesson>.md` |
 | Add a lesson | Add a new numbered `.md` file to that course folder |
 | A blog post | `src/content/blog/<post>.md` |
 | Colors, fonts, spacing | `src/styles/tokens.css` |
 | Images | `public/images/` |
-
-### Claude Mastery lessons and videos
-
-The Claude Mastery lessons come from the video scripts in `pipeline/lessons/*.json` (one JSON file per lesson). Edit a script, then regenerate the site pages from the repo root:
-
-```bash
-python3 pipeline/to_site.py
-```
-
-`pipeline/README.md` explains how the same scripts are rendered into narrated lesson videos.
 
 ### Contact form
 
@@ -53,6 +43,15 @@ Vercel builds every push to `main` (`vercel.json`: Vite, output `dist`, SPA rewr
 
 ## Course materials
 
-`pipeline/` (Claude Mastery video scripts and renderer), `modules/`, `templates/`, `checklists/`, `capstone/`, `resources/` and `videos/` hold the source course materials and HyperFrames video compositions.
+`modules/`, `templates/`, `checklists/`, `capstone/`, `resources/` and `videos/` hold the source course materials and HyperFrames video compositions.
 
 Photos: Unsplash (free license) and LetsVibeAI Build Night (Feb 2026).
+
+
+## Claude Mastery lesson scripts
+
+`pipeline/lessons/*.json` holds the Claude Mastery video scripts (one JSON file per lesson); `pipeline/README.md` explains how they are rendered into narrated videos. To regenerate the readable lesson pages in `src/content/courses/claude-mastery/` after editing a script, run from the repo root:
+
+```bash
+python3 pipeline/to_site.py
+```

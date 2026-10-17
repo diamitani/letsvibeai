@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Projects & Cowork — Atlas HXM Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue-100:#DAE6FE;--blue-250:#82ACFC;--blue-500:#0559FA;--blue-900:#06195E;
+    --purple-100:#E6DFFB;--purple-250:#AB93F1;--purple-500:#5827E3;--purple-900:#1E046A;
+    --magenta-100:#F5E0F7;--magenta-250:#DD98E5;--magenta-500:#BA33CA;--magenta-900:#48114F;
+    --coral-100:#FFC6C5;--coral-300:#FF8F77;--coral-500:#FF595A;
+    --gold-300:#F6B942;--gold-500:#FF782C;
+    --gray-50:#F8F8F8;--gray-300:#E9E9E9;--gray-900:#160629;--white:#FFFFFF;
+    --pad-x:72px;--pad-y:52px;
+  }
+  body { font-family:'Poppins','Gelion',sans-serif; font-variant-ligatures:none; background:var(--gray-900); color:var(--gray-900); overflow:hidden; height:100vh; width:100vw; }
+  .deck { position:relative; width:100vw; height:100vh; }
+  .slide { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-start; padding:var(--pad-y) var(--pad-x); padding-bottom:68px; opacity:0; pointer-events:none; transition:opacity .4s ease; overflow-y:auto; overflow-x:hidden; }
+  .slide.active { opacity:1; pointer-events:auto; }
+  .slide.vc { justify-content:center; }
+  .bg-w { background:var(--white); } .bg-navy { background:var(--gray-900); color:var(--white); }
+  .bg-blue { background:var(--blue-900); color:var(--white); } .bg-purple { background:var(--purple-900); color:var(--white); }
+  .bg-magenta { background:var(--magenta-900); color:var(--white); }
+  .bg-gb { background:linear-gradient(135deg,var(--blue-900),var(--purple-900)); color:var(--white); }
+  .bg-gp { background:linear-gradient(135deg,var(--purple-900),var(--magenta-900)); color:var(--white); }
+  .bg-light { background:var(--gray-50); }
+  h1 { font-size:clamp(1.6rem,3.5vw,2.6rem); font-weight:700; line-height:1.15; margin-bottom:12px; }
+  h2 { font-size:clamp(1.2rem,2.6vw,1.9rem); font-weight:700; line-height:1.2; margin-bottom:10px; }
+  h3 { font-size:clamp(.95rem,1.6vw,1.2rem); font-weight:600; line-height:1.3; margin-bottom:8px; }
+  p, li { font-size:clamp(.8rem,1.15vw,.98rem); line-height:1.55; }
+  .sub { font-size:clamp(.88rem,1.3vw,1.1rem); opacity:.8; margin-bottom:16px; }
+  .sm { font-size:.78rem; opacity:.65; }
+  code { background:rgba(0,0,0,.06); padding:2px 6px; border-radius:4px; font-size:.88em; }
+  .bg-navy code,.bg-blue code,.bg-purple code,.bg-gb code,.bg-gp code { background:rgba(255,255,255,.12); }
+  .tag { display:inline-block; padding:3px 14px; border-radius:20px; font-size:.75rem; font-weight:600; margin-bottom:10px; }
+  .tag-b { background:var(--blue-500); color:white; } .tag-p { background:var(--purple-500); color:white; }
+  .tag-m { background:var(--magenta-500); color:white; } .tag-g { background:rgba(255,255,255,.12); color:white; }
+  .tag-c { background:var(--coral-500); color:white; }
+  .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .cols-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .cols-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:16px; }
+  .card { background:var(--white); border-radius:10px; padding:20px; box-shadow:0 2px 10px rgba(22,6,41,.06); }
+  .card-dk { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:20px; }
+  .card h3,.card p { color:var(--gray-900); }
+  ul { list-style:none; padding:0; } ul li { padding:3px 0 3px 20px; position:relative; }
+  ul li::before { content:''; position:absolute; left:0; top:10px; width:7px; height:7px; border-radius:50%; background:var(--blue-500); }
+  .bg-navy ul li::before,.bg-blue ul li::before,.bg-purple ul li::before,.bg-gb ul li::before,.bg-gp ul li::before { background:var(--blue-250); }
+  ol { padding-left:22px; } ol li { padding:3px 0; } ol li::before { display:none; } ol li::marker { color:var(--blue-500); font-weight:700; }
+  .num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--blue-500); color:white; font-weight:700; font-size:.9rem; margin-bottom:8px; }
+  .num.p { background:var(--purple-500); } .num.m { background:var(--magenta-500); } .num.c { background:var(--coral-500); }
+  .accent { width:50px; height:3px; border-radius:2px; margin-bottom:14px; }
+  .accent-b { background:var(--blue-500); } .accent-p { background:var(--purple-500); }
+  .hl { border-left:3px solid var(--blue-500); background:var(--blue-100); padding:14px 18px; border-radius:0 8px 8px 0; margin:10px 0; }
+  .hl.p { border-left-color:var(--purple-500); background:var(--purple-100); }
+  .hl.m { border-left-color:var(--magenta-500); background:var(--magenta-100); }
+  .hl.dk { border-left-color:var(--blue-250); background:rgba(255,255,255,.06); }
+  .codeblock { background:var(--gray-900); color:var(--gray-50); border-radius:8px; padding:16px 18px; font-family:'Courier New',monospace; font-size:.78rem; line-height:1.6; overflow-x:auto; white-space:pre-wrap; }
+  table { width:100%; border-collapse:collapse; font-size:clamp(.72rem,1vw,.88rem); margin-top:6px; }
+  th { text-align:left; padding:8px 12px; font-weight:600; border-bottom:2px solid var(--blue-500); }
+  td { padding:7px 12px; border-bottom:1px solid var(--gray-300); vertical-align:top; }
+  .bg-navy th { border-bottom-color:var(--blue-250); } .bg-navy td { border-bottom-color:rgba(255,255,255,.1); }
+  .ct { width:100%; } .ct th { background:var(--blue-500); color:white; padding:10px 14px; }
+  .ct th:first-child { border-radius:6px 0 0 0; } .ct th:last-child { border-radius:0 6px 0 0; }
+  .ct tr:nth-child(even) td { background:var(--blue-100); }
+  .tagline { position:absolute; top:18px; left:24px; font-size:.68rem; opacity:.55; z-index:10; }
+  .dots { display:flex; gap:6px; margin-bottom:12px; }
+  .dots span { width:12px; height:12px; border-radius:50%; }
+  .dots .d1 { background:var(--blue-500); } .dots .d2 { background:var(--purple-500); } .dots .d3 { background:var(--magenta-500); }
+  .nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:8px 20px; background:rgba(22,6,41,.94); backdrop-filter:blur(8px); z-index:100; color:white; gap:10px; }
+  .nav button { background:var(--blue-500); color:white; border:none; padding:7px 20px; border-radius:8px; font-family:inherit; font-size:.82rem; font-weight:600; cursor:pointer; }
+  .nav button:hover { background:var(--purple-500); } .nav button:disabled { opacity:.3; cursor:default; background:var(--blue-500); }
+  .progress { display:flex; gap:4px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .progress .dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .3s; cursor:pointer; }
+  .progress .dot.active { background:var(--blue-500); transform:scale(1.4); } .progress .dot:hover { background:var(--blue-250); }
+  .counter { font-size:.76rem; opacity:.6; min-width:55px; text-align:center; }
+  @media (max-width:1100px) { :root { --pad-x:44px; --pad-y:40px; } .cols-4 { grid-template-columns:1fr 1fr; } }
+  @media (max-width:768px) { :root { --pad-x:18px; --pad-y:24px; } .cols-2,.cols-3,.cols-4 { grid-template-columns:1fr; gap:14px; } .card,.card-dk { padding:16px; } }
+  @media (max-width:480px) { h1 { font-size:1.4rem; } .progress { display:none; } }
+  .slide::-webkit-scrollbar { width:5px; } .slide::-webkit-scrollbar-thumb { background:rgba(0,0,0,.12); border-radius:3px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 1 — Title ═══ -->
+<div class="slide bg-gp vc active" data-slide="0">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:20px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <span class="tag tag-p" style="font-size:.85rem;padding:5px 18px;">Atlas HXM Training Series</span>
+    <h1 style="margin-top:10px;">Mastering Projects & Cowork</h1>
+    <p class="sub" style="max-width:640px;">Your workspace, your rules. Learn how to set up Projects, configure instructions, build memory, and harness Cowork for autonomous multi-step work.</p>
+    <p class="sm" style="margin-top:16px;">Part 2 of the Claude Training Series &nbsp;|&nbsp; ~15 minutes &nbsp;|&nbsp; March 2026</p>
+    <p style="font-size:.88rem;font-style:italic;opacity:.45;margin-top:12px;">For People, By People</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 — Chat vs Cowork vs Code ═══ -->
+<div class="slide bg-w" data-slide="1">
+  <div class="tagline">For People, By People</div>
+  <div class="accent accent-b"></div>
+  <h2>Three Modes — Chat, Cowork, Code</h2>
+  <p class="sub" style="color:var(--gray-900);">Claude's Desktop App has three distinct modes. Know when to use each.</p>
+  <div style="overflow-x:auto;">
+    <table class="ct">
+      <thead>
+        <tr><th style="width:14%;">Feature</th><th style="width:28%;">Chat</th><th style="width:30%;">Cowork</th><th style="width:28%;">Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>What it does</strong></td><td>Responds to prompts one at a time — Q&A, brainstorming, drafting</td><td>Executes multi-step tasks autonomously on your files & apps</td><td>CLI tool for developers — agentic coding in the terminal</td></tr>
+        <tr><td><strong>File access</strong></td><td>Upload files to conversation only</td><td>Direct access to a local folder on your computer</td><td>Full codebase access via terminal</td></tr>
+        <tr><td><strong>Skills & Memory</strong></td><td>Skills active, no persistent memory</td><td>Skills active, project memory persists across sessions</td><td>Skills + CLAUDE.md + git context</td></tr>
+        <tr><td><strong>Scheduled tasks</strong></td><td>No</td><td>Yes — runs tasks on a recurring schedule</td><td>Via cron/hooks</td></tr>
+        <tr><td><strong>Best for</strong></td><td>Quick questions, edits, brainstorms, one-off drafts</td><td>Reports, file org, research, presentations, data work, automations</td><td>Software development, debugging, code review</td></tr>
+        <tr><td><strong>Who at Atlas</strong></td><td>Everyone — daily driver</td><td>Marketing, Sales, RevOps, Ops, Enablement</td><td>Engineering, DevOps, technical Ops</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="hl" style="margin-top:14px;">
+    <p><strong>Rule of thumb:</strong> Use <strong>Chat</strong> for simple back-and-forth. Switch to <strong>Cowork</strong> when you need Claude to <em>do the work</em> — create files, process data, execute multi-step workflows — and come back with finished output.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — What is Cowork ═══ -->
+<div class="slide bg-navy" data-slide="2">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Deep Dive</span>
+  <h2>Cowork — Your Autonomous Work Partner</h2>
+  <p class="sub">Cowork isn't just a chat with file access. It's Claude working independently on complex tasks while you do other things.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3 style="color:var(--blue-250);">Give It a Task</h3>
+      <p>Describe what you need — a report, a presentation, a data analysis, a batch of emails. Be specific about format, audience, and requirements.</p>
+      <p style="margin-top:8px;font-size:.82rem;color:var(--blue-250);">"Create a 10-slide deck for our Q2 kickoff using the Atlas PPT template. Audience: AEs and SDRs."</p>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3 style="color:var(--purple-250);">Claude Works Autonomously</h3>
+      <p>Claude reads your project files, activates relevant skills, executes multi-step workflows, creates files, and validates output — without needing you to guide each step.</p>
+      <p style="margin-top:8px;font-size:.82rem;color:var(--purple-250);">You can close the window and come back later. Cowork keeps working.</p>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3 style="color:var(--magenta-250);">Review & Iterate</h3>
+      <p>Claude delivers finished output saved to your project folder. Review it, give feedback ("make the intro more punchy"), and Claude refines — building on what it already did.</p>
+      <p style="margin-top:8px;font-size:.82rem;color:var(--magenta-250);">Iterate the 20% — don't restart from scratch.</p>
+    </div>
+  </div>
+  <div class="hl dk" style="margin-top:14px;">
+    <p><strong>Key difference from Chat:</strong> In Chat, Claude responds to each message. In Cowork, Claude <em>plans and executes</em> — reading files, running code, creating documents, and making decisions along the way. It's the difference between answering questions and doing the work.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — Setup 5 Steps ═══ -->
+<div class="slide bg-purple" data-slide="3">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Setup Guide</span>
+  <h2>Getting Started — 5 Steps</h2>
+  <p class="sub">Set this up once, and every future conversation starts smarter.</p>
+  <div class="cols-3" style="margin-top:10px;">
+    <div class="card-dk">
+      <div class="num">1</div>
+      <h3>Install Desktop App</h3>
+      <p>Download from <strong>claude.com/download</strong>. Log in with your Pro, Max, or Team account. You'll see Chat and Cowork tabs at the top.</p>
+    </div>
+    <div class="card-dk">
+      <div class="num p">2</div>
+      <h3>Set Global Instructions</h3>
+      <p><strong>Settings → Cowork → Edit</strong> next to "Global Instructions." Include your role, team context, and output preferences. These persist across every conversation.</p>
+    </div>
+    <div class="card-dk">
+      <div class="num m">3</div>
+      <h3>Create Your First Project</h3>
+      <p>Sidebar → <strong>Projects → "+"</strong>. Pick a local folder — this is where Claude reads from and saves work. Add project-specific instructions.</p>
+    </div>
+  </div>
+  <div class="cols-2" style="margin-top:14px;">
+    <div class="card-dk">
+      <div class="num">4</div>
+      <h3>Connect Your Tools</h3>
+      <p><strong>Settings → Connectors.</strong> Connect Google Calendar, Slack, Asana, Outlook, SharePoint. Claude can then read emails, pull tasks, and work across apps directly.</p>
+    </div>
+    <div class="card-dk">
+      <div class="num p">5</div>
+      <h3>Add Skills & Plugins</h3>
+      <p>Install the <strong>Atlas brand skill suite</strong> (20+ skills). Upload the plugin ZIP via Settings → Skills. See Part 1 (Skills) for details.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — Projects Deep Dive ═══ -->
+<div class="slide bg-w" data-slide="4">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Projects</span>
+  <h2>Projects — Your Dedicated Workspace</h2>
+  <p class="sub" style="color:var(--gray-900);">Projects are the organizational backbone of Cowork. Each project is a dedicated context with its own folder, instructions, memory, and tasks.</p>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <h3>What Lives Inside a Project</h3>
+      <ul>
+        <li><strong>Working folder</strong> — a local directory Claude reads from and saves to</li>
+        <li><strong>Project instructions</strong> — custom rules specific to this project</li>
+        <li><strong>Memory</strong> — Claude builds knowledge over time. Preferences, decisions, context persist across conversations</li>
+        <li><strong>Scheduled tasks</strong> — recurring automations (weekly reports, daily summaries)</li>
+        <li><strong>Conversation history</strong> — past conversations stay scoped to the project</li>
+        <li><strong>Skills</strong> — all installed skills are available in every project</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Project Setup Best Practices</h3>
+      <div class="hl">
+        <p><strong>One project per workstream.</strong> Don't dump everything into one project. Create separate ones for "Q1 Campaign", "Sales Enablement Content", "RevOps Reporting", etc.</p>
+      </div>
+      <div class="hl p">
+        <p><strong>Add context files to the folder.</strong> Drop brand guidelines, ICPs, past examples, messaging docs, templates — anything Claude should reference. More context = better output.</p>
+      </div>
+      <div class="hl m">
+        <p><strong>Write clear project instructions.</strong> Tell Claude who the audience is, what standards to follow, what format outputs should take, and what to avoid.</p>
+      </div>
+      <div class="hl" style="border-left-color:var(--gold-300);background:rgba(246,185,66,.1);">
+        <p><strong>Keep it organized.</strong> Use subfolders — <code>/drafts</code>, <code>/final</code>, <code>/data</code>. Claude respects your folder structure.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — Instructions Layers ═══ -->
+<div class="slide bg-blue" data-slide="5">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Instructions</span>
+  <h2>Three Layers of Instructions</h2>
+  <p class="sub">Each layer adds context. Together they make Claude deeply knowledgeable about your work.</p>
+  <div class="cols-3" style="margin-top:12px;">
+    <div class="card-dk" style="border-top:3px solid var(--blue-500);">
+      <div class="num">1</div>
+      <h3 style="color:var(--blue-250);">Global Instructions</h3>
+      <p><strong>Settings → Cowork → Global Instructions</strong></p>
+      <p style="margin-top:6px;">Apply to <em>every</em> conversation and project. Use for:</p>
+      <ul>
+        <li>Your name, role, and team</li>
+        <li>Communication style preferences</li>
+        <li>Default output formats</li>
+        <li>Tools and platforms you use</li>
+      </ul>
+      <div style="background:rgba(0,0,0,.25);border-radius:6px;padding:10px 12px;margin-top:10px;font-size:.72rem;color:var(--blue-250);line-height:1.5;">
+        "I'm a GTM Manager at Atlas HXM.<br>I work across marketing, sales, and<br>RevOps. Use Atlas brand voice.<br>Save outputs as .docx or .pptx."
+      </div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--purple-500);">
+      <div class="num p">2</div>
+      <h3 style="color:var(--purple-250);">Project Instructions</h3>
+      <p><strong>Per project → Edit instructions</strong></p>
+      <p style="margin-top:6px;">Specific to one project. Use for:</p>
+      <ul>
+        <li>Target audience for this workstream</li>
+        <li>Specific templates or formats</li>
+        <li>Key stakeholders and approvers</li>
+        <li>What to avoid in this context</li>
+      </ul>
+      <div style="background:rgba(0,0,0,.25);border-radius:6px;padding:10px 12px;margin-top:10px;font-size:.72rem;color:var(--purple-250);line-height:1.5;">
+        "This project is for Q2 outbound.<br>Audience: HR Directors at mid-market.<br>Use atlas-email + atlas-country skills.<br>Always output as .docx sequences."
+      </div>
+    </div>
+    <div class="card-dk" style="border-top:3px solid var(--magenta-500);">
+      <div class="num m">3</div>
+      <h3 style="color:var(--magenta-250);">Skills (Always Active)</h3>
+      <p><strong>Auto-loaded when relevant</strong></p>
+      <p style="margin-top:6px;">Skills add specialized domain knowledge:</p>
+      <ul>
+        <li>Brand voice and visual guidelines</li>
+        <li>Document formatting rules</li>
+        <li>Email templates and sequences</li>
+        <li>Country compliance data</li>
+      </ul>
+      <div style="background:rgba(0,0,0,.25);border-radius:6px;padding:10px 12px;margin-top:10px;font-size:.72rem;color:var(--magenta-250);line-height:1.5;">
+        Skills load automatically — no need<br>to mention them. "Write a cold email<br>about Germany" auto-loads atlas-email<br>+ brand-guidelines + atlas-country.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — Memory ═══ -->
+<div class="slide bg-navy" data-slide="6">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Memory</span>
+  <h2>Memory — Claude Gets Smarter Over Time</h2>
+  <p class="sub">Claude automatically saves patterns, preferences, and decisions. No manual setup required.</p>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3 style="color:var(--blue-250);">Four Types of Memory</h3>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--blue-500);">
+        <h3 style="color:var(--blue-250);font-size:.92rem;">User Memories</h3>
+        <p>Your role, expertise, how you like to work. Claude tailors responses based on who you are.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--purple-500);">
+        <h3 style="color:var(--purple-250);font-size:.92rem;">Feedback Memories</h3>
+        <p>Corrections and confirmed approaches. "Never use green" or "yes, the single PR was right" — Claude remembers both.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:10px;border-left:3px solid var(--magenta-500);">
+        <h3 style="color:var(--magenta-250);font-size:.92rem;">Project Memories</h3>
+        <p>Deadlines, stakeholders, decisions. "Q2 campaign launches April 15" — Claude factors this in automatically.</p>
+      </div>
+      <div class="card-dk" style="border-left:3px solid var(--gold-300);">
+        <h3 style="color:var(--gold-300);font-size:.92rem;">Reference Memories</h3>
+        <p>Where to find external info. "Pipeline bugs are tracked in Linear project INGEST" — Claude knows where to look.</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:var(--magenta-250);">How to Use Memory</h3>
+      <div class="card-dk" style="margin-bottom:10px;">
+        <h3 style="color:white;font-size:.92rem;">Teach Claude explicitly</h3>
+        <p>"Remember that our Q2 campaign launches April 15"</p>
+        <p>"Remember that I prefer bullet points over paragraphs"</p>
+        <p>"Forget the old positioning doc — we updated it"</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:10px;">
+        <h3 style="color:white;font-size:.92rem;">Let Claude learn naturally</h3>
+        <p>When you say "that was perfect" or "never do that again", Claude saves it. Feedback compounds — your 50th conversation is dramatically better than your 1st.</p>
+      </div>
+      <div class="hl dk">
+        <p><strong>Memory persists across conversations</strong> within a project. Start a new conversation next week, and Claude still remembers your preferences, past decisions, and team context.</p>
+      </div>
+      <div class="hl dk" style="border-left-color:var(--coral-300);">
+        <p><strong>Memory is per-project.</strong> Different projects can have different memories. Your "Q1 Campaign" memory doesn't bleed into "Sales Enablement."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — Connectors ═══ -->
+<div class="slide bg-light" data-slide="7">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Connectors</span>
+  <h2>Connectors — Claude Across Your Tools</h2>
+  <p class="sub" style="color:var(--gray-900);">Connect via Settings → Connectors. Once connected, Claude can read, search, and act across your apps.</p>
+  <div class="cols-4" style="margin-top:12px;">
+    <div class="card" style="border-top:3px solid var(--blue-500);">
+      <h3 style="font-size:.92rem;">Communication</h3>
+      <ul>
+        <li>Slack</li>
+        <li>Microsoft Teams</li>
+        <li>Gmail</li>
+        <li>Outlook</li>
+      </ul>
+      <p style="font-size:.78rem;margin-top:8px;color:var(--blue-500);">Read messages, draft replies, summarize threads</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--purple-500);">
+      <h3 style="font-size:.92rem;">Productivity</h3>
+      <ul>
+        <li>Google Calendar</li>
+        <li>Asana</li>
+        <li>Linear</li>
+        <li>Jira</li>
+      </ul>
+      <p style="font-size:.78rem;margin-top:8px;color:var(--purple-500);">Check schedule, create tasks, track projects</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--magenta-500);">
+      <h3 style="font-size:.92rem;">Files & Storage</h3>
+      <ul>
+        <li>SharePoint</li>
+        <li>OneDrive</li>
+        <li>Google Drive</li>
+        <li>Notion</li>
+      </ul>
+      <p style="font-size:.78rem;margin-top:8px;color:var(--magenta-500);">Search docs, pull data, sync files</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--coral-500);">
+      <h3 style="font-size:.92rem;">CRM & Sales</h3>
+      <ul>
+        <li>Salesforce</li>
+        <li>HubSpot</li>
+        <li>LinkedIn (via MCP)</li>
+        <li>Apollo (via MCP)</li>
+      </ul>
+      <p style="font-size:.78rem;margin-top:8px;color:var(--coral-500);">Pull contacts, update records, enrich data</p>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:14px;">
+    <p><strong>Power move:</strong> Connect Calendar + Slack + your project folder. Ask Claude "prep me for my 2pm meeting" — it checks your calendar, reads the prospect's recent Slack messages, and generates a 1-page brief. All automatic.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — Scheduled Tasks ═══ -->
+<div class="slide bg-gp" data-slide="8">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Automation</span>
+  <h2>Scheduled Tasks — Set It and Forget It</h2>
+  <p class="sub">One of Cowork's most powerful features. Claude runs tasks on a schedule — no manual prompting needed.</p>
+  <div class="cols-3" style="margin-top:10px;">
+    <div class="card-dk">
+      <h3>How to Set Up</h3>
+      <p>In any Cowork conversation, ask Claude to create a scheduled task. You can also manage schedules in project settings.</p>
+      <div style="background:rgba(0,0,0,.25);border-radius:6px;padding:10px 12px;margin-top:10px;font-size:.78rem;color:var(--purple-250);line-height:1.5;">
+        "Schedule a weekly competitive<br>intelligence brief every Monday at<br>8am. Save as .docx in this folder."
+      </div>
+    </div>
+    <div class="card-dk">
+      <h3>Marketing Ideas</h3>
+      <ul>
+        <li>Weekly competitive landscape summary</li>
+        <li>Daily content calendar with draft ideas</li>
+        <li>Monthly campaign performance rollup</li>
+        <li>Bi-weekly SEO keyword tracking</li>
+      </ul>
+    </div>
+    <div class="card-dk">
+      <h3>Sales & RevOps Ideas</h3>
+      <ul>
+        <li>Daily pipeline health snapshot</li>
+        <li>Weekly stale-deal alerts</li>
+        <li>Monthly win/loss analysis</li>
+        <li>Quarterly territory planning refresh</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-dk" style="margin-top:14px;text-align:center;">
+    <p><strong>Note:</strong> Cowork must be running (desktop app open) at the scheduled time. If missed, it runs at the next available time.</p>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — Project Templates ═══ -->
+<div class="slide bg-w" data-slide="9">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-p">Templates</span>
+  <h2>Recommended Project Templates by Team</h2>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <div class="card" style="margin-bottom:12px;border-left:4px solid var(--blue-500);">
+        <h3 style="color:var(--blue-500);">Marketing</h3>
+        <p><strong>Folder:</strong> <code>~/Marketing/Q2-Campaign/</code></p>
+        <p><strong>Context files:</strong> Brand guidelines PDF, ICP doc, past campaign results, competitor analysis</p>
+        <p><strong>Instructions:</strong> "Output all content as .docx. Use Atlas brand voice. Target: HR Directors at 500-5000 employee companies expanding internationally."</p>
+        <p><strong>Scheduled:</strong> Weekly competitive brief (Mon 8am), daily content ideas (7am)</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--purple-500);">
+        <h3 style="color:var(--purple-500);">Sales Enablement</h3>
+        <p><strong>Folder:</strong> <code>~/Sales/Enablement-Content/</code></p>
+        <p><strong>Context files:</strong> Battlecards, objection handling doc, pricing sheet, win/loss reports</p>
+        <p><strong>Instructions:</strong> "Create sales-ready assets. Always include competitor comparison. Output as .pptx for decks, .docx for one-pagers."</p>
+        <p><strong>Scheduled:</strong> Weekly pipeline summary (Fri 4pm)</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px;border-left:4px solid var(--magenta-500);">
+        <h3 style="color:var(--magenta-500);">RevOps</h3>
+        <p><strong>Folder:</strong> <code>~/RevOps/Reporting/</code></p>
+        <p><strong>Context files:</strong> CRM export templates, funnel definitions, territory maps, KPI targets</p>
+        <p><strong>Instructions:</strong> "Use data-driven analysis. Always include YoY comparisons. Output as .xlsx for data, .pdf for reports."</p>
+        <p><strong>Scheduled:</strong> Daily pipeline snapshot (8am), monthly forecast (1st of month)</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--coral-500);">
+        <h3 style="color:var(--coral-500);">Operations</h3>
+        <p><strong>Folder:</strong> <code>~/Ops/SOPs-and-Training/</code></p>
+        <p><strong>Context files:</strong> Existing SOPs, org chart, tool documentation, onboarding checklists</p>
+        <p><strong>Instructions:</strong> "Write for non-technical readers. Use step-by-step format with screenshots where relevant. Output as .docx."</p>
+        <p><strong>Scheduled:</strong> Weekly team status rollup (Mon 9am)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — Global Instructions Template ═══ -->
+<div class="slide bg-navy" data-slide="10">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Template</span>
+  <h2>Global Instructions — Copy & Customize</h2>
+  <p class="sub">Paste this into Settings → Cowork → Global Instructions. Edit the bracketed sections for your role.</p>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <div class="codeblock" style="font-size:.75rem;"><span style="color:var(--blue-250);"># About Me</span>
+I'm [Your Name], [Your Role] at Atlas HXM.
+I work across [your teams/functions].
+Based in [location]. Started [date].
+
+<span style="color:var(--purple-250);"># Communication Style</span>
+- Be concise and direct — I value speed
+- Use bullet points over long paragraphs
+- Flag decisions that need my input vs.
+  decisions you can make autonomously
+- Don't over-explain obvious things
+
+<span style="color:var(--magenta-250);"># Output Preferences</span>
+- Save documents as .docx or .pptx
+- Use Atlas brand voice (atlas-brand-guidelines)
+- Gelion font preferred, Poppins as fallback
+- Never use green in branded materials
+- Always proofread before saving final output
+
+<span style="color:var(--coral-300);"># Tools & Context</span>
+- CRM: [HubSpot/Salesforce]
+- Sequencing: [Outreach/Apollo/Salesloft]
+- Internal comms: [Slack/Teams]
+- Project mgmt: [Asana/Linear/Jira]</div>
+    </div>
+    <div>
+      <h3 style="color:var(--blue-250);">Why This Matters</h3>
+      <div class="card-dk" style="margin-bottom:10px;">
+        <p>Without global instructions, every conversation starts from zero. Claude doesn't know your role, preferences, or team context.</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:10px;">
+        <p><strong>With global instructions:</strong> Claude already knows you're a GTM Manager who wants .docx outputs in Atlas brand voice. Every response is tailored from the start.</p>
+      </div>
+      <h3 style="color:var(--purple-250);margin-top:16px;">Dos & Don'ts</h3>
+      <div class="card-dk" style="margin-bottom:8px;border-left:3px solid var(--blue-500);">
+        <p style="font-size:.85rem;">✅ Include your role and team</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;border-left:3px solid var(--blue-500);">
+        <p style="font-size:.85rem;">✅ Specify output format preferences</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;border-left:3px solid var(--blue-500);">
+        <p style="font-size:.85rem;">✅ Mention tools your team uses</p>
+      </div>
+      <div class="card-dk" style="margin-bottom:8px;border-left:3px solid var(--coral-500);">
+        <p style="font-size:.85rem;">❌ Don't include sensitive data (passwords, API keys)</p>
+      </div>
+      <div class="card-dk" style="border-left:3px solid var(--coral-500);">
+        <p style="font-size:.85rem;">❌ Don't make it too long — focus on what changes behavior</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12 — Real Workflows ═══ -->
+<div class="slide bg-light" data-slide="11">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-m">Real Workflows</span>
+  <h2>Cowork in Action — Real Atlas Workflows</h2>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <div class="card" style="margin-bottom:12px;border-left:4px solid var(--blue-500);">
+        <h3 style="font-size:.95rem;">Weekly Competitive Brief</h3>
+        <p style="font-size:.85rem;"><strong>Prompt:</strong> "Create this week's competitive intelligence brief. Check what Deel, Remote, and Rippling announced. Save as .docx."</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>What Claude does:</strong> Searches recent announcements, compares features, drafts branded report using atlas-reports skill, saves to project folder.</p>
+        <p style="font-size:.78rem;margin-top:6px;color:var(--blue-500);"><strong>Schedule it:</strong> Runs every Monday 8am automatically.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--purple-500);">
+        <h3 style="font-size:.95rem;">Cold Email Batch for Germany</h3>
+        <p style="font-size:.85rem;"><strong>Prompt:</strong> "Write a 3-email outbound sequence targeting HR Directors in Germany. Focus on compliance risks of expanding without an EOR."</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>Skills activated:</strong> atlas-email + atlas-brand-guidelines + atlas-country (Germany compliance data)</p>
+        <p style="font-size:.78rem;margin-top:6px;color:var(--purple-500);"><strong>Result:</strong> 3 on-brand emails with Germany-specific compliance hooks.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px;border-left:4px solid var(--magenta-500);">
+        <h3 style="font-size:.95rem;">Sales Kickoff Deck</h3>
+        <p style="font-size:.85rem;"><strong>Prompt:</strong> "Create a 12-slide .pptx for our Q2 sales kickoff. Cover new messaging, updated ICP, competitive positioning, and Q1 wins."</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>Skills activated:</strong> atlas-presentations + atlas-brand-guidelines</p>
+        <p style="font-size:.78rem;margin-top:6px;color:var(--magenta-500);"><strong>Result:</strong> Branded .pptx using Atlas template, saved to project folder.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold-300);">
+        <h3 style="font-size:.95rem;">Meeting Prep Brief</h3>
+        <p style="font-size:.85rem;"><strong>Prompt:</strong> "Prep me for my 2pm meeting with [Prospect]. Pull what we know from the project folder and create a 1-page brief."</p>
+        <p style="font-size:.85rem;margin-top:6px;"><strong>What Claude does:</strong> Reads project files, checks context, generates company overview + talking points + questions to ask.</p>
+        <p style="font-size:.78rem;margin-top:6px;color:var(--gold-300);"><strong>With Calendar connector:</strong> Auto-identifies the meeting and attendees.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13 — Prompting CRAFT ═══ -->
+<div class="slide bg-w" data-slide="12">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Prompting</span>
+  <h2>The CRAFT Framework for Better Prompts</h2>
+  <p class="sub" style="color:var(--gray-900);">The quality of output directly reflects the quality of your input.</p>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <div class="hl" style="margin-bottom:8px;"><p><strong>C</strong>ontext — Who you are, what project, who the audience is</p></div>
+      <div class="hl p" style="margin-bottom:8px;"><p><strong>R</strong>ole — Tell Claude what role to play: "You are an Atlas content strategist"</p></div>
+      <div class="hl m" style="margin-bottom:8px;"><p><strong>A</strong>ction — What specifically you want done: "Write a 300-word blog intro"</p></div>
+      <div class="hl" style="margin-bottom:8px;"><p><strong>F</strong>ormat — How you want the output: "As a .docx with H2 headers"</p></div>
+      <div class="hl p"><p><strong>T</strong>one — Specify the voice: "Authoritative but not formal, per Atlas brand"</p></div>
+    </div>
+    <div>
+      <h3>Weak vs. Strong</h3>
+      <div style="background:var(--coral-100);border-left:3px solid var(--coral-500);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;">
+        <p style="font-size:.82rem;color:var(--coral-500);font-weight:600;">❌ Weak</p>
+        <p style="font-size:.82rem;">"Write a blog post about EOR"</p>
+        <p style="font-size:.82rem;">"Make a presentation"</p>
+      </div>
+      <div style="background:rgba(40,167,69,.08);border-left:3px solid #28A745;padding:12px 16px;border-radius:0 8px 8px 0;">
+        <p style="font-size:.82rem;color:#28A745;font-weight:600;">✅ Strong</p>
+        <p style="font-size:.82rem;">"Write a 600-word blog post targeting HR Directors at mid-market companies considering their first international hire. Focus on top 3 compliance risks of hiring in Germany. Use Atlas brand voice. Save as .docx."</p>
+        <p style="font-size:.82rem;margin-top:8px;">"Create a 10-slide .pptx deck for our Q2 sales kickoff. Audience: AEs and SDRs. Cover new messaging, updated ICP, competitive positioning. Use the Atlas PPT template."</p>
+      </div>
+      <div class="hl" style="margin-top:12px;">
+        <p><strong>In Cowork, you can be even more specific</strong> because Claude has your project context, files, and memory. "Use the data in /data/q1-results.xlsx" works.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 14 — Security ═══ -->
+<div class="slide bg-navy" data-slide="13">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-c">Important</span>
+  <h2>Security, Compliance & Data Handling</h2>
+  <p class="sub">Claude is powerful but requires responsible use — especially at a company handling global HR and compliance data.</p>
+  <div class="cols-2" style="margin-top:12px;">
+    <div>
+      <h3 style="color:var(--coral-300);">What NOT to Share with Claude</h3>
+      <ul>
+        <li><strong>PII / employee data</strong> — SSN, passport, salary, medical info</li>
+        <li><strong>Client contracts & financials</strong> — unless explicitly approved by Legal</li>
+        <li><strong>Credentials & passwords</strong> — API keys, login credentials, tokens</li>
+        <li><strong>Confidential strategy docs</strong> — board materials, M&A info, unreleased financials</li>
+      </ul>
+      <div class="hl dk" style="margin-top:12px;border-left-color:var(--coral-300);">
+        <p><strong>Rule of thumb:</strong> If you wouldn't email it to an external consultant, don't share it with Claude.</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="color:white;">Best Practices</h3>
+      <ul>
+        <li><strong>Review before sharing externally</strong> — always check output for accuracy and data exposure</li>
+        <li><strong>Use Team/Enterprise plans</strong> for admin controls, SSO, and data governance</li>
+        <li><strong>Don't publish artifacts</strong> with internal metrics, client names, or strategic data</li>
+        <li><strong>Check connector permissions</strong> — understand what data Claude can access</li>
+        <li><strong>Report concerns</strong> to your manager or IT</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 15 — 10 Best Practices ═══ -->
+<div class="slide bg-gb" data-slide="14">
+  <div class="tagline" style="color:rgba(255,255,255,.4);">For People, By People</div>
+  <span class="tag tag-g">Best Practices</span>
+  <h2>10 Rules for Getting the Most from Cowork</h2>
+  <div class="cols-2" style="margin-top:10px;">
+    <div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--blue-250);">1. Be specific, not vague.</strong> Include audience, format, word count, tone. The more detail, the better the first draft.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--blue-250);">2. Use Projects — always.</strong> Never work in a bare conversation. Projects give Claude persistent context.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--blue-250);">3. Front-load context.</strong> Drop brand docs, ICPs, examples into your project folder before asking for outputs.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--blue-250);">4. Iterate, don't restart.</strong> If the first output is 80% right, ask Claude to fix the 20%. Don't start a new conversation.</p></div>
+      <div class="card-dk"><p><strong style="color:var(--blue-250);">5. Give feedback to build memory.</strong> Say "that was perfect" or "never do X again." Claude remembers and improves.</p></div>
+    </div>
+    <div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--magenta-250);">6. Schedule recurring work.</strong> Weekly competitive briefs, daily pipeline summaries. Set once, get forever.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--magenta-250);">7. Combine skills for complex tasks.</strong> "Brand guidelines AND presentations" produces better results than either alone.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--magenta-250);">8. Use Chat for quick things.</strong> Don't burn Cowork tokens on simple questions. Chat is faster for brainstorming.</p></div>
+      <div class="card-dk" style="margin-bottom:8px;"><p><strong style="color:var(--magenta-250);">9. Review before sharing.</strong> Always check output for accuracy, brand compliance, and confidential data.</p></div>
+      <div class="card-dk"><p><strong style="color:var(--magenta-250);">10. Share your setup.</strong> Share project instructions and skills with teammates. Same setup = consistent team output.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 16 — Quick-Start Checklist ═══ -->
+<div class="slide bg-w" data-slide="15">
+  <div class="tagline">For People, By People</div>
+  <span class="tag tag-b">Action Items</span>
+  <h2>Your Quick-Start Checklist</h2>
+  <p class="sub" style="color:var(--gray-900);">Complete these steps to get fully set up with Cowork.</p>
+  <div class="cols-2" style="margin-top:8px;">
+    <div>
+      <h3>This Week</h3>
+      <div style="font-size:.9rem;line-height:2.1;">
+        <p>☐ Download the Claude Desktop App</p>
+        <p>☐ Set up Global Instructions (use the template from slide 11)</p>
+        <p>☐ Create your first Project with a working folder</p>
+        <p>☐ Add context files to the project folder</p>
+        <p>☐ Confirm 20+ Atlas skills are installed</p>
+        <p>☐ Connect at least one tool (Calendar, Slack, or Asana)</p>
+        <p>☐ Complete one real task in Cowork mode</p>
+      </div>
+    </div>
+    <div>
+      <h3>This Month</h3>
+      <div style="font-size:.9rem;line-height:2.1;">
+        <p>☐ Create 2-3 projects for different workstreams</p>
+        <p>☐ Set up at least one scheduled task</p>
+        <p>☐ Build project-specific instructions for each project</p>
+        <p>☐ Give Claude feedback 10+ times to build memory</p>
+        <p>☐ Try combining skills for a complex task</p>
+        <p>☐ Share your project setup with a teammate</p>
+      </div>
+      <div class="hl m" style="margin-top:14px;">
+        <p><strong>Need help?</strong> Ask Claude "help me set up a project for [your workstream]" — it walks you through every step.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 17 — Closing ═══ -->
+<div class="slide bg-gp vc" data-slide="16">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
+    <div class="dots" style="justify-content:center;margin-bottom:20px;">
+      <span class="d1" style="width:16px;height:16px;"></span>
+      <span class="d2" style="width:16px;height:16px;"></span>
+      <span class="d3" style="width:16px;height:16px;"></span>
+    </div>
+    <h1>Your Workspace, Your Rules</h1>
+    <p class="sub" style="max-width:640px;margin-top:6px;">Projects give Claude context. Instructions give it direction. Memory gives it growth. Connectors give it reach. Together, they turn Claude from a chatbot into a teammate who knows your work inside out.</p>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="https://claude.com/download" style="display:inline-block;background:var(--purple-500);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;">Download Claude Desktop</a>
+      <a href="https://support.claude.com/en/articles/13345190-get-started-with-cowork" style="display:inline-block;background:rgba(255,255,255,.12);color:white;padding:10px 24px;border-radius:8px;font-weight:600;text-decoration:none;font-size:.9rem;border:1px solid rgba(255,255,255,.2);">Cowork Help Center</a>
+    </div>
+    <p style="font-size:.95rem;font-style:italic;opacity:.45;margin-top:28px;">For People, By People</p>
+    <p class="sm" style="margin-top:8px;">Series: Part 1 — Skills ✅ &nbsp;|&nbsp; <strong>Part 2 — Projects & Cowork ✅</strong> &nbsp;|&nbsp; Part 3 — Artifacts (coming soon)</p>
+  </div>
+</div>
+
+</div>
+
+<nav class="nav">
+  <button id="prev" onclick="go(-1)" disabled>← Prev</button>
+  <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
+    <div class="progress" id="prog"></div>
+    <span class="counter" id="cnt">1 / 17</span>
+  </div>
+  <button id="next" onclick="go(1)">Next →</button>
+</nav>
+<script>
+const slides=document.querySelectorAll('.slide');let cur=0;const prog=document.getElementById('prog');
+slides.forEach((_,i)=>{const d=document.createElement('span');d.className='dot'+(i===0?' active':'');d.onclick=()=>show(i);prog.appendChild(d);});
+function show(n){slides[cur].classList.remove('active');prog.children[cur].classList.remove('active');cur=Math.max(0,Math.min(n,slides.length-1));slides[cur].classList.add('active');prog.children[cur].classList.add('active');document.getElementById('cnt').textContent=`${cur+1} / ${slides.length}`;document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1;}
+function go(d){show(cur+d);}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}if(e.key==='ArrowLeft')go(-1);});
+</script>
+</body>
+</html>

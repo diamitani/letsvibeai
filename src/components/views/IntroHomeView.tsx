@@ -17,6 +17,8 @@ import {
   Zap
 } from 'lucide-react';
 import { DailyVideoSpotlight } from '../DailyVideoSpotlight';
+import { FounderSection } from '../FounderSection';
+import { BlogSection } from '../BlogSection';
 import { COURSE_MODULES } from '../../data/courseData';
 
 interface IntroHomeViewProps {
@@ -268,6 +270,12 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
 
         </div>
       </section>
+
+      {/* 4B. FOUNDER AUTHORITY — WHO TEACHES THIS */}
+      <FounderSection onStartCourse={() => onStartCourse(1)} />
+
+      {/* 4C. THE DAILY VIBE — CONTENT ENGINE */}
+      <BlogSection />
 
       {/* 5. ABOUT THE INSTITUTION & PATRICK DIAMITANI */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

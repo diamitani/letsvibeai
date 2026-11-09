@@ -3,59 +3,65 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: light;
-    --token-orange: #ec4909;
-    --token-navy: #020335;
-    --token-dark: #101b24;
-    --token-white: #ffffff;
-    --token-canvas: #f7f4f2;
-    --token-muted: #4a4d4f;
-    --token-yellow: #fcd554;
-    --token-border: rgba(74, 77, 79, 0.12);
-  }
-  
-  html {
-    scroll-behavior: smooth;
-    background-color: #f7f4f2;
-  }
-
-  body {
-    background-color: #f7f4f2;
-    color: #101b24;
-    overflow-x: hidden;
-    font-family: 'Hanken Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-
-  /* Clean warm scrollbar */
-  ::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #f7f4f2;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #d8d1c7;
-    border-radius: 9999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #b5ada3;
-  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-mist text-ink font-sans antialiased; }
+  ::selection { background: #7C5CFC; color: #fff; }
+  :focus-visible { outline: 2px solid #2F80ED; outline-offset: 2px; border-radius: 6px; }
 }
 
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #capstone, #capstone * {
-    visibility: visible;
-  }
-  #capstone {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-8; }
+  .eyebrow { @apply font-mono text-[11px] font-semibold uppercase tracking-[0.18em]; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition active:scale-[.98]; }
+  .btn-primary { @apply btn bg-signal text-white hover:bg-[#2370d6] shadow-[0_8px_24px_-10px_rgba(47,128,237,.8)]; }
+  .btn-ghost-dark { @apply btn border border-white/20 text-white hover:bg-white/10; }
+  .btn-ghost { @apply btn border border-line bg-white text-ink hover:border-signal/40 hover:text-signal; }
+  .grad-text { @apply bg-gradient-to-r from-signal via-violet to-cyan bg-clip-text text-transparent; }
+  .card { @apply rounded-2xl border border-line bg-white shadow-card; }
 }
 
+/* Dark hero backdrop: signal ribbons like the course videos */
+.hero-bg {
+  background:
+    radial-gradient(60% 80% at 85% 10%, rgba(124,92,252,.28), transparent 60%),
+    radial-gradient(50% 60% at 10% 90%, rgba(32,199,217,.16), transparent 60%),
+    radial-gradient(80% 60% at 50% 0%, rgba(47,128,237,.22), transparent 70%),
+    #071B3A;
+}
+.ribbons { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.ribbons::before, .ribbons::after {
+  content: ''; position: absolute; left: -20%; right: -20%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(47,128,237,.5), rgba(124,92,252,.5), transparent);
+  box-shadow: 0 40px 0 rgba(32,199,217,.18), 0 80px 0 rgba(124,92,252,.14), 0 120px 0 rgba(47,128,237,.1);
+  transform: rotate(-8deg);
+}
+.ribbons::before { top: 38%; }
+.ribbons::after { top: 70%; transform: rotate(-4deg); opacity: .6; }
+
+/* Lesson notes typography */
+.prose-lv { @apply text-[15.5px] leading-7 text-ink/90; }
+.prose-lv h1 { @apply mt-2 mb-4 text-2xl font-bold text-ink; }
+.prose-lv h2 { @apply mt-10 mb-3 text-xl font-bold text-ink; }
+.prose-lv h3 { @apply mt-8 mb-2 text-lg font-semibold text-ink; }
+.prose-lv h4 { @apply mt-6 mb-2 font-semibold text-ink; }
+.prose-lv p { @apply my-4; }
+.prose-lv ul { @apply my-4 list-disc space-y-1.5 pl-6; }
+.prose-lv ol { @apply my-4 list-decimal space-y-1.5 pl-6; }
+.prose-lv li::marker { color: #2F80ED; }
+.prose-lv a { @apply font-medium text-signal underline decoration-signal/30 underline-offset-2 hover:decoration-signal; }
+.prose-lv strong { @apply font-semibold text-ink; }
+.prose-lv blockquote { @apply my-6 rounded-xl border-l-4 border-violet bg-violet/5 px-5 py-3 text-ink; }
+.prose-lv blockquote p { @apply my-1; }
+.prose-lv code { @apply rounded bg-navy/5 px-1.5 py-0.5 font-mono text-[13px] text-navy; }
+.prose-lv pre { @apply my-5 overflow-x-auto rounded-xl bg-navy p-4 text-[13px] leading-6 text-white/90; }
+.prose-lv pre code { @apply bg-transparent p-0 text-inherit; }
+.prose-lv hr { @apply my-8 border-line; }
+.prose-lv table { @apply my-5 block w-full overflow-x-auto text-sm; }
+.prose-lv th { @apply border-b border-line px-3 py-2 text-left font-semibold; }
+.prose-lv td { @apply border-b border-line/70 px-3 py-2 align-top; }
+.prose-lv img { @apply my-5 rounded-xl; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

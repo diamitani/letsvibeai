@@ -50,6 +50,6 @@ export function Link({ to, onClick, children, ...rest }: LinkProps) {
 
 export function useTitle(title: string) {
   useEffect(() => {
-    document.title = title ? `${title} · LetsVibeAI` : 'LetsVibeAI · Learn Claude Code & Cowork, free';
+    document.title = title ? `${title} · LetsVibeAI` : 'LetsVibeAI · The AI Skills Institution · Learn. Build. Grow.';
   }, [title]);
 }

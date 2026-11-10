@@ -1,4 +1,5 @@
-import { ArrowRight, BookOpen, CheckCircle2, Clock, PlayCircle } from 'lucide-react';
+import { ArrowRight, BookOpen, CheckCircle2, Clock, Lock, PlayCircle } from 'lucide-react';
+import { useAuth } from '../lib/auth';
 import { Link } from '../lib/router';
 import { useProgress } from '../lib/progress';
 import { Course, Lesson, courseMinutes, posterSrc } from '../content/catalog';
@@ -23,7 +24,7 @@ export function CourseCard({ course, large = false }: { course: Course; large?: 
         />
         <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${course.accent}`} />
         <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-navy/80 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-          {course.kind === 'video' ? <PlayCircle className="h-3.5 w-3.5 text-cyan" /> : <BookOpen className="h-3.5 w-3.5 text-cyan" />}
+          {course.kind === 'video' ? <PlayCircle className="h-3.5 w-3.5 text-growth" /> : <BookOpen className="h-3.5 w-3.5 text-growth" />}
           {course.kind === 'video' ? `${videos} videos` : `${course.lessons.length} lessons`}
         </span>
       </div>
@@ -57,7 +58,9 @@ export function LessonRow({
   compact?: boolean;
 }) {
   const { isDone } = useProgress(course.slug);
+  const { user, ready } = useAuth();
   const finished = isDone(lesson.slug);
+  const locked = ready && !user && !!lesson.videoId && lesson.number > 0;
   return (
     <Link
       to={`/courses/${course.slug}/${lesson.slug}`}
@@ -70,6 +73,11 @@ export function LessonRow({
         <div className={`relative shrink-0 overflow-hidden rounded-lg bg-navy ${compact ? 'h-12 w-20' : 'h-16 w-28'}`}>
           <img src={posterSrc(lesson.videoId)} alt="" loading="lazy" className="h-full w-full object-cover" />
           <span className="absolute bottom-1 right-1 rounded bg-navy/85 px-1 font-mono text-[10px] text-white">{lesson.duration}</span>
+          {locked && (
+            <span className="absolute left-1 top-1 rounded bg-navy/85 p-0.5 text-white" aria-label="Sign in to watch">
+              <Lock className="h-3 w-3" />
+            </span>
+          )}
         </div>
       ) : (
         <div className={`flex shrink-0 items-center justify-center rounded-lg bg-navy font-mono text-sm font-bold text-white ${compact ? 'h-12 w-12' : 'h-14 w-14'}`}>

@@ -91,7 +91,7 @@ const claude: Course = {
   level: 'Beginner → Intermediate',
   unit: 'Lesson',
   kind: 'video',
-  accent: 'from-signal via-violet to-cyan',
+  accent: 'from-signal via-violet to-growth',
   trailerId: 'cm-00-promo',
   poster: posterSrc('cm-01-setup-pick-harness'),
   outcomes: [
@@ -118,7 +118,7 @@ const cowork: Course = {
   level: 'Beginner',
   unit: 'Lesson',
   kind: 'video',
-  accent: 'from-cyan via-signal to-violet',
+  accent: 'from-growth via-signal to-violet',
   trailerId: 'cw-00-trailer',
   poster: posterSrc('cw-01-meet-cowork'),
   outcomes: [
@@ -134,7 +134,7 @@ const cowork: Course = {
   lessons: loadLessons('claude-cowork', (s) => (s.startsWith('00') ? 'cw-00-trailer' : `cw-${s}`)),
 };
 
-const legacyAccents = ['from-violet to-signal', 'from-growth to-cyan', 'from-signal to-cyan', 'from-violet to-cyan'];
+const legacyAccents = ['from-violet to-signal', 'from-growth to-growth', 'from-signal to-growth', 'from-violet to-growth'];
 
 const readingCourses: Course[] = legacy.map((c, i) => ({
   slug: c.slug,

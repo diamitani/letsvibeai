@@ -1,4 +1,5 @@
-import { ArrowRight, Clapperboard, Hammer, PlayCircle, Rocket, Sparkles } from 'lucide-react';
+import { ArrowRight, Clapperboard, Hammer, PlayCircle, Rocket, Sparkle, Sprout, Target, Users } from 'lucide-react';
+import { useAuth } from '../lib/auth';
 import { Link, useTitle } from '../lib/router';
 import { VideoPlayer } from '../components/VideoPlayer';
 import { CourseCard, hours } from '../components/Cards';
@@ -7,6 +8,10 @@ import { offers, site } from '../content/site';
 
 export function Home() {
   useTitle('');
+  const { user, openAuth } = useAuth();
+  const primary = user
+    ? { label: 'Continue learning', to: '/account' }
+    : null;
   const claude = getCourse('claude-code')!;
   const reading = catalog.filter((c) => c.kind === 'reading');
   const videoMinutes = videoCourses.reduce((n, c) => n + courseMinutes(c), 0);
@@ -17,37 +22,42 @@ export function Home() {
       {/* HERO */}
       <section className="hero-bg relative overflow-hidden text-white">
         <div className="ribbons" aria-hidden />
+        <div className="watermark -left-24 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 lg:block" aria-hidden />
         <div className="wrap relative grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:py-24">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80">
-              <Sparkles className="h-3.5 w-3.5 text-cyan" /> New: Claude Cowork course, 11 videos
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-white/80">
+              <img src="/brand/mark.svg" alt="" className="h-4 w-4" /> THE AI SKILLS INSTITUTION
             </p>
             <h1 className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.6rem]">
-              Stop typing. <br className="hidden sm:block" />
-              Start <span className="grad-text">directing AI.</span>
+              Real skills. <br className="hidden sm:block" />
+              <span className="grad-text">Lasting impact.</span>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/75 sm:text-lg">
-              Free, plain-English video courses on Claude Code and Claude Cowork. Two-minute lessons, a hands-on mission
-              in each one, and no coding background needed.
+              Learn to direct AI with free, plain-English video courses on Claude Code and Claude Cowork. Two-minute lessons,
+              a hands-on mission in each one, and no coding background needed.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link to="/courses/claude-code/01-setup-pick-harness" className="btn-primary !px-6 !py-3.5 text-base">
-                Start lesson 1 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/courses/claude-cowork" className="btn-ghost-dark !px-6 !py-3.5 text-base">
-                Explore Cowork
+              {primary ? (
+                <Link to={primary.to} className="btn-primary !px-6 !py-3.5 text-base">
+                  {primary.label} <ArrowRight className="h-4 w-4" />
+                </Link>
+              ) : (
+                <button type="button" onClick={() => openAuth('signup')} className="btn-primary !px-6 !py-3.5 text-base">
+                  Join free and start learning <ArrowRight className="h-4 w-4" />
+                </button>
+              )}
+              <Link to="/courses" className="btn-ghost-dark !px-6 !py-3.5 text-base">
+                Explore courses
               </Link>
             </div>
-            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
-              <li>✓ 100% free</li>
-              <li>✓ Watch on any device</li>
-              <li>✓ No sign-up to start</li>
-            </ul>
+            <p className="mt-8 text-xs font-semibold tracking-[0.32em] text-white/60">
+              LEARN <span className="text-growth">•</span> BUILD <span className="text-violet">•</span> GROW
+            </p>
           </div>
           <div>
             <VideoPlayer src={videoSrc('cm-00-promo')} poster={posterSrc('cm-00-promo')} title="Claude Code Mastery trailer" />
             <p className="mt-3 flex items-center gap-2 text-sm text-white/55">
-              <PlayCircle className="h-4 w-4 text-cyan" /> Course trailer · 1 min
+              <PlayCircle className="h-4 w-4 text-growth" /> Watch the trailer · 1 min · free
             </p>
           </div>
         </div>
@@ -69,6 +79,28 @@ export function Home() {
             </div>
           ))}
         </dl>
+      </section>
+
+      {/* BRAND PILLARS */}
+      <section className="wrap pt-16 sm:pt-20">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: Sparkle, color: 'text-signal bg-signal/10', title: 'AI-Powered Learning', body: 'Practical, hands-on training to help you use AI with confidence.' },
+            { icon: Users, color: 'text-growth bg-growth/10', title: 'Real-World Skills', body: 'From everyday tasks to career advancement.' },
+            { icon: Target, color: 'text-violet bg-violet/10', title: 'Workforce & Community Impact', body: 'Projects, workshops and programs for education, business and cities.' },
+            { icon: Sprout, color: 'text-growth bg-growth/10', title: 'Your Future, Amplified', body: 'More skills. More opportunities. A brighter tomorrow.' },
+          ].map(({ icon: Icon, color, title, body }) => (
+            <div key={title} className="flex gap-4">
+              <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${color}`}>
+                <Icon className="h-5 w-5" />
+              </span>
+              <div>
+                <h3 className="font-bold">{title}</h3>
+                <p className="mt-1 text-sm leading-6 text-muted">{body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* FLAGSHIP COURSES */}
@@ -134,7 +166,7 @@ export function Home() {
           ].map(({ icon: Icon, title, body }, i) => (
             <div key={title} className="card p-6">
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-signal to-violet text-white">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-signal via-violet to-growth text-white">
                   <Icon className="h-5 w-5" />
                 </span>
                 <span className="font-mono text-xs text-muted">Step {i + 1}</span>
@@ -150,11 +182,11 @@ export function Home() {
       <section className="hero-bg relative overflow-hidden text-white">
         <div className="ribbons" aria-hidden />
         <div className="wrap relative grid items-center gap-10 py-16 sm:py-20 md:grid-cols-[auto_1fr]">
-          <div className="mx-auto h-56 w-56 overflow-hidden rounded-full bg-gradient-to-br from-signal via-violet to-cyan p-1 sm:h-64 sm:w-64">
+          <div className="mx-auto h-56 w-56 overflow-hidden rounded-full bg-gradient-to-br from-signal via-violet to-growth p-1 sm:h-64 sm:w-64">
             <img src="/images/pat.png" alt="Patrick Diamitani" className="h-full w-full rounded-full bg-navy-800 object-cover object-top" />
           </div>
           <div className="max-w-2xl">
-            <p className="eyebrow text-cyan">Your instructor</p>
+            <p className="eyebrow text-growth">Your instructor</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Patrick Diamitani</h2>
             <p className="mt-1 text-white/60">Founder & Lead Instructor, LetsVibeAI · {site.location}</p>
             <p className="mt-5 leading-7 text-white/80">
@@ -212,11 +244,18 @@ export function Home() {
           <div className="relative">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Your first lesson takes two minutes.</h2>
             <p className="mx-auto mt-3 max-w-xl text-white/70">
-              {claude.lessons.length - 1} lessons. {hours(courseMinutes(claude))} total. Free, forever.
+              {totalVideoLessons} video lessons across Claude Code and Cowork. One free account unlocks them all.
             </p>
-            <Link to="/courses/claude-code/01-setup-pick-harness" className="btn-primary mt-8 !px-7 !py-3.5 text-base">
-              Start Claude Code Mastery <ArrowRight className="h-4 w-4" />
-            </Link>
+            {user ? (
+              <Link to="/account" className="btn-primary mt-8 !px-7 !py-3.5 text-base">
+                Continue learning <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : (
+              <button type="button" onClick={() => openAuth('signup')} className="btn-primary mt-8 !px-7 !py-3.5 text-base">
+                Create your free account <ArrowRight className="h-4 w-4" />
+              </button>
+            )}
+            <p className="mt-6 text-xs font-semibold tracking-[0.32em] text-white/50">LEARN • BUILD • GROW</p>
           </div>
         </div>
       </section>

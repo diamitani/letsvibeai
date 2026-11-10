@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle, FileText, ListVideo, ScrollText } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Circle, FileText, ListVideo, Lock, ScrollText } from 'lucide-react';
 import { Link, navigate, useTitle } from '../lib/router';
 import { useProgress } from '../lib/progress';
+import { useAuth } from '../lib/auth';
 import { renderMarkdown } from '../lib/markdown';
 import { Course, Lesson, posterSrc, transcriptSrc, videoSrc } from '../content/catalog';
 import { PlayerHandle, VideoPlayer } from '../components/VideoPlayer';
@@ -15,6 +16,9 @@ const stamp = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60))
 export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson }) {
   useTitle(`${lesson.title} · ${course.short}`);
   const { isDone, set, done } = useProgress(course.slug);
+  const { user, ready, openAuth } = useAuth();
+  // Course trailers are a free preview; every other video needs a free account.
+  const locked = !!lesson.videoId && lesson.number > 0 && !user;
   const idx = course.lessons.findIndex((l) => l.slug === lesson.slug);
   const prev = course.lessons[idx - 1];
   const next = course.lessons[idx + 1];
@@ -59,7 +63,7 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
 
   return (
     <div className="bg-mist">
-      <div className="wrap grid gap-8 py-6 sm:py-8 lg:grid-cols-[1fr_360px]">
+      <div className="wrap grid grid-cols-1 gap-8 py-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_360px]">
         <main className="min-w-0">
           <nav className="mb-4 flex flex-wrap items-center gap-1.5 text-sm text-muted" aria-label="Breadcrumb">
             <Link to="/courses" className="hover:text-signal">Courses</Link>
@@ -69,7 +73,33 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
             <span className="text-ink">{lesson.number === 0 ? 'Welcome' : `${course.unit} ${lesson.number}`}</span>
           </nav>
 
-          {lesson.videoId ? (
+          {lesson.videoId && locked ? (
+            <div className="relative overflow-hidden rounded-2xl bg-navy shadow-lift ring-1 ring-white/10">
+              <div className="relative aspect-video">
+                <img src={posterSrc(lesson.videoId)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40 blur-[2px]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-navy/30" />
+                {ready && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-5 text-center text-white">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/20 sm:h-14 sm:w-14">
+                      <Lock className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </span>
+                    <p className="mt-3 text-lg font-bold sm:mt-4 sm:text-2xl">Sign in free to watch this lesson</p>
+                    <p className="mt-1 hidden max-w-md text-sm text-white/70 sm:block">
+                      One free account unlocks every video, transcript and mission, and saves your progress.
+                    </p>
+                    <div className="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:gap-3">
+                      <button type="button" className="btn-primary" onClick={() => openAuth('signup', 'Free forever. Unlock this lesson and every other video.')}>
+                        Create free account
+                      </button>
+                      <button type="button" className="btn-ghost-dark" onClick={() => openAuth('signin')}>
+                        I have an account
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : lesson.videoId ? (
             <div className="relative">
               <VideoPlayer
                 ref={player}
@@ -86,7 +116,7 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
               {upNext !== null && next && (
                 <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-navy/90 p-6 text-center text-white">
                   <div>
-                    <p className="eyebrow text-cyan">Up next in {upNext}s</p>
+                    <p className="eyebrow text-growth">Up next in {upNext}s</p>
                     <p className="mt-2 text-xl font-bold sm:text-2xl">{next.title}</p>
                     <div className="mt-5 flex justify-center gap-3">
                       <button type="button" className="btn-primary" onClick={() => setUpNext(0)}>
@@ -136,7 +166,7 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
               <TabBtn active={tab === 'notes'} onClick={() => setTab('notes')} icon={<FileText className="h-4 w-4" />}>
                 Lesson notes
               </TabBtn>
-              {lesson.videoId && segs && segs.length > 0 && (
+              {lesson.videoId && !locked && segs && segs.length > 0 && (
                 <TabBtn active={tab === 'transcript'} onClick={() => setTab('transcript')} icon={<ScrollText className="h-4 w-4" />}>
                   Transcript
                 </TabBtn>
@@ -210,7 +240,7 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
         </main>
 
         {/* Playlist */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
           <div className="card overflow-hidden">
             <div className="border-b border-line p-4">
               <p className="flex items-center gap-2 text-sm font-bold">
@@ -221,7 +251,7 @@ export function LessonPage({ course, lesson }: { course: Course; lesson: Lesson 
                 <span>{pct}%</span>
               </div>
               <div className="mt-1.5 h-1.5 rounded-full bg-line">
-                <div className="h-full rounded-full bg-gradient-to-r from-growth to-cyan" style={{ width: `${pct}%` }} />
+                <div className="h-full rounded-full bg-gradient-to-r from-growth to-growth" style={{ width: `${pct}%` }} />
               </div>
             </div>
             <div className="max-h-[70vh] space-y-0.5 overflow-y-auto p-2">

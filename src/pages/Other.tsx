@@ -91,7 +91,7 @@ export function PageHeader({ eyebrow, title, body }: { eyebrow: string; title: s
     <section className="hero-bg relative overflow-hidden text-white">
       <div className="ribbons" aria-hidden />
       <div className="wrap relative py-14 sm:py-20">
-        <p className="eyebrow text-cyan">{eyebrow}</p>
+        <p className="eyebrow text-growth">{eyebrow}</p>
         <h1 className="mt-3 max-w-3xl text-3xl font-bold leading-tight tracking-tight sm:text-5xl">{title}</h1>
         {body && <p className="mt-4 max-w-2xl text-white/70 sm:text-lg">{body}</p>}
       </div>

@@ -1,16 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-// LetsVibeAI brand tokens (see letsvibeai-brand-guidelines.md)
+// LetsVibeAI brand tokens: official brand board (letsvibeai-brand-direction.png)
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        navy: { DEFAULT: '#071B3A', 900: '#050F24', 800: '#0A2148', 700: '#10294F' },
-        ink: '#10213F',
-        mist: '#F4F7FB',
-        signal: '#2F80ED',
-        violet: '#7C5CFC',
-        growth: '#34D399',
+        navy: { DEFAULT: '#0B1F44', 900: '#071531', 800: '#102A57', 700: '#163466' },
+        ink: '#0B1F44',
+        mist: '#F3F6FA',
+        signal: '#3B82F6',
+        violet: '#8B5CF6',
+        growth: '#10B991',
         cyan: '#20C7D9',
         line: '#E3E9F2',
         muted: '#5A6B86',

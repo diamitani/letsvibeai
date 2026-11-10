@@ -1,20 +1,22 @@
 import { Link } from '../lib/router';
-import { Logo } from './Brand';
+import { BrandStrip, Logo } from './Brand';
 import { catalog } from '../content/catalog';
 import { site } from '../content/site';
 
 export function Footer() {
   return (
-    <footer className="bg-navy text-white/70">
-      <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="relative overflow-hidden bg-navy text-white/70">
+      <BrandStrip />
+      <div className="watermark -right-16 top-16 hidden h-80 w-80 md:block" aria-hidden />
+      <div className="wrap relative grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="max-w-sm">
-          <Logo />
+          <Logo tagline />
           <p className="mt-4 text-sm leading-6">
-            The AI Skills Institution. Free, plain-English courses that take you from “I’ve never coded” to shipping real
-            work with AI.
+            <strong className="text-white">Real skills. Lasting impact.</strong> LetsVibeAI teaches people how to use AI
+            confidently in their jobs and lives, then turns learning into real projects, workshops and community outcomes.
           </p>
           <p className="mt-4 text-sm">
-            <a className="text-white hover:text-cyan" href={`mailto:${site.email}`}>
+            <a className="text-white hover:text-growth" href={`mailto:${site.email}`}>
               {site.email}
             </a>
             <span className="mx-2 text-white/30">·</span>
@@ -36,6 +38,7 @@ export function Footer() {
         <div>
           <p className="eyebrow text-white/40">LetsVibeAI</p>
           <ul className="mt-4 space-y-2.5 text-sm">
+            <li><Link to="/account" className="hover:text-white">My learning</Link></li>
             <li><Link to="/#work-with-pat" className="hover:text-white">Work with Pat</Link></li>
             <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
             {site.socials.map((s) => (
@@ -48,7 +51,7 @@ export function Footer() {
       </div>
       <div className="border-t border-white/10">
         <div className="wrap flex flex-col gap-2 py-6 text-xs text-white/40 sm:flex-row sm:justify-between">
-          <span>© {new Date().getFullYear()} LetsVibeAI. Learn AI. Build with AI. Grow with AI.</span>
+          <span>© {new Date().getFullYear()} LetsVibeAI · The AI Skills Institution. Learn. Build. Grow.</span>
           <span>Made in Chicago.</span>
         </div>
       </div>

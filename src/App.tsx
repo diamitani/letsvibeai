@@ -1,4 +1,9 @@
+import { useEffect } from 'react';
 import { RouterProvider, usePath } from './lib/router';
+import { AuthProvider, useAuth } from './lib/auth';
+import { syncProgress } from './lib/progress';
+import { AuthModal } from './components/AuthModal';
+import { Account } from './pages/Account';
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -13,6 +18,8 @@ const redirects: Record<string, string> = {
   '/claude': '/courses/claude-code',
   '/cowork': '/courses/claude-cowork',
   '/about': '/#work-with-pat',
+  '/login': '/account',
+  '/dashboard': '/account',
   '/pricing': '/#work-with-pat',
   '/contact': '/#work-with-pat',
 };
@@ -32,13 +39,25 @@ function Routes() {
     const lesson = course.lessons.find((l) => l.slug === parts[2]);
     return lesson ? <LessonPage key={lesson.slug} course={course} lesson={lesson} /> : <NotFound />;
   }
+  if (parts[0] === 'account') return <Account />;
   if (parts[0] === 'blog') return parts[1] ? <BlogPost slug={parts[1]} /> : <BlogPage />;
   return <NotFound />;
+}
+
+function ProgressSync() {
+  const { user } = useAuth();
+  useEffect(() => {
+    void syncProgress(user?.id ?? null);
+  }, [user?.id]);
+  return null;
 }
 
 export function App() {
   return (
     <RouterProvider>
+      <AuthProvider>
+      <ProgressSync />
+      <AuthModal />
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2">
         Skip to content
       </a>
@@ -49,6 +68,7 @@ export function App() {
         </div>
         <Footer />
       </div>
+      </AuthProvider>
     </RouterProvider>
   );
 }

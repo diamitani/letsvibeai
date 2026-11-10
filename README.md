@@ -11,6 +11,16 @@ Live site: [letsvibeai.com](https://www.letsvibeai.com)
 - Every lesson has its own shareable link, e.g. `letsvibeai.com/courses/claude-cowork/05-skills`, with the video, lesson notes, a clickable transcript, progress tracking and auto-play of the next lesson
 - 4 reading courses: Vibe Coding, Zero to Ship, Project Labs, GTM Automation Labs
 - Blog and "Work with Pat" offers
+- **Free accounts:** course trailers are free to watch; every other lesson video asks visitors to create a free account (name, email, password). Progress is saved to their account and follows them to any device. The "My learning" page is at `/account`.
+
+## Accounts (Supabase)
+
+Sign-in uses the Supabase project **Master** (`zuhacughnenhongixfre`).
+
+- **See who signed up:** Supabase dashboard → Authentication → Users (name is in the user's metadata as `full_name`).
+- **Lesson progress:** table `public.lv_lesson_progress` (each learner can only see their own rows).
+- **Password-reset emails** use Supabase's built-in email sender, which only sends a few emails per hour. Before you have lots of learners, add your own email sender (e.g. Resend) in Supabase → Authentication → Emails → SMTP settings, and add `https://www.letsvibeai.com/**` under Authentication → URL Configuration → Redirect URLs.
+- The lock is on the website itself. Someone technical could still find a video file's direct link, so don't put paid-only material behind it without moving videos to protected storage.
 
 ## Run it locally
 
@@ -29,7 +39,8 @@ npm run build    # production build into dist/
 | Add a lesson | Add a numbered `.md` file to the course folder. For a video lesson, also add the video (see below) |
 | Prices and contact email | `src/content/site.ts` |
 | A blog post | `src/content/blog/<post>.md` |
-| Colours and fonts | `tailwind.config.js` |
+| Colours and fonts | `tailwind.config.js` (official brand board: `letsvibeai-brand-direction.png`) |
+| Logo and app icon | `public/brand/` |
 
 ### Adding or replacing a lesson video
 

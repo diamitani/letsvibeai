@@ -8,10 +8,13 @@ import { IntroHomeView } from './components/views/IntroHomeView';
 import { CoursesView } from './components/views/CoursesView';
 import { ExtendedDirectoryView } from './components/views/ExtendedDirectoryView';
 import { DashboardView } from './components/views/DashboardView';
+import { ProjectLabsView } from './components/views/ProjectLabsView';
+import { CourseCatalog } from './components/CourseCatalog';
 import { supabase } from './lib/supabase';
+import { AppView } from './types';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'saas' | 'marketplace' | 'directory' | 'dashboard' | 'agent-platform' | 'harness-mastery' | 'skills-library' | 'theater'>('saas');
+  const [currentView, setCurrentView] = useState<AppView>('saas');
   const [selectedCourseModule, setSelectedCourseModule] = useState<number>(1);
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [completedModules, setCompletedModules] = useState<number[]>(() => {
@@ -67,17 +70,34 @@ export const App: React.FC = () => {
     );
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
   const handleSelectResult = (targetSection: string, detailId?: string | number) => {
     if (targetSection === 'courses' || targetSection === 'curriculum') {
       if (typeof detailId === 'number') {
         setSelectedCourseModule(detailId);
+        setCurrentView('theater');
+      } else {
+        setCurrentView('courses');
       }
-      setCurrentView('theater');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    if (targetSection === 'agent-platform' || targetSection === 'harness-mastery' || targetSection === 'skills-library') {
-      setCurrentView('directory');
+    if (targetSection === 'labs') {
+      setCurrentView('labs');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (targetSection === 'tools' || targetSection === 'news' || targetSection === 'portfolio' || targetSection === 'tutorials') {
+      setCurrentView(targetSection as AppView);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (targetSection === 'agent-platform' || targetSection === 'harness-mastery' || targetSection === 'skills-library' || targetSection === 'agents') {
+      setCurrentView('agents');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -111,6 +131,7 @@ export const App: React.FC = () => {
           setIsAgentOpen(true);
         }}
         onOpenAuth={() => setIsAuthOpen(true)}
+        onSignOut={handleSignOut}
         completedModulesCount={completedModules.length}
         user={user}
       />
@@ -125,14 +146,59 @@ export const App: React.FC = () => {
               setCurrentView('theater');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            onExploreDirectory={() => {
-              setCurrentView('directory');
+            onExploreDirectory={(tab) => {
+              if (tab) {
+                setCurrentView(tab as AppView);
+              } else {
+                setCurrentView('directory');
+              }
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateToCourses={() => {
+              setCurrentView('courses');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateToLabs={() => {
+              setCurrentView('labs');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
         )}
 
-        {/* VIEW 2: ORIGINAL FOUNDATIONAL COURSES (100% FREE) */}
+        {/* VIEW 2: ALL 7 FRONTIER COURSES CATALOG */}
+        {currentView === 'courses' && (
+          <div className="pt-24 pb-16 animate-in fade-in duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+              <div className="p-8 sm:p-10 rounded-3xl bg-[#071B3A] text-white shadow-xl relative overflow-hidden text-left">
+                <div className="max-w-3xl space-y-3 relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ec4909]/20 border border-[#ec4909]/30 text-[#ec4909] text-xs font-mono font-bold">
+                    <span>COMPLETE FRONTIER CURRICULUM</span>
+                  </div>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight font-sans">
+                    Master Every Frontier AI Builder.
+                  </h1>
+                  <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                    Zero-syntax visual building on Lovable and Bolt. Sovereign open-weights with Nous Hermes on Bedrock. Terminal autonomous agents with OpenAI Codex and Claude Code. Multi-agent DAG swarms with OpenClaw. 100% free open curriculum.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <CourseCatalog
+              onSelectModule={(moduleId) => {
+                setSelectedCourseModule(moduleId);
+                setCurrentView('theater');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenLabs={() => {
+                setCurrentView('labs');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </div>
+        )}
+
+        {/* VIEW 3: ORIGINAL FOUNDATIONAL COURSES THEATER (100% FREE) */}
         {currentView === 'theater' && (
           <CoursesView
             initialModuleId={selectedCourseModule}
@@ -149,8 +215,24 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 3: EXTENDED DIRECTORY & ECOSYSTEM HUB */}
-        {(currentView === 'directory' || currentView === 'marketplace') && (
+        {/* VIEW 4: PROJECT LABS & STARTER REPOS */}
+        {currentView === 'labs' && (
+          <div className="animate-in fade-in duration-300">
+            <ProjectLabsView
+              onStartCourse={(moduleId) => {
+                if (moduleId) setSelectedCourseModule(moduleId);
+                setCurrentView('theater');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onOpenAgent={() => {
+                setIsAgentOpen(true);
+              }}
+            />
+          </div>
+        )}
+
+        {/* VIEW 5: EXTENDED DIRECTORY & ECOSYSTEM HUB */}
+        {(currentView === 'directory' || currentView === 'marketplace' || currentView === 'tutorials') && (
           <ExtendedDirectoryView
             initialTab="tutorials"
             onNavigateToCourses={() => {
@@ -160,7 +242,37 @@ export const App: React.FC = () => {
           />
         )}
 
-        {(currentView === 'agent-platform' || currentView === 'harness-mastery' || currentView === 'skills-library') && (
+        {currentView === 'tools' && (
+          <ExtendedDirectoryView
+            initialTab="tools"
+            onNavigateToCourses={() => {
+              setCurrentView('theater');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {currentView === 'news' && (
+          <ExtendedDirectoryView
+            initialTab="news"
+            onNavigateToCourses={() => {
+              setCurrentView('theater');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {currentView === 'portfolio' && (
+          <ExtendedDirectoryView
+            initialTab="portfolio"
+            onNavigateToCourses={() => {
+              setCurrentView('theater');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        )}
+
+        {(currentView === 'agents' || currentView === 'agent-platform' || currentView === 'harness-mastery' || currentView === 'skills-library') && (
           <ExtendedDirectoryView
             initialTab="agents"
             onNavigateToCourses={() => {
@@ -170,12 +282,20 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* VIEW 4: MEMBER DASHBOARD */}
+        {/* VIEW 6: MEMBER DASHBOARD */}
         {currentView === 'dashboard' && (
           <div className="animate-in fade-in duration-300">
             <DashboardView
+              user={user}
+              completedModules={completedModules}
+              onSignOut={handleSignOut}
+              onNavigateToCourses={(moduleId) => {
+                if (moduleId) setSelectedCourseModule(moduleId);
+                setCurrentView('theater');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               onOpenSandbox={() => {
-                setCurrentView('directory');
+                setCurrentView('tools');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onOpenAgent={() => {

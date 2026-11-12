@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Sparkles,
   ArrowRight,
@@ -14,20 +14,41 @@ import {
   Rocket,
   Award,
   BookOpen,
-  Zap
+  Zap,
+  Globe,
+  Code2,
+  Github,
+  Database,
+  ExternalLink
 } from 'lucide-react';
 import { DailyVideoSpotlight } from '../DailyVideoSpotlight';
 import { COURSE_MODULES } from '../../data/courseData';
+import { courses } from '../../content/courses';
+import { HowItWorks } from '../HowItWorks';
+import { PortfolioSandbox } from '../PortfolioSandbox';
+import { CapstoneHub } from '../CapstoneHub';
+import { Testimonials } from '../Testimonials';
+import { PricingSection } from '../PricingSection';
+import { FaqSection } from '../FaqSection';
+import { CommunityCta } from '../CommunityCta';
+import { CheckoutModal } from '../CheckoutModal';
+import { PricingPlan } from '../../types';
 
 interface IntroHomeViewProps {
   onStartCourse: (moduleId?: number) => void;
-  onExploreDirectory: () => void;
+  onExploreDirectory: (tab?: 'tutorials' | 'tools' | 'news' | 'agents' | 'portfolio') => void;
+  onNavigateToCourses?: () => void;
+  onNavigateToLabs?: () => void;
 }
 
 export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
   onStartCourse,
-  onExploreDirectory
+  onExploreDirectory,
+  onNavigateToCourses,
+  onNavigateToLabs
 }) => {
+  const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+
   const scrollToDailyVideo = () => {
     const el = document.getElementById('daily-video-spotlight');
     if (el) {
@@ -52,19 +73,64 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
     }
   };
 
+  const FRONTIER_PLATFORMS = [
+    {
+      name: 'Lovable & Bolt.new',
+      category: 'Visual Full-Stack Prototyping',
+      badge: 'Rapid Builds',
+      description: 'Prompt-to-fullstack application design with automatic Supabase schema sync, component state, and GitHub repo export.',
+      tools: ['Lovable', 'Bolt.new', 'v0', 'Supabase']
+    },
+    {
+      name: 'OpenAI Codex & Canvas',
+      category: 'AST Code Synthesis & QA',
+      badge: 'Direct AST',
+      description: 'Interactive canvas code steering, multi-file refactoring without regressions, and autonomous Operator browser testing.',
+      tools: ['Codex', 'GPT-4o Canvas', 'Operator', 'TypeScript']
+    },
+    {
+      name: 'Nous Hermes Agent',
+      category: 'Sovereign Open-Weights',
+      badge: 'Zero Leakage',
+      description: 'High-capability open-weights function calling running locally with Ollama or securely orchestrated on AWS Bedrock.',
+      tools: ['Hermes 3', 'Bedrock', 'Ollama', 'Local GPUs']
+    },
+    {
+      name: 'OpenClaw Multi-Agent Swarms',
+      category: 'Autonomous Multi-Agent',
+      badge: 'DAG Waves',
+      description: 'Middle-Out DAG task breakdown, parallel subagent swarms, isolated worktrees, and the One Must Act wholeness theorem.',
+      tools: ['OpenClaw', 'Subagents', 'Worktrees', 'QA Verifiers']
+    },
+    {
+      name: 'Claude Code CLI & MCP',
+      category: 'Terminal Agent Engineering',
+      badge: 'Agent Memory',
+      description: 'Terminal-native agent with persistent CLAUDE.md memory, test runners, git commit workflows, and Model Context Protocol.',
+      tools: ['Claude Code', 'CLAUDE.md', 'MCP Servers', 'Anthropic']
+    },
+    {
+      name: 'Cursor & Windsurf IDEs',
+      category: 'Editor-Integrated Harness',
+      badge: 'In-IDE Flow',
+      description: '.cursorrules strictness, multi-file Composer editing, Cascade agent flows, and context indexing across complex repos.',
+      tools: ['Cursor Composer', 'Windsurf Cascade', '.cursorrules']
+    }
+  ];
+
   return (
     <div className="text-left font-sans animate-in fade-in duration-300">
       
       {/* 1. HERO SECTION: Institutional Introduction */}
-      <section className="pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section id="hero" className="pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           
           {/* Institutional Eyebrow */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#2F80ED]/20 text-[#071B3A] text-xs font-bold shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-[#2F80ED] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse" />
             <span className="font-mono text-[11px] text-[#2F80ED] uppercase tracking-wider">LETSVIBEAI INSTITUTION</span>
             <span className="text-[#4a4d4f]/40">·</span>
-            <span>Learn. Build. Grow.</span>
+            <span>Learn. Build. Ship.</span>
           </div>
 
           {/* Display H1 */}
@@ -77,7 +143,7 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg text-[#4a4d4f] leading-relaxed max-w-2xl mx-auto">
-            Vibe coding is building production software by describing what you want in plain language and directing AI agents. Master the 11 building blocks with our 100% free, open curriculum.
+            Vibe coding is directing autonomous agents in natural language to build production software. Master every frontier platform — Lovable, Cursor, Codex, Hermes, OpenClaw, and Claude Code — with our 100% free open curriculum.
           </p>
 
           {/* CTAs */}
@@ -86,18 +152,28 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
               onClick={() => onStartCourse(1)}
               className="px-7 py-3.5 rounded-full bg-[#ec4909] hover:bg-[#d43f05] active:scale-98 text-white font-bold text-sm transition-all shadow-lg shadow-[#ec4909]/25 flex items-center gap-2.5 cursor-pointer group"
             >
-              <span>Start Free Course (10 Modules)</span>
+              <span>Start Vibe Coding 101 (Featured)</span>
               <div className="w-6 h-6 rounded-full bg-white text-[#ec4909] flex items-center justify-center transition-transform group-hover:translate-x-0.5">
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
             </button>
+
+            {onNavigateToLabs && (
+              <button
+                onClick={onNavigateToLabs}
+                className="px-6 py-3.5 rounded-full bg-white hover:bg-[#F4F7FB] border border-[#2F80ED]/30 text-[#071B3A] font-bold text-sm transition-all shadow-xs flex items-center gap-2 cursor-pointer"
+              >
+                <Terminal className="w-4 h-4 text-[#2F80ED]" />
+                <span>Open Project Labs</span>
+              </button>
+            )}
 
             <button
               onClick={scrollToDailyVideo}
               className="px-6 py-3.5 rounded-full bg-white hover:bg-[#F4F7FB] border border-[#4a4d4f]/15 text-[#071B3A] font-bold text-sm transition-all shadow-xs flex items-center gap-2 cursor-pointer"
             >
               <Play className="w-4 h-4 text-[#2F80ED] fill-[#2F80ED]" />
-              <span>Watch Today's Vibe Brief</span>
+              <span>Today's Vibe Brief</span>
             </button>
           </div>
 
@@ -109,21 +185,21 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#34D399]" />
-              <span>10 Mastered Video Lessons</span>
+              <span>Multi-Platform (Codex, Hermes, OpenClaw, Lovable)</span>
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#34D399]" />
-              <span>Zero Syntax Memorization</span>
+              <span>Zero Hallucination Verification Gates</span>
             </span>
           </div>
 
         </div>
       </section>
 
-      {/* 2. DAILY VIDEO SPOTLIGHT (The Anchor Moment for Social Traffic) */}
+      {/* 2. DAILY VIDEO SPOTLIGHT (Social Traffic Anchor with Clean Poster) */}
       <DailyVideoSpotlight
         onStartCourse={() => onStartCourse(1)}
-        onExploreRostr={onExploreDirectory}
+        onExploreRostr={() => onExploreDirectory('tutorials')}
       />
 
       {/* 3. WHAT IS VIBE CODING & THE TWO INVARIABLE LAWS */}
@@ -198,17 +274,92 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
         </div>
       </section>
 
-      {/* 4. THE 10 FOUNDATIONAL MODULES (Bento Syllabus Preview) */}
+      {/* 4. FRONTIER AGENT PLATFORMS GRID (Not Just Claude!) */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="space-y-8">
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#34D399]/15 text-[#071B3A] text-xs font-bold font-mono mb-2">
-                <span>FOUNDATIONAL SYLLABUS</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2F80ED]/10 text-[#2F80ED] text-xs font-bold font-mono mb-2">
+                <span>MULTI-HARNESS ECOSYSTEM</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black text-[#071B3A] tracking-tight font-sans">
-                The 10-Module Free Curriculum
+                Build On Every Frontier Platform
+              </h2>
+              <p className="text-xs sm:text-sm text-[#4a4d4f] mt-1 max-w-2xl leading-relaxed">
+                True engineering leverage comes from knowing when to use visual builders (Lovable, Bolt), terminal CLI agents (Claude Code, Codex), sovereign open weights (Hermes), and autonomous DAG swarms (OpenClaw).
+              </p>
+            </div>
+
+            <button
+              onClick={() => onExploreDirectory('agents')}
+              className="px-5 py-2.5 rounded-full bg-white hover:bg-[#F4F7FB] border border-[#4a4d4f]/15 text-[#071B3A] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-xs self-start sm:self-auto shrink-0"
+            >
+              <span>Explore Platform Directory</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FRONTIER_PLATFORMS.map((platform, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-3xl bg-white border border-[#4a4d4f]/10 shadow-xs flex flex-col justify-between hover:border-[#2F80ED]/40 hover:shadow-lg transition-all group"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#F4F7FB] text-[#071B3A] border border-[#4a4d4f]/10">
+                      {platform.badge}
+                    </span>
+                    <span className="text-xs font-mono text-[#2F80ED] font-semibold">
+                      {platform.category}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-[#071B3A] tracking-tight group-hover:text-[#2F80ED] transition-colors">
+                    {platform.name}
+                  </h3>
+
+                  <p className="text-xs text-[#4a4d4f] leading-relaxed">
+                    {platform.description}
+                  </p>
+
+                  <div className="pt-2 flex flex-wrap gap-1.5">
+                    {platform.tools.map((tool, tIdx) => (
+                      <span key={tIdx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#071B3A]">
+                  <button
+                    onClick={() => onExploreDirectory('tutorials')}
+                    className="text-[#2F80ED] hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>View Tutorials</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. THE 10 FOUNDATIONAL MODULES (Vibe Coding 101 Featured) */}
+      <section id="curriculum" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div id="courses" className="space-y-8">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#34D399]/15 text-[#071B3A] text-xs font-bold font-mono mb-2">
+                <span>FLAGSHIP CURRICULUM</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black text-[#071B3A] tracking-tight font-sans">
+                Vibe Coding 101: The 10 Foundational Modules
               </h2>
               <p className="text-xs sm:text-sm text-[#4a4d4f] mt-1 max-w-xl">
                 Every module includes a mastered video lesson, core analogy, production copy-prompt, hands-on exercise, and self-check quiz.
@@ -217,9 +368,9 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
 
             <button
               onClick={() => onStartCourse(1)}
-              className="px-5 py-2.5 rounded-full bg-[#071B3A] hover:bg-[#10213F] text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm self-start sm:self-auto shrink-0"
+              className="px-5 py-2.5 rounded-full bg-[#ec4909] hover:bg-[#d43f05] text-white text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-sm shadow-[#ec4909]/20 self-start sm:self-auto shrink-0"
             >
-              <span>Open Course Studio</span>
+              <span>Start Course in Theater</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -269,8 +420,8 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
         </div>
       </section>
 
-      {/* 5. ABOUT THE INSTITUTION & PATRICK DIAMITANI */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* 6. ABOUT THE INSTITUTION & PATRICK DIAMITANI */}
+      <section id="about-mentor" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="rounded-3xl sm:rounded-[36px] bg-[#071B3A] text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden">
           
           <div className="max-w-3xl space-y-6 relative z-10">
@@ -292,8 +443,8 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
                 <p className="text-xs text-slate-400 mt-0.5">Foundational education open to all</p>
               </div>
               <div>
-                <span className="text-2xl font-black text-[#34D399] font-sans">Production</span>
-                <p className="text-xs text-slate-400 mt-0.5">Real code, real databases, real Stripe</p>
+                <span className="text-2xl font-black text-[#34D399] font-sans">Multi-Platform</span>
+                <p className="text-xs text-slate-400 mt-0.5">Codex, Hermes, OpenClaw, Lovable, Claude</p>
               </div>
               <div>
                 <span className="text-2xl font-black text-[#2F80ED] font-sans">Director Mindset</span>
@@ -310,17 +461,64 @@ export const IntroHomeView: React.FC<IntroHomeViewProps> = ({
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <button
-                onClick={onExploreDirectory}
-                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm transition-all border border-white/20 cursor-pointer"
-              >
-                <span>Browse Ecosystem ROSTR</span>
-              </button>
+              {onNavigateToCourses && (
+                <button
+                  onClick={onNavigateToCourses}
+                  className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold text-sm transition-all border border-white/20 cursor-pointer"
+                >
+                  <span>Explore All 7 Courses</span>
+                </button>
+              )}
             </div>
           </div>
 
         </div>
       </section>
+
+      {/* 7. HOW IT WORKS (id="how-it-works") */}
+      <HowItWorks onStartCourse={() => onStartCourse(1)} />
+
+      {/* 8. INTERACTIVE SANDBOX & STUDIO (id="sandboxes") */}
+      <section id="sandboxes" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#2F80ED]/10 border border-[#2F80ED]/20 text-[#2F80ED] text-xs font-bold">
+            <Sparkles className="w-3.5 h-3.5 fill-[#2F80ED]" />
+            <span>STUDIO & SANDBOX</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-[#071B3A] tracking-tight">
+            Interactive Developer Sandboxes
+          </h2>
+          <p className="text-xs sm:text-sm text-[#4a4d4f]">
+            Test frontier AI models, compare latency vs cost, and prototype fullstack applications directly in browser.
+          </p>
+        </div>
+        <PortfolioSandbox />
+      </section>
+
+      {/* 9. CAPSTONE PROJECT & ACCREDITED CREDENTIAL (id="capstone") */}
+      <CapstoneHub />
+
+      {/* 10. STUDENT TESTIMONIALS & RESULTS (id="testimonials") */}
+      <Testimonials />
+
+      {/* 11. TUITION & INVESTMENT PLANS (id="pricing") */}
+      <PricingSection onSelectPlan={(plan) => setSelectedPlan(plan)} />
+
+      {/* 12. FREQUENTLY ASKED QUESTIONS & SUPPORT (id="faq") */}
+      <FaqSection />
+
+      {/* 13. COMMUNITY COHORT CTA */}
+      <CommunityCta onJoinCohort={() => onStartCourse(1)} />
+
+      {/* Stripe Enrollment Checkout Modal */}
+      <CheckoutModal
+        plan={selectedPlan}
+        onClose={() => setSelectedPlan(null)}
+        onEnrollSuccess={() => {
+          setSelectedPlan(null);
+          onStartCourse(1);
+        }}
+      />
 
     </div>
   );

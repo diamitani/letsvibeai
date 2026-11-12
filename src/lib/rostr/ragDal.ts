@@ -81,13 +81,34 @@ const KNOWLEDGE_CORPUS: Array<{
     category: 'ai_stack',
     text: 'Vercel AI SDK unifies streamText, useChat, and tool execution with Zod schemas. Supports automatic failover, token usage streaming, and multi-model routing.'
   },
-  // Tier 3: Practical heuristics
+  // Tier 3: Practical heuristics & Support Operations
   {
     id: 'comm-pal',
     title: 'PAL Learner Heuristics',
     tier: 'tier3',
     category: 'heuristics',
     text: 'Rule of thumb: If a smart human hire would need to ask you a question, the AI coding agent needs that answer in the prompt.'
+  },
+  {
+    id: 'ops-support',
+    title: 'Student Support & Helpdesk',
+    tier: 'tier2',
+    category: 'support',
+    text: 'Student support and enrollment help is available 24/7 via hello@letsvibeai.com and through the in-browser AI Coach. Technical mentors review code submissions and architecture blueprints in the community mastermind.'
+  },
+  {
+    id: 'ops-refund',
+    title: '14-Day Money-Back Satisfaction Guarantee',
+    tier: 'tier2',
+    category: 'billing',
+    text: 'LetsVibeAI offers an unconditional 14-day 100% money-back guarantee on all tuition plans. If you complete the first two modules and feel you did not gain actionable production skills, email hello@letsvibeai.com for an immediate full refund.'
+  },
+  {
+    id: 'ops-certification',
+    title: 'Capstone Certification & Credentialing',
+    tier: 'tier1',
+    category: 'certification',
+    text: 'Module 11 Capstone requires 4 deliverables: live production HTTPS URL on Vercel, Supabase RLS schema with zero leaks, Stripe webhook handler passing test payloads, and an exported Agent harness manifest. Scoring 85+ on the 100-point rubric earns the accredited LetsVibeAI Vibe Engineer Certificate.'
   }
 ];
 

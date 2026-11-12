@@ -122,6 +122,7 @@ export const DailyVideoSpotlight: React.FC<DailyVideoSpotlightProps> = ({
               videoSrc={dailyVideo.videoUrl}
               youtubeId={dailyVideo.youtubeId}
               duration={dailyVideo.duration}
+              poster="/images/launch-video-poster.png"
             />
 
             <div className="mt-3 flex items-center justify-between text-xs text-[#706B67] px-2">

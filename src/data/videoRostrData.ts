@@ -5,7 +5,7 @@ export const DAILY_BRIEF_VIDEOS: DailyBriefVideo[] = [
     id: 'daily-2026-10-08',
     date: 'October 8, 2026',
     title: 'Agent Architecture, Harness Standards & Vibe Coding Production',
-    videoUrl: '/videos/daily/ai-daily-brief-2026-10-08.mp4',
+    videoUrl: '/videos/mastered/07-agents-master.mp4',
     youtubeId: 'b_7h2uP5-lI',
     duration: '3:45',
     summary: 'The daily breakdown of AI agent harnesses, why direct typing is being replaced by architectural direction, and how the One Must Act theorem secures multi-agent execution.',
@@ -13,7 +13,7 @@ export const DAILY_BRIEF_VIDEOS: DailyBriefVideo[] = [
       'The Shift to Director: Why vague prompts cause hallucination and how concrete specs route directly to working code.',
       'Agent Harness Topology: Model + Instructions + Tools + Memory + Loop.',
       'Zero Hallucination of External Action: Verification gates before any database write or payment event.',
-      'Connecting daily learning directly into the 10-module foundational curriculum.'
+      'Connecting daily learning directly into the foundational vibe coding curriculum.'
     ],
     status: 'live',
     keyTool: 'Claude Code & Antigravity'
@@ -55,6 +55,82 @@ export const YOUTUBE_ROSTR_TUTORIALS: YouTubeRostrItem[] = [
     tags: ['Vibe Coding', 'Software 2.0', 'Foundations', 'Karpathy'],
     featured: true,
     publishedDate: 'Feb 2025'
+  },
+  {
+    id: 'yt-lovable-01',
+    title: 'Lovable & Bolt: Build Full-Stack Web Apps in Minutes with Supabase',
+    creator: 'Lovable Community',
+    creatorUrl: 'https://lovable.dev',
+    youtubeId: '4_Zq_7N5Uko',
+    category: 'Fullstack Vibe Coding',
+    duration: '16:20',
+    level: 'All Levels',
+    summary: 'Complete architectural walkthrough of building production web applications with Lovable: prompt-to-UI generation, automatic Supabase Postgres schema migrations, and GitHub repository export.',
+    takeaways: [
+      'Visual component selection and iterative prompting directly on the canvas.',
+      'Automated Supabase database wiring with foreign keys and Row-Level Security.',
+      'Two-way GitHub repository synchronization for local development in Cursor.'
+    ],
+    tags: ['Lovable', 'Bolt.new', 'Supabase', 'Fullstack', 'Vibe Coding'],
+    featured: true,
+    publishedDate: '2026'
+  },
+  {
+    id: 'yt-codex-01',
+    title: 'OpenAI Codex & Canvas: AST-Level Prompting & Operator Browser QA',
+    creator: 'OpenAI Developers',
+    creatorUrl: 'https://openai.com',
+    youtubeId: 'jA_n4xGqKuo',
+    category: 'Frontier Agent Platforms',
+    duration: '19:15',
+    level: 'Intermediate',
+    summary: 'Mastering OpenAI Codex, GPT-4o Canvas, and OpenAI Operator. How to prompt against code ASTs, perform surgical refactoring, and automate end-to-end browser user testing.',
+    takeaways: [
+      'Using Canvas highlights to direct local function refactors without regressions.',
+      'Directing OpenAI Operator browser agents to test payment flows and auth funnels.',
+      'Synthesizing type-safe backend route handlers with Zod schema verification.'
+    ],
+    tags: ['Codex', 'OpenAI', 'Canvas', 'Operator', 'Agents'],
+    featured: true,
+    publishedDate: '2026'
+  },
+  {
+    id: 'yt-hermes-01',
+    title: 'Nous Hermes Agent Harness: Sovereign Function Calling on Bedrock & Local GPUs',
+    creator: 'Nous Research / Open Source AI',
+    creatorUrl: 'https://nousresearch.com',
+    youtubeId: 'b_7h2uP5-lI',
+    category: 'Frontier Agent Platforms',
+    duration: '22:40',
+    level: 'Advanced',
+    summary: 'Deep dive into Nous Research Hermes 3 and Hermes Agent: state-of-the-art open weights function calling, sovereign infrastructure, and AWS Bedrock runtime deployments.',
+    takeaways: [
+      'Hermes <tool_call> and <scratchpad> extended thinking mechanics.',
+      'Executing zero-leakage local agents with Ollama and private sandboxes.',
+      'Deploying enterprise agent swarms on AWS Bedrock with Calibrated Truth Guards.'
+    ],
+    tags: ['Hermes', 'Nous Research', 'Bedrock', 'Open Weights', 'Function Calling'],
+    featured: true,
+    publishedDate: '2026'
+  },
+  {
+    id: 'yt-openclaw-01',
+    title: 'OpenClaw Multi-Agent Orchestration: Middle-Out DAG Execution & Subagents',
+    creator: 'OpenClaw Autonomous Lab',
+    creatorUrl: 'https://github.com',
+    youtubeId: '8x8jU_6P9E4',
+    category: 'Frontier Agent Platforms',
+    duration: '24:10',
+    level: 'Advanced',
+    summary: 'How OpenClaw orchestrates autonomous agent swarms: coordinator planning, Middle-Out DAG wave scheduling, parallel subagents, and automated QA gates.',
+    takeaways: [
+      'Decomposing monolithic coding tasks into parallel independent subagent waves.',
+      'Isolating build worktrees so parallel agents never collide on git branches.',
+      'The One Must Act (W = 1.00) foundation wholeness verification loop.'
+    ],
+    tags: ['OpenClaw', 'Multi-Agent', 'DAG', 'Subagents', 'Harness'],
+    featured: true,
+    publishedDate: '2026'
   },
   {
     id: 'yt-02',
@@ -269,8 +345,9 @@ export const YOUTUBE_ROSTR_TUTORIALS: YouTubeRostrItem[] = [
 
 export const TUTORIAL_CATEGORIES = [
   'All',
-  'Harness Setup',
   'Fullstack Vibe Coding',
+  'Frontier Agent Platforms',
+  'Harness Setup',
   'Agent Workflows & MCP',
   'Prompt Architecture & PAL',
   'Database & Auth',
@@ -287,15 +364,17 @@ export function getTutorialsByCategory(category: string): YouTubeRostrItem[] {
 }
 
 export function searchTutorials(query: string, category: string = 'All'): YouTubeRostrItem[] {
-  const q = query.toLowerCase().trim();
+  const normalizedQuery = query.toLowerCase().trim();
   return YOUTUBE_ROSTR_TUTORIALS.filter((item) => {
-    const matchesCat = category === 'All' || item.category === category;
-    const matchesQuery =
-      !q ||
-      item.title.toLowerCase().includes(q) ||
-      item.creator.toLowerCase().includes(q) ||
-      item.summary.toLowerCase().includes(q) ||
-      item.tags.some((t) => t.toLowerCase().includes(q));
-    return matchesCat && matchesQuery;
+    const matchesCategory = category === 'All' || item.category === category;
+    if (!matchesCategory) return false;
+    if (!normalizedQuery) return true;
+
+    const matchesTitle = item.title.toLowerCase().includes(normalizedQuery);
+    const matchesCreator = item.creator.toLowerCase().includes(normalizedQuery);
+    const matchesSummary = item.summary.toLowerCase().includes(normalizedQuery);
+    const matchesTags = item.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
+
+    return matchesTitle || matchesCreator || matchesSummary || matchesTags;
   });
 }

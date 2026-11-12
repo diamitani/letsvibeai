@@ -110,8 +110,8 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-white/70">
               <li><a href="#testimonials" className="hover:text-white transition-colors">Student Testimonials</a></li>
               <li><a href="#pricing" className="hover:text-white transition-colors">Tuition & Pricing</a></li>
-              <li><a href="#blog" className="hover:text-white transition-colors">Blog & AI Insights</a></li>
               <li><a href="#faq" className="hover:text-white transition-colors">Frequently Asked Questions</a></li>
+              <li><a href="mailto:hello@letsvibeai.com" className="hover:text-white transition-colors text-[#ec4909] font-medium">Support: hello@letsvibeai.com</a></li>
             </ul>
           </div>
 
@@ -125,6 +125,7 @@ export const Footer: React.FC = () => {
                 <span>All Systems Operational</span>
               </div>
               <span className="text-white/60 block">SLA: 99.99% · 24ms Origin Cache</span>
+              <span className="text-white/40 block text-[10px] font-mono">ROSTR v2 Engine · W = 1.00</span>
             </div>
           </div>
 

@@ -11,7 +11,7 @@ export interface Course {
   image: string;
   video?: string;
   videoPoster?: string;
-  level: 'Beginner' | 'Intermediate';
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
   duration: string;
   unit: string; // what a lesson is called: Module, Day, Lab
   featured: boolean;
@@ -21,19 +21,20 @@ export interface Course {
   benefits: string[];
   whoFor: string;
   closing: string;
+  projectLinks?: { label: string; url: string }[];
 }
 
 export const courses: Course[] = [
   {
     slug: 'vibe-coding',
     title: 'Vibe Coding: Idea to Shipped App',
-    heroTitle: 'Vibe Coding: Idea to Shipped App',
-    summary: 'The architecture-first course: learn how apps fit together, direct AI agents precisely and ship a real product.',
+    heroTitle: 'Vibe Coding 101: Idea to Shipped App',
+    summary: 'The flagship architecture-first course: learn how modern software fits together, direct AI agents with precision, and ship real production products.',
     image: '/images/course-foundations.jpg',
-    video: '/videos/letsvibeai-course-vibe-coding.mp4',
+    video: '/videos/mastered/01-what-is-vibe-coding-master.mp4',
     videoPoster: '/images/course-vibe-coding-poster.jpg',
     level: 'Beginner',
-    duration: '~25 hours',
+    duration: '10 Modules (22 min video + labs)',
     unit: 'Module',
     featured: true,
     intro: {
@@ -60,54 +61,180 @@ export const courses: Course[] = [
       'The vocabulary to work with developers, vendors and agents.',
     ],
     whoFor: 'Founders, operators, marketers, creators, educators and career changers who want to build real software with AI — without a computer-science background.',
-    closing: 'Every app has an architecture. Learn it once and every AI tool gets easier. Start Module 1 today — it is free.',
+    closing: 'Every app has an architecture. Learn it once and every AI tool gets easier. Start Module 1 today — it is 100% free.',
+    projectLinks: [
+      { label: 'GitHub Repository', url: 'https://github.com/diamitani/letsvibeai' },
+      { label: 'Starter Blueprint', url: 'https://github.com/diamitani/letsvibeai/tree/main/modules' },
+    ]
   },
   {
     slug: 'zero-to-ship',
-    title: 'Build with AI: Zero to Ship',
-    heroTitle: 'Zero to Ship in 10 Days',
-    summary: 'Ten short daily lessons: a custom GPT, two automations, an AI assistant and a live portfolio site.',
+    title: 'Ship It: Zero to Production on Every Platform',
+    heroTitle: 'Ship It: Zero to Production in 10 Days',
+    summary: 'Ten daily hands-on sprints: Lovable, Bolt, Cursor, Windsurf, Supabase, Vercel, Stripe and custom domains.',
     image: '/images/course-zero-to-ship.jpg',
-    video: '/videos/letsvibeai-course-zero-to-ship.mp4',
+    video: '/videos/mastered/10-ship-it-master.mp4',
     videoPoster: '/images/course-zero-to-ship-poster.jpg',
     level: 'Beginner',
-    duration: '~3.5 hours',
+    duration: '10 Days (~3.5 hours)',
     unit: 'Day',
     featured: true,
     intro: {
       heading: 'Your First Real AI Builds, One Day at a Time',
-      body: 'Zero to Ship is a 10-day sprint where every lesson builds on the last. You start with a custom GPT and finish with your own AI portfolio site live on the internet — all with no-code tools and the Chain Prompting method.',
+      body: 'Zero to Ship is a 10-day sprint where every lesson builds on the last. You start with scaffolding and finish with your own live app on your custom domain with payments and authentication.',
     },
     approach: [
       'Short daily lessons you can finish in 15–25 minutes.',
       'Chain Prompting: big builds broken into small, simple prompts.',
-      'Project-based — almost every day produces something you can use.',
-      'Real tools: ChatGPT, Make.com, the Assistants API, v0 and Vercel.',
+      'Project-based — almost every day produces something you can deploy.',
+      'Real tools: Lovable, Bolt, Cursor, Supabase, Vercel, and Stripe.',
     ],
     helpsWith: [
-      'Building and publishing your first custom GPT.',
-      'Automating repetitive work with Make.com.',
-      'Designing a production-ready AI assistant.',
-      'Turning an idea into a live web page.',
+      'Scaffolding full-stack apps in minutes.',
+      'Configuring Supabase Postgres and Row Level Security.',
+      'Integrating Stripe Checkout sessions and verified webhooks.',
+      'Connecting custom domains and SSL on Vercel.',
     ],
     benefits: [
-      'Confidence using AI for real work, not just chat.',
-      'A small portfolio of working projects in ten days.',
-      'A repeatable method for any future build.',
+      'Confidence using AI for real production software.',
+      'A portfolio of working projects deployed in ten days.',
+      'A repeatable deployment method for any future build.',
     ],
     whoFor: 'Anyone curious — or a little intimidated — by AI who wants quick, practical wins before going deeper.',
-    closing: 'Ten days from now you can be the person on your team who builds with AI. Start Day 1 today.',
+    closing: 'Ten days from now you can be the person on your team who ships with AI. Start Day 1 today.',
+    projectLinks: [
+      { label: 'Lovable Starter', url: 'https://lovable.dev' },
+      { label: 'Vercel Deploy Guide', url: 'https://vercel.com' },
+    ]
+  },
+  {
+    slug: 'frontier-platforms',
+    title: 'Frontier Agent Platforms: Codex, Hermes & OpenClaw',
+    heroTitle: 'Frontier Multi-Agent Platforms & Harnesses',
+    summary: 'Master OpenAI Codex, Nous Hermes on Bedrock, OpenClaw swarms, and Claude Code terminal agents with strict verification gates.',
+    image: '/images/course-foundations.jpg',
+    video: '/videos/mastered/07-agents-master.mp4',
+    videoPoster: '/images/course-frontier-platforms-poster.jpg',
+    level: 'Intermediate',
+    duration: '5 Modules (~5 hours)',
+    unit: 'Module',
+    featured: true,
+    intro: {
+      heading: 'Beyond Single Prompts: Directing Frontier Autonomous Agent Swarms',
+      body: 'The frontier of AI coding is multi-agent orchestration. Learn how OpenAI Codex ASTs, Nous Hermes function-calling models, OpenClaw DAG swarms, and Claude Code CLI coordinate together to build enterprise systems.',
+    },
+    approach: [
+      'Architectural breakdowns of frontier harnesses (Codex, Hermes, OpenClaw, Claude Code).',
+      'Model Context Protocol (MCP) tool integration and security scoping.',
+      'Middle-Out DAG wave scheduling for parallel subagents.',
+      'The One Must Act (W = 1.00) verification theorem.',
+    ],
+    helpsWith: [
+      'Running sovereign open-weights agents with Nous Hermes.',
+      'Configuring terminal agents with persistent CLAUDE.md memory.',
+      'Preventing hallucinations and token budget exhaustion.',
+      'Implementing automated QA testing subagents.',
+    ],
+    benefits: [
+      'Mastery of every major frontier agent platform, not just one vendor.',
+      'Ability to build complex autonomous coding swarms.',
+      'Strict quality gates that guarantee zero-regression builds.',
+    ],
+    whoFor: 'Technical founders, senior developers, and ambitious AI directors ready to orchestrate autonomous multi-agent engineering teams.',
+    closing: 'Move from prompt guessing to verified autonomous execution. Start Module 1 today.',
+    projectLinks: [
+      { label: 'OpenClaw Repository', url: 'https://github.com' },
+      { label: 'Hermes Agent Docs', url: 'https://nousresearch.com' },
+    ]
+  },
+  {
+    slug: 'lovable-fullstack',
+    title: 'Full-Stack Vibe Coding with Lovable & Bolt',
+    heroTitle: 'Prompt to Full-Stack Web App with Lovable',
+    summary: 'Instant web application prototyping, Supabase schema sync, Edge Functions, GitHub two-way sync, and production polish.',
+    image: '/images/course-zero-to-ship.jpg',
+    video: '/videos/mastered/04-web-app-architecture-master.mp4',
+    videoPoster: '/images/course-lovable-fullstack-poster.jpg',
+    level: 'Beginner',
+    duration: '5 Modules (~4 hours)',
+    unit: 'Module',
+    featured: true,
+    intro: {
+      heading: 'Zero Syntax, Full Power: The New Way to Build Web Apps',
+      body: 'Tools like Lovable and Bolt let you describe complex relational web applications and watch them compile in real-time. Learn how to steer these visual tools with precision, connect relational databases, and export to GitHub for pro developer polish.',
+    },
+    approach: [
+      'Prompt patterns that generate clean component hierarchies.',
+      'Connecting Lovable to Supabase with automatic table migration.',
+      'Pairing Lovable with Cursor Composer for surgical code edits.',
+      'One-click deploys to custom domains with full SSL.',
+    ],
+    helpsWith: [
+      'Building responsive SaaS MVPs in hours instead of months.',
+      'Avoiding frontend spaghetti code with structured design tokens.',
+      'Wiring real relational tables with foreign keys and RLS.',
+    ],
+    benefits: [
+      'Ship client projects 10x faster with zero boilerplate.',
+      'Professional two-way GitHub repository synchronization.',
+      'Clean handoffs between visual designers and developers.',
+    ],
+    whoFor: 'Product designers, indie hackers, agency builders, and entrepreneurs launching commercial web apps.',
+    closing: 'Build your next full-stack application before the weekend is over.',
+    projectLinks: [
+      { label: 'Lovable Platform', url: 'https://lovable.dev' },
+      { label: 'Supabase Database', url: 'https://supabase.com' },
+    ]
+  },
+  {
+    slug: 'claude-coworker',
+    title: 'Claude as Coworker: Skills, MCP & Governance',
+    heroTitle: 'Claude as Coworker & Enterprise Skills Suite',
+    summary: 'Leverage Claude Projects, interactive Artifacts, Model Context Protocol (MCP), custom skills packaging, and team governance.',
+    image: '/images/course-project-labs.jpg',
+    video: '/videos/mastered/08-the-document-stack-master.mp4',
+    videoPoster: '/images/course-claude-mastery-poster.jpg',
+    level: 'Intermediate',
+    duration: '5 Modules (~6 hours)',
+    unit: 'Module',
+    featured: true,
+    intro: {
+      heading: 'Transform Claude into Your Long-Term Operating Partner',
+      body: 'Claude is more than a chatbot — when configured with Projects, Artifacts, MCP connectors, and reusable SKILL.md packages, it becomes an autonomous coworker that remembers your architecture, writes tested code, and enforces team standards.',
+    },
+    approach: [
+      'Project-level context engineering and instruction tuning.',
+      'Interactive prototype generation with Claude Artifacts.',
+      'Authoring production SKILL.md packages for reusable tasks.',
+      'Model Context Protocol integration with enterprise systems.',
+    ],
+    helpsWith: [
+      'Building team-wide AI skills libraries.',
+      'Automating repetitive pull request reviews and documentation.',
+      'Enforcing privacy and credential security guardrails.',
+    ],
+    benefits: [
+      'Zero prompt repetition across team members.',
+      'Permanent institutional agent memory that survives chat resets.',
+      'High-trust AI execution in enterprise environments.',
+    ],
+    whoFor: 'Engineering leads, technical project managers, and power users building organizational AI capability.',
+    closing: 'Turn individual AI use into an organizational superpower. Start Module 1 today.',
+    projectLinks: [
+      { label: 'Anthropic MCP Guide', url: 'https://modelcontextprotocol.io' },
+      { label: 'Skills Catalog', url: 'https://github.com/diamitani/letsvibeai' },
+    ]
   },
   {
     slug: 'project-labs',
     title: 'Vibe Coding Project Labs',
     heroTitle: 'Three Hands-On Project Labs',
-    summary: 'Build and deploy a marketing site, an e-commerce store and a directory marketplace — portfolio-ready.',
+    summary: 'Build and deploy a marketing site, an e-commerce store, a directory marketplace, and an AI SaaS — portfolio-ready.',
     image: '/images/course-project-labs.jpg',
-    video: '/videos/letsvibeai-course-project-labs.mp4',
+    video: '/videos/mastered/09-the-build-process-master.mp4',
     videoPoster: '/images/course-project-labs-poster.jpg',
     level: 'Intermediate',
-    duration: '~17 hours',
+    duration: '3 Labs (~17 hours)',
     unit: 'Lab',
     featured: true,
     intro: {
@@ -132,40 +259,49 @@ export const courses: Course[] = [
     ],
     whoFor: 'Learners who have finished Vibe Coding or Zero to Ship and want bigger, more realistic projects.',
     closing: 'The best way to learn is to ship. Pick a lab and start building.',
+    projectLinks: [
+      { label: 'Marketing Site Lab', url: '#labs' },
+      { label: 'E-Commerce Lab', url: '#labs' },
+      { label: 'Directory Lab', url: '#labs' }
+    ]
   },
   {
     slug: 'gtm-automation',
-    title: 'GTM Automation Labs',
+    title: 'Autonomous GTM & Sales Automation Engine',
     heroTitle: 'AI Automation for Sales & Marketing',
-    summary: 'Build the email, LinkedIn and outreach automations that go-to-market teams actually use.',
+    summary: 'Build 10 production revenue workflows: cold outreach, CRM hygiene, DNS deliverability, and revops dashboards.',
     image: '/images/course-gtm-automation.jpg',
-    video: '/videos/letsvibeai-course-gtm-automation.mp4',
+    video: '/videos/mastered/11-capstone-master.mp4',
     videoPoster: '/images/course-gtm-automation-poster.jpg',
     level: 'Intermediate',
-    duration: '~6 hours',
+    duration: '10 Workflows (~6 hours)',
     unit: 'Lab',
     featured: false,
     intro: {
       heading: 'Put AI to Work on Pipeline',
-      body: 'GTM engineering is building AI and automation for sales and marketing. These labs walk you through systems used by modern revenue teams — built with Make.com, Google Sheets and AI.',
+      body: 'GTM engineering is building AI and automation for sales and marketing. These labs walk you through systems used by modern revenue teams — built with Make.com, n8n, Google Sheets and AI.',
     },
     approach: [
-      'Real workflows from a working GTM team.',
-      'Deliverability best practices built in.',
-      'Review steps so nothing goes out unchecked.',
+      'Real workflows from working high-scale GTM teams.',
+      'DNS and email deliverability best practices built in.',
+      'Verification steps so no outreach fires unchecked.',
     ],
     helpsWith: [
-      'Automated email outreach pipelines.',
-      'AI-assisted LinkedIn content calendars.',
-      'Research-driven personalized cold email.',
+      'Automated personalized email outreach pipelines.',
+      'AI-assisted LinkedIn content scheduling and engagement.',
+      'Firmographic enrichment and pre-call intelligence briefs.',
     ],
     benefits: [
       'Hours saved every week on manual outreach.',
       'More personal messages at higher volume.',
-      'A skill set companies are hiring for now.',
+      'A skill set high-growth tech companies are actively hiring for.',
     ],
     whoFor: 'Sales reps, marketers, founders and RevOps teams who want to automate prospecting and content.',
     closing: 'Automate the busywork and spend your time on conversations that close.',
+    projectLinks: [
+      { label: 'GTM Workflow Templates', url: 'https://github.com/diamitani/letsvibeai' },
+      { label: 'Make.com Blueprints', url: 'https://make.com' }
+    ]
   },
 ];
 

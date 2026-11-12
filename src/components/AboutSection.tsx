@@ -27,8 +27,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreCourses }) 
 
               {/* In-Photo Name Tag */}
               <div className="absolute bottom-5 left-5 right-5 text-white">
-                <p className="font-serif italic text-lg text-white font-medium">Elena Rostova & Team</p>
-                <p className="text-xs text-white/80 font-mono">Founding AI Architect & Curriculum Lead</p>
+                <p className="font-serif italic text-lg text-white font-medium">Pat Diamitani & Faculty</p>
+                <p className="text-xs text-white/80 font-mono">Founder & Lead AI Systems Architect</p>
               </div>
             </div>
 

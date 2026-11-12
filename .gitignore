@@ -29,3 +29,5 @@ Thumbs.db
 /videos/
 public/videos/mastered/*.mp4
 public/videos/daily/*.mp4
+public/videos/deepdive-*
+public/videos/lesson-*

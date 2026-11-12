@@ -173,6 +173,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
             title={activeModule.title}
             subtitle={activeModule.tagline}
             videoSrc={activeModule.videoUrl || `/videos/mastered/0${activeModule.id}-what-is-vibe-coding-master.mp4`}
+            poster={activeModule.poster || '/images/course-vibe-coding-poster.jpg'}
             duration={activeModule.duration || '15:00'}
             onEnded={() => {
               if (!isCompleted) {

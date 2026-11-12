@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Search,
   Film,
@@ -31,6 +31,7 @@ import {
 import { YouTubeRostrItem } from '../../types';
 import { BrandedVideoPlayer } from '../BrandedVideoPlayer';
 import { PortfolioSandbox } from '../PortfolioSandbox';
+import { CapstoneHub } from '../CapstoneHub';
 import { PromptStudio } from '../PromptStudio';
 import { ArchitectureMap } from '../ArchitectureMap';
 import { DocumentStackViewer } from '../DocumentStackViewer';
@@ -39,7 +40,7 @@ import { AgentHarnessExplorer } from '../AgentHarnessExplorer';
 import { SkillsLibraryView } from './SkillsLibraryView';
 
 interface ExtendedDirectoryViewProps {
-  initialTab?: 'tutorials' | 'tools' | 'news' | 'agents';
+  initialTab?: 'tutorials' | 'tools' | 'news' | 'agents' | 'portfolio';
   onNavigateToCourses: () => void;
 }
 
@@ -47,7 +48,13 @@ export const ExtendedDirectoryView: React.FC<ExtendedDirectoryViewProps> = ({
   initialTab = 'tutorials',
   onNavigateToCourses
 }) => {
-  const [activeTab, setActiveTab] = useState<'tutorials' | 'tools' | 'news' | 'agents'>(initialTab);
+  const [activeTab, setActiveTab] = useState<'tutorials' | 'tools' | 'news' | 'agents' | 'portfolio'>(initialTab);
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeSandbox, setActiveSandbox] = useState<'model-sandbox' | 'prompt-compiler' | 'pal-architecture' | 'doc-stack'>('prompt-compiler');
@@ -180,6 +187,18 @@ export const ExtendedDirectoryView: React.FC<ExtendedDirectoryViewProps> = ({
         >
           <Bot className="w-4 h-4 text-[#ec4909]" />
           <span>Agent Platforms & Skills</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('portfolio')}
+          className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+            activeTab === 'portfolio'
+              ? 'bg-[#071B3A] text-white shadow-xs'
+              : 'bg-white text-[#4a4d4f] border border-[#4a4d4f]/15 hover:bg-[#F4F7FB] hover:text-[#071B3A]'
+          }`}
+        >
+          <Sparkles className="w-4 h-4 text-[#ec4909]" />
+          <span>Portfolio & Capstone</span>
         </button>
       </div>
 
@@ -422,6 +441,7 @@ export const ExtendedDirectoryView: React.FC<ExtendedDirectoryViewProps> = ({
                     videoSrc={brief.videoUrl}
                     youtubeId={brief.youtubeId}
                     duration={brief.duration}
+                    poster="/images/launch-video-poster.png"
                   />
                 </div>
               ))}
@@ -442,6 +462,27 @@ export const ExtendedDirectoryView: React.FC<ExtendedDirectoryViewProps> = ({
           <AgentHarnessExplorer />
           <div className="pt-6">
             <SkillsLibraryView onNavigateToHarness={() => {}} />
+          </div>
+        </div>
+      )}
+
+      {/* TAB 5: PORTFOLIO & SHIPPED BUILDS */}
+      {activeTab === 'portfolio' && (
+        <div className="space-y-12 animate-in fade-in duration-200">
+          <div className="p-6 rounded-3xl bg-white border border-[#4a4d4f]/10 shadow-xs space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#34D399]/15 text-[#071B3A] text-xs font-bold font-mono">
+              <span>PROOF OF WORK & VERIFIED DEPLOYS</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#071B3A] tracking-tight">
+              Shipped Builds Wall & Capstone Verification
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4a4d4f] max-w-2xl leading-relaxed">
+              Every graduate build is verified by an independent process. Pass all 4 deliverable gates to mint your accredited LetsVibeAI Vibe Engineer Certificate.
+            </p>
+          </div>
+          <CapstoneHub />
+          <div className="pt-6">
+            <PortfolioSandbox />
           </div>
         </div>
       )}

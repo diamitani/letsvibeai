@@ -34,6 +34,7 @@ export interface CourseModule {
   };
   exercise: string;
   quiz: QuizQuestion[];
+  poster?: string;
   videoUrl?: string;
   youtubeId?: string;
   duration?: string;
@@ -46,7 +47,7 @@ export interface YouTubeRostrItem {
   creator: string;
   creatorUrl?: string;
   youtubeId: string;
-  category: 'Harness Setup' | 'Fullstack Vibe Coding' | 'Agent Workflows & MCP' | 'Prompt Architecture & PAL' | 'Database & Auth' | 'Deployment & Scale';
+  category: 'Harness Setup' | 'Fullstack Vibe Coding' | 'Agent Workflows & MCP' | 'Prompt Architecture & PAL' | 'Database & Auth' | 'Deployment & Scale' | 'Frontier Agent Platforms';
   duration: string;
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'All Levels';
   summary: string;
@@ -162,7 +163,8 @@ export interface UserProfile {
   id: string;
   email: string;
   fullName: string;
-  plan: 'free' | 'pro' | 'cohort';
+  name?: string;
+  plan: 'free' | 'pro' | 'cohort' | string;
   avatarUrl: string;
   role: string;
   bio: string;
@@ -270,6 +272,23 @@ export interface GencyLibrarySkill {
   compat: string[];
   triggers: string[];
 }
+
+export type AppView =
+  | 'saas'
+  | 'courses'
+  | 'theater'
+  | 'labs'
+  | 'directory'
+  | 'tools'
+  | 'news'
+  | 'tutorials'
+  | 'agents'
+  | 'portfolio'
+  | 'dashboard'
+  | 'marketplace'
+  | 'agent-platform'
+  | 'harness-mastery'
+  | 'skills-library';
 
 
 

@@ -1,0 +1,68 @@
+{
+  "cm-00-promo": {
+    "seconds": 61.9
+  },
+  "cm-01-setup-pick-harness": {
+    "seconds": 137.4
+  },
+  "cm-02-context-files": {
+    "seconds": 117.1
+  },
+  "cm-03-prompts-production": {
+    "seconds": 94.5
+  },
+  "cm-04-skills-package-expertise": {
+    "seconds": 110.2
+  },
+  "cm-05-connectors-mcp": {
+    "seconds": 101.3
+  },
+  "cm-06-commands-workflows": {
+    "seconds": 90.7
+  },
+  "cm-07-agents-subagents": {
+    "seconds": 109.2
+  },
+  "cm-08-governance-teams": {
+    "seconds": 94.9
+  },
+  "cm-09-one-must-act": {
+    "seconds": 132.9
+  },
+  "cm-10-claude-october-2026": {
+    "seconds": 129.5
+  },
+  "cw-00-trailer": {
+    "seconds": 68.8
+  },
+  "cw-01-meet-cowork": {
+    "seconds": 116.8
+  },
+  "cw-02-setup": {
+    "seconds": 97.6
+  },
+  "cw-03-projects": {
+    "seconds": 106.5
+  },
+  "cw-04-artifacts": {
+    "seconds": 104.9
+  },
+  "cw-05-skills": {
+    "seconds": 102.5
+  },
+  "cw-06-connectors": {
+    "seconds": 104.1
+  },
+  "cw-07-plugins": {
+    "seconds": 109.4
+  },
+  "cw-08-agents": {
+    "seconds": 102.4
+  },
+  "cw-09-automate": {
+    "seconds": 97.7
+  },
+  "cw-10-safe-and-hired": {
+    "seconds": 104.8
+  }
+}

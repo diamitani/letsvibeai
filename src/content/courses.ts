@@ -187,45 +187,6 @@ export const courses: Course[] = [
     ]
   },
   {
-    slug: 'claude-coworker',
-    title: 'Claude as Coworker: Skills, MCP & Governance',
-    heroTitle: 'Claude as Coworker & Enterprise Skills Suite',
-    summary: 'Leverage Claude Projects, interactive Artifacts, Model Context Protocol (MCP), custom skills packaging, and team governance.',
-    image: '/images/course-project-labs.jpg',
-    video: '/videos/mastered/08-the-document-stack-master.mp4',
-    videoPoster: '/images/course-claude-mastery-poster.jpg',
-    level: 'Intermediate',
-    duration: '5 Modules (~6 hours)',
-    unit: 'Module',
-    featured: true,
-    intro: {
-      heading: 'Transform Claude into Your Long-Term Operating Partner',
-      body: 'Claude is more than a chatbot — when configured with Projects, Artifacts, MCP connectors, and reusable SKILL.md packages, it becomes an autonomous coworker that remembers your architecture, writes tested code, and enforces team standards.',
-    },
-    approach: [
-      'Project-level context engineering and instruction tuning.',
-      'Interactive prototype generation with Claude Artifacts.',
-      'Authoring production SKILL.md packages for reusable tasks.',
-      'Model Context Protocol integration with enterprise systems.',
-    ],
-    helpsWith: [
-      'Building team-wide AI skills libraries.',
-      'Automating repetitive pull request reviews and documentation.',
-      'Enforcing privacy and credential security guardrails.',
-    ],
-    benefits: [
-      'Zero prompt repetition across team members.',
-      'Permanent institutional agent memory that survives chat resets.',
-      'High-trust AI execution in enterprise environments.',
-    ],
-    whoFor: 'Engineering leads, technical project managers, and power users building organizational AI capability.',
-    closing: 'Turn individual AI use into an organizational superpower. Start Module 1 today.',
-    projectLinks: [
-      { label: 'Anthropic MCP Guide', url: 'https://modelcontextprotocol.io' },
-      { label: 'Skills Catalog', url: 'https://github.com/diamitani/letsvibeai' },
-    ]
-  },
-  {
     slug: 'project-labs',
     title: 'Vibe Coding Project Labs',
     heroTitle: 'Three Hands-On Project Labs',

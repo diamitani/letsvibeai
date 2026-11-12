@@ -6,12 +6,21 @@ Live site: [letsvibeai.com](https://www.letsvibeai.com)
 
 ## What's on the site
 
-- **4 free courses / 26 lessons:** Vibe Coding: Idea to Shipped App (10 modules with quizzes), Build with AI: Zero to Ship (10 days), Project Labs (3), GTM Automation Labs (3)
-- **Builder Toolkit:** 11 building blocks, 11-document planning stack (copy/download), prompt library, checklists, glossary
-- **Pricing & offers:** Live Build Nights, 1:1 coaching, cohorts and team workshops
-- **Blog:** LiveBuildAI briefings and tool guides
+- **Claude Code Mastery:** 11 video lessons (trailer + 8 core lessons + 2 masterclasses)
+- **Claude Cowork: Your AI Coworker:** 11 video lessons (trailer + 10 lessons)
+- Every lesson has its own shareable link, e.g. `letsvibeai.com/courses/claude-cowork/05-skills`, with the video, lesson notes, a clickable transcript, progress tracking and auto-play of the next lesson
+- 4 reading courses: Vibe Coding, Zero to Ship, Project Labs, GTM Automation Labs
+- Blog and "Work with Pat" offers
+- **Free accounts:** course trailers are free to watch; every other lesson video asks visitors to create a free account (name, email, password). Progress is saved to their account and follows them to any device. The "My learning" page is at `/account`.
 
-Design system and sitemap: [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md).
+## Accounts (Supabase)
+
+Sign-in uses the Supabase project **Master** (`zuhacughnenhongixfre`).
+
+- **See who signed up:** Supabase dashboard → Authentication → Users (name is in the user's metadata as `full_name`).
+- **Lesson progress:** table `public.lv_lesson_progress` (each learner can only see their own rows).
+- **Password-reset emails** use Supabase's built-in email sender, which only sends a few emails per hour. Before you have lots of learners, add your own email sender (e.g. Resend) in Supabase → Authentication → Emails → SMTP settings, and add `https://www.letsvibeai.com/**` under Authentication → URL Configuration → Redirect URLs.
+- The lock is on the website itself. Someone technical could still find a video file's direct link, so don't put paid-only material behind it without moving videos to protected storage.
 
 ## Run it locally
 
@@ -25,13 +34,23 @@ npm run build    # production build into dist/
 
 | To change… | Edit this file |
 | --- | --- |
-| Headlines, offers, prices, FAQs, guides, plans | `src/content/site.ts` |
-| Course titles, summaries, course-page copy | `src/content/courses.ts` |
-| A lesson | `src/content/courses/<course>/<NN-lesson>.md` |
-| Add a lesson | Add a new numbered `.md` file to that course folder |
+| Course titles, descriptions, outcomes | `src/content/catalog.ts` |
+| Lesson notes (the text under each video) | `src/content/courses/<folder>/<NN-lesson>.md` |
+| Add a lesson | Add a numbered `.md` file to the course folder. For a video lesson, also add the video (see below) |
+| Prices and contact email | `src/content/site.ts` |
 | A blog post | `src/content/blog/<post>.md` |
-| Colors, fonts, spacing | `src/styles/tokens.css` |
-| Images | `public/images/` |
+| Colours and fonts | `tailwind.config.js` (official brand board: `letsvibeai-brand-direction.png`) |
+| Logo and app icon | `public/brand/` |
+
+### Adding or replacing a lesson video
+
+Each video lesson uses three files with the same name (the "video id", e.g. `cw-05-skills`):
+
+1. `public/videos/lessons/<id>.mp4`, the video (720p MP4, about 7 MB for two minutes)
+2. `public/images/lessons/<id>.jpg`, the thumbnail
+3. `public/transcripts/<id>.json`, the transcript (optional)
+
+Then add the video's length in seconds to `src/content/videos.json`. Claude Code lessons use the id `cm-<lesson file name>`, Cowork lessons `cw-<lesson file name>`.
 
 ### Contact form
 
@@ -46,3 +65,12 @@ Vercel builds every push to `main` (`vercel.json`: Vite, output `dist`, SPA rewr
 `modules/`, `templates/`, `checklists/`, `capstone/`, `resources/` and `videos/` hold the source course materials and HyperFrames video compositions.
 
 Photos: Unsplash (free license) and LetsVibeAI Build Night (Feb 2026).
+
+
+## Claude Mastery lesson scripts
+
+`pipeline/lessons/*.json` holds the Claude Mastery video scripts (one JSON file per lesson); `pipeline/README.md` explains how they are rendered into narrated videos. To regenerate the readable lesson pages in `src/content/courses/claude-mastery/` after editing a script, run from the repo root:
+
+```bash
+python3 pipeline/to_site.py
+```

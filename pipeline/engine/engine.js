@@ -63,7 +63,7 @@ function portal(cam, cx, cy, r, t, opts = {}) {
   p.innerHTML = `<div class="glow"></div><div class="disc"></div><div class="ring"></div><div class="person"></div>`;
   const person = p.querySelector('.person');
   if (opts.canvas) { person.appendChild(opts.canvas); }
-  else { const img = el('img'); img.src = '../assets/pat_portrait.png'; img.style.width = (opts.imgW ?? 2 * r * 1.12) + 'px'; person.appendChild(img); }
+  else { const img = el('img'); img.src = '../assets/brand_mark.png'; img.style.width = (opts.imgW ?? 2 * r * 0.8) + 'px'; person.appendChild(img); }
   cam.appendChild(p);
   const ring = p.querySelector('.ring'), glow = p.querySelector('.glow'), disc = p.querySelector('.disc');
   tl.fromTo(disc, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.0, ease: 'expo.out' }, t);
@@ -91,7 +91,7 @@ B.title = (sc, cam) => {
   const h = el('div', 'h', sc.headline); h.style.fontSize = '84px'; tw.appendChild(h); kinetic(h, t + 0.45);
   const s = el('div', 'sub', sc.sub); s.style.marginTop = '34px'; s.style.width = '820px'; tw.appendChild(s); rise(s, t + 1.1);
   const p = portal(cam, 1395, 470, 285, t + 0.3, { imgW: 640 }); pulses.push({ e: p._glow, base: .75, amp: .0 });
-  const np = place(el('div', 'nameplate glass', `<div class="nm">Patrick Diamitani</div><div class="rl">Your instructor</div>`), 1395 - 200, 790, 400);
+  const np = place(el('div', 'nameplate glass', `<div class="nm">LetsVibeAI</div><div class="rl">The AI Skills Institution</div>`), 1395 - 200, 790, 400);
   cam.appendChild(np);
   const instrLine = sc.lines[1] || sc.lines[0];
   tl.fromTo(np, { y: 30, opacity: 0, scale: .9 }, { y: 0, opacity: 1, scale: 1, duration: .8, ease: 'back.out(1.6)' }, Math.max(t + 1.2, instrLine.start - 0.2));
@@ -104,7 +104,7 @@ B.cameo = (sc, cam) => {
   const p = portal(cam, 1380, 520, 300, t + 0.1, { canvas: c });
   cameoCanvases.push({ c, sc, ctx: c.getContext('2d') });
   pulses.push({ e: p._glow, base: .55, amp: .6 });
-  const np = place(el('div', 'nameplate glass', `<div class="nm">Patrick Diamitani</div><div class="rl">LetsVibeAI</div>`), 1380 - 190, 772, 380);
+  const np = place(el('div', 'nameplate glass', `<div class="nm">LetsVibeAI</div><div class="rl">Core Curriculum</div>`), 1380 - 190, 772, 380);
   cam.appendChild(np); rise(np, t + 0.9, { y: 24 });
   if (sc.eyebrow) { const e = place(el('div', 'eyebrow', sc.eyebrow), 140, 200); cam.appendChild(e); rise(e, t, { y: 16 }); }
   const q = place(el('div', 'h', sc.quote), 140, 260, 860); q.style.fontSize = '104px'; cam.appendChild(q);

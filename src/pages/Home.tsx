@@ -12,7 +12,7 @@ export function Home() {
   const primary = user
     ? { label: 'Continue learning', to: '/account' }
     : null;
-  const claude = getCourse('claude-code')!;
+  const vibe = getCourse('vibe-coding')!;
   const reading = catalog.filter((c) => c.kind === 'reading');
   const videoMinutes = videoCourses.reduce((n, c) => n + courseMinutes(c), 0);
   const preview = [...videoCourses.flatMap((c) => c.lessons.filter((l) => l.number > 0).slice(0, 3).map((l) => ({ c, l })))];
@@ -26,28 +26,22 @@ export function Home() {
         <div className="wrap relative grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:py-24">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-white/80">
-              <img src="/brand/mark.svg" alt="" className="h-4 w-4" /> THE AI SKILLS INSTITUTION
+              <img src="/brand/mark.svg" alt="" className="h-4 w-4" /> THE AI SKILLS INSTITUTION • FLAGSHIP
             </p>
             <h1 className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.6rem]">
-              Real skills. <br className="hidden sm:block" />
-              <span className="grad-text">Lasting impact.</span>
+              Vibe Coding: <br className="hidden sm:block" />
+              <span className="grad-text">Idea to Shipped App.</span>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/75 sm:text-lg">
-              Learn to direct AI with free, plain-English video courses on Claude Code and Claude Cowork. Two-minute lessons,
-              a hands-on mission in each one, and no coding background needed.
+              Don't learn syntax — learn how modern software fits together. Direct AI agents with architectural precision,
+              master the 11 building blocks, and ship a revenue-ready web app in 10 hands-on modules.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              {primary ? (
-                <Link to={primary.to} className="btn-primary !px-6 !py-3.5 text-base">
-                  {primary.label} <ArrowRight className="h-4 w-4" />
-                </Link>
-              ) : (
-                <button type="button" onClick={() => openAuth('signup')} className="btn-primary !px-6 !py-3.5 text-base">
-                  Join free and start learning <ArrowRight className="h-4 w-4" />
-                </button>
-              )}
+              <Link to="/courses/vibe-coding" className="btn-primary !px-6 !py-3.5 text-base">
+                Start Vibe Coding course <ArrowRight className="h-4 w-4" />
+              </Link>
               <Link to="/courses" className="btn-ghost-dark !px-6 !py-3.5 text-base">
-                Explore courses
+                Explore all courses
               </Link>
             </div>
             <p className="mt-8 text-xs font-semibold tracking-[0.32em] text-white/60">
@@ -55,9 +49,9 @@ export function Home() {
             </p>
           </div>
           <div>
-            <VideoPlayer src={videoSrc('cm-00-promo')} poster={posterSrc('cm-00-promo')} title="Claude Code Mastery trailer" />
+            <VideoPlayer src="/videos/letsvibeai-course-vibe-coding.mp4" poster="/images/course-vibe-coding-poster.jpg" title="Vibe Coding: Idea to Shipped App" />
             <p className="mt-3 flex items-center gap-2 text-sm text-white/55">
-              <PlayCircle className="h-4 w-4 text-growth" /> Watch the trailer · 1 min · free
+              <PlayCircle className="h-4 w-4 text-growth" /> Watch the Vibe Coding trailer · 100% free curriculum
             </p>
           </div>
         </div>
@@ -106,14 +100,13 @@ export function Home() {
       {/* FLAGSHIP COURSES */}
       <section className="wrap py-16 sm:py-20">
         <div className="max-w-2xl">
-          <p className="eyebrow text-signal">Video courses</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Pick your path</h2>
+          <p className="eyebrow text-signal">Flagship Curriculum</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Pick your learning path</h2>
           <p className="mt-3 text-muted">
-            Building software with an agent? Start with Claude Code. Want Claude to handle your everyday work? Start with
-            Cowork. Each lesson is short enough to watch on a coffee break.
+            Start with our flagship Vibe Coding curriculum to master software architecture and direct AI agents, or level up with specialized agent training in Claude Code and Cowork.
           </p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {videoCourses.map((c) => (
             <CourseCard key={c.slug} course={c} large />
           ))}
@@ -178,30 +171,32 @@ export function Home() {
         </div>
       </section>
 
-      {/* INSTRUCTOR */}
+      {/* INSTRUCTION & ACADEMY PHILOSOPHY */}
       <section className="hero-bg relative overflow-hidden text-white">
         <div className="ribbons" aria-hidden />
         <div className="wrap relative grid items-center gap-10 py-16 sm:py-20 md:grid-cols-[auto_1fr]">
-          <div className="mx-auto h-56 w-56 overflow-hidden rounded-full bg-gradient-to-br from-signal via-violet to-growth p-1 sm:h-64 sm:w-64">
-            <img src="/images/pat.png" alt="Patrick Diamitani" className="h-full w-full rounded-full bg-navy-800 object-cover object-top" />
+          <div className="mx-auto flex h-48 w-48 items-center justify-center rounded-3xl bg-gradient-to-br from-signal via-violet to-growth p-1 shadow-lift sm:h-56 sm:w-56">
+            <div className="flex h-full w-full items-center justify-center rounded-[22px] bg-navy-900 p-8">
+              <img src="/brand/app-icon.svg" alt="LetsVibeAI Academy" className="h-full w-full object-contain" />
+            </div>
           </div>
           <div className="max-w-2xl">
-            <p className="eyebrow text-growth">Your instructor</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Patrick Diamitani</h2>
-            <p className="mt-1 text-white/60">Founder & Lead Instructor, LetsVibeAI · {site.location}</p>
+            <p className="eyebrow text-growth">The LetsVibeAI Standard</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Built by Operators for Builders</h2>
+            <p className="mt-1 text-white/60">Practical AI Curriculum & Architecture · {site.location}</p>
             <p className="mt-5 leading-7 text-white/80">
-              Pat leads go-to-market AI and automation work, and has built more than 150 custom AI workflows and
-              applications. He learned AI by shipping real things, not by studying syntax, and he teaches the same way:
-              you're the film director, not the camera operator.
+              Our curriculum is crafted by engineers and go-to-market operators who have built more than 150 production
+              AI workflows and web applications. We teach the architecture-first approach: you learn by shipping real things,
+              not by memorizing syntax. You are the film director; the AI agent is your crew.
             </p>
-            <p className="mt-4 text-sm text-white/60">Also founded Artispreneur and SalesGency.</p>
+            <p className="mt-4 text-sm text-white/60">100% open curriculum. Real code, real databases, real deployments.</p>
           </div>
         </div>
       </section>
 
       {/* MORE COURSES */}
       <section className="wrap py-16 sm:py-20">
-        <p className="eyebrow text-signal">Reading courses</p>
+        <p className="eyebrow text-signal">Specialized Labs & Deep Dives</p>
         <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Go deeper: build apps and automations</h2>
         <p className="mt-3 max-w-2xl text-muted">Step-by-step written lessons with prompts you can copy, exercises and projects.</p>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -211,13 +206,13 @@ export function Home() {
         </div>
       </section>
 
-      {/* WORK WITH PAT */}
-      <section id="work-with-pat" className="scroll-mt-20 bg-white py-16 sm:py-20">
+      {/* WORKSHOPS & ADVISORY */}
+      <section id="workshops" className="scroll-mt-20 bg-white py-16 sm:py-20">
         <div className="wrap">
-          <p className="eyebrow text-signal">Work with Pat</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Want help building it?</h2>
+          <p className="eyebrow text-signal">Live Programs</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Workshops & Private Mentorship</h2>
           <p className="mt-3 max-w-2xl text-muted">
-            The courses are free. When you want a live room, a coach or a workshop for your team, here's how.
+            The curriculum is 100% free online. When you want a live room, 1:1 project coaching or private workforce training for your team, explore our programs.
           </p>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {offers.map((o) => (
@@ -244,7 +239,7 @@ export function Home() {
           <div className="relative">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Your first lesson takes two minutes.</h2>
             <p className="mx-auto mt-3 max-w-xl text-white/70">
-              {totalVideoLessons} video lessons across Claude Code and Cowork. One free account unlocks them all.
+              Master vibe coding and AI agent directing. One free account unlocks all video lessons, transcripts, and missions.
             </p>
             {user ? (
               <Link to="/account" className="btn-primary mt-8 !px-7 !py-3.5 text-base">

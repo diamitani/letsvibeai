@@ -17,11 +17,13 @@ const redirects: Record<string, string> = {
   '/courses/claude-mastery': '/courses/claude-code',
   '/claude': '/courses/claude-code',
   '/cowork': '/courses/claude-cowork',
-  '/about': '/#work-with-pat',
+  '/about': '/#workshops',
+  '/workshops': '/#workshops',
+  '/work-with-pat': '/#workshops',
   '/login': '/account',
   '/dashboard': '/account',
-  '/pricing': '/#work-with-pat',
-  '/contact': '/#work-with-pat',
+  '/pricing': '/#workshops',
+  '/contact': '/#workshops',
 };
 
 function Routes() {

@@ -80,6 +80,31 @@ function loadLessons(folder: string, videoFor?: (fileSlug: string) => string | u
     });
 }
 
+const vibe: Course = {
+  slug: 'vibe-coding',
+  folder: 'vibe-coding',
+  title: 'Vibe Coding: Idea to Shipped App',
+  short: 'Vibe Coding',
+  tagline: "You Don't Need to Learn to Code — You Need to Learn How Software Fits Together",
+  summary:
+    'The flagship architecture-first course: learn how modern software fits together, direct AI agents with precision, and ship a real production product.',
+  level: 'Beginner',
+  unit: 'Module',
+  kind: 'video',
+  accent: 'from-signal via-violet to-growth',
+  trailerSrc: '/videos/letsvibeai-course-vibe-coding.mp4',
+  poster: '/images/course-vibe-coding-poster.jpg',
+  outcomes: [
+    'Turn a vague idea into a buildable, production-ready specification',
+    'Master the 11 software building blocks: front end, back end, auth, database, and payments',
+    'Direct AI agents with precision using architecture maps and PRDs',
+    'Ship safely with a pre-launch checklist on your custom domain',
+  ],
+  whoFor:
+    'Founders, operators, marketers, creators, educators and career changers who want to build real software with AI — without a computer-science background.',
+  lessons: loadLessons('vibe-coding'),
+};
+
 const claude: Course = {
   slug: 'claude-code',
   folder: 'claude-mastery',
@@ -93,7 +118,7 @@ const claude: Course = {
   kind: 'video',
   accent: 'from-signal via-violet to-growth',
   trailerId: 'cm-00-promo',
-  poster: posterSrc('cm-01-setup-pick-harness'),
+  poster: '/images/course-claude-mastery-poster.jpg',
   outcomes: [
     'Install Claude Code (or any harness) and know the five layers under the hood',
     'Write CLAUDE.md context files so every session starts smart',
@@ -120,7 +145,7 @@ const cowork: Course = {
   kind: 'video',
   accent: 'from-growth via-signal to-violet',
   trailerId: 'cw-00-trailer',
-  poster: posterSrc('cw-01-meet-cowork'),
+  poster: '/images/course-frontier-platforms-poster.jpg',
   outcomes: [
     'Know what Cowork is and when to use it instead of chat',
     'Set up projects that remember your files and instructions',
@@ -136,25 +161,27 @@ const cowork: Course = {
 
 const legacyAccents = ['from-violet to-signal', 'from-growth to-growth', 'from-signal to-growth', 'from-violet to-growth'];
 
-const readingCourses: Course[] = legacy.map((c, i) => ({
-  slug: c.slug,
-  folder: c.slug,
-  title: c.title,
-  short: c.title.split(':')[0],
-  tagline: c.intro.heading,
-  summary: c.summary,
-  level: c.level,
-  unit: c.unit,
-  kind: 'reading' as const,
-  accent: legacyAccents[i % legacyAccents.length],
-  trailerSrc: c.video,
-  poster: c.videoPoster || c.image,
-  outcomes: c.helpsWith,
-  whoFor: c.whoFor,
-  lessons: loadLessons(c.slug),
-}));
+const readingCourses: Course[] = legacy
+  .filter((c) => c.slug !== 'vibe-coding')
+  .map((c, i) => ({
+    slug: c.slug,
+    folder: c.slug,
+    title: c.title,
+    short: c.title.split(':')[0],
+    tagline: c.intro.heading,
+    summary: c.summary,
+    level: c.level,
+    unit: c.unit,
+    kind: 'reading' as const,
+    accent: legacyAccents[i % legacyAccents.length],
+    trailerSrc: c.video,
+    poster: c.videoPoster || c.image,
+    outcomes: c.helpsWith,
+    whoFor: c.whoFor,
+    lessons: loadLessons(c.slug),
+  }));
 
-export const catalog: Course[] = [claude, cowork, ...readingCourses];
+export const catalog: Course[] = [vibe, claude, cowork, ...readingCourses];
 export const videoCourses = catalog.filter((c) => c.kind === 'video');
 export const getCourse = (slug: string) =>
   catalog.find((c) => c.slug === slug) || (slug === 'claude-mastery' ? claude : undefined);

@@ -5,11 +5,12 @@ import { useAuth } from '../lib/auth';
 import { Logo } from './Brand';
 
 const links = [
+  { to: '/courses/vibe-coding', label: 'Vibe Coding' },
   { to: '/courses/claude-code', label: 'Claude Code' },
   { to: '/courses/claude-cowork', label: 'Cowork' },
   { to: '/courses', label: 'All courses' },
   { to: '/blog', label: 'Blog' },
-  { to: '/#work-with-pat', label: 'Work with Pat' },
+  { to: '/#workshops', label: 'Workshops' },
 ];
 
 export function Nav() {

@@ -39,7 +39,7 @@ export function Footer() {
           <p className="eyebrow text-white/40">LetsVibeAI</p>
           <ul className="mt-4 space-y-2.5 text-sm">
             <li><Link to="/account" className="hover:text-white">My learning</Link></li>
-            <li><Link to="/#work-with-pat" className="hover:text-white">Work with Pat</Link></li>
+            <li><Link to="/#workshops" className="hover:text-white">Workshops & Mentorship</Link></li>
             <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
             {site.socials.map((s) => (
               <li key={s.href}>

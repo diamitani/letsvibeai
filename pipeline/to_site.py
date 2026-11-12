@@ -41,7 +41,7 @@ def scene(s):
     if t in ('title', 'next'):
         return ''
     if t == 'cameo':
-        md += [f'> **{clean(s.get("quote"))}**', '> — Pat Diamitani', '', bullets(s.get('items'), 't', 'x')]
+        md += [f'> **{clean(s.get("quote"))}**', '> — LetsVibeAI Curriculum', '', bullets(s.get('items'), 't', 'x')]
         return '\n'.join(md)
     md.append(f'## {head}')
     if t == 'statement':

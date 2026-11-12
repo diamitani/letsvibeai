@@ -15,8 +15,8 @@ export const site = {
   // receive form submissions. Without it, the form opens the visitor's email app.
   contactEndpoint: (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined) || '',
   // Countdown on the "Ways to learn" section. Set to '' to hide it.
-  offerDeadline: '2026-10-31T23:59:59-05:00',
-  offerDeadlineLabel: 'Founding pricing ends in',
+  offerDeadline: '',
+  offerDeadlineLabel: '',
   socials: [
     { kind: 'linkedin', href: 'https://www.linkedin.com/in/diamitani', label: 'LinkedIn' },
     { kind: 'github', href: 'https://github.com/diamitani/letsvibeai', label: 'GitHub' },
@@ -26,7 +26,7 @@ export const site = {
 export const nav = [
   { label: 'Courses', href: '/courses' },
   { label: 'Toolkit', href: '/toolkit' },
-  { label: 'Pricing', href: '/pricing' },
+  { label: 'Workshops', href: '/#workshops' },
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
 ];
@@ -34,35 +34,32 @@ export const nav = [
 export const primaryCta = { label: 'Start Free', href: '/courses/vibe-coding' };
 export const meetingCta = { label: 'Book a Build Call', href: '/contact' };
 
-// "Ways to learn" — paid offers. Edit prices any time.
+// "Ways to learn" — programs & mentorship (no pricing on site)
 export const offers = [
   {
-    badge: 'Popular',
+    badge: 'Cohort',
     badgeIcon: 'crown',
     title: 'Live Build Nights',
-    description: 'Build alongside other beginners in a guided, hands-on session — in Chicago or online.',
-    price: '$49',
-    per: '/ Session',
+    description: 'Build alongside other builders in a guided, hands-on session — in Chicago or online.',
+    format: 'Guided Hands-on Cohort',
     href: '/contact?topic=Live%20Build%20Night',
     art: 'laptop',
   },
   {
-    badge: 'New',
+    badge: 'Mentorship',
     badgeIcon: 'zap',
     title: '1:1 AI Build Coaching',
-    description: 'Bring your idea. Leave with a working tool, a clear plan and the prompts to keep going.',
-    price: '$149',
-    per: '/ Hour',
+    description: 'Bring your idea. Leave with a working tool, an architecture plan, and custom prompts.',
+    format: 'Private 1:1 Sessions',
     href: '/contact?topic=1%3A1%20Coaching',
     art: 'spark',
   },
   {
-    badge: 'Teams',
+    badge: 'Organizations',
     badgeIcon: 'users',
     title: 'Team & Workforce Workshops',
-    description: 'A half-day workshop that gets your sales, marketing, ops or public-service team building with AI.',
-    price: '$1,500',
-    per: '/ Workshop',
+    description: 'Custom training that gets your company, startup, or public-service team directing AI agents.',
+    format: 'Custom Institutional Program',
     href: '/contact?topic=Team%20Workshop',
     art: 'building',
   },
@@ -88,14 +85,13 @@ export const features = [
 
 export const guides = [
   {
-    name: 'Pat Diamitani',
-    role: 'Founder & Lead Instructor',
-    bio: 'Learned AI from practical execution. Now leads GTM AI & automation at scale and has built 150+ custom AI workflows and applications.',
-    image: '', // add /images/guide-pat.jpg and set the path here
-    initials: 'PD',
+    name: 'LetsVibeAI Operator Network',
+    role: 'Curriculum Architects & Instructors',
+    bio: 'Built by practitioners and engineers who have shipped 150+ production AI workflows, applications, and autonomous agents at enterprise scale.',
+    image: '',
+    initials: 'LV',
     links: [
-      { kind: 'linkedin', href: 'https://www.linkedin.com/in/diamitani', label: 'Pat on LinkedIn' },
-      { kind: 'github', href: 'https://github.com/diamitani', label: 'Pat on GitHub' },
+      { kind: 'github', href: 'https://github.com/diamitani/letsvibeai', label: 'LetsVibeAI on GitHub' },
     ],
   },
   {

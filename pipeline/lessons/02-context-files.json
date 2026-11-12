@@ -1,12 +1,13 @@
 {
   "slug": "02-context-files", "course": "Claude Mastery", "lesson": 2,
-  "title": "Context files that remember for you", "voice": "af_heart",
+  "title": "Context files that remember for you", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 3, "title": "Prompts that survive production"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Foundations", "min": 7,
      "headline": "Context files that <em>remember for you</em>",
      "sub": "Write it once. Every session starts smart.",
-     "lines": ["Lesson two. Context files.", "Your instructor is Patrick Diamitani.", "This is the single biggest upgrade most people never make."]},
+     "lines": ["Lesson two. Context files.", "Built by operators for builders, at LetsVibeAI.", "This is the single biggest upgrade most people never make."]},
     {"type": "compare", "chapter": "The problem",
      "eyebrow": "The problem", "headline": "Say it once. <em>Reuse it forever.</em>",
      "lines": ["Every new session starts with a blank memory.",

@@ -1,36 +1,36 @@
 {
   "cm-00-promo": {
-    "seconds": 61.9
+    "seconds": 46.9
   },
   "cm-01-setup-pick-harness": {
-    "seconds": 137.4
+    "seconds": 122.7
   },
   "cm-02-context-files": {
-    "seconds": 117.1
+    "seconds": 103.0
   },
   "cm-03-prompts-production": {
-    "seconds": 94.5
+    "seconds": 80.5
   },
   "cm-04-skills-package-expertise": {
-    "seconds": 110.2
+    "seconds": 95.7
   },
   "cm-05-connectors-mcp": {
-    "seconds": 101.3
+    "seconds": 85.7
   },
   "cm-06-commands-workflows": {
-    "seconds": 90.7
+    "seconds": 75.7
   },
   "cm-07-agents-subagents": {
-    "seconds": 109.2
+    "seconds": 95.6
   },
   "cm-08-governance-teams": {
-    "seconds": 94.9
+    "seconds": 80.1
   },
   "cm-09-one-must-act": {
-    "seconds": 132.9
+    "seconds": 118.1
   },
   "cm-10-claude-october-2026": {
-    "seconds": 129.5
+    "seconds": 114.9
   },
   "cw-00-trailer": {
     "seconds": 68.8
@@ -64,5 +64,35 @@
   },
   "cw-10-safe-and-hired": {
     "seconds": 104.8
+  },
+  "vc-01-what-is-vibe-coding": {
+    "seconds": 127.6
+  },
+  "vc-02-ai-fundamentals": {
+    "seconds": 127.8
+  },
+  "vc-03-ai-landscape": {
+    "seconds": 119.9
+  },
+  "vc-04-web-app-architecture": {
+    "seconds": 135.0
+  },
+  "vc-05-the-toolbox": {
+    "seconds": 116.9
+  },
+  "vc-06-talking-to-ai": {
+    "seconds": 124.8
+  },
+  "vc-07-agents": {
+    "seconds": 90.2
+  },
+  "vc-08-document-stack": {
+    "seconds": 119.3
+  },
+  "vc-09-build-process": {
+    "seconds": 112.3
+  },
+  "vc-10-ship-it": {
+    "seconds": 123.7
   }
 }

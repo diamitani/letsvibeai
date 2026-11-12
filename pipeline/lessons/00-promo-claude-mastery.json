@@ -1,13 +1,14 @@
 {
   "slug": "00-promo-claude-mastery", "course": "Claude Mastery", "lesson": 0, "badge": "Trailer",
-  "title": "Claude Mastery — Trailer", "voice": "af_heart",
+  "title": "Claude Mastery — Trailer", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"promo": true, "lesson": 1, "title": "Pick & install your agent harness"},
   "scenes": [
     {"type": "statement", "chapter": "The shift", "lead": 1.0,
      "eyebrow": "LetsVibeAI presents", "headline": "Stop prompting. <em>Start directing.</em>",
      "lines": ["Most people use AI like a search box.", "The best builders direct it, like a team."]},
-    {"type": "cameo", "clip": "describe", "chapter": "In Pat's words",
-     "eyebrow": "In Pat's words", "quote": "You describe.<br><em>Agents build.</em>",
+    {"type": "cameo", "clip": "describe", "chapter": "The Builder Mindset",
+     "eyebrow": "The Builder Mindset", "quote": "You describe.<br><em>Agents build.</em>",
      "items": [
        {"t": "Plain language, typed or spoken", "icon": "mic", "at": 1.6},
        {"t": "Agents write the code", "icon": "bot", "at": 3.9}]},
@@ -28,7 +29,7 @@
        {"value": 2, "label": "Masterclasses", "cue": 0.6},
        {"value": 10, "label": "Hands-on missions", "cue": 1}]},
     {"type": "next", "chapter": "Start here", "tail": 1.6,
-     "lines": ["Your instructor is Patrick Diamitani.", {"say": "Start with lesson one, at Lets Vibe A I dot com.", "cap": "Start with lesson one, at letsvibeai.com."},
+     "lines": ["Built by operators for builders, at LetsVibeAI.", {"say": "Start with lesson one, at Lets Vibe A I dot com.", "cap": "Start with lesson one, at letsvibeai.com."},
                {"say": "Learn, build, ship.", "cap": "Learn. Build. Ship."}]}
   ]
 }

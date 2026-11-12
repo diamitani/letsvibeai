@@ -102,7 +102,7 @@ const vibe: Course = {
   ],
   whoFor:
     'Founders, operators, marketers, creators, educators and career changers who want to build real software with AI — without a computer-science background.',
-  lessons: loadLessons('vibe-coding'),
+  lessons: loadLessons('vibe-coding', (s) => `vc-${s}`),
 };
 
 const claude: Course = {

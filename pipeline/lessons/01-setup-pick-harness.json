@@ -3,7 +3,8 @@
  "course": "Claude Mastery",
  "lesson": 1,
  "title": "Pick & install your agent harness",
- "voice": "af_heart",
+ "voice": "am_adam",
+ "speed": 0.96,
  "next": {
   "lesson": 2,
   "title": "Context files that remember for you"
@@ -21,7 +22,7 @@
      "say": "Welcome to Claude Mastery, from Lets Vibe A.I.",
      "cap": "Welcome to Claude Mastery, from LetsVibeAI."
     },
-    "Your instructor is Patrick Diamitani.",
+    "Built by operators for builders, at LetsVibeAI.",
     "In this first lesson, you'll pick a harness, and get it running in about ten minutes."
    ]
   },
@@ -29,7 +30,7 @@
    "type": "cameo",
    "clip": "director",
    "chapter": "The mindset",
-   "eyebrow": "In Pat's words",
+   "eyebrow": "The Builder Mindset",
    "quote": "From <s>typist</s><br>to <em>director.</em>",
    "items": [
     {

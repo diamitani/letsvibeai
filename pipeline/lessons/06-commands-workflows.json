@@ -1,12 +1,13 @@
 {
   "slug": "06-commands-workflows", "course": "Claude Mastery", "lesson": 6,
-  "title": "Commands, prompts & workflows", "voice": "af_heart",
+  "title": "Commands, prompts & workflows", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 7, "title": "Agents & subagents: plan, build, ship"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Power features", "min": 7,
      "headline": "Commands &amp; <em>workflows</em>",
      "sub": "Your best prompts, one keystroke away.",
-     "lines": ["Lesson six. Commands.", "Your instructor is Patrick Diamitani.", "This is how you stop typing the same prompt every day."]},
+     "lines": ["Lesson six. Commands.", "Built by operators for builders, at LetsVibeAI.", "This is how you stop typing the same prompt every day."]},
     {"type": "terminal", "chapter": "The rule",
      "eyebrow": "The rule", "headline": "Same prompt again? <em>Make it a command.</em>",
      "sub": "Type a slash and a word.", "window": "~/my-app — claude",

@@ -5,7 +5,7 @@ description: Delegate like a lead, not a typist.
 ---
 
 > **You describe. Agents build.**
-> — Pat Diamitani
+> — LetsVibeAI Curriculum
 
 - **Plain language, typed or spoken**
 - **Agents write the code**

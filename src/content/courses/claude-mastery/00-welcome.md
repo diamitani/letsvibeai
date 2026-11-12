@@ -19,4 +19,4 @@ Describe the software you want in plain language, typed or spoken, and AI agents
 2. Do the mission while it's fresh. Open Claude Code (or your harness) next to the video.
 3. Tick **Mark complete** so your progress is saved on this device.
 
-Your instructor is **Patrick Diamitani**, founder of LetsVibeAI. Learn, build, ship.
+The LetsVibeAI Standard: Built by operators for builders. Learn, build, ship.

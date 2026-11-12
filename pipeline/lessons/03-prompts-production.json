@@ -1,12 +1,13 @@
 {
   "slug": "03-prompts-production", "course": "Claude Mastery", "lesson": 3,
-  "title": "Prompts that survive production", "voice": "af_heart",
+  "title": "Prompts that survive production", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 4, "title": "Skills: package your expertise"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Foundations", "min": 7,
      "headline": "Prompts that <em>survive production</em>",
      "sub": "Structure beats clever wording.",
-     "lines": ["Lesson three. Prompts that survive production.", "Your instructor is Patrick Diamitani.", "Clever wording isn't the trick. Structure is."]},
+     "lines": ["Lesson three. Prompts that survive production.", "Built by operators for builders, at LetsVibeAI.", "Clever wording isn't the trick. Structure is."]},
     {"type": "code", "chapter": "The structure",
      "eyebrow": "The structure", "headline": "Five parts that <em>hold up.</em>", "path": "prompt.md", "notesY": 380,
      "lines": ["Strong prompts have five parts.", "A role.", "A clear goal.", "Constraints, like length or tone.",

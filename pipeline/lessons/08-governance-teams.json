@@ -1,12 +1,13 @@
 {
   "slug": "08-governance-teams", "course": "Claude Mastery", "lesson": 8,
-  "title": "Governance for teams", "voice": "af_heart",
+  "title": "Governance for teams", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 9, "title": "Masterclass: One Must Act"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Teams", "min": 7,
      "headline": "Governance for <em>teams</em>",
      "sub": "Make it safe. Then make it stick.",
-     "lines": ["Lesson eight. Governance.", "Your instructor is Patrick Diamitani.", "How to roll agents out to a team, safely."]},
+     "lines": ["Lesson eight. Governance.", "Built by operators for builders, at LetsVibeAI.", "How to roll agents out to a team, safely."]},
     {"type": "compare", "chapter": "Two rulebooks",
      "eyebrow": "Two sets of rules", "headline": "Rules for agents. <em>Rules for people.</em>",
      "lines": ["Governance needs two sets of rules.", "Rules for the agents, written in their context files.", "And rules for the people, written down where everyone can see them."],

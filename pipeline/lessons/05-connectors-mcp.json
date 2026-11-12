@@ -1,12 +1,13 @@
 {
   "slug": "05-connectors-mcp", "course": "Claude Mastery", "lesson": 5,
-  "title": "Connectors & MCP", "voice": "af_heart",
+  "title": "Connectors & MCP", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 6, "title": "Commands, prompts & workflows"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Power features", "min": 7,
      "headline": "Connectors &amp; <em>MCP</em>",
      "sub": "Plug the agent into the tools you already use.",
-     "lines": ["Lesson five. Connectors.", "Your instructor is Patrick Diamitani.", "Let's plug the agent into the tools you already use."]},
+     "lines": ["Lesson five. Connectors.", "Built by operators for builders, at LetsVibeAI.", "Let's plug the agent into the tools you already use."]},
     {"type": "compare", "chapter": "The rule",
      "eyebrow": "The rule", "headline": "Connect. <em>Don't paste.</em>",
      "lines": ["Copying and pasting data into a chat goes stale the moment you do it.", "A connector lets the agent read live data, and take real actions."],

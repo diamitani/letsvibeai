@@ -37,3 +37,5 @@ pipeline/build/
 pipeline/out/
 pipeline/models/
 pipeline/node_modules/
+__pycache__/
+*.pyc

@@ -23,4 +23,4 @@ Ten short lessons and ten hands-on missions.
 - People leveling up in the role they already have
 - Anyone going after a new job who wants to prove real AI skills
 
-Your instructor is **Patrick Diamitani**. Start with Lesson 1. Learn, build, ship.
+The LetsVibeAI Standard: Built by operators for builders. Start with Lesson 1. Learn, build, ship.

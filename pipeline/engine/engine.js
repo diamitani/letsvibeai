@@ -99,22 +99,20 @@ B.title = (sc, cam) => {
 
 B.cameo = (sc, cam) => {
   const t = sc.start;
-  // canvas with Pat's real footage (bg removed)
-  const c = el('canvas'); c.width = 680; c.height = 620; c.style.width = '800px'; c.style.height = '729px';
-  const p = portal(cam, 1380, 520, 300, t + 0.1, { canvas: c });
-  cameoCanvases.push({ c, sc, ctx: c.getContext('2d') });
+  // Institutional Gateway V Brand Portal — pure motion graphics, zero video cameos
+  const p = portal(cam, 1380, 520, 300, t + 0.1, { imgW: 520 });
   pulses.push({ e: p._glow, base: .55, amp: .6 });
-  const np = place(el('div', 'nameplate glass', `<div class="nm">LetsVibeAI</div><div class="rl">Core Curriculum</div>`), 1380 - 190, 772, 380);
+  const np = place(el('div', 'nameplate glass', `<div class="nm">LetsVibeAI</div><div class="rl">The AI Skills Institution</div>`), 1380 - 190, 772, 380);
   cam.appendChild(np); rise(np, t + 0.9, { y: 24 });
   if (sc.eyebrow) { const e = place(el('div', 'eyebrow', sc.eyebrow), 140, 200); cam.appendChild(e); rise(e, t, { y: 16 }); }
   const q = place(el('div', 'h', sc.quote), 140, 260, 860); q.style.fontSize = '104px'; cam.appendChild(q);
   kinetic(q, t + 0.35, 0.09, 1.0);
   const strike = q.querySelector('.strk .ln');
-  if (strike) tl.to(strike, { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, sc.clip_start + 0.9);
+  if (strike) tl.to(strike, { scaleX: 1, duration: 0.55, ease: 'power3.inOut' }, (sc.start + 1.2));
   (sc.items || []).forEach((it, i) => {
     const r = place(el('div', 'row', `<div class="itile g">${icon(it.icon)}</div><div><div class="tt" style="font-size:30px">${it.t}</div></div>`), 146, 560 + i * 98);
     cam.appendChild(r);
-    tl.fromTo(r, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: .7, ease: 'power3.out' }, it.time);
+    tl.fromTo(r, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: .7, ease: 'power3.out' }, it.time || (t + 1.5 + i * 0.8));
   });
 };
 const cameoCanvases = [];

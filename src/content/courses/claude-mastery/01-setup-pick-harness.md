@@ -5,7 +5,7 @@ description: A working AI agent on your machine in about ten minutes.
 ---
 
 > **From typist to director.**
-> — Pat Diamitani
+> — LetsVibeAI Curriculum
 
 - **Describe what the scene needs**
 - **Review and steer the output**

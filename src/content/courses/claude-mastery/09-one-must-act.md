@@ -42,7 +42,7 @@ The order matters. Define from the end: the goal, the whole, the multipliers, th
 
 ## Finish. Process. Effective.
 
-Every step is held to Pat's standard, called FPE. Finish. Always ship complete things. No placeholders. Process. Work from repeatable systems, like skills and checklists. Effective. Judge it by results in reality, not by effort.
+Every step is held to the LetsVibeAI standard, called FPE. Finish. Always ship complete things. No placeholders. Process. Work from repeatable systems, like skills and checklists. Effective. Judge it by results in reality, not by effort.
 
 - **Finish** — Ship complete things — no placeholders
 - **Process** — Repeatable systems, skills, checklists

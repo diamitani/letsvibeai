@@ -1,12 +1,13 @@
 {
   "slug": "04-skills-package-expertise", "course": "Claude Mastery", "lesson": 4,
-  "title": "Skills: package your expertise", "voice": "af_heart",
+  "title": "Skills: package your expertise", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 5, "title": "Connectors & MCP"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Power features", "min": 7,
      "headline": "Skills: <em>package</em> your expertise",
      "sub": "Teach the agent a job once. It remembers forever.",
-     "lines": ["Lesson four. Skills.", "Your instructor is Patrick Diamitani.", "If you've explained a process three times, it should be a skill."]},
+     "lines": ["Lesson four. Skills.", "Built by operators for builders, at LetsVibeAI.", "If you've explained a process three times, it should be a skill."]},
     {"type": "code", "chapter": "What a skill is",
      "eyebrow": "What a skill is", "headline": "One job, done <em>your way.</em>", "path": ".claude/skills/pdf-report/", "notesY": 420,
      "lines": ["A skill teaches the agent one job, done your way.",

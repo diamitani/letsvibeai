@@ -64,7 +64,7 @@ export function Home() {
             [String(totalVideoLessons), 'video lessons'],
             [`${videoMinutes} min`, 'of focused video'],
             [String(catalog.length), 'free courses'],
-            ['$0', 'to start, forever'],
+            ['100%', 'Open curriculum'],
           ].map(([n, label]) => (
             <div key={label}>
               <dt className="sr-only">{label}</dt>
@@ -220,11 +220,14 @@ export function Home() {
                 <span className="eyebrow self-start rounded-full bg-violet/10 px-2.5 py-1 text-violet">{o.badge}</span>
                 <h3 className="mt-4 text-lg font-bold">{o.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-muted">{o.description}</p>
-                <p className="mt-5 text-3xl font-bold">
-                  {o.price} <span className="text-sm font-medium text-muted">{o.per}</span>
-                </p>
-                <a href={`mailto:${site.email}?subject=${encodeURIComponent(o.title)}`} className="btn-ghost mt-5">
-                  Ask about this
+                <div className="mt-5 border-t border-line/70 pt-3">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-growth">
+                    {/* @ts-ignore */}
+                    {o.format}
+                  </span>
+                </div>
+                <a href={`mailto:${site.email}?subject=${encodeURIComponent(o.title)}`} className="btn-ghost mt-4">
+                  Inquire & Apply
                 </a>
               </div>
             ))}

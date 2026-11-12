@@ -1,12 +1,13 @@
 {
   "slug": "10-claude-october-2026", "course": "Claude Mastery", "lesson": 10,
-  "title": "Masterclass: Claude in October 2026", "voice": "af_heart",
+  "title": "Masterclass: Claude in October 2026", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"final": true, "title": "Now go build."},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Masterclass", "min": 7,
      "headline": "Claude in <em>October 2026</em>",
      "sub": "Chat, agentic tasks and Code — and how to put them to work.",
-     "lines": ["Masterclass two. Claude, in October twenty twenty six.", "Your instructor is Patrick Diamitani.", "Here's what changed, and how to put it to work."]},
+     "lines": ["Masterclass two. Claude, in October twenty twenty six.", "Built by operators for builders, at LetsVibeAI.", "Here's what changed, and how to put it to work."]},
     {"type": "cards", "chapter": "Three ways to work",
      "eyebrow": "One conversation", "headline": "Three ways to work, <em>side by side.</em>",
      "lines": ["Claude now works three ways, side by side.", "Chat, to think and draft.",

@@ -1,14 +1,15 @@
 {
   "slug": "07-agents-subagents", "course": "Claude Mastery", "lesson": 7,
-  "title": "Agents & subagents: plan, build, ship", "voice": "af_heart",
+  "title": "Agents & subagents: plan, build, ship", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 8, "title": "Governance for teams"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Orchestration", "min": 7,
      "headline": "Agents &amp; subagents: <em>plan, build, ship</em>",
      "sub": "Delegate like a lead, not a typist.",
-     "lines": ["Lesson seven. Agents and subagents.", "Your instructor is Patrick Diamitani.", "This is where you stop typing, and start leading."]},
-    {"type": "cameo", "clip": "describe", "chapter": "In Pat's words",
-     "eyebrow": "In Pat's words", "quote": "You describe.<br><em>Agents build.</em>",
+     "lines": ["Lesson seven. Agents and subagents.", "Built by operators for builders, at LetsVibeAI.", "This is where you stop typing, and start leading."]},
+    {"type": "cameo", "clip": "describe", "chapter": "The Builder Mindset",
+     "eyebrow": "The Builder Mindset", "quote": "You describe.<br><em>Agents build.</em>",
      "items": [
        {"t": "Plain language, typed or spoken", "icon": "mic", "at": 1.6},
        {"t": "Agents write the code", "icon": "bot", "at": 3.9}],

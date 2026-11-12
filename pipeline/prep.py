@@ -5,7 +5,13 @@ lets the AUDIO set the timing, and writes build/<slug>/data.js + narration.wav.
 Usage: python3 prep.py <slug>"""
 import json, re, sys, os, glob
 import numpy as np, soundfile as sf
-from scipy.signal import resample_poly
+
+def resample_audio(s, sr, target_sr):
+    if sr == target_sr:
+        return s.astype(np.float32)
+    x = np.arange(len(s))
+    x_new = np.linspace(0, len(s) - 1, int(len(s) * target_sr / sr))
+    return np.interp(x_new, x, s).astype(np.float32)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SR = 48000
@@ -26,11 +32,13 @@ def tts(text, voice, speed, cache_dir):
     p = f"{cache_dir}/{key}.wav"
     if not os.path.exists(p):
         s, sr = kokoro().create(text, voice=voice, speed=speed, lang="en-us")
-        s = resample_poly(s, SR, sr).astype(np.float32)
-        # trim leading/trailing silence
+        s = resample_audio(s, sr, SR)
+        # trim leading/trailing silence with smooth 120ms fade padding
         a = np.abs(s); thr = 0.01 * a.max()
         idx = np.where(a > thr)[0]
-        if len(idx): s = s[max(0, idx[0] - 600): idx[-1] + 2400]
+        if len(idx):
+            s = s[max(0, idx[0] - 600): idx[-1] + 2400]
+            s = np.pad(s, (0, int(SR * 0.12)))
         sf.write(p, s, SR)
     s, _ = sf.read(p, dtype='float32')
     return s
@@ -82,7 +90,7 @@ def main(slug):
     L = json.load(open(f"{ROOT}/lessons/{slug}.json"))
     bdir = f"{ROOT}/build/{slug}"; os.makedirs(bdir, exist_ok=True)
     cache = f"{ROOT}/build/_tts"; os.makedirs(cache, exist_ok=True)
-    voice = L.get("voice", "af_heart"); speed = L.get("speed", 1.0)
+    voice = L.get("voice", "am_adam"); speed = L.get("speed", 0.96)
     t = 0.0
     chunks = []   # (start_time, np.array)
     cameo_audio = []
@@ -91,31 +99,34 @@ def main(slug):
         sc["start"] = round(t, 3)
         lead = sc.get("lead", 1.0 if si == 0 else 0.75)
         if sc["type"] == "cameo":
-            cdir = f"{ROOT}/assets/cameos/{sc['clip']}"
-            meta = json.load(open(f"{cdir}/meta.json"))
-            cs = t + lead
-            sc["clip_start"] = round(cs, 3)
-            sc["clip_frames"] = meta["frames"]
-            sc["clip_dur"] = meta["dur"]
-            cameo_audio.append((cs, f"{cdir}/audio.wav"))
-            sc["lines"] = [{"cap": seg["text"], "start": round(cs + seg["s"], 3), "end": round(cs + seg["e"], 3),
-                            "words": [{"w": w["w"], "s": round(cs + w["s"], 3), "e": round(cs + w["e"], 3)} for w in seg["words"]]}
-                           for seg in meta["segments"]]
+            tt = t + lead
+            sc["clip_start"] = round(tt, 3)
+            # Pure animated brand portal: quote and items voiced with natural Kokoro TTS
+            clean_q = re.sub(r'<[^>]+>', ' ', sc.get("quote", "")).strip()
+            clean_q = re.sub(r'\s+', ' ', clean_q)
+            lines = []
+            if clean_q:
+                a = tts(clean_q, voice, speed, cache); d = len(a) / SR
+                chunks.append((tt, a))
+                lines.append({"cap": clean_q, "start": round(tt, 3), "end": round(tt + d, 3), "words": word_times(clean_q, tt, d)})
+                tt += d + 0.6
             for it in sc.get("items", []):
-                if "at" in it: it["time"] = round(cs + it["at"], 3)
-            end = cs + meta["dur"]
-            # optional narrator line(s) after the clip
-            extra = []
-            tt = end + 0.5
+                it_text = it.get("t", "")
+                if it_text:
+                    ia = tts(it_text, voice, speed, cache); idur = len(ia) / SR
+                    it["time"] = round(tt, 3)
+                    chunks.append((tt, ia))
+                    lines.append({"cap": it_text, "start": round(tt, 3), "end": round(tt + idur, 3), "words": word_times(it_text, tt, idur)})
+                    tt += idur + 0.4
             for ln in sc.get("after", []):
                 say = ln if isinstance(ln, str) else ln["say"]
                 cap = ln if isinstance(ln, str) else ln.get("cap", say)
                 a = tts(say, voice, speed, cache); d = len(a) / SR
                 chunks.append((tt, a))
-                extra.append({"cap": cap, "start": round(tt, 3), "end": round(tt + d, 3), "words": word_times(cap, tt, d)})
-                tt += d + 0.4; end = tt
-            sc["lines"] += extra
-            t = end + sc.get("tail", 0.9)
+                lines.append({"cap": cap, "start": round(tt, 3), "end": round(tt + d, 3), "words": word_times(cap, tt, d)})
+                tt += d + 0.4
+            sc["lines"] = lines
+            t = tt + sc.get("tail", 0.9)
         else:
             tt = t + lead
             lines = []

@@ -1,12 +1,13 @@
 {
   "slug": "09-one-must-act", "course": "Claude Mastery", "lesson": 9,
-  "title": "Masterclass: One Must Act", "voice": "af_heart",
+  "title": "Masterclass: One Must Act", "voice": "am_adam",
+ "speed": 0.96,
   "next": {"lesson": 10, "title": "Masterclass: Claude in October 2026"},
   "scenes": [
     {"type": "title", "chapter": "Welcome", "kicker": "Masterclass", "min": 7,
      "headline": "One Must Act: <em>whole before multiply</em>",
      "sub": "A theory of goal achievement — for people, teams and agents.",
-     "lines": ["Masterclass one. One Must Act.", "A theory of goal achievement, created by Patrick Diamitani.", "It works for a single day, a team of agents, or a whole company."]},
+     "lines": ["Masterclass one. One Must Act.", "An operating framework for goal achievement, from the LetsVibeAI curriculum.", "It works for a single day, a team of agents, or a whole company."]},
     {"type": "equation", "chapter": "The principle",
      "eyebrow": "The principle", "headline": "Every goal is <em>multiplication.</em>",
      "lines": ["One Must Act says any goal is reached by multiplication.",
@@ -42,7 +43,7 @@
      "lines": ["The order matters.", "Define from the end: the goal, the whole, the multipliers, then the start.", "Then build from the start: zero, to one, to your multipliers, to one hundred."]},
     {"type": "cards", "chapter": "The FPE standard",
      "eyebrow": "The quality gate", "headline": "Finish. Process. <em>Effective.</em>",
-     "lines": [{"say": "Every step is held to Pat's standard, called F P E.", "cap": "Every step is held to Pat's standard, called FPE."},
+     "lines": [{"say": "Every step is held to the LetsVibeAI standard, called FPE.", "cap": "Every step is held to the LetsVibeAI standard, called FPE."},
                "Finish. Always ship complete things. No placeholders.", "Process. Work from repeatable systems, like skills and checklists.",
                "Effective. Judge it by results in reality, not by effort."],
      "cards": [

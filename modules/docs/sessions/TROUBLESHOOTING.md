@@ -1,5 +1,5 @@
 # Automated Session Troubleshooting & Incident Guide
-> **Generated:** 2026-11-11 23:23:44 · **Conversation ID:** `24129b65-3ee8-463d-99aa-5397317e3494`
+> **Generated:** 2026-11-12 03:28:06 · **Conversation ID:** `24129b65-3ee8-463d-99aa-5397317e3494`
 
 ---
 
@@ -25,6 +25,12 @@
 
 ### 4. Command failed with exit code 7
 - **Context & Symptom:** Command exited with non-zero code 7.
+- **Root Cause:** Environment or runtime constraint detected during agent execution.
+- **Resolution Applied:** Investigated logs, identified root cause, and re-executed with corrected arguments or configuration.
+- **Status:** ✅ Resolved & Verified
+
+### 5. Command failed with exit code 127
+- **Context & Symptom:** Command exited with non-zero code 127.
 - **Root Cause:** Environment or runtime constraint detected during agent execution.
 - **Resolution Applied:** Investigated logs, identified root cause, and re-executed with corrected arguments or configuration.
 - **Status:** ✅ Resolved & Verified

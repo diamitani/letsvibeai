@@ -24,6 +24,7 @@ dist-ssr/
 Thumbs.db
 .vercel
 .env*
+!.env.example
 
 # Raw video generation assets (large binaries in project root)
 /videos/
@@ -39,3 +40,11 @@ pipeline/models/
 pipeline/node_modules/
 __pycache__/
 *.pyc
+
+# Next.js
+.next/
+out/
+next-env.d.ts.bak
+
+# Local screenshots / previews
+screenshots/

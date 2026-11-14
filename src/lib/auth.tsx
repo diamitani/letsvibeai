@@ -1,116 +1,125 @@
-// Sign-in for learners (Supabase Auth, email + password).
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import type { User } from '@supabase/supabase-js';
-import { supabase } from './supabase';
+'use client';
 
-export interface Learner {
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { supabase, supabaseConfigured } from './supabase';
+import { clearLocalProgress, syncProgress } from './progress';
+
+export type AuthMode = 'signin' | 'signup' | 'forgot';
+
+export interface AuthUser {
   id: string;
   email: string;
   name: string;
 }
 
-type Mode = 'signup' | 'signin' | 'forgot';
-
 interface AuthState {
-  user: Learner | null;
+  user: AuthUser | null;
   ready: boolean;
-  recovering: boolean; // arrived from a password-reset email
-  modal: { open: boolean; mode: Mode; reason?: string };
-  openAuth: (mode?: Mode, reason?: string) => void;
+  configured: boolean;
+  modal: { open: boolean; mode: AuthMode; reason?: string };
+  openAuth: (mode?: AuthMode, reason?: string) => void;
   closeAuth: () => void;
-  signUp: (name: string, email: string, password: string) => Promise<string | null>;
-  signIn: (email: string, password: string) => Promise<string | null>;
-  sendReset: (email: string) => Promise<string | null>;
-  updatePassword: (password: string) => Promise<string | null>;
+  signUp: (name: string, email: string, password: string) => Promise<string | undefined>;
+  signIn: (email: string, password: string) => Promise<string | undefined>;
+  sendReset: (email: string) => Promise<string | undefined>;
   signOut: () => Promise<void>;
 }
 
 const Ctx = createContext<AuthState | null>(null);
 
-const toLearner = (u: User | null | undefined): Learner | null =>
-  u
-    ? {
-        id: u.id,
-        email: u.email || '',
-        name: (u.user_metadata?.full_name as string) || (u.email || '').split('@')[0],
-      }
-    : null;
-
-// Turn Supabase error text into plain English
-function friendly(msg: string) {
-  const m = msg.toLowerCase();
-  if (m.includes('invalid login')) return 'That email and password don’t match. Try again or reset your password.';
-  if (m.includes('already registered') || m.includes('already been registered')) return 'You already have an account with this email. Sign in instead.';
-  if (m.includes('password should be') || m.includes('weak')) return 'Pick a stronger password: at least 8 characters.';
-  if (m.includes('rate limit') || m.includes('too many')) return 'Too many attempts. Wait a minute and try again.';
-  if (m.includes('email') && m.includes('invalid')) return 'That email address doesn’t look right.';
-  if (m.includes('fetch') || m.includes('network')) return 'Can’t reach the server. Check your connection and try again.';
-  return msg;
+function toUser(u: { id: string; email?: string; user_metadata?: Record<string, unknown> } | null): AuthUser | null {
+  if (!u) return null;
+  return {
+    id: u.id,
+    email: u.email || '',
+    name: String(u.user_metadata?.full_name || u.user_metadata?.name || u.email || 'Learner'),
+  };
 }
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<Learner | null>(null);
-  const [ready, setReady] = useState(false);
-  const [recovering, setRecovering] = useState(false);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [ready, setReady] = useState(!supabaseConfigured);
   const [modal, setModal] = useState<AuthState['modal']>({ open: false, mode: 'signup' });
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(toLearner(data.session?.user));
+    if (!supabase) {
       setReady(true);
+      return;
+    }
+    let off = false;
+    supabase.auth.getSession().then(({ data }) => {
+      if (off) return;
+      const next = toUser(data.session?.user ?? null);
+      setUser(next);
+      setReady(true);
+      void syncProgress(next?.id ?? null);
     });
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(toLearner(session?.user));
-      if (event === 'PASSWORD_RECOVERY') setRecovering(true);
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      const next = toUser(session?.user ?? null);
+      setUser(next);
+      void syncProgress(next?.id ?? null);
     });
-    return () => data.subscription.unsubscribe();
+    return () => {
+      off = true;
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
-  const openAuth = useCallback((mode: Mode = 'signup', reason?: string) => setModal({ open: true, mode, reason }), []);
+  const openAuth = useCallback((mode: AuthMode = 'signup', reason?: string) => setModal({ open: true, mode, reason }), []);
   const closeAuth = useCallback(() => setModal((m) => ({ ...m, open: false })), []);
 
-  const value: AuthState = {
-    user,
-    ready,
-    recovering,
-    modal,
-    openAuth,
-    closeAuth,
-    signUp: async (name, email, password) => {
-      const { data, error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: { data: { full_name: name.trim(), source: 'letsvibeai.com' }, emailRedirectTo: window.location.origin },
-      });
-      if (error) return friendly(error.message);
-      if (!data.session) return 'CHECK_EMAIL';
-      return null;
-    },
-    signIn: async (email, password) => {
-      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-      return error ? friendly(error.message) : null;
-    },
-    sendReset: async (email) => {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: `${window.location.origin}/account`,
-      });
-      return error ? friendly(error.message) : null;
-    },
-    updatePassword: async (password) => {
-      const { error } = await supabase.auth.updateUser({ password });
-      if (!error) setRecovering(false);
-      return error ? friendly(error.message) : null;
-    },
-    signOut: async () => {
-      await supabase.auth.signOut();
-    },
-  };
+  const signUp = useCallback(async (name: string, email: string, password: string) => {
+    if (!supabase) return 'Accounts are not connected in this preview. Progress still saves in this browser.';
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } },
+    });
+    if (error) return error.message;
+    if (data.user && !data.session) return 'CHECK_EMAIL';
+  }, []);
+
+  const signIn = useCallback(async (email: string, password: string) => {
+    if (!supabase) return 'Accounts are not connected in this preview. Progress still saves in this browser.';
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return error.message;
+  }, []);
+
+  const sendReset = useCallback(async (email: string) => {
+    if (!supabase) return 'Accounts are not connected in this preview.';
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/account`,
+    });
+    if (error) return error.message;
+  }, []);
+
+  const signOut = useCallback(async () => {
+    if (supabase) await supabase.auth.signOut();
+    setUser(null);
+    clearLocalProgress();
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      user,
+      ready,
+      configured: supabaseConfigured,
+      modal,
+      openAuth,
+      closeAuth,
+      signUp,
+      signIn,
+      sendReset,
+      signOut,
+    }),
+    [user, ready, modal, openAuth, closeAuth, signUp, signIn, sendReset, signOut],
+  );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export function useAuth() {
-  const c = useContext(Ctx);
-  if (!c) throw new Error('useAuth must be used inside <AuthProvider>');
-  return c;
+  const ctx = useContext(Ctx);
+  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+  return ctx;
 }

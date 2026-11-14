@@ -1,7 +1,7 @@
-import { Link } from '../lib/router';
+import Link from 'next/link';
 import { BrandStrip, Logo } from './Brand';
-import { catalog } from '../content/catalog';
-import { site } from '../content/site';
+import { catalog } from '@/lib/catalog';
+import { site } from '@/lib/site';
 
 export function Footer() {
   return (
@@ -10,7 +10,7 @@ export function Footer() {
       <div className="watermark -right-16 top-16 hidden h-80 w-80 md:block" aria-hidden />
       <div className="wrap relative grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
         <div className="max-w-sm">
-          <Logo tagline />
+          <Logo dark tagline />
           <p className="mt-4 text-sm leading-6">
             <strong className="text-white">Real skills. Lasting impact.</strong> LetsVibeAI teaches people how to use AI
             confidently in their jobs and lives, then turns learning into real projects, workshops and community outcomes.
@@ -28,7 +28,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             {catalog.map((c) => (
               <li key={c.slug}>
-                <Link to={`/courses/${c.slug}`} className="hover:text-white">
+                <Link href={`/courses/${c.slug}`} className="hover:text-white">
                   {c.title}
                 </Link>
               </li>
@@ -38,12 +38,18 @@ export function Footer() {
         <div>
           <p className="eyebrow text-white/40">LetsVibeAI</p>
           <ul className="mt-4 space-y-2.5 text-sm">
-            <li><Link to="/account" className="hover:text-white">My learning</Link></li>
-            <li><Link to="/#workshops" className="hover:text-white">Workshops & Mentorship</Link></li>
-            <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
+            <li><Link href="/paths" className="hover:text-white">Idea to shipped product</Link></li>
+            <li><Link href="/library" className="hover:text-white">Library</Link></li>
+            <li><Link href="/account" className="hover:text-white">My learning</Link></li>
+            <li><Link href="/workshops" className="hover:text-white">Workshops & Mentorship</Link></li>
+            <li><Link href="/pricing" className="hover:text-white">Pricing</Link></li>
+            <li><Link href="/about" className="hover:text-white">About</Link></li>
+            <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
             {site.socials.map((s) => (
               <li key={s.href}>
-                <Link to={s.href} className="hover:text-white">{s.label}</Link>
+                <a href={s.href} className="hover:text-white" target="_blank" rel="noreferrer">
+                  {s.label}
+                </a>
               </li>
             ))}
           </ul>

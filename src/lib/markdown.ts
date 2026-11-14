@@ -5,7 +5,6 @@ export interface Doc {
   body: string;
 }
 
-// Reads the `--- key: value ---` block at the top of a markdown file.
 export function parseDoc(raw: string): Doc {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!m) return { meta: {}, body: raw };
@@ -17,8 +16,6 @@ export function parseDoc(raw: string): Doc {
   return { meta, body: raw.slice(m[0].length) };
 }
 
-// Content is written by us (repo files), so rendering HTML from it is safe.
 export const renderMarkdown = (md: string) => marked.parse(md, { async: false }) as string;
 
-// First "# Heading" in a file, used as a title fallback.
 export const firstHeading = (md: string) => md.match(/^#\s+(.+)$/m)?.[1]?.trim();

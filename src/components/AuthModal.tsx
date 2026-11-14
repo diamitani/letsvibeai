@@ -1,11 +1,12 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Eye, EyeOff, Loader2, X } from 'lucide-react';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '@/lib/auth';
 import { Mark, Wordmark } from './Brand';
-import { totalVideoLessons } from '../content/catalog';
 
 export function AuthModal() {
-  const { modal, closeAuth, openAuth, signUp, signIn, sendReset } = useAuth();
+  const { modal, closeAuth, openAuth, signUp, signIn, sendReset, configured } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -69,26 +70,22 @@ export function AuthModal() {
         <button type="button" onClick={closeAuth} className="absolute right-3 top-3 z-10 rounded-full p-2 text-muted hover:bg-mist md:text-white/70 md:hover:bg-white/10" aria-label="Close">
           <X className="h-5 w-5" />
         </button>
-
-        {/* Brand panel */}
         <div className="hero-bg relative hidden overflow-hidden p-8 text-white md:block">
           <img src="/brand/mark.svg" alt="" aria-hidden className="pointer-events-none absolute -bottom-10 -right-10 w-64 opacity-[0.07]" />
-          <Wordmark tagline />
+          <Wordmark dark tagline />
           <p className="mt-10 text-2xl font-bold leading-tight">
             Real Skills.
             <br />
             <span className="grad-text">Lasting Impact.</span>
           </p>
           <ul className="mt-6 space-y-3 text-sm text-white/80">
-            {[`All ${totalVideoLessons} video lessons, free`, 'Progress saved across your devices', 'Lesson notes, transcripts and missions', 'New lessons as they launch'].map((t) => (
+            {['All video lessons, free', 'Progress saved across your devices', 'Lesson notes, transcripts and missions', 'New lessons as they launch'].map((t) => (
               <li key={t} className="flex gap-2.5">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-growth" /> {t}
               </li>
             ))}
           </ul>
         </div>
-
-        {/* Form */}
         <div className="p-6 sm:p-8">
           <div className="mb-5 flex items-center gap-2 md:hidden">
             <Mark className="h-8 w-8" />
@@ -102,14 +99,20 @@ export function AuthModal() {
                   ? 'Sign in to keep watching where you left off.'
                   : 'Enter your email and we’ll send you a reset link.')}
           </p>
-
+          {!configured && (
+            <p className="mt-4 rounded-xl bg-mist px-4 py-3 text-sm text-muted">
+              Account sync is not connected in this local preview. Lesson progress still saves in this browser.
+            </p>
+          )}
           <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
             {mode === 'signup' && (
-              <Field label="First name">
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-semibold text-ink">First name</span>
                 <input ref={first} required autoComplete="given-name" value={name} onChange={(e) => setName(e.target.value)} className="input" placeholder="Jordan" />
-              </Field>
+              </label>
             )}
-            <Field label="Email">
+            <label className="block">
+              <span className="mb-1.5 block text-sm font-semibold text-ink">Email</span>
               <input
                 ref={mode === 'signup' ? undefined : first}
                 type="email"
@@ -121,20 +124,19 @@ export function AuthModal() {
                 className="input"
                 placeholder="you@example.com"
               />
-            </Field>
+            </label>
             {mode !== 'forgot' && (
-              <Field
-                label="Password"
-                aside={
-                  mode === 'signin' ? (
+              <label className="block">
+                <span className="mb-1.5 flex items-center justify-between text-sm font-semibold text-ink">
+                  Password
+                  {mode === 'signin' ? (
                     <button type="button" className="text-xs font-semibold text-signal hover:underline" onClick={() => openAuth('forgot')}>
                       Forgot password?
                     </button>
                   ) : (
                     <span className="text-xs text-muted">8+ characters</span>
-                  )
-                }
-              >
+                  )}
+                </span>
                 <div className="relative">
                   <input
                     type={show ? 'text' : 'password'}
@@ -149,48 +151,26 @@ export function AuthModal() {
                     {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-              </Field>
+              </label>
             )}
-
             {error && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
             {notice && <p role="status" className="rounded-xl bg-growth/10 px-4 py-3 text-sm text-[#0a7a5a]">{notice}</p>}
-
             <button type="submit" disabled={busy || (mode === 'signup' && !name.trim()) || !email.trim()} className="btn-primary w-full !py-3.5 text-base disabled:opacity-60">
               {busy && <Loader2 className="h-4 w-4 animate-spin" />}
               {mode === 'signup' ? 'Create free account' : mode === 'signin' ? 'Sign in' : 'Send reset link'}
             </button>
           </form>
-
           <p className="mt-6 text-center text-sm text-muted">
             {mode === 'signup' ? (
-              <>Already have an account? <SwitchBtn onClick={() => openAuth('signin', modal.reason)}>Sign in</SwitchBtn></>
+              <>Already have an account? <button type="button" onClick={() => openAuth('signin', modal.reason)} className="font-semibold text-signal hover:underline">Sign in</button></>
             ) : mode === 'signin' ? (
-              <>New to LetsVibeAI? <SwitchBtn onClick={() => openAuth('signup', modal.reason)}>Create a free account</SwitchBtn></>
+              <>New to LetsVibeAI? <button type="button" onClick={() => openAuth('signup', modal.reason)} className="font-semibold text-signal hover:underline">Create a free account</button></>
             ) : (
-              <SwitchBtn onClick={() => openAuth('signin')}>Back to sign in</SwitchBtn>
+              <button type="button" onClick={() => openAuth('signin')} className="font-semibold text-signal hover:underline">Back to sign in</button>
             )}
           </p>
-          {mode === 'signup' && <p className="mt-4 text-center text-xs text-muted">We’ll only email you about your account and new lessons. No spam.</p>}
         </div>
       </div>
     </div>
   );
 }
-
-function Field({ label, aside, children }: { label: string; aside?: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <label className="block">
-      <span className="mb-1.5 flex items-center justify-between text-sm font-semibold text-ink">
-        {label}
-        {aside}
-      </span>
-      {children}
-    </label>
-  );
-}
-
-const SwitchBtn = ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => (
-  <button type="button" onClick={onClick} className="font-semibold text-signal hover:underline">
-    {children}
-  </button>
-);

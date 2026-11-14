@@ -1,76 +1,62 @@
 # LetsVibeAI — The AI Skills Institution
 
-**Learn AI. Build with AI. Grow with AI.** Free, plain-English courses that take people from "I've never coded" to shipping their own AI tools, automations and apps.
+**Learn AI. Build with AI. Grow with AI.** Free, plain-English courses that take people from a vibe-coded idea to a shipped product on any platform.
 
 Live site: [letsvibeai.com](https://www.letsvibeai.com)
 
-## What's on the site
+This app is a Next.js (App Router) site. The previous Vite SPA was replaced on the `redesign/idea-to-ship` branch.
 
-- **Claude Code Mastery:** 11 video lessons (trailer + 8 core lessons + 2 masterclasses)
-- **Claude Cowork: Your AI Coworker:** 11 video lessons (trailer + 10 lessons)
-- Every lesson has its own shareable link, e.g. `letsvibeai.com/courses/claude-cowork/05-skills`, with the video, lesson notes, a clickable transcript, progress tracking and auto-play of the next lesson
-- 4 reading courses: Vibe Coding, Zero to Ship, Project Labs, GTM Automation Labs
-- Blog and "Work with Pat" offers
-- **Free accounts:** course trailers are free to watch; every other lesson video asks visitors to create a free account (name, email, password). Progress is saved to their account and follows them to any device. The "My learning" page is at `/account`.
-
-## Accounts (Supabase)
-
-Sign-in uses the Supabase project **Master** (`zuhacughnenhongixfre`).
-
-- **See who signed up:** Supabase dashboard → Authentication → Users (name is in the user's metadata as `full_name`).
-- **Lesson progress:** table `public.lv_lesson_progress` (each learner can only see their own rows).
-- **Password-reset emails** use Supabase's built-in email sender, which only sends a few emails per hour. Before you have lots of learners, add your own email sender (e.g. Resend) in Supabase → Authentication → Emails → SMTP settings, and add `https://www.letsvibeai.com/**` under Authentication → URL Configuration → Redirect URLs.
-- The lock is on the website itself. Someone technical could still find a video file's direct link, so don't put paid-only material behind it without moving videos to protected storage.
-
-## Run it locally
+## Local development
 
 ```bash
-npm install      # first time only
-npm run dev      # opens http://localhost:3000
-npm run build    # production build into dist/
+cp .env.example .env.local   # optional
+npm install
+npm run dev                  # http://localhost:3000
+npm run build && npm start
+npm run lint
 ```
 
-## Where to edit things (no coding needed)
+### Environment variables
 
-| To change… | Edit this file |
+| Variable | Purpose |
 | --- | --- |
-| Course titles, descriptions, outcomes | `src/content/catalog.ts` |
-| Lesson notes (the text under each video) | `src/content/courses/<folder>/<NN-lesson>.md` |
-| Add a lesson | Add a numbered `.md` file to the course folder. For a video lesson, also add the video (see below) |
-| Prices and contact email | `src/content/site.ts` |
-| A blog post | `src/content/blog/<post>.md` |
-| Colours and fonts | `tailwind.config.js` (official brand board: `letsvibeai-brand-direction.png`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical site URL (default in code: `https://www.letsvibeai.com`) |
+| `NEXT_PUBLIC_SUPABASE_URL` | Existing LetsVibeAI Supabase project URL. Without it, accounts are disabled and lesson progress stays in the browser. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable (anon) key. `NEXT_PUBLIC_SUPABASE_ANON_KEY` is also accepted. |
+| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional form endpoint (e.g. Formspree). Without it, the contact form opens a mail draft to hello@letsvibeai.com. |
+
+If the Vercel project still has `VITE_SUPABASE_*` or `VITE_CONTACT_ENDPOINT` from the old app, add the `NEXT_PUBLIC_*` names above. Do not commit secrets.
+
+The progress table is still `public.lv_lesson_progress` (course + lesson). Sign-up still stores `full_name` in user metadata.
+
+## What's on the site
+
+- **Path:** idea → document & architect → build with AI → check & ship, mapped onto the real courses and platforms in the curriculum.
+- **Video courses:** Vibe Coding: Idea to Shipped App; Claude Code Mastery; Claude Cowork.
+- **Reading courses:** Ship It: Zero to Production on Every Platform; Frontier Agent Platforms; Full-Stack Vibe Coding with Lovable & Bolt; Project Labs; GTM Automation Labs.
+- **Library:** prompts, the 11-document planning stack, checklists, and glossary (from the open curriculum).
+- **Blog, workshops, pricing, about, account.**
+
+Every lesson has a shareable URL, e.g. `letsvibeai.com/courses/claude-cowork/05-skills`.
+
+## Where to edit content
+
+| To change… | Edit |
+| --- | --- |
+| Course titles, descriptions, outcomes | `src/lib/catalog.ts` and `src/lib/courses-legacy.ts` |
+| Lesson notes | `content/courses/<folder>/<NN-lesson>.md` |
+| Blog posts | `content/blog/<post>.md` |
+| Prompts, templates, checklists | `content/resources/`, `content/templates/`, `content/checklists/` (curriculum originals also remain at the repo root) |
+| Site copy, offers, plans | `src/lib/site.ts` |
+| Colours and fonts | `tailwind.config.ts` (brand board: `letsvibeai-brand-direction.png`) |
 | Logo and app icon | `public/brand/` |
 
-### Adding or replacing a lesson video
-
-Each video lesson uses three files with the same name (the "video id", e.g. `cw-05-skills`):
-
-1. `public/videos/lessons/<id>.mp4`, the video (720p MP4, about 7 MB for two minutes)
-2. `public/images/lessons/<id>.jpg`, the thumbnail
-3. `public/transcripts/<id>.json`, the transcript (optional)
-
-Then add the video's length in seconds to `src/content/videos.json`. Claude Code lessons use the id `cm-<lesson file name>`, Cowork lessons `cw-<lesson file name>`.
-
-### Contact form
-
-Without setup, the form opens the visitor's email app addressed to `hello@letsvibeai.com`. To receive submissions directly, create a free form at formspree.io and add its URL in Vercel → Project → Settings → Environment Variables as `VITE_CONTACT_ENDPOINT`, then redeploy.
+Lesson videos live at `public/videos/lessons/<id>.mp4` with posters in `public/images/lessons/` and optional transcripts in `public/transcripts/`. Durations are in `content/videos.json`.
 
 ## Deploy
 
-Vercel builds every push to `main` (`vercel.json`: Vite, output `dist`, SPA rewrites).
+Vercel should detect **Next.js**. `vercel.json` sets `"framework": "nextjs"` and does **not** use the old Vite `outputDirectory: dist` or SPA rewrite to `index.html`. If a project-level preset still says Vite / `dist`, change it to Next.js or the production deploy will fail.
 
-## Course materials
+## Curriculum source materials
 
-`modules/`, `templates/`, `checklists/`, `capstone/`, `resources/` and `videos/` hold the source course materials and HyperFrames video compositions.
-
-Photos: Unsplash (free license) and LetsVibeAI Build Night (Feb 2026).
-
-
-## Claude Mastery lesson scripts
-
-`pipeline/lessons/*.json` holds the Claude Mastery video scripts (one JSON file per lesson); `pipeline/README.md` explains how they are rendered into narrated videos. To regenerate the readable lesson pages in `src/content/courses/claude-mastery/` after editing a script, run from the repo root:
-
-```bash
-python3 pipeline/to_site.py
-```
+`modules/`, `templates/`, `checklists/`, `capstone/`, `resources/`, and `videos/` hold the source course materials and HyperFrames compositions used to produce the site content.

@@ -1,13 +1,10 @@
-import { Link } from '../lib/router';
-
-// Official LetsVibeAI identity (see letsvibeai-brand-direction.png):
-// Gateway V mark · "LetsVibe" + gradient "AI" · LEARN • BUILD • GROW
+import Link from 'next/link';
 
 export function Mark({ className = 'h-9 w-9' }: { className?: string }) {
   return <img src="/brand/mark.svg" alt="" aria-hidden className={className} width={36} height={36} />;
 }
 
-export function Wordmark({ dark = true, tagline = false, size = 'md' }: { dark?: boolean; tagline?: boolean; size?: 'md' | 'lg' }) {
+export function Wordmark({ dark = false, tagline = false, size = 'md' }: { dark?: boolean; tagline?: boolean; size?: 'md' | 'lg' }) {
   return (
     <span className="flex items-center gap-2.5">
       <Mark className={size === 'lg' ? 'h-12 w-12' : 'h-9 w-9'} />
@@ -25,9 +22,9 @@ export function Wordmark({ dark = true, tagline = false, size = 'md' }: { dark?:
   );
 }
 
-export function Logo({ dark = true, tagline = false }: { dark?: boolean; tagline?: boolean }) {
+export function Logo({ dark = false, tagline = false }: { dark?: boolean; tagline?: boolean }) {
   return (
-    <Link to="/" aria-label="LetsVibeAI home" className="shrink-0">
+    <Link href="/" aria-label="LetsVibeAI home" className="shrink-0">
       <Wordmark dark={dark} tagline={tagline} />
     </Link>
   );

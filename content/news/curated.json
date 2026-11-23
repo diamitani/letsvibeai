@@ -1,0 +1,122 @@
+[
+  {
+    "id": "2026-11-23-vercel-flag-definitions-check",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Catch missing feature flags before they reach production",
+    "url": "https://vercel.com/changelog/catch-missing-feature-flags-before-they-reach-production",
+    "date": "2026-11-23",
+    "takeaway": "Vercel Flags can now fail a deployment check when a flag exists in your code but was never created in the project, instead of silently falling back to its default value. If your AI agent sprinkles feature flags through a generated app, turn this check on so a half-finished feature can't switch itself on in production.",
+    "tags": ["Vercel", "Shipping", "Feature flags"]
+  },
+  {
+    "id": "2026-11-21-taaft-gemini-eiffel-agents",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "Gemini rebuilds the Eiffel Tower with 32 agents",
+    "url": "https://newsletter.theresanaiforthat.com/p/uber-lets-ai-drive-and-fly",
+    "date": "2026-11-21",
+    "takeaway": "Google had 32 Gemini agents work in parallel from about 70 archival blueprints and photos to generate a construction time-lapse, with the agents checking each other's work against the sources. The builder lesson: multi-agent setups get reliable when every agent is grounded in the same reference material and verifies its peers.",
+    "tags": ["Agents", "Gemini", "Multi-agent"]
+  },
+  {
+    "id": "2026-11-20-latent-space-formal-verification",
+    "type": "newsletter",
+    "source": "Latent Space",
+    "title": "The War Against Slop and an Emerging Weapon to Fight it: Formal Verification",
+    "url": "https://latent.space/p/formal-verification/",
+    "date": "2026-11-20",
+    "takeaway": "With so much code now AI-generated, a wave of companies (Harmonic, Theorem, Axiom Math and &Truth) is using math-style proofs to check that software actually does what it claims. You don't need proofs for a weekend app, but the takeaway scales down: write down what 'correct' means before you prompt, then make the agent prove it with tests.",
+    "tags": ["Code quality", "Verification", "Newsletter"]
+  },
+  {
+    "id": "2026-11-20-hf-harness-adapters",
+    "type": "rss",
+    "source": "Hugging Face Blog",
+    "title": "Introducing harness adapters: adapt your favorite model to your harness",
+    "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+    "date": "2026-11-20",
+    "takeaway": "Hugging Face trained small LoRA adapters that tune an open model to a specific agent harness, lifting Qwen3.8-27B from 39% to 55% on Terminal-Bench 2.1 under the pi harness while cutting average tokens per task from 2.9K to 1.5K. The model is only half the system: the harness you run it in changes both quality and cost.",
+    "tags": ["Open models", "Agents", "Harness"]
+  },
+  {
+    "id": "2026-11-20-simonw-token-fraud",
+    "type": "rss",
+    "source": "Simon Willison",
+    "title": "Token fraud is here and it's BAD",
+    "url": "https://simonwillison.net/2026/Nov/20/token-fraud-is-here-and-its-bad/",
+    "date": "2026-11-20",
+    "takeaway": "Claire Vo of ChatPRD describes groups looping free trials and promo codes to resell her product's AI usage or run their own businesses on top of her agent. If you ship an AI app with a free tier, rate limits, signup verification and per-user spend caps belong in version one, not after the first surprise bill.",
+    "tags": ["Security", "Pricing", "AI apps"]
+  },
+  {
+    "id": "2026-11-19-vercel-cli-help-search",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Agents can now find Vercel CLI commands by describing the task",
+    "url": "https://vercel.com/changelog/agents-can-now-find-vercel-cli-commands-by-describing-the-task",
+    "date": "2026-11-19",
+    "takeaway": "`vercel help search \"roll back production\" --with-help` returns the matching command plus its options, and can also return ready-to-fill `vercel api` calls as JSON. Upgrade the CLI so your coding agent stops guessing deploy commands and looks them up instead.",
+    "tags": ["Vercel", "CLI", "Agents"]
+  },
+  {
+    "id": "2026-11-19-gemini-api-tool-retrieval",
+    "type": "rss",
+    "source": "Google AI Blog",
+    "title": "Introducing Tool Retrieval in the Gemini API",
+    "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+    "date": "2026-11-19",
+    "takeaway": "Tool Retrieval, now in preview in the Gemini API, lets an agent work with hundreds of tools while spending fewer tokens on tool definitions. If your app has grown a long list of functions or MCP tools, this is the pattern to watch: load the tools a task needs, not all of them every turn.",
+    "tags": ["Gemini", "Tools", "MCP"]
+  },
+  {
+    "id": "2026-11-18-gemini-4-neon",
+    "type": "rss",
+    "source": "Google DeepMind",
+    "title": "Introducing Gemini 4 Neon",
+    "url": "https://deepmind.google/blog/introducing-gemini-4-neon/",
+    "date": "2026-11-18",
+    "takeaway": "Google's new mid-tier model is priced at $3 per million input tokens and $15 per million output, with a 1M-token context window and a 95% discount on cached input. For builders, the cached-input price is the story: keep your system prompt and project docs stable so repeat calls hit the cache.",
+    "tags": ["Models", "Gemini", "Pricing"]
+  },
+  {
+    "id": "2026-11-17-github-agent-host-protocol",
+    "type": "rss",
+    "source": "GitHub Blog",
+    "title": "Building the Agent Host Protocol for sessions that continue across devices",
+    "url": "https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/",
+    "date": "2026-11-17",
+    "takeaway": "GitHub explains the Agent Host Protocol, the open standard that lets a Copilot agent session started in one place keep running and be picked up from another device. Long-running agents are becoming normal, so design your own agent features around sessions that outlive a single browser tab.",
+    "tags": ["GitHub", "Agents", "Protocols"]
+  },
+  {
+    "id": "2026-11-17-pragmatic-inference-engineering",
+    "type": "newsletter",
+    "source": "The Pragmatic Engineer",
+    "title": "Inference engineering for software engineers",
+    "url": "https://newsletter.pragmaticengineer.com/p/inference-engineering-for-software-engineers",
+    "date": "2026-11-17",
+    "takeaway": "Companies are moving workloads to open models to cut AI spend, with Uber reporting a 50% drop in per-token cost and Pinterest 90%, and notes most teams get there through an inference provider rather than their own GPUs. Once your app has real traffic, the model bill is a product decision: know your cache hit rates, rate limits and tail latency.",
+    "tags": ["Cost", "Open models", "Newsletter"]
+  },
+  {
+    "id": "2026-11-12-github-agent-skills-guide",
+    "type": "rss",
+    "source": "GitHub Blog",
+    "title": "Build once, run on any agent: A practical guide to agent skills",
+    "url": "https://github.blog/ai-and-ml/github-copilot/build-once-run-on-any-agent-a-practical-guide-to-agent-skills/",
+    "date": "2026-11-12",
+    "takeaway": "An agent skill is a versioned folder built around a SKILL.md file that tells any agent when and how to do one repeatable task. Stop re-explaining your deploy steps or brand rules in every chat: write them once as a skill in your repo and every agent you use can follow them.",
+    "tags": ["Skills", "Agents", "Workflow"]
+  },
+  {
+    "id": "2026-11-22-verge-vibe-coding-gadgets",
+    "type": "rss",
+    "source": "The Verge AI",
+    "title": "The vibe-coding revolution is coming to all the gadgets",
+    "url": "https://www.theverge.com/column/1039139/vibe-coding-gadgets-tv-camera",
+    "date": "2026-11-22",
+    "takeaway": "The Verge's Stepback column looks at people using large language models to hack and customize their own hardware, something that used to take deep expertise. Vibe coding is leaving the browser: the same idea-to-working-thing loop now applies to TVs, cameras and the devices around you.",
+    "tags": ["Vibe coding", "Hardware", "Culture"]
+  }
+]

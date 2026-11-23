@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, Clapperboard, Hammer, PlayCircle, Rocket } from 'lucide-react';
 import { CourseCard } from '@/components/CourseCard';
 import { JoinButton } from '@/components/JoinButton';
+import { NewsStrip } from '@/components/NewsStrip';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { catalog, posterSrc, readingCatalog, totalVideoLessons, videoCourses, videoMinutesTotal } from '@/lib/catalog';
 import { offers, processSteps, site } from '@/lib/site';
@@ -117,6 +118,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <NewsStrip />
 
       <section className="wrap py-16 sm:py-20">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">

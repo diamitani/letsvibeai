@@ -1,14 +1,15 @@
 import type { MetadataRoute } from 'next';
 import { catalog } from '@/lib/catalog';
 import { getPosts } from '@/lib/blog';
+import { getNewsArticles } from '@/lib/news';
 import { getLibraryItems } from '@/lib/library';
 import { siteUrl } from '@/lib/utils';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ['/', '/paths', '/courses', '/library', '/blog', '/workshops', '/pricing', '/about', '/account'];
+  const staticPaths = ['/', '/paths', '/courses', '/news', '/library', '/blog', '/workshops', '/pricing', '/about', '/account'];
   const entries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: `${siteUrl}${path}`,
-    changeFrequency: path === '/blog' ? 'weekly' : 'monthly',
+    changeFrequency: path === '/news' ? 'daily' : path === '/blog' ? 'weekly' : 'monthly',
     priority: path === '/' ? 1 : 0.7,
   }));
   for (const c of catalog) {
@@ -19,6 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
   for (const p of getPosts()) {
     entries.push({ url: `${siteUrl}/blog/${p.slug}`, changeFrequency: 'yearly', priority: 0.5 });
+  }
+  for (const a of getNewsArticles()) {
+    entries.push({ url: `${siteUrl}/news/${a.slug}`, lastModified: a.date, changeFrequency: 'monthly', priority: 0.6 });
   }
   for (const item of getLibraryItems()) {
     entries.push({ url: `${siteUrl}/library/${item.kind}/${item.slug}`, changeFrequency: 'monthly', priority: 0.5 });

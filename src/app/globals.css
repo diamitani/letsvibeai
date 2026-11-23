@@ -69,3 +69,9 @@
 }
 
 .watermark { position: absolute; pointer-events: none; opacity: .06; background: url('/brand/mark.svg') no-repeat center / contain; }
+
+/* Vibe News article typography (Linear-Now inspired) */
+.prose-news { @apply text-[17px] leading-[1.8] text-ink/85; }
+.prose-news h2 { @apply mt-12 mb-4 text-[1.45rem] leading-snug tracking-[-0.02em]; }
+.prose-news p { @apply my-5; }
+.prose-news p strong:first-child { @apply text-signal; }

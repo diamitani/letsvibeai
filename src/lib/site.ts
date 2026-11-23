@@ -26,6 +26,7 @@ export const site = {
 export const nav = [
   { label: 'Path', href: '/paths' },
   { label: 'Courses', href: '/courses' },
+  { label: 'News', href: '/news' },
   { label: 'Library', href: '/library' },
   { label: 'Workshops', href: '/workshops' },
   { label: 'Blog', href: '/blog' },

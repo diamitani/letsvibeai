@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { parseDoc, firstHeading } from './markdown';
-import type { CuratedItem, NewsArticle, NewsFeedItem } from './news-types';
+import type { CuratedItem, NewsArticle, NewsFeedItem, NewsSource, NewsSourceWithCount } from './news-types';
 
 export * from './news-types';
 
@@ -68,4 +68,55 @@ export function getNewsFeed(): NewsFeedItem[] {
     if (d !== 0) return d;
     return a.kind === 'article' ? -1 : b.kind === 'article' ? 1 : 0;
   });
+}
+
+interface FeedsFile {
+  rss?: Array<Omit<NewsSource, 'kind'> & { url?: string }>;
+  newsletters?: Array<Omit<NewsSource, 'kind'> & { url?: string; via?: 'rss' | 'gmail' }>;
+}
+
+function normalizeSource(entry: Omit<NewsSource, 'kind'> & { url?: string; via?: 'rss' | 'gmail' }, kind: 'rss' | 'newsletter'): NewsSource {
+  return {
+    id: entry.id,
+    kind,
+    name: entry.name,
+    site: entry.site,
+    category: entry.category || (kind === 'newsletter' ? 'Newsletter' : 'Feed'),
+    description: entry.description || '',
+    url: entry.url,
+    via: entry.via || (kind === 'newsletter' ? (entry.url ? 'rss' : 'gmail') : 'rss'),
+  };
+}
+
+export function getNewsSources(): NewsSource[] {
+  const file = path.join(newsRoot, 'feeds.json');
+  if (!fs.existsSync(file)) return [];
+  const data = JSON.parse(fs.readFileSync(file, 'utf8')) as FeedsFile;
+  const rss = (data.rss || []).map((s) => normalizeSource(s, 'rss'));
+  const newsletters = (data.newsletters || []).map((s) => normalizeSource(s, 'newsletter'));
+  return [...newsletters, ...rss];
+}
+
+export function getRssSources(): NewsSource[] {
+  return getNewsSources().filter((s) => s.kind === 'rss');
+}
+
+export function getNewsletterSources(): NewsSource[] {
+  return getNewsSources().filter((s) => s.kind === 'newsletter');
+}
+
+export function withStoryCounts(sources: NewsSource[], curated: CuratedItem[] = getCurated()): NewsSourceWithCount[] {
+  const counts = new Map<string, number>();
+  for (const item of curated) {
+    counts.set(item.source, (counts.get(item.source) || 0) + 1);
+  }
+  return sources.map((s) => ({ ...s, storyCount: counts.get(s.name) || 0 }));
+}
+
+export function getRssSourcesWithCounts() {
+  return withStoryCounts(getRssSources());
+}
+
+export function getNewsletterSourcesWithCounts() {
+  return withStoryCounts(getNewsletterSources());
 }

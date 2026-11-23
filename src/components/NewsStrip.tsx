@@ -17,9 +17,14 @@ export function NewsStrip() {
           </h2>
           <p className="mt-3 text-muted">Today’s AI moves, translated into what to build, fix or try next.</p>
         </div>
-        <Link href="/news" className="btn-ghost shrink-0">
-          All news <ArrowRight className="h-4 w-4" />
-        </Link>
+        <div className="flex shrink-0 flex-wrap gap-3">
+          <Link href="/news/sources" className="btn-ghost">
+            Sources &amp; feeds
+          </Link>
+          <Link href="/news" className="btn-ghost">
+            All news <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
       <div className="mt-10 grid gap-6 lg:grid-cols-3">
         {latest && (

@@ -40,6 +40,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5 text-sm">
             <li><Link href="/paths" className="hover:text-white">Idea to shipped product</Link></li>
             <li><Link href="/news" className="hover:text-white">Vibe News</Link></li>
+            <li><Link href="/news/sources" className="hover:text-white">News sources & feeds</Link></li>
             <li><Link href="/library" className="hover:text-white">Library</Link></li>
             <li><Link href="/account" className="hover:text-white">My learning</Link></li>
             <li><Link href="/workshops" className="hover:text-white">Workshops & Mentorship</Link></li>

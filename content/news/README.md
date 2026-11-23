@@ -6,7 +6,7 @@ The `/news` section is generated statically from this folder. A daily routine (7
 | --- | --- |
 | `articles/YYYY-MM-DD-slug.md` | Original Daily AI Articles. Rendered in full at `/news/<filename-without-.md>`. |
 | `curated.json` | Curated picks from RSS feeds and newsletters (array, newest first is not required; the site sorts by `date`). |
-| `feeds.json` | Verified RSS/Atom feeds and newsletter sources the routine pulls from. |
+| `feeds.json` | Verified RSS/Atom feeds and newsletter sources the routine pulls from. Rendered as a public directory on `/news` and `/news/sources` (name, description, category, site, RSS, story count). |
 
 ## Article frontmatter
 

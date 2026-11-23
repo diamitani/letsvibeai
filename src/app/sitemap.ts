@@ -6,10 +6,10 @@ import { getLibraryItems } from '@/lib/library';
 import { siteUrl } from '@/lib/utils';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ['/', '/paths', '/courses', '/news', '/library', '/blog', '/workshops', '/pricing', '/about', '/account'];
+  const staticPaths = ['/', '/paths', '/courses', '/news', '/news/sources', '/library', '/blog', '/workshops', '/pricing', '/about', '/account'];
   const entries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: `${siteUrl}${path}`,
-    changeFrequency: path === '/news' ? 'daily' : path === '/blog' ? 'weekly' : 'monthly',
+    changeFrequency: path === '/news' || path === '/news/sources' ? 'daily' : path === '/blog' ? 'weekly' : 'monthly',
     priority: path === '/' ? 1 : 0.7,
   }));
   for (const c of catalog) {

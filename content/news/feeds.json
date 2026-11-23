@@ -1,26 +1,26 @@
 {
   "verifiedAt": "2026-11-23",
-  "notes": "RSS/Atom feeds verified to return valid XML (HTTP 200) on 2026-11-23. The daily routine reads these, picks the top builder-relevant items from the last 72 hours, and appends entries to curated.json. Never republish full article text: store headline, a 2-sentence original takeaway, source, date and the outbound URL only.",
+  "notes": "RSS/Atom feeds verified to return valid XML (HTTP 200) on 2026-11-23. The daily routine reads these, picks the top builder-relevant items from the last 72 hours, and appends entries to curated.json. Never republish full article text: store headline, a 2-sentence original takeaway, source, date and the outbound URL only. Descriptions are short editorial blurbs of what each source covers, used on /news and /news/sources.",
   "rss": [
-    { "id": "openai", "name": "OpenAI News", "url": "https://openai.com/news/rss.xml", "site": "https://openai.com/news", "category": "Labs" },
-    { "id": "deepmind", "name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "site": "https://deepmind.google/blog", "category": "Labs" },
-    { "id": "google-ai", "name": "Google AI Blog", "url": "https://blog.google/technology/ai/rss/", "site": "https://blog.google/technology/ai/", "category": "Labs" },
-    { "id": "huggingface", "name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "site": "https://huggingface.co/blog", "category": "Open models" },
-    { "id": "vercel", "name": "Vercel", "url": "https://vercel.com/atom", "site": "https://vercel.com/changelog", "category": "Ship" },
-    { "id": "github", "name": "GitHub Blog", "url": "https://github.blog/feed/", "site": "https://github.blog", "category": "Build" },
-    { "id": "supabase", "name": "Supabase Blog", "url": "https://supabase.com/rss.xml", "site": "https://supabase.com/blog", "category": "Build" },
-    { "id": "cloudflare", "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "site": "https://blog.cloudflare.com", "category": "Ship" },
-    { "id": "linear", "name": "Linear Changelog", "url": "https://linear.app/rss/changelog.xml", "site": "https://linear.app/changelog", "category": "Build" },
-    { "id": "simonw", "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/", "site": "https://simonwillison.net", "category": "Analysis" },
-    { "id": "hackernews", "name": "Hacker News (150+ points)", "url": "https://hnrss.org/frontpage?points=150", "site": "https://news.ycombinator.com", "category": "Community" },
-    { "id": "techcrunch-ai", "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "site": "https://techcrunch.com/category/artificial-intelligence/", "category": "Industry" },
-    { "id": "verge-ai", "name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "site": "https://www.theverge.com/ai-artificial-intelligence", "category": "Industry" }
+    { "id": "openai", "name": "OpenAI News", "url": "https://openai.com/news/rss.xml", "site": "https://openai.com/news", "category": "Labs", "description": "Official product, research, and safety announcements from OpenAI." },
+    { "id": "deepmind", "name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml", "site": "https://deepmind.google/blog", "category": "Labs", "description": "Research, model releases, and science updates from Google DeepMind." },
+    { "id": "google-ai", "name": "Google AI Blog", "url": "https://blog.google/technology/ai/rss/", "site": "https://blog.google/technology/ai/", "category": "Labs", "description": "Google’s AI product and developer news, from Gemini to tooling." },
+    { "id": "huggingface", "name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "site": "https://huggingface.co/blog", "category": "Open models", "description": "Open models, datasets, and ML engineering from the Hugging Face team." },
+    { "id": "vercel", "name": "Vercel", "url": "https://vercel.com/atom", "site": "https://vercel.com/changelog", "category": "Ship", "description": "Platform changelog and shipping updates for Next.js and Vercel." },
+    { "id": "github", "name": "GitHub Blog", "url": "https://github.blog/feed/", "site": "https://github.blog", "category": "Build", "description": "Engineering, Copilot, and developer-platform news from GitHub." },
+    { "id": "supabase", "name": "Supabase Blog", "url": "https://supabase.com/rss.xml", "site": "https://supabase.com/blog", "category": "Build", "description": "Backend, Auth, and Postgres product updates from Supabase." },
+    { "id": "cloudflare", "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/", "site": "https://blog.cloudflare.com", "category": "Ship", "description": "Edge, Workers, and infrastructure engineering from Cloudflare." },
+    { "id": "linear", "name": "Linear Changelog", "url": "https://linear.app/rss/changelog.xml", "site": "https://linear.app/changelog", "category": "Build", "description": "Product updates from Linear, the issue tracker many build teams ship with." },
+    { "id": "simonw", "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/", "site": "https://simonwillison.net", "category": "Analysis", "description": "Independent, hands-on analysis of AI tools, models, and software." },
+    { "id": "hackernews", "name": "Hacker News (150+ points)", "url": "https://hnrss.org/frontpage?points=150", "site": "https://news.ycombinator.com", "category": "Community", "description": "High-signal front-page stories from Hacker News, filtered to 150+ points." },
+    { "id": "techcrunch-ai", "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "site": "https://techcrunch.com/category/artificial-intelligence/", "category": "Industry", "description": "Industry coverage of AI companies, funding, and product launches." },
+    { "id": "verge-ai", "name": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "site": "https://www.theverge.com/ai-artificial-intelligence", "category": "Industry", "description": "Culture and product coverage of artificial intelligence from The Verge." }
   ],
   "newsletters": [
-    { "id": "latent-space", "name": "Latent Space", "url": "https://www.latent.space/feed", "site": "https://www.latent.space", "via": "rss" },
-    { "id": "pragmatic-engineer", "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "site": "https://newsletter.pragmaticengineer.com", "via": "rss" },
-    { "id": "bens-bites", "name": "Ben's Bites", "url": "https://www.bensbites.com/feed", "site": "https://www.bensbites.com", "via": "rss" },
-    { "id": "taaft", "name": "There's An AI For That", "site": "https://newsletter.theresanaiforthat.com", "via": "gmail", "gmailQuery": "from:hi@mail.theresanaiforthat.com newer_than:2d", "gmailAccount": "gptpat123@gmail.com" }
+    { "id": "latent-space", "name": "Latent Space", "url": "https://www.latent.space/feed", "site": "https://www.latent.space", "via": "rss", "category": "AI engineering", "description": "The AI engineer newsletter and podcast, covering models, agents, and the people building them." },
+    { "id": "pragmatic-engineer", "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/feed", "site": "https://newsletter.pragmaticengineer.com", "via": "rss", "category": "Engineering", "description": "Deep engineering writing on software systems, teams, and AI in production." },
+    { "id": "bens-bites", "name": "Ben's Bites", "url": "https://www.bensbites.com/feed", "site": "https://www.bensbites.com", "via": "rss", "category": "Daily digest", "description": "A daily digest of useful AI product news, tools, and launches for builders." },
+    { "id": "taaft", "name": "There's An AI For That", "site": "https://newsletter.theresanaiforthat.com", "via": "gmail", "gmailQuery": "from:hi@mail.theresanaiforthat.com newer_than:2d", "gmailAccount": "gptpat123@gmail.com", "category": "Tools", "description": "A daily roundup of new AI tools and use cases, curated from the There's An AI For That newsletter." }
   ],
   "excluded": [
     { "name": "Anthropic News", "url": "https://www.anthropic.com/rss.xml", "reason": "404 on 2026-11-23 (no public RSS)" },

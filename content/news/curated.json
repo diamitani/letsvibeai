@@ -1,5 +1,85 @@
 [
   {
+    "id": "2026-11-23-vercel-audited-zdr",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Introducing Audited ZDR on AI Gateway",
+    "url": "https://vercel.com/blog/introducing-audited-zdr-on-ai-gateway",
+    "date": "2026-11-23",
+    "takeaway": "Vercel will only label an inference provider Audited ZDR after an independent security firm tests its zero data retention claim against code, infrastructure and live traffic and publishes the report, with Baseten, Modal and Wafer as launch partners. If your app sends user prompts or customer data to a model, \"we don't keep your data\" is becoming something you can check, not just take on trust.",
+    "tags": ["Vercel", "AI Gateway", "Privacy"]
+  },
+  {
+    "id": "2026-11-23-hn-glm-5-4-loop-transformer",
+    "type": "rss",
+    "source": "Hacker News (150+ points)",
+    "title": "GLM-5.4: Toward Generalized Coding with Our First Loop Transformer",
+    "url": "https://z.ai/blog/glm-5.4",
+    "date": "2026-11-23",
+    "takeaway": "Z.ai's new flagship coding model runs a shared block of layers twice to reason more deeply without adding parameters, and the team admits it can get stuck in overly long thinking loops. The API is listed as coming soon and open weights are planned after safety hardening, so treat it as one to watch rather than one to wire into production today.",
+    "tags": ["Models", "Coding agents", "Open weights"]
+  },
+  {
+    "id": "2026-11-23-verge-walmart-agent-gateway-muse",
+    "type": "rss",
+    "source": "The Verge AI",
+    "title": "Meta Muse can do your Black Friday shopping at Walmart",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1039874/walmart-agent-gateway-meta-muse-black-friday",
+    "date": "2026-11-23",
+    "takeaway": "Walmart is rolling out a live Agent Gateway on November 24 that lets Meta's Muse agent buy on a shopper's behalf, through Agent Profiles with spending limits, purchase approvals and a history of what the agent bought. That is a useful pattern to copy: any app that lets an agent take actions needs limits, a human approval step and a visible log.",
+    "tags": ["Agents", "Commerce", "Permissions"]
+  },
+  {
+    "id": "2026-11-22-vercel-gateway-provider-headquarters",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Choose AI Gateway providers by headquarters country",
+    "url": "https://vercel.com/changelog/choose-ai-gateway-providers-by-headquarters-country",
+    "date": "2026-11-22",
+    "takeaway": "AI Gateway can now allowlist or denylist model providers by the country they're headquartered in, team-wide on Pro and Enterprise or per request on any plan. If a client or school asks where their data goes, this turns the answer into a setting, but configure fallback models, because requests fail rather than route to a blocked country.",
+    "tags": ["Vercel", "AI Gateway", "Compliance"]
+  },
+  {
+    "id": "2026-11-21-taaft-computor-ai-tutor",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "Free Coding Lessons with an AI tutor that won't hand you the answer",
+    "url": "https://newsletter.theresanaiforthat.com/p/google-kills-its-search-button",
+    "date": "2026-11-21",
+    "takeaway": "TU Graz's free Computor site pairs three Python courses and 70 exercises with an AI tutor, Lena, that points out what's off in your code but leaves the fix to you. Vibe coders ship faster when they can read what their agent wrote, and a nudge-not-answer tutor is a low-cost way to build that skill.",
+    "tags": ["Learning", "Python", "Tutors"]
+  },
+  {
+    "id": "2026-11-20-vercel-functions-20mib-bodies",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Vercel Functions now support request bodies up to 20MiB",
+    "url": "https://vercel.com/changelog/vercel-functions-now-support-request-bodies-up-to-20mib",
+    "date": "2026-11-20",
+    "takeaway": "In public beta, Vercel Functions on Node.js, Python and Bun can accept request bodies up to 20MiB instead of 4.5MB, by setting VERCEL_SUPPORT_LARGE_REQUEST_BODY=1 and using the 4GB performance memory setting. If your AI app uploads images, PDFs or audio straight to a function, test this on a preview deployment first, since Edge functions keep the old cap and middleware stops seeing the body.",
+    "tags": ["Vercel", "Functions", "Uploads"]
+  },
+  {
+    "id": "2026-11-20-hf-inkling-2-mini",
+    "type": "rss",
+    "source": "Hugging Face Blog",
+    "title": "Welcome Inkling 2 Mini, Cutting-edge Performance for your Local Setup",
+    "url": "https://huggingface.co/blog/inkling2mini",
+    "date": "2026-11-20",
+    "takeaway": "Thinking Machines Lab's Inkling 2 Mini is a looped mixture-of-experts model with about 26B total and 3B active parameters, a 1M-token context and image plus text input, with transformers, llama.cpp and MLX support from day one. For builders handling sensitive data, it's a fresh option for prototyping on your own machine, though Hugging Face says more validation is needed.",
+    "tags": ["Open models", "Local AI", "Hugging Face"]
+  },
+  {
+    "id": "2026-11-20-cloudflare-nginx2root",
+    "type": "rss",
+    "source": "Cloudflare Blog",
+    "title": "nginx2root: Five new nginx vulnerabilities, and how Cloudflare protects origins from the worst of them",
+    "url": "https://blog.cloudflare.com/nginx2root/",
+    "date": "2026-11-20",
+    "takeaway": "Five memory corruption bugs disclosed in nginx can let an unauthenticated attacker crash a worker or run commands on the server, and a related Linux kernel bug can escalate that to root even from inside a Docker container. If you self-host a shipped app behind nginx on a VPS or in Docker, this is a patch-now event, not a someday task.",
+    "tags": ["Security", "Self-hosting", "Shipping"]
+  },
+  {
     "id": "2026-11-23-vercel-flag-definitions-check",
     "type": "rss",
     "source": "Vercel",

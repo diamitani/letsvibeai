@@ -1,5 +1,85 @@
 [
   {
+    "id": "2026-11-23-techcrunch-claude-ship",
+    "type": "rss",
+    "source": "TechCrunch AI",
+    "title": "Anthropic launches Claude Ship, letting AI agents review, fix, and approve code changes",
+    "url": "https://techcrunch.com/2026/11/23/anthropic-launches-claude-ship-letting-ai-agents-review-fix-and-approve-code-changes/",
+    "date": "2026-11-23",
+    "takeaway": "Claude Ship pairs Code Review with two beta agents: PR Steward, which fixes failing CI checks, merge conflicts and review feedback, and Claude Approvals, which approves routine changes against a policy file your team keeps in the repo. Anthropic itself suggests starting in observe-only mode on one repository with a monthly spending limit, which is a sensible way to trial any auto-approval setup before it can merge on its own.",
+    "tags": ["Claude", "Code review", "Agents"]
+  },
+  {
+    "id": "2026-11-23-huggingface-agentic-evals",
+    "type": "rss",
+    "source": "Hugging Face Blog",
+    "title": "How to build and maintain an agentic evaluation",
+    "url": "https://huggingface.co/blog/agentic-evals",
+    "date": "2026-11-23",
+    "takeaway": "Hugging Face walks one agent task through eight steps, from writing down the claim to reading the traces and reporting a score, and points out that the harness, environment and verifier can each change the result. If you're choosing between models or prompts for your app, a handful of real tasks with a checker you trust beats a leaderboard number.",
+    "tags": ["Evals", "Agents", "Open source"]
+  },
+  {
+    "id": "2026-11-23-deepmind-quantum-agents-lean",
+    "type": "rss",
+    "source": "Google DeepMind",
+    "title": "Finding faster quantum algorithms with agents and formal verification",
+    "url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+    "date": "2026-11-23",
+    "takeaway": "Teams of Gemini 4 agents proposed quantum circuit improvements, including an 11.8x cost cut for a fusion calculation, and every idea had to pass a proof in the Lean theorem prover before it entered the shared notebook. The pattern scales down to everyday apps: let agents generate freely, but only keep what passes an automatic check.",
+    "tags": ["Agents", "Verification", "Research"]
+  },
+  {
+    "id": "2026-11-23-openai-cisco-shirudo",
+    "type": "rss",
+    "source": "OpenAI News",
+    "title": "OpenAI and Cisco introduce Shirudo",
+    "url": "https://openai.com/index/introducing-shirudo",
+    "date": "2026-11-23",
+    "takeaway": "Shirudo is an open-source, BSD-licensed runtime that uses eBPF to block a vulnerable code path on a running Linux service while a real patch is prepared, and in OpenAI's test a Codex-generated shield stopped a Java4Shell exploit against Elasticsearch without a restart. Note the workflow: the agent drafts the shield, you can watch its effect before enforcing it, and an operator approves it before it goes live.",
+    "tags": ["Security", "Open source", "Codex"]
+  },
+  {
+    "id": "2026-11-23-vercel-gateway-canary-zdr",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "AI Gateway now runs canary ZDR audits",
+    "url": "https://vercel.com/changelog/ai-gateway-now-runs-canary-zdr-audits",
+    "date": "2026-11-23",
+    "takeaway": "AI Gateway now plants unique URLs in test prompts sent to inference providers and records any request to them, which would show that prompt content was read outside the inference path. It is a neat, copyable idea: when a vendor promises something about your data, set up a tripwire that tells you if the promise breaks.",
+    "tags": ["Vercel", "AI Gateway", "Privacy"]
+  },
+  {
+    "id": "2026-11-23-vercel-gateway-extraction-models",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "AI Gateway now supports extraction models",
+    "url": "https://vercel.com/changelog/ai-gateway-now-supports-extraction-models",
+    "date": "2026-11-23",
+    "takeaway": "ScaleDown Extract-1 pulls named fields such as an invoice number or line items out of text, images and PDFs through the AI SDK's experimental_extract, returning null for missing fields and a 0 to 1 confidence score per match. Those confidence scores give you an easy rule for document apps: auto-accept the confident fields and send the rest to a person.",
+    "tags": ["Vercel", "AI SDK", "Documents"]
+  },
+  {
+    "id": "2026-11-23-supabase-knowledge-base",
+    "type": "rss",
+    "source": "Supabase Blog",
+    "title": "Introducing Supabase Knowledge Base",
+    "url": "https://supabase.com/blog/introducing-supabase-knowledge-base",
+    "date": "2026-11-23",
+    "takeaway": "Supabase put migration guides, troubleshooting articles, FAQs and tutorials at supabase.com/kb, with a Markdown version of every page for coding agents and links from its llms.txt. When your agent gets stuck on a Supabase error, point it at /kb instead of letting it guess.",
+    "tags": ["Supabase", "Docs", "Agents"]
+  },
+  {
+    "id": "2026-11-23-taaft-ai-plays-your-customer",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "AI Plays Your Customer",
+    "url": "https://newsletter.theresanaiforthat.com/p/tesla-s-ai-rebuilds-reality",
+    "date": "2026-11-23",
+    "takeaway": "Research covered by TAAFT found that asking an AI to answer like a shopper in its own words, then mapping those words to ratings, got to 90% of how well real people agree with their own repeat answers, across 57 product surveys and 9,300 human responses. Use a simulated customer to sharpen your questions before launch, then ask real users the ones that matter.",
+    "tags": ["Validation", "Research", "Founders"]
+  },
+  {
     "id": "2026-11-23-vercel-audited-zdr",
     "type": "rss",
     "source": "Vercel",

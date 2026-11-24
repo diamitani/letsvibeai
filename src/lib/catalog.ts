@@ -35,6 +35,10 @@ export interface Course {
 }
 
 const contentRoot = path.join(process.cwd(), 'content');
+const publicRoot = path.join(process.cwd(), 'public');
+
+/** Only keep a public asset path if the file actually ships (some legacy trailers are gitignored). */
+const shipped = (src?: string) => (src && fs.existsSync(path.join(publicRoot, src)) ? src : undefined);
 const meta = videoMeta as Record<string, { seconds: number }>;
 
 export const videoSrc = (id: string) => `/videos/lessons/${id}.mp4`;
@@ -171,7 +175,7 @@ const readingCourses: Course[] = legacy
     unit: c.unit,
     kind: 'reading' as const,
     accent: legacyAccents[i % legacyAccents.length],
-    trailerSrc: c.video,
+    trailerSrc: shipped(c.video) ?? shipped(`/videos/letsvibeai-course-${c.slug}.mp4`),
     poster: c.videoPoster || c.image,
     outcomes: c.helpsWith,
     whoFor: c.whoFor,

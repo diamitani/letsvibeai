@@ -54,10 +54,16 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             </Link>
           )}
         </div>
-        {trailer && (
+        {trailer ? (
           <div>
             <VideoPlayer src={trailer.src} poster={trailer.poster} title={`${course.title} trailer`} />
           </div>
+        ) : (
+          course.poster && (
+            <div className="overflow-hidden rounded-2xl bg-navy shadow-lift">
+              <img src={course.poster} alt={`${course.title} cover`} className="aspect-video w-full object-cover" />
+            </div>
+          )
         )}
       </div>
 

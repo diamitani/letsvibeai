@@ -6,6 +6,7 @@ import { VideoPlayer } from '@/components/VideoPlayer';
 import { LessonProgress } from '@/components/LessonProgress';
 import { catalog, getCourse, posterSrc, videoSrc } from '@/lib/catalog';
 import { pageMeta } from '@/lib/seo';
+import { resolveLessonLinks } from '@/lib/markdown';
 import fs from 'fs';
 import path from 'path';
 
@@ -75,7 +76,13 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       </div>
 
       <article className="mt-10 max-w-prose">
-        <Markdown content={lesson.notes} />
+        <Markdown
+          content={resolveLessonLinks(
+            lesson.notes,
+            course.slug,
+            course.lessons.map((l) => l.slug),
+          )}
+        />
       </article>
 
       {transcript && (

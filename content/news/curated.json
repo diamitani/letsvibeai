@@ -1,5 +1,85 @@
 [
   {
+    "id": "2026-11-24-techcrunch-shellbench-agents",
+    "type": "rss",
+    "source": "TechCrunch AI",
+    "title": "Even the best AI agents struggle with everyday life",
+    "url": "https://techcrunch.com/2026/11/24/even-the-best-ai-agents-struggle-with-everyday-life/",
+    "date": "2026-11-24",
+    "takeaway": "On ShellBench, a benchmark built from more than 10 million anonymized agent interactions, even top models from OpenAI, Anthropic and Meta failed over a third of the time, and the best scorer, GPT-6 Astra, got all three identical runs right less than half the time. If your app hands real chores to an agent, test the same task several times and treat consistency as a feature you have to earn.",
+    "tags": ["Agents", "Evals", "Reliability"]
+  },
+  {
+    "id": "2026-11-24-techcrunch-ncsc-ai-attacks",
+    "type": "rss",
+    "source": "TechCrunch AI",
+    "title": "UK warns AI-driven cyberattacks are exposing years of weak security",
+    "url": "https://techcrunch.com/2026/11/24/uk-warns-ai-driven-cyberattacks-are-exposing-years-of-weak-security/",
+    "date": "2026-11-24",
+    "takeaway": "The UK's NCSC says autonomous hacking tools are breaking in through old, simple weaknesses such as exposed systems, guessable passwords and loosely protected API endpoints, not novel exploits. For a freshly shipped side project, that means the boring checklist (strong auth, locked-down endpoints, nothing exposed by accident) is now your main defense.",
+    "tags": ["Security", "Agents", "Shipping"]
+  },
+  {
+    "id": "2026-11-24-openai-ifood-remote-agents",
+    "type": "rss",
+    "source": "OpenAI News",
+    "title": "How iFood scales coding agents across 15,000 repositories",
+    "url": "https://openai.com/business/customer-stories/ifood",
+    "date": "2026-11-24",
+    "takeaway": "iFood wraps its coding agent in deterministic steps (clone, load skills, branch at the start; open a merge request at the end) and reports 25,000+ runs at an average of US$0.04 each. The same sandwich works on a solo project: script the predictable parts and let the agent handle only the middle.",
+    "tags": ["Codex", "Agents", "Workflow"]
+  },
+  {
+    "id": "2026-11-24-simonw-llm-inflection-points",
+    "type": "rss",
+    "source": "Simon Willison",
+    "title": "Three LLM inflection points in twelve months",
+    "url": "https://simonwillison.net/2026/Nov/24/llm-inflection-points/",
+    "date": "2026-11-24",
+    "takeaway": "Simon Willison traces the past year from the first coding agents that were reliably right by default, to proactive \"Fable class\" models, to models that can make a game genuinely fun after hours of self-playtesting. His current rule of thumb, that if you can clearly describe a piece of software the model can build it, puts the premium on writing a sharp spec.",
+    "tags": ["Coding agents", "Analysis", "Models"]
+  },
+  {
+    "id": "2026-11-24-vercel-mcp-ai-gateway",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Agents can now manage AI Gateway through Vercel MCP",
+    "url": "https://vercel.com/changelog/agents-can-now-manage-ai-gateway-through-vercel-mcp",
+    "date": "2026-11-24",
+    "takeaway": "Through Vercel MCP your agent can now create virtual models, set routing rules and configure spending budgets for AI Gateway in plain language. Pointing your app at a virtual model ID lets you swap the underlying model later without redeploying, and a budget is a cheap guardrail before you share your app widely.",
+    "tags": ["Vercel", "MCP", "AI Gateway"]
+  },
+  {
+    "id": "2026-11-25-vercel-standard-builds-usage-billing",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Standard builds for existing Pro teams have moved to usage-based billing",
+    "url": "https://vercel.com/changelog/standard-builds-for-existing-pro-teams-have-moved-to-usage-based-billing",
+    "date": "2026-11-25",
+    "takeaway": "Existing Vercel Pro teams no longer get an included Standard build slot; Standard builds now cost $0.014 per build minute, drawn from the monthly usage credit. If your agent pushes lots of small commits, check the Usage page, because every preview build now has a price.",
+    "tags": ["Vercel", "Pricing", "Shipping"]
+  },
+  {
+    "id": "2026-11-25-verge-vibe-coding-open-source-synths",
+    "type": "rss",
+    "source": "The Verge AI",
+    "title": "Has vibe coding made open source the new normal for synths?",
+    "url": "https://www.theverge.com/ai-artificial-intelligence/1040081/vibe-coding-open-source-music-firmware",
+    "date": "2026-11-25",
+    "takeaway": "With vibe coders writing custom firmware for music gear, inMusic (Akai, Moog), Behringer, M-Vave, Polyend and Erica Synths are releasing SDKs and open-source devices, while Elektron warns that mods can brick machines. It's a clear sign that hardware makers now see hackable products as a selling point, and a reminder to ship a reset path whenever users can modify what you build.",
+    "tags": ["Vibe coding", "Open source", "Hardware"]
+  },
+  {
+    "id": "2026-11-24-bensbites-commitment-issues",
+    "type": "newsletter",
+    "source": "Ben's Bites",
+    "title": "Commitment issues (app edition)",
+    "url": "https://www.bensbites.com/p/commitment-issues-app-edition",
+    "date": "2026-11-24",
+    "takeaway": "Ben's Bites makes the case for building software for an audience of one, describing a personal Chrome extension and Mac app that recreate favorite features from abandoned browsers. The practical tip: ask your agent to install what it built and use it like a real person to test it thoroughly before you rely on it.",
+    "tags": ["Vibe coding", "Personal software", "Testing"]
+  },
+  {
     "id": "2026-11-23-techcrunch-claude-ship",
     "type": "rss",
     "source": "TechCrunch AI",

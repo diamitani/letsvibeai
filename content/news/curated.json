@@ -1,5 +1,85 @@
 [
   {
+    "id": "2026-11-25-1password-security-incident",
+    "type": "rss",
+    "source": "Hacker News (150+ points)",
+    "title": "1Password Security Incident",
+    "url": "https://1password.com/blog/update-on-nov-2026-security-incident",
+    "date": "2026-11-25",
+    "takeaway": "1Password says an attacker got into one employee's corporate GitHub account, pushed malicious code to backend services and reached its CI/CD system, copying customer names and emails (vault contents were not touched). Your GitHub account is the master key to your shipped app, so turn on strong 2FA, keep deploy secrets scoped, and know how you would rotate every credential in an afternoon.",
+    "tags": ["Security", "GitHub", "Shipping"]
+  },
+  {
+    "id": "2026-11-25-techcrunch-characterai-chat-auction",
+    "type": "rss",
+    "source": "TechCrunch AI",
+    "title": "Character.AI's plan to auction off users' private chats challenged by state AGs",
+    "url": "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats/",
+    "date": "2026-11-25",
+    "takeaway": "A coalition of 42 state attorneys general is fighting Character.AI's bankruptcy plan to sell chat histories from more than 21 million U.S. accounts, after the company had told users their data would not be sold. If your AI app stores conversations, decide now what you keep, for how long, and what happens to it if the project ends, and write a privacy promise you can actually keep.",
+    "tags": ["Privacy", "Data", "Trust"]
+  },
+  {
+    "id": "2026-11-25-vercel-cozey-operators-builders",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "How Cozey turns its operators into software builders on Vercel",
+    "url": "https://vercel.com/blog/how-cozey-turns-its-operators-into-software-builders-on-vercel",
+    "date": "2026-11-25",
+    "takeaway": "Warehouse, finance and support staff at furniture maker Cozey now ship their own agent-built apps, but one employee once deployed an internal app that anyone on the internet could open, until access protection and SSO were switched on. It is a real-world reminder that the first thing to check on a vibe-coded internal tool is who can reach it.",
+    "tags": ["Vercel", "Vibe Coding", "Security"]
+  },
+  {
+    "id": "2026-11-25-vercel-workflow-speculative-execution",
+    "type": "rss",
+    "source": "Vercel",
+    "title": "Workflow is 10x faster, again",
+    "url": "https://vercel.com/changelog/workflows-speculative-execution",
+    "date": "2026-11-25",
+    "takeaway": "Workflow SDK 5.8 cuts p75 step-to-step overhead from 85 ms to 7 ms by speculatively re-running steps, which is only safe for steps that are idempotent, like a Stripe charge keyed on the step ID. Before you lean on any retrying agent or job runner, mark the steps that must never run twice (such as sending an email) so they run at most once.",
+    "tags": ["Vercel", "Agents", "Reliability"]
+  },
+  {
+    "id": "2026-11-25-techcrunch-chatgpt-shared-limits",
+    "type": "rss",
+    "source": "TechCrunch AI",
+    "title": "OpenAI says heavy ChatGPT users may hit limits sooner as it merges Chat and Work",
+    "url": "https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/",
+    "date": "2026-11-25",
+    "takeaway": "ChatGPT's Chat and Work will share a single usage meter, rolling out more broadly in December, and OpenAI separately said a billing fix means GPT-6.2 Astra limits will be reached 40% faster. If your build workflow depends on one plan's allowance, keep a fallback model or tool ready so a quota change doesn't stall a launch week.",
+    "tags": ["OpenAI", "Pricing", "Tools"]
+  },
+  {
+    "id": "2026-11-25-cloudflare-search-for-agents",
+    "type": "rss",
+    "source": "Cloudflare Blog",
+    "title": "Introducing Search for Agents",
+    "url": "https://blog.cloudflare.com/search-for-agents/",
+    "date": "2026-11-25",
+    "takeaway": "Cloudflare's new toggle indexes your site with AI Search, serves a search endpoint from your own domain and advertises it to agents through page metadata, and it's available on every plan, including Free with limits. For builders, it's a cheap way to make your docs or product pages usable by AI agents without building your own retrieval stack.",
+    "tags": ["Cloudflare", "Agents", "Search"]
+  },
+  {
+    "id": "2026-11-25-pragmatic-engineer-anthropic-builds-software",
+    "type": "newsletter",
+    "source": "The Pragmatic Engineer",
+    "title": "How Anthropic builds software in 2026 with Katelyn Lesse",
+    "url": "https://newsletter.pragmaticengineer.com/p/how-anthropic-builds-software-in",
+    "date": "2026-11-25",
+    "takeaway": "Anthropic rewrote the API that serves every Claude token from Python to Rust in about five months, with no Rust experts, by having the new service shadow the old one until responses matched, and engineers looked closely at only about 20% of the generated code. The lesson for vibe coders: make your app's behavior checkable with tests or a reference, then you can trust code you didn't read line by line.",
+    "tags": ["Engineering", "Agents", "Verification"]
+  },
+  {
+    "id": "2026-11-25-taaft-claude-connectors-ask-first",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "Claude's Biggest Updates This Week",
+    "url": "https://newsletter.theresanaiforthat.com/p/google-s-ai-tv-starring-you",
+    "date": "2026-11-25",
+    "takeaway": "Apps connected to Claude can now pause and ask before big actions: GitHub makes you type the project's name before a delete, and Supabase checks before anything starts costing money. If you're building agent features, copy the pattern and require an explicit, specific confirmation for anything destructive or billable.",
+    "tags": ["Claude", "Agents", "Safety"]
+  },
+  {
     "id": "2026-11-24-techcrunch-shellbench-agents",
     "type": "rss",
     "source": "TechCrunch AI",

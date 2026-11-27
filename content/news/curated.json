@@ -1,5 +1,75 @@
 [
   {
+    "id": "2026-11-26-techstackups-google-workspace-agent-mcp",
+    "type": "rss",
+    "source": "Hacker News (150+ points)",
+    "title": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email",
+    "url": "https://techstackups.com/articles/google-workspace-ai-agents-mcp/",
+    "date": "2026-11-26",
+    "takeaway": "Under a new Google API terms addendum, from February 1, 2027 any tool that is or is driven by an AI agent must reach Gmail, Drive, Calendar and the rest of Workspace through Google's MCP servers, and the public Gmail server can draft but not send, reply or forward. If your project's core feature runs on someone else's API, check their terms and quotas before you build, and keep a list of which features would break if the rules changed.",
+    "tags": ["Agents", "MCP", "Platform risk"]
+  },
+  {
+    "id": "2026-11-26-janlukas-ai-self-hosting",
+    "type": "rss",
+    "source": "Hacker News (150+ points)",
+    "title": "AI made self-hosting fun again",
+    "url": "https://janlukas.blog/posts/ai-self-hosting",
+    "date": "2026-11-26",
+    "takeaway": "Jan-Lukas Else keeps his infrastructure as Docker Compose files and scripts in Git, so coding agents can work on it like any other project, and he estimates a bootable OS image setup took half a day with AI instead of at least a week. The lesson for builders: when your setup lives in files in a repo, an agent can change it, review it and redeploy it, but you are still the one who has to understand each change.",
+    "tags": ["Self-hosting", "DevOps", "Shipping"]
+  },
+  {
+    "id": "2026-11-26-simonw-sqlite3-rsync",
+    "type": "rss",
+    "source": "Simon Willison",
+    "title": "sqlite3_rsync: Database Remote-Copy Tool For SQLite",
+    "url": "https://simonwillison.net/2026/Nov/26/sqlite3-rsync/",
+    "date": "2026-11-26",
+    "takeaway": "Simon Willison points out that sqlite3_rsync can copy a snapshot of a SQLite database to another machine over SSH without first making a full local copy, which matters on small servers that are already more than half full. If your shipped app keeps its data in one SQLite file, a tested off-machine backup is one command away, so set it up before your first real user signs up.",
+    "tags": ["SQLite", "Backups", "Data"]
+  },
+  {
+    "id": "2026-11-26-taaft-astra-planet-search",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "AI Helps Hobbyists Hunt for Planets",
+    "url": "https://openai.com/index/searching-for-distant-planets-with-astra/",
+    "date": "2026-11-26",
+    "takeaway": "Two amateur astronomers used Codex and Astra to build their own planet searches on public telescope data; one search flagged more than 200 signals, including 10 already-confirmed planets, and a SETI Institute astronomer independently found two of the same signals. That is a great pattern for any AI-built tool: test it on answers you already know, then get an independent check before you trust its new results.",
+    "tags": ["Codex", "Verification", "Science"]
+  },
+  {
+    "id": "2026-11-26-taaft-karpathy-maps-america",
+    "type": "newsletter",
+    "source": "There's An AI For That",
+    "title": "Karpathy Maps America With AI",
+    "url": "https://newsletter.theresanaiforthat.com/p/karpathy-maps-america-with-ai",
+    "date": "2026-11-26",
+    "takeaway": "Andrej Karpathy asked Claude to turn the United States into a strategy-game map using real numbers, and the newsletter says Claude spent seven hours pulling data from 31 public sources and wrote 45,000 lines of code. It's a vivid example of how far one prompt-driven project can go, and a reminder that a fun, browsable demo built on real public data is a legitimate thing to ship.",
+    "tags": ["Claude", "Vibe coding", "Data"]
+  },
+  {
+    "id": "2026-11-25-github-next-safe-step-modernization",
+    "type": "rss",
+    "source": "GitHub Blog",
+    "title": "How to choose the next safe step in application modernization",
+    "url": "https://github.blog/ai-and-ml/github-copilot/how-to-choose-the-next-safe-step-in-application-modernization/",
+    "date": "2026-11-25",
+    "takeaway": "GitHub's Sam Quakenbush lays out an evidence-first method: inventory what actually runs, label each finding documented, inferred or unverified, and prefer keep, upgrade, swap or wrap before a rewrite. Before you ask an agent to rebuild your vibe-coded app on a new stack, have it run your build and tests first and write down what currently works.",
+    "tags": ["GitHub Copilot", "Refactoring", "Testing"]
+  },
+  {
+    "id": "2026-11-26-huggingface-training-swarms",
+    "type": "rss",
+    "source": "Hugging Face Blog",
+    "title": "Swarms, Flocks, Gangs: How to build, train, and evaluate multi-agent systems",
+    "url": "https://huggingface.co/blog/training-swarms",
+    "date": "2026-11-26",
+    "takeaway": "Hugging Face's new series argues that more agents isn't automatically better: four agents get four tries and cost four times as much, so the fair test is whether they beat one agent on the same token budget. If you're tempted to add a multi-agent setup to your app, measure it against a single agent at equal cost before you pay for the complexity.",
+    "tags": ["Agents", "Evals", "Hugging Face"]
+  },
+  {
     "id": "2026-11-25-1password-security-incident",
     "type": "rss",
     "source": "Hacker News (150+ points)",
